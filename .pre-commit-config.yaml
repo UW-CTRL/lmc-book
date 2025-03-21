@@ -6,13 +6,13 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: mixed-line-ending
-  - repo: https://github.com/tomcatling/black-nb
-    rev: "0.7"
-    hooks:
-      - id: black-nb
-        description: strip output and black source
-        additional_dependencies: ['black[jupyter]']
-        args: ["--clear-output"]
+  # - repo: https://github.com/tomcatling/black-nb
+  #   rev: "0.7"
+  #   hooks:
+  #     - id: black-nb
+  #       description: strip output and black source
+  #       additional_dependencies: ['black[jupyter]']
+  #       args: ["--clear-output"]
   - repo: https://github.com/psf/black
     rev: "22.3.0"
     hooks:
