@@ -1,19 +1,6 @@
-# AA/EE/ME 548 Linear Multivariable Control
+## Course information
 
-## Overview
-
-This course bridges foundational theory and practical application in multivariable control and estimation, with a focus on linear systems in both continuous and discrete time. It emphasizes the development of skills necessary for modeling complex systems and designing robust controllers, serving as a gateway to advanced topics in control theory, robotics, and optimization. A strong mathematical foundation in linear algebra and multivariable calculus is essential, as is familiarity with graduate-level systems theory (e.g., 547 or equivalent), including linear algebra, ordinary differential equations, feedback control, and scientific computing. The course places a strong emphasis on leveraging modern computational tools to implement and analyze control strategies, blending theoretical understanding with hands-on experience.
-
-
-- Analyze the stability and performance of control systems using mathematical tools.
-- Apply state-space methods to model and control multivariable systems.
-- Utilize computational software to simulate and validate control designs.
-- Develop an understanding of the trade-offs in control system design.
-- Formulate a control synthesis problem and mathematically describe control requirements and objectives.
-- Gain familiarity in modern software tools that enable the possibility of real-time controllers.
-
-
-## Course information & logistics
+## Logistics
 
 **Instructor:** [Karen Leung](https://faculty.washington.edu/kymleung/)
 
@@ -25,7 +12,7 @@ This course bridges foundational theory and practical application in multivariab
 
 **Location:** ARC G070
 
-** Office hours: ** TBD
+** Office hours:** TBD
 
 **Recording:** Lectures will be recorded to accommodate unexpected circumstances where you are unable to attend lectures. But these are recorded on a best-effort basis and there are no guarantees on the quality of the recording. Therefore you are expected to attend lectures in-person as the instruction is designed for in-person learning. Zoom link and recording can be found on Canvas. Note: The lecture room does not have any built-in video recording capabilities.
 
@@ -39,7 +26,7 @@ Below is the breakdown for the grading for the course. For more information, ple
 - **Homework self-grading:** 15\% Once homework solutions are released (~1 week after submission deadline), you will need to self-grade your homework and submit a write-up that compares your homework with the solution manual. For example, identifying where your answer was incorrect and what it was that led to that error, or if your answer was correct but different from the solution manual, explaining why your approach is equally valid. The TA will be check these submissions for accuracy. Full grade will be awarded if submitted on time and the write-up is properly done.
 - **Homework solution or worked example write-up:** 10% You will be assigned to develop either:
     1. A detailed solution to a problem in a homework. You will be given (anonymized) homework from the class, and you will develop a detailed solution guide to that problem, and, if any, describe common mistakes/errors. The TA will synthesize the submitted solutions and these will be the solutions used for the homework self-grading task described above.
-    2. A worked out example on a topic covered in the course. The worked example should, for instance, include some interesting system/dynamics, application of a technique, and the output. Ideally, this would include some code that can be run to visualize results.
+    2. A worked example on a topic covered in the course. The worked example should, for instance, include some interesting system/dynamics, application of a technique, and the output. Ideally, this would include some code that can be run to visualize results.
 <!--
 Perform peer grading and write up a detailed solution (in Latex) for an assigned problem.
 - **Bite-size notes:** 15% Develop a bite-size notes on a selected topic related to course material. The plan is to share these notes with the rest of the class to help each other learn so that you can look back on these notes in the future, and refresh your knowledge on that topic in less than 15 minutes. You will be expected to use Github.

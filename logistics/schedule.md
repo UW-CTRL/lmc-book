@@ -1,26 +1,17 @@
 # Week-by-week schedule
-Note: *Italicized* text indicates last year's content which is provided as reference. But the teaching team will update the table as the quarter progresses.
+Note: *Italicized* text indicates planned topics, but subject to change.
 
-| Date      | Week   | Topic | Milestones | Files and links |
-| :-------- | ------ | :---- | :--------- | :-------------- |
-| March 31  |   1    | *Introduction, state-space dynamics, linearization, continuous and discrete time dynamics, Lyapunov stability (review)* | *Homework 0 out (ungraded)* | | |
-| April 2   |        |  | | |
-| April 7   |   2    | *Control Lyapunov Functions, control invariant sets, intro to optimization, synthesizing CLF controllers* | | |
-| April 9   |        |  | | |
-| April 14  |   3    | *Control barrier functions + CBF controllers, introduction to optimal control, intro to trajectory optimization (open loop), iequential decision-making, dynamics programming, Bellman equation*  | | |
-| April 16  |        |  | | |
-| April 21  |   4    | *Bellman equation (cont'd), HJB equation, Linear Quadratic Regulator, continuous time, discrete time* | |
-| April 23  |        |  | |
-| April 28  |   5    | *Tracking, time-varying, special topics: HJ reachability* | | |
-| April30   |        |  | | |
-| May 5     |   6    | *Guest lecture, iLQR, Linear model predictive control* | | |
-| May 7     |        |  | | |
-| May 12    |   7    | *Intro to state estimation, observers, duality, Kalman filter (first treatment)* | | |
-| May 14    |        |  | | |
-| May 19    |   8    | *Probability review, Kalman filter (second treatment)*| | |
-| May 21    |        |  | | |
-| May 26    |   9    | *Kalman filter (second treatment) cont'd, Continuous time KF, Linear quadratic gaussian, Extended KF, other filtering techniques* | | |
-| May 28    |        |  | | |
-| June 2    |   10   | Project spotlight presentation | | |
-| June 4    |        | Project poster presentation | | |
-|           | Finals | Due final report or website | | |
+|  Date      |  Week  |  Topic  |  Milestones  |  Links  |
+| :--------- | ------ | :---- | :--------- | :-------------- |
+| <img width=150/> ||||
+| March 31 <br> April 2  |   1    | *Introduction, state-space dynamics, linearization, continuous and discrete time dynamics, intro to optimization* | hw 1 out | | |
+| April 7 <br> April 9   |   2    | *Control Lyapunov Functions, control invariant sets, Control barrier functions, CLF-CBF-QP* | | |
+| April 14 <br> April 16 |   3    | *Guest lecture(?), introduction to sequential decision-making*  | | |
+| April 21 <br> April 23 |   4    | *Value iteration, HJB equation, HJ reachability* | hw 1 due; <br> hw 2 out | |
+| April 28 <br> April 30 |   5    | *Linear quadratic regulator, tracking LQR, iLQR* | Project proposal due | |
+| May 5 <br> May 7       |   6    | *Trajectory optimization* | | |
+| May 12 <br> May 14     |   7    | *Model predictive control* | hw 2 due <br> hw3 out| |
+| May 19 <br> May 21     |   8    | *Guest lecture(?), Kalman filter*| | |
+| May 26 <br> May 28     |   9    | (No lecture; Memorial Day) <br> *Technical communication* | hw 3 due | |
+| June 2 <br> June 4     |   10   | Project spotlight presentation <br> Project poster presentation | Due project pitch <br> Due project poster | |
+|                        | Finals | Due final report or website | | |

@@ -7,10 +7,11 @@ parts:
   - file: logistics/schedule
 - caption: Homework
   chapters:
+  - file: homework/hw_solution_writeup
   - file: homework/hw01
   - file: homework/hw02
   - file: homework/hw03
-  - file: homework/hw_solution_writeup
+
 
 
 # - caption: A. Math Review
