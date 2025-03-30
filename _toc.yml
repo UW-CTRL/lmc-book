@@ -11,6 +11,11 @@ parts:
   - file: homework/hw01
   - file: homework/hw02
   - file: homework/hw03
+- caption: Lectures
+  chapters:
+  - file: lectures/introduction
+  - file: lectures/state-space
+
 
 
 
