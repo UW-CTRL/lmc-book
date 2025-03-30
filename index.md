@@ -5,6 +5,8 @@ html_meta:
 ---
 <!-- ![Header image showing molecules plotted in two different ways](_static/images/header.png) -->
 
+# Linear Multivariable Control
+These are (work-in-progress) course notes for University of Washington AA/EE/ME 548.
 
 ## Overview
 
@@ -17,6 +19,12 @@ This course bridges foundational theory and practical application in multivariab
 - Develop an understanding of the trade-offs in control system design.
 - Formulate a control synthesis problem and mathematically describe control requirements and objectives.
 - Gain familiarity in modern software tools that enable the possibility of real-time controllers.
+
+
+#### Acknowledgement
+
+This jupyter book template is based on the [deep learning for molecules & materials](https://github.com/whitead/dmol-book) notes by Andrew D. White.
+
 
 
 <!-- ## Table of Contents
