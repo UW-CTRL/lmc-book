@@ -61,7 +61,7 @@ function addGithubLink() {
     const github_button = document.querySelector('.fa-github').closest('button')
     // add a target href to the github button
     github_button.onclick = () => {
-        window.open('https://github.com/whitead/dmol-book', '_blank').focus();
+        window.open('https://github.com/UW-CTRL/lmc-book', '_blank').focus();
     }
 }
 
