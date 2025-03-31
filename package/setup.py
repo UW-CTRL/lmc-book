@@ -6,7 +6,7 @@ setup(
     name="lmc-book",
     version="0.0.1",
     description="Style and Imports for lmc book",
-    author="Karen LEung",
+    author="Karen Leung",
     author_email="kymleung@uw.edu",
     license="MIT",
     packages=["dmol"],
