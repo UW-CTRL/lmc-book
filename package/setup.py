@@ -19,6 +19,8 @@ setup(
         "jaxlib",
         "pillow>=8.3.2",
         "linkify-it-py",
+        "cvxpy",
+        "lxml_html_clean",
     ],
     test_suite="tests",
     long_description="""
