@@ -22,7 +22,7 @@
 
 Below is the breakdown for the grading for the course. For more information, please see the relevant chapters in this book.
 
-- **Homework:** 30% There will be three homework sets (10% each) composed of written and coding parts. Full grade will be awarded if submitted on time. Homework must be typeset using Latex. UW offers premium overleaf accounts for students.
+- **Homework:** 30% There will be three homework sets (10% each) composed of written and coding parts. Full grade will be awarded if submitted on time. You will submit Jupyter notebooks, which will include markdown/LaTex and Python coding.
 - **Homework self-grading:** 15\% Once homework solutions are released (~1 week after submission deadline), you will need to self-grade your homework and submit a write-up that compares your homework with the solution manual. For example, identifying where your answer was incorrect and what it was that led to that error, or if your answer was correct but different from the solution manual, explaining why your approach is equally valid. The TA will be check these submissions for accuracy. Full grade will be awarded if submitted on time and the write-up is properly done.
 - **Homework solution or worked example write-up:** 10% You will be assigned to develop either:
     1. A detailed solution to a problem in a homework. You will be given (anonymized) homework from the class, and you will develop a detailed solution guide to that problem, and, if any, describe common mistakes/errors. The TA will synthesize the submitted solutions and these will be the solutions used for the homework self-grading task described above.
