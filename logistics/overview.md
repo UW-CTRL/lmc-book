@@ -12,7 +12,7 @@
 
 **Location:** ARC G070
 
-** Office hours:** TBD
+**Office hours:** Tuesday 4-5PM GUG 305 (Oliver), Wednesday 1-2PM GUG 311B (Karen)
 
 **Recording:** Lectures will be recorded to accommodate unexpected circumstances where you are unable to attend lectures. But these are recorded on a best-effort basis and there are no guarantees on the quality of the recording. Therefore you are expected to attend lectures in-person as the instruction is designed for in-person learning. Zoom link and recording can be found on Canvas. Note: The lecture room does not have any built-in video recording capabilities.
 
