@@ -52,7 +52,7 @@ What are some practical considerations when performing gradient descent?
 ```
 
 ```{margin} Convex Optimization
-The textbook [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf) by Lieven Vandenberghe and Stephen P. Boyd is to go-to text for learning about convex optimization.
+The textbook [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf) by Lieven Vandenberghe and Stephen P. Boyd is to go-to text for learning about convex optimization. Lectures of 2023 Stanford EE 364a [course offering are ou Youtube](https://youtu.be/kV1ru-Inzl4?si=S2Nf1e1gu_M6H2zq).
 ```
 
 ```{admonition} Practical considerations
