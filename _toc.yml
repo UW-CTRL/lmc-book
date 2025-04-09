@@ -11,6 +11,9 @@ parts:
   - file: homework/hw01
   - file: homework/hw02
   - file: homework/hw03
+- caption: Project
+  chapters:
+  - file: project/project
 - caption: Lectures
   chapters:
   - file: lectures/introduction
