@@ -16,6 +16,7 @@ parts:
   - file: lectures/introduction
   - file: lectures/state-space
   - file: lectures/optimization
+  - file: lectures/control-certificates
 
 
 

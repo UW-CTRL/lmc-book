@@ -1,7 +1,7 @@
 # Introduction to optimization
 
 ```{margin} Algorithms for Optimization
-The textbook [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) by Mykel Kochenderfer offers a comprehensive introduction to optimization with a focus on practical algorithms.
+The textbook [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) by Mykel Kochenderfer and Tim A. Wheeler offers a comprehensive introduction to optimization with a focus on practical algorithms.
 ```
 
 In this chapter, we give a brief overview of mathematical optimization and highlight ways we can go about solving them.
