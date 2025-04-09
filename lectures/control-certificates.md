@@ -169,7 +169,7 @@ We change the barrier condition described above slightly to account for the cont
 Let $b:\mathbb{R}^n \rightarrow \mathbb{R}$ be a scalar function, and suppose we have dynamics $\dot{x} = f(x,u)$. Define $\mathcal{S} = \{ x \mid b(x) \geq 0\}$ as the "safe set".
 We see that if $\max_{u \in \mathcal{U}} \nabla b(x)^T f(x,u) \geq 0$ whenever $b(x) = 0$, then, if $b(x(0)) \geq 0$, then the system will always remain inside $\mathcal{S}$. Note that having the inequality on the right be 0 imposes the least restriction on the system---it can so absolutely anything inside $\mathcal{S}$, but at the boundary, we must have $\max_{u \in \mathcal{U}} \nabla b(x)^T f(x,u) \geq 0$.
 
-One may want a more gradual constraint on the system as it approaches the boundary. Intuitively, the closer the system approaches the boundary, the more restrictions there should be on the motion such that when the system is at the boundary, we must have $\max_{u \in \mathcal{U}} \nabla b(x)^T f(x,u) \geq 0$, which is the condition above. This makes practical sense---when the system is far away from the boundary of $\mathcal{S}$, it should have a lot of freedom on its motion, including moving towards the boundary. But since the system is far away from the boundary, moving towards the boundary does not pose much risk. But as the system gets closer and closer tot he boundary, the freedom in its motion should be reduced accordingly, for instance, the system should begin to slow down and/or steering away from the boundary.
+One may want a more gradual constraint on the system as it approaches the boundary. Intuitively, the closer the system approaches the boundary, the more restrictions there should be on the motion such that when the system is at the boundary, we must have $\max_{u \in \mathcal{U}} \nabla b(x)^T f(x,u) \geq 0$, which is the condition above. This makes practical sense---when the system is far away from the boundary of $\mathcal{S}$, it should have a lot of freedom on its motion, including moving towards the boundary. But since the system is far away from the boundary, moving towards the boundary does not pose much risk. But as the system gets closer and closer to the boundary, the freedom in its motion should be reduced accordingly, for instance, the system should begin to slow down and/or steer away from the boundary.
 To achieve this behavior, we introduce a different term on the RHS of the inequality. First we introduce the following definition.
 
 
@@ -199,8 +199,19 @@ In general, finding a valid CBF (and CLF for that matter) is challenging. One ma
 ## CBF safety filter
 
 The CBF discussion so far is centered about the definition, but we have yet to compute a controller that would ensure the system remains inside $\mathcal{S}$.
-To ensure the system remains inside $\mathcal{S}$, we just need to ensure that at all times, the executed control satisfies the inequality described in {eq}`eq-cbf`. We know that at least one control exists if the CBF is valid.
-At the same time, there is typically a nominal controller that will guide your system to perform a desired task. Thus you would like to carefully trade-off between executing what your nominal controller wants, and making sure your system remains inside $\mathcal{S}$.
+To ensure the system remains inside $\mathcal{S}$, we need to guarantee that the control input satisfies the inequality in {eq}`eq-cbf` at all times. Since a valid CBF ensures the existence of at least one control input that meets this condition, we can leverage this property. Simultaneously, we often have a nominal controller designed to achieve specific objectives or tasks. Therefore, we aim to balance following the nominal controller's guidance while ensuring the system's safety by staying within $\mathcal{S}$.
+
+This trade-off can be formulated as an optimization problem:
+
+```{math}
+:label: eq-cbf-optimization
+u^\star = &\underset{u}{\text{argmin}} \: \| u - u_\mathrm{nom}\|_2^2\\
+&\text{subj. to} \:\: \nabla b(x)^Tf(x,u) \geq -\alpha(b(x))
+```
+
+For systems with *control affine* dynamics, this optimization problem becomes a quadratic program (QP), which is a convex optimization problem that can be solved efficiently using standard solvers.
+
+
 Like what we saw with CLFs, we can pose this as an optimization problem,
 
 
