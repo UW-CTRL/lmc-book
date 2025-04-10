@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Course information &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Week-by-week schedule" href="schedule.html" />
+    <link rel="prev" title="Linear Multivariable Control" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Homework
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw_solution_writeup.html">
+   Homework solution and worked example guidelines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw01.html">
+   Homework 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw02.html">
+   Homework 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw03.html">
+   Homework 3
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/project.html">
+   Project
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flogistics/overview.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/logistics/overview.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Course information
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistics">
+   Logistics
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grading">
+   Grading
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-material">
+   Course material
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-expectations">
+   Course Expectations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#communication-interaction-and-collaboration">
+   Communication, Interaction and Collaboration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing">
+   Computing
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#illnesses-and-other-intermittent-situations">
+   Illnesses and other intermittent situations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inclusion">
+   Inclusion
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#access-and-accommodations">
+   Access and Accommodations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#religious-accommodation-policy">
+   Religious Accommodation Policy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#academic-integrity-and-cheating">
+   Academic Integrity and Cheating
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Course information</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Course information
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistics">
+   Logistics
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grading">
+   Grading
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-material">
+   Course material
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-expectations">
+   Course Expectations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#communication-interaction-and-collaboration">
+   Communication, Interaction and Collaboration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing">
+   Computing
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#illnesses-and-other-intermittent-situations">
+   Illnesses and other intermittent situations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inclusion">
+   Inclusion
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#access-and-accommodations">
+   Access and Accommodations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#religious-accommodation-policy">
+   Religious Accommodation Policy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#academic-integrity-and-cheating">
+   Academic Integrity and Cheating
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="course-information">
+<h1>Course information<a class="headerlink" href="#course-information" title="Permalink to this headline">#</a></h1>
+</section>
+<section id="logistics">
+<h1>Logistics<a class="headerlink" href="#logistics" title="Permalink to this headline">#</a></h1>
+<p><strong>Instructor:</strong> <a class="reference external" href="https://faculty.washington.edu/kymleung/">Karen Leung</a></p>
+<p><strong>TA:</strong> Oliver Sheridan</p>
+<p><strong>Email communication:</strong> <code class="docutils literal notranslate"><span class="pre">aa548-spr25-staff&#64;uw.edu</span></code></p>
+<p><strong>Lecture:</strong> MW 11:30AM - 12:50PM</p>
+<p><strong>Location:</strong> ARC G070</p>
+<p><strong>Office hours:</strong> Tuesday 4-5PM GUG 305 (Oliver), Wednesday 1-2PM GUG 311B (Karen)</p>
+<p><strong>Recording:</strong> Lectures will be recorded to accommodate unexpected circumstances where you are unable to attend lectures. But these are recorded on a best-effort basis and there are no guarantees on the quality of the recording. Therefore you are expected to attend lectures in-person as the instruction is designed for in-person learning. Zoom link and recording can be found on Canvas. Note: The lecture room does not have any built-in video recording capabilities.</p>
+<p><strong>Ed Discussion:</strong> Use the Ed Discussion board for general course-related questions, such as lecture topics, homework clarifications, or logistics. This is the official course discussion platform, visible to the entire class. Students are encouraged to answer questions, with extra credit for active participation. You can post anonymously to classmates, but your identity will be visible to the teaching staff.</p>
+</section>
+<section id="grading">
+<h1>Grading<a class="headerlink" href="#grading" title="Permalink to this headline">#</a></h1>
+<p>Below is the breakdown for the grading for the course. For more information, please see the relevant chapters in this book.</p>
+<ul class="simple">
+<li><p><strong>Homework:</strong> 30% There will be three homework sets (10% each) composed of written and coding parts. Full grade will be awarded if submitted on time. You will submit Jupyter notebooks, which will include markdown/LaTex and Python coding.</p></li>
+<li><p><strong>Homework self-grading:</strong> 15% Once homework solutions are released (~1 week after submission deadline), you will need to self-grade your homework and submit a write-up that compares your homework with the solution manual. For example, identifying where your answer was incorrect and what it was that led to that error, or if your answer was correct but different from the solution manual, explaining why your approach is equally valid. The TA will be check these submissions for accuracy. Full grade will be awarded if submitted on time and the write-up is properly done.</p></li>
+<li><p><strong>Homework solution or worked example write-up:</strong> 10% You will be assigned to develop either:</p>
+<ol class="simple">
+<li><p>A detailed solution to a problem in a homework. You will be given (anonymized) homework from the class, and you will develop a detailed solution guide to that problem, and, if any, describe common mistakes/errors. The TA will synthesize the submitted solutions and these will be the solutions used for the homework self-grading task described above.</p></li>
+<li><p>A worked example on a topic covered in the course. The worked example should, for instance, include some interesting system/dynamics, application of a technique, and the output. Ideally, this would include some code that can be run to visualize results.</p></li>
+</ol>
+</li>
+</ul>
+<!--
+Perform peer grading and write up a detailed solution (in Latex) for an assigned problem.
+- **Bite-size notes:** 15% Develop a bite-size notes on a selected topic related to course material. The plan is to share these notes with the rest of the class to help each other learn so that you can look back on these notes in the future, and refresh your knowledge on that topic in less than 15 minutes. You will be expected to use Github.
+    - Initial draft of notes (9%)
+    - Review notes of other student (3%)
+    - Incorporate feedback from review (3%). -->
+<ul class="simple">
+<li><p><strong>Project:</strong> 45% Course project provides you with an opportunity to dive deeper into topics covered in the course (or beyond), and apply it to an interesting system or application. There will be:</p>
+<ul>
+<li><p>Project proposal  due around mid-quarter (5%)</p></li>
+<li><p>Spotlight talk at the end of the quarter (5%)</p></li>
+<li><p>Poster presentation at the end of the quarter (15%)</p></li>
+<li><p>Report/webpage write-up (15%)</p></li>
+<li><p>Peer review (5%)</p></li>
+</ul>
+</li>
+<li><p><strong>Extra credit:</strong> 5% Extra credit will be assigned for active engagement on the EdDiscussion board (e.g., asking insightful questions, answering questions, sharing helpful resources or insights) and for feedback/suggestions to the course notes.</p></li>
+</ul>
+</section>
+<section id="course-material">
+<h1>Course material<a class="headerlink" href="#course-material" title="Permalink to this headline">#</a></h1>
+<p>There is no official textbook for this course, but notes will be drawn from the following sources:</p>
+<ul class="simple">
+<li><p>Optimal Control and Estimation by Robert F. Stengel.</p></li>
+<li><p><a class="reference external" href="https://underactuated.csail.mit.edu/">Underactuated Robotics: Algorithms for Walking, Running, Swimming, Flying, and Manipulation</a> by Russ Tedrake.</p></li>
+<li><p>Optimal Control Theory: An Introduction by Donald E. Kirk.</p></li>
+<li><p><a class="reference external" href="https://web.ece.ucsb.edu/~hespanha/linearsystems/">Linear Systems Theory</a> by Joao Hespanha</p></li>
+<li><p><a class="reference external" href="https://link.springer.com/book/10.1007/978-3-031-27576-0">Safe Autonomy with Control Barrier Functions</a> by Wei Xiao, Christos G. Cassandras, and Calin Belta.</p></li>
+<li><p><a class="reference external" href="https://stanfordasl.github.io/aa203/sp2122/">Stanford AA203: Optimal and Learning-Based Control course material</a> by Edward Schmerling.</p></li>
+</ul>
+</section>
+<section id="course-expectations">
+<h1>Course Expectations<a class="headerlink" href="#course-expectations" title="Permalink to this headline">#</a></h1>
+<p>The teaching team has put a lot of effort into putting this course together to make sure you are achieving your learning objectives. As the teaching team respects the time and effort you put into the course, we also ask that you respect the teaching team’s time. As such, the expectations for this course are:</p>
+<ul class="simple">
+<li><p>Be an <strong>active participant</strong> in the course by coming to lectures, asking questions, and contributing to discussions on Ed Discussion.</p></li>
+<li><p><strong>Proactive communication</strong> with the teaching team. It is important to communicate with the teaching team as early as possible so they have the time and capacity to help you as much as possible. Do not leave things to the last minute.</p></li>
+<li><p><strong>Engage with your peers</strong> and work together in learning the course material. Meet other students, and interact with each other.</p></li>
+</ul>
+</section>
+<section id="communication-interaction-and-collaboration">
+<h1>Communication, Interaction and Collaboration<a class="headerlink" href="#communication-interaction-and-collaboration" title="Permalink to this headline">#</a></h1>
+<p>Below is a summary the communication channels for the course.</p>
+<ul class="simple">
+<li><p>Regarding personal administrative items: send email to <code class="docutils literal notranslate"><span class="pre">aa548-spr25-staff&#64;uw.edu</span></code>.</p></li>
+<li><p>Teaching staff making announcements to the class: Canvas announcements.</p></li>
+<li><p>Discussion about course materials (lectures, homework, projects, etc): Ed Discussion board.</p></li>
+</ul>
+<p>For more urgent and time-sensitive matters, please send an email to <code class="docutils literal notranslate"><span class="pre">aa548-spr25-staff&#64;uw.edu</span></code> and also follow up with the teaching team after lectures, or during office hours.
+For questions about the technical material covered in lectures, handouts, or homework, please use the Ed Discussion board. This way other students can chime in (and you will probably receive a faster response), and your questions and responses can also aid other students who have the same or similar questions.</p>
+</section>
+<section id="computing">
+<h1>Computing<a class="headerlink" href="#computing" title="Permalink to this headline">#</a></h1>
+<p>Python will be the primarly programming language used for this course. You are assumed to have familarity in programming and Python in the course. If you are new or a beginner, you are encouraged to gain more practive beforehand. There are many resources on getting started with Python. The <a class="reference external" href="https://adventofcode.com/">Advent of Code</a> is a fun way to gain familiarity in any programming language.
+If it encouraged you set up a local programming development on your laptop, and be familiar with setting up virtual environments. A popular integrated development environment (IDE) is Visual Studio Code (VSCode) which is available on Windows, macOS, and Linux.
+The course will also make use of Google Colabs, mainly for short self-contained demos.
+Note that part of the course goal to gain familiarity in modern software toolings for control design and synthesis.</p>
+</section>
+<section id="illnesses-and-other-intermittent-situations">
+<h1>Illnesses and other intermittent situations<a class="headerlink" href="#illnesses-and-other-intermittent-situations" title="Permalink to this headline">#</a></h1>
+<p><strong>Virtual instruction.</strong> In the event that the university must shift to virtual instruction, students will be notified and lectures will be provided via Zoom.\</p>
+<p><strong>Instructor illness.</strong>  In the event of instructor illness and the instructor is still able to lecture, all lectures will immediately move to virtual format on zoom.  Students will be notified if this situation occurs.  Zoom links for lectures can be found in the course canvas Zoom area.</p>
+<p><strong>Student illness.</strong> If a student becomes ill, has caregiver responsibilities, or has other intermittent situations, please reach out to the teaching team <code class="docutils literal notranslate"><span class="pre">aa548-spr25-staff&#64;uw.edu</span></code> as soon as possible to plan next steps following university guidelines.</p>
+</section>
+<section id="inclusion">
+<h1>Inclusion<a class="headerlink" href="#inclusion" title="Permalink to this headline">#</a></h1>
+<p>Students of all backgrounds and experiences are welcome in this class. You are entitled to be treated respectfully by your classmates and the course staff.
+If at any time you are made to feel uncomfortable, disrespected, or excluded, please contact the teaching team to report the incident. If you feel uncomfortable bringing up an issue with the course staff directly, you may also consider sending anonymous course feedback or meeting with the A&amp;A academic advisors or the <a class="reference external" href="https://www.washington.edu/ombud/">UW Office of the Ombud</a>.</p>
+</section>
+<section id="access-and-accommodations">
+<h1>Access and Accommodations<a class="headerlink" href="#access-and-accommodations" title="Permalink to this headline">#</a></h1>
+<p>Your experience in this class is important to me.
+It is the policy and practice of the University of Washington to create inclusive and accessible learning environments consistent with federal and state law.
+If you have already established accommodations with Disability Resources for Students (DRS), please activate your accommodations via myDRS so we can discuss how they will be implemented in this course.
+If you have not yet established services through DRS, but you have a temporary health condition or permanent disability that requires accommodations (conditions include but not limited to; mental health, attention-related, learning, vision, hearing, physical or health impacts), contact DRS directly to set up an Access Plan. DRS facilitates the interactive process that establishes reasonable accommodations. Contact DRS at <code class="docutils literal notranslate"><span class="pre">disability.uw.edu</span></code>.</p>
+</section>
+<section id="religious-accommodation-policy">
+<h1>Religious Accommodation Policy<a class="headerlink" href="#religious-accommodation-policy" title="Permalink to this headline">#</a></h1>
+<p>Washington state law requires that UW develop a policy for the accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at Religious Accommodations Policy. Accommodations must be requested within the first two weeks of this course using the <a class="reference external" href="https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/">Religious Accommodations Request form</a>.</p>
+</section>
+<section id="academic-integrity-and-cheating">
+<h1>Academic Integrity and Cheating<a class="headerlink" href="#academic-integrity-and-cheating" title="Permalink to this headline">#</a></h1>
+<p>Academic dishonesty is taken extremely seriously and will not be tolerated.
+Cooperation is allowed in doing the homework. You are encouraged to discuss approaches to solving homework problems with your classmates. However, <strong>you must always write up the solutions on your own</strong>. Copying solutions, in whole or in part, from other students or any other source will be considered a case of academic dishonesty.
+More information on the <a class="reference external" href="https://www.washington.edu/cssc/for-students/student-code-of-conduct/">UW code of conduct regarding academic integrity</a>.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./logistics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Linear Multivariable Control</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="schedule.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Week-by-week schedule</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

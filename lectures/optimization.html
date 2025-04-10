@@ -1,0 +1,911 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to optimization &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Control certificate functions" href="control-certificates.html" />
+    <link rel="prev" title="State-space representation" href="state-space.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Homework
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw_solution_writeup.html">
+   Homework solution and worked example guidelines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw01.html">
+   Homework 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw02.html">
+   Homework 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw03.html">
+   Homework 3
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/project.html">
+   Project
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/optimization.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/lectures/optimization.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unconstrained-optimization">
+   Unconstrained optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mathematical-description">
+     Mathematical description
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solving-unconstrained-optimization-problems">
+     Solving unconstrained optimization problems
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-descent">
+     Gradient descent
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivative-free">
+     Derivative free
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#constrained-optimization">
+   Constrained optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-solvers">
+   Optimization solvers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     <strong>
+      🔹 Optimization solvers
+     </strong>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#free-open-source-solvers">
+       <strong>
+        Free &amp; open-source solvers
+       </strong>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#commercial-solvers-often-more-powerful-but-some-have-free-academic-licenses">
+       <strong>
+        Commercial solvers (often more Powerful, but some have free academic licenses)
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimization-modeling-languages">
+     <strong>
+      🔹 Optimization modeling languages
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimization-functions-within-toolboxes">
+     <strong>
+      🔹 Optimization functions within toolboxes
+     </strong>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optimization-functions-in-matlab-from-optimization-toolbox-and-other-toolboxes">
+       <strong>
+        🔹 Optimization functions in MATLAB
+       </strong>
+       <em>
+        (from Optimization Toolbox and other toolboxes)
+       </em>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optimization-functions-in-scipy-python-from-scipy-optimize-module">
+       <strong>
+        🔹 Optimization functions in SciPy (Python)
+       </strong>
+       <em>
+        (from
+        <code class="docutils literal notranslate">
+         <span class="pre">
+          scipy.optimize
+         </span>
+        </code>
+        module)
+       </em>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimization-unctions-in-julia-from-jump-and-optim-jl-packages">
+     <strong>
+      🔹 Optimization unctions in Julia
+     </strong>
+     <em>
+      (from
+      <code class="docutils literal notranslate">
+       <span class="pre">
+        JuMP
+       </span>
+      </code>
+      and
+      <code class="docutils literal notranslate">
+       <span class="pre">
+        Optim.jl
+       </span>
+      </code>
+      packages)
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to optimization</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unconstrained-optimization">
+   Unconstrained optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mathematical-description">
+     Mathematical description
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solving-unconstrained-optimization-problems">
+     Solving unconstrained optimization problems
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-descent">
+     Gradient descent
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivative-free">
+     Derivative free
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#constrained-optimization">
+   Constrained optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-solvers">
+   Optimization solvers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     <strong>
+      🔹 Optimization solvers
+     </strong>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#free-open-source-solvers">
+       <strong>
+        Free &amp; open-source solvers
+       </strong>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#commercial-solvers-often-more-powerful-but-some-have-free-academic-licenses">
+       <strong>
+        Commercial solvers (often more Powerful, but some have free academic licenses)
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimization-modeling-languages">
+     <strong>
+      🔹 Optimization modeling languages
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimization-functions-within-toolboxes">
+     <strong>
+      🔹 Optimization functions within toolboxes
+     </strong>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optimization-functions-in-matlab-from-optimization-toolbox-and-other-toolboxes">
+       <strong>
+        🔹 Optimization functions in MATLAB
+       </strong>
+       <em>
+        (from Optimization Toolbox and other toolboxes)
+       </em>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optimization-functions-in-scipy-python-from-scipy-optimize-module">
+       <strong>
+        🔹 Optimization functions in SciPy (Python)
+       </strong>
+       <em>
+        (from
+        <code class="docutils literal notranslate">
+         <span class="pre">
+          scipy.optimize
+         </span>
+        </code>
+        module)
+       </em>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimization-unctions-in-julia-from-jump-and-optim-jl-packages">
+     <strong>
+      🔹 Optimization unctions in Julia
+     </strong>
+     <em>
+      (from
+      <code class="docutils literal notranslate">
+       <span class="pre">
+        JuMP
+       </span>
+      </code>
+      and
+      <code class="docutils literal notranslate">
+       <span class="pre">
+        Optim.jl
+       </span>
+      </code>
+      packages)
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-optimization">
+<h1>Introduction to optimization<a class="headerlink" href="#introduction-to-optimization" title="Permalink to this headline">#</a></h1>
+<aside class="margin sidebar">
+<p class="sidebar-title">Algorithms for Optimization</p>
+<p>The textbook <a class="reference external" href="https://mykel.kochenderfer.com/textbooks/">Algorithms for Optimization</a> by Mykel Kochenderfer and Tim A. Wheeler offers a comprehensive introduction to optimization with a focus on practical algorithms.</p>
+</aside>
+<p>In this chapter, we give a brief overview of mathematical optimization and highlight ways we can go about solving them.</p>
+<p>At a high-level, optimization is the process of finding the best solution to a problem by minimizing (or maximizing) an objective function while satisfying constraints.
+Humans are constantly solving some form of optimization problem in everyday activities. For example, to get to class on time, you may want to minimize the distance traveled while avoiding high-traffic areas and avoid stairs.
+In aerospace engineering, you want to minimize the weight and cost of an aircraft design (e.g., wing shape, fuselage size, engine placement) while ensuring the aircraft is stable, exhibits desired aerodynamics properties, and can withstand the forces during operations.
+In the context of controls, you want to pick the best sequence of control inputs that minimized fuel usage over the time while reaching the goal, avoiding obstacles, and obeying the system dynamics.</p>
+<p>While it may be simple to describe the optimization problem in words, ultimately we need to represent the problem mathematically and in such a way that can be tractably solved.</p>
+<p>NOTE: We won’t be diving deep into optimization theory and solvers in this course. Instead, we will learn how to frame control synthesis problems as optimization problems and in such as way that it is tractable (i.e., convex) to solve using off-the-shelf solvers/packages (e.g., <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code>).</p>
+<section id="unconstrained-optimization">
+<h2>Unconstrained optimization<a class="headerlink" href="#unconstrained-optimization" title="Permalink to this headline">#</a></h2>
+<section id="mathematical-description">
+<h3>Mathematical description<a class="headerlink" href="#mathematical-description" title="Permalink to this headline">#</a></h3>
+<p>First let’s consider an <strong>unconstrained optimization problem</strong>.
+An (unconstrained) optimization problem consists of two main elements: <span class="math notranslate nohighlight">\(x\in\mathbb{R}^n\)</span> is the <em>decision variable</em>, <span class="math notranslate nohighlight">\(n\)</span> number of variables whose values are to be determined, and <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> an <em>objective function</em> that determines how desirable <span class="math notranslate nohighlight">\(x\)</span> is. Supposing that <span class="math notranslate nohighlight">\(f\)</span> describes the <em>cost</em>, or how expensive <span class="math notranslate nohighlight">\(x\)</span> is, then naturally we want to choose <span class="math notranslate nohighlight">\(x\)</span> that <em>minimizes</em> <span class="math notranslate nohighlight">\(f\)</span>.
+As such, the mathematical optimization problem becomes:</p>
+<div class="math notranslate nohighlight">
+\[\min_x \: f(x), \qquad x^\star = \underset{x}{\mathrm{argmin}} \: f(x)\]</div>
+<p>where the first equation describes the minimum value of <span class="math notranslate nohighlight">\(f\)</span> over the variable <span class="math notranslate nohighlight">\(x\)</span>, while the second equation is describing the value of the <em>argument</em> that minimizes <span class="math notranslate nohighlight">\(f\)</span>. Typically the optimal decision variable, i.e., the <em>minimizer</em> is denoted by a superscript <span class="math notranslate nohighlight">\(\star\)</span>.</p>
+</section>
+<section id="solving-unconstrained-optimization-problems">
+<h3>Solving unconstrained optimization problems<a class="headerlink" href="#solving-unconstrained-optimization-problems" title="Permalink to this headline">#</a></h3>
+<p>Depending on the properties of <span class="math notranslate nohighlight">\(f\)</span>, finding the optimal solution can either be very straightforward, or very hard or expensive.
+If <span class="math notranslate nohighlight">\(f\)</span> is “nice” and differentiable, then we can simply apply gradient descent to find the stationary points.
+If <span class="math notranslate nohighlight">\(f\)</span> is not differentiable, or evaluating <span class="math notranslate nohighlight">\(f\)</span> is an expensive process (e.g., running expensive simulations such as computation fluid dynamics), then we would likely need to use <em>derivative-free</em> techniques and computing the optimal solution can be very difficult.</p>
+</section>
+<section id="gradient-descent">
+<h3>Gradient descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">#</a></h3>
+<p>One of the most popular and simplest approach is gradient descent.
+If <span class="math notranslate nohighlight">\(f\)</span> is nice smooth differentiable function where it is possible, and hopefully cheap, to compute <span class="math notranslate nohighlight">\(\nabla f(x)\)</span>, the <em>gradient</em> of <span class="math notranslate nohighlight">\(f\)</span>, then we can simply update our value of <span class="math notranslate nohighlight">\(x\)</span> by moving moving in the direction og steepest descent.
+Mathematically, if <span class="math notranslate nohighlight">\(\alpha\)</span> is a step size, and <span class="math notranslate nohighlight">\(x_k\)</span> is the current guess for the optimal solution, then we can update our guess by applying the update rule,</p>
+<div class="math notranslate nohighlight">
+\[
+x_{k+1} = x_k - \alpha \nabla f(x)
+\]</div>
+<div class="admonition-pause-and-think admonition">
+<p class="admonition-title">Pause and think</p>
+<p>What are some practical considerations when performing gradient descent?</p>
+</div>
+<aside class="margin sidebar">
+<p class="sidebar-title">Convex Optimization</p>
+<p>The textbook <a class="reference external" href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf">Convex Optimization</a> by Lieven Vandenberghe and Stephen P. Boyd is to go-to text for learning about convex optimization. Lectures of 2023 Stanford EE 364a <a class="reference external" href="https://youtu.be/kV1ru-Inzl4?si=S2Nf1e1gu_M6H2zq">course offering are ou Youtube</a>.</p>
+</aside>
+<div class="dropdown admonition">
+<p class="admonition-title">Practical considerations</p>
+<p>We need to be careful about how to pick <span class="math notranslate nohighlight">\(\alpha\)</span>; if it is too small, then you may need to take many steps, but if it’s too big, you may struggle to converge to a (local) optimum.
+We can perform <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Line_search_methods">line search</a> where you search in the along the direction to find a suitable step size.
+There are more advanced techniques that consider the <em>momentum</em>* that can adaptive change <span class="math notranslate nohighlight">\(\alpha\)</span> based on the geometry of <span class="math notranslate nohighlight">\(f\)</span>. We won’t discuss further here, but <a class="reference external" href="https://mykel.kochenderfer.com/textbooks/">Algorithms for Optimization</a> touches on this and has some useful references.</p>
+<p>Just because the objective is differentiable does not mean you will always find the <em>globally</em> optimal solution. The objective could have many local optima, meaning even if you converge to a value <span class="math notranslate nohighlight">\(x_1\)</span> where <span class="math notranslate nohighlight">\(\nabla f(x_1) = 0\)</span>, there could be another value <span class="math notranslate nohighlight">\(x_2\)</span> where <span class="math notranslate nohighlight">\(f(x_2) \leq f(x_1)\)</span>.</p>
+<p>However, if <span class="math notranslate nohighlight">\(f\)</span> is <em>convex</em>, loosely speaking, “bowl-shaped”, then that implies that any minimum found is the global minimum. We won’t go into too much detail into convex optimization, but we will use the fact later on that <em>quadratic</em> and <em>linear</em> functions are convex.
+But if your problem is convex, then generally (in most cases), this is tractable to solve, and there are many well-support tools and solvers for solving convex optimization problems. In this course, we will use <a class="reference external" href="https://www.cvxpy.org/"><code class="docutils literal notranslate"><span class="pre">cvxpy</span></code></a>.</p>
+</div>
+</section>
+<section id="derivative-free">
+<h3>Derivative free<a class="headerlink" href="#derivative-free" title="Permalink to this headline">#</a></h3>
+<p>What if you can’t take gradients, or that you don’t want to because it’s very expensive or difficult to?! Well, there are many other methods that don’t rely on gradient information at all.
+A common approach is a sampling-based, or population-based approach where you sample your search space to get a sense of the objective landscape, and from that, you can resample or refine your search towards more promising areas.
+Popular methods include cross-entropy method, simulated annealing, and genetic algorithms.</p>
+</section>
+</section>
+<section id="constrained-optimization">
+<h2>Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Permalink to this headline">#</a></h2>
+<p>Suppose now that there are some values of <span class="math notranslate nohighlight">\(x\)</span> that are not allowed. For example, a negative value may be physically impossible or undesirable, such as negative weight. Or that some values of <span class="math notranslate nohighlight">\(x\)</span> must be a certain value. Or more generally, there is a function <span class="math notranslate nohighlight">\(g:\mathbb{R}^n \rightarrow \mathbb{R}^{m_\leq}\)</span> and another function <span class="math notranslate nohighlight">\(h:\mathbb{R}^n \rightarrow \mathbb{R}^{m_=}\)</span> such that we require <span class="math notranslate nohighlight">\(g(x) \leq 0\)</span> and <span class="math notranslate nohighlight">\(h(x) = 0\)</span>. Here, <span class="math notranslate nohighlight">\(m_\leq\)</span> and <span class="math notranslate nohighlight">\(m_=\)</span> denotes the number of inequality and equality constraints respectively.</p>
+<p>With these constraints, we can also consider a <strong>constrained optimization problem</strong>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\min_x &amp;  \quad f(x)\\
+\text{subject to}&amp;  \quad g(x) \leq 0\\
+&amp;   \quad h(x) = 0
+\end{split}\]</div>
+<p>This becomes a hard problem to solve, and applying regular gradient descent is not going to work because you may descend towards a region where the constraints are violated.</p>
+<div class="admonition-pause-and-think admonition">
+<p class="admonition-title">Pause and think</p>
+<p>What are some ways you could go about handling these constraints?</p>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Handling constraints</p>
+<p>There are a few ways to go about handling these constraints. Again, we won’t be going into depth here, but we are briefly mentioning these approaches in case you want to read more about them.</p>
+<ul class="simple">
+<li><p><strong>Projected gradient descent</strong>: Take a gradient descent step as normal, and then project the solution back to the closest feasible point in the feasible set. This projection may involve solving another optimization problem(!) but for certain geometries of the feasible set, the projection could be found in closed form.</p></li>
+<li><p><strong>Use the Lagrangian</strong>: A special way to convert a constrained optimization problem into an unconstrained one. But this is performed in a specific way where <em>Lagrangian multipliers</em> are introduced, and the neccesary conditions for optimality are given by the <em>Karush–Kuhn–Tucker (KKT) conditions</em>. There are duality connections between the lagrangian (dual problem) and the original problem (primal problem) where solving the dual problem gives you insight about the primal problem.</p></li>
+<li><p><strong>Treat constraints as (big) penalities in the objective</strong>: We can add the constraint functions as part of the objective function so that there is a high cost then the constraints are violated. This turns the constrained problem into an unconstrained one, but then you have to carefully tune the weightings on the constraints, and there is not guarantee that the constraints will be perfectly satisfied.</p></li>
+<li><p><strong>Log-barrier</strong>: A version of the approach above expect that a log function is applied on the constraint to so that the cost approaches infinity as <span class="math notranslate nohighlight">\(x\)</span> approaches the the infeasible region. See homework 1.</p></li>
+</ul>
+</div>
+<p>A reminder again, in this course, we will focus on framing control problems as optimization problems and ensure that the optimization problem is formulated such that we directly use off-the-shelf optimizers.</p>
+</section>
+<section id="optimization-solvers">
+<h2>Optimization solvers<a class="headerlink" href="#optimization-solvers" title="Permalink to this headline">#</a></h2>
+<p>There are many optimization solvers out there. Note there there are some packages that are <em>modeling languages</em>, that is, a nice intuitive wrapper for users to define an optimization problem in a natural way that follows the math, rather than in the restrictive standard form required by solvers. Then the user can select different backend solvers. While other packages are the actualy solvers and they come with their own interface.
+Others are simply a function you can use as part of a toolbox.
+In this class, we will mainly be using <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> as it is designed to be very intuitive and simple to use. Though for your project, you are welcome to use whatever solver/language/function you wish.</p>
+<p>Here’s a list of <strong>optimization solvers</strong> and <strong>modeling languages</strong>, including links and short descriptions for each.</p>
+<section id="id1">
+<h3><strong>🔹 Optimization solvers</strong><a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<section id="free-open-source-solvers">
+<h4><strong>Free &amp; open-source solvers</strong><a class="headerlink" href="#free-open-source-solvers" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://cvxopt.org/">CVXOPT</a></strong> – Convex optimization library in Python, supports linear and quadratic programming.</p></li>
+<li><p><strong><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy Optimize</a></strong> – General-purpose optimization module in SciPy (Python).</p></li>
+<li><p><strong><a class="reference external" href="https://osqp.org/">OSQP</a></strong> – Quadratic programming solver designed for fast embedded optimization.</p></li>
+<li><p><strong><a class="reference external" href="https://www.gnu.org/software/glpk/">GLPK (GNU Linear Programming Kit)</a></strong> – Solves large-scale linear programming (LP) and mixed-integer programming (MILP) problems.</p></li>
+<li><p><strong><a class="reference external" href="https://coin-or.github.io/Ipopt/">Ipopt</a></strong> – Interior-point solver for nonlinear programming (NLP).</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/coin-or/Cbc">CBC (Coin-or Branch and Cut)</a></strong> – Open-source MILP solver.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/coin-or/Clp">Clp (Coin-or Linear Programming)</a></strong> – Open-source LP solver.</p></li>
+<li><p><strong><a class="reference external" href="https://web.casadi.org/">CasADi</a></strong> – Symbolic framework for nonlinear optimization and optimal control.</p></li>
+<li><p><strong><a class="reference external" href="https://gekko.readthedocs.io/en/latest/">GEKKO</a></strong> – Python package for solving LP, NLP, and MILP problems.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="commercial-solvers-often-more-powerful-but-some-have-free-academic-licenses">
+<h4><strong>Commercial solvers (often more Powerful, but some have free academic licenses)</strong><a class="headerlink" href="#commercial-solvers-often-more-powerful-but-some-have-free-academic-licenses" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://www.gurobi.com/">Gurobi</a></strong> – Industry-leading solver for LP, QP, and MILP. Free academic licenses available.</p></li>
+<li><p><strong><a class="reference external" href="https://www.ibm.com/products/ilog-cplex-optimization-studio">CPLEX (IBM)</a></strong> – Powerful solver for LP, MILP, and NLP. Academic licenses available.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mosek.com/">MOSEK</a></strong> – Optimized for large-scale conic and linear problems.</p></li>
+<li><p><strong><a class="reference external" href="https://www.artelys.com/knitro/">Knitro</a></strong> – High-performance nonlinear optimization solver.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/products/optimization.html">MATLAB Optimization Toolbox</a></strong> – Various solvers for LP, QP, and NLP problems.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="optimization-modeling-languages">
+<h3><strong>🔹 Optimization modeling languages</strong><a class="headerlink" href="#optimization-modeling-languages" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://www.cvxpy.org/">CVXPY</a></strong> – Python-based modeling framework for convex optimization.</p></li>
+<li><p><strong><a class="reference external" href="https://coin-or.github.io/pulp/">PuLP</a></strong> – Python library for linear programming modeling.</p></li>
+<li><p><strong><a class="reference external" href="http://www.pyomo.org/">Pyomo</a></strong> – Python-based modeling for LP, NLP, and MILP.</p></li>
+<li><p><strong><a class="reference external" href="https://jump.dev/">JuMP</a></strong> – High-performance optimization modeling in Julia.</p></li>
+<li><p><strong><a class="reference external" href="https://ampl.com/">AMPL</a></strong> – A powerful modeling language for mathematical programming.</p></li>
+<li><p><strong><a class="reference external" href="https://www.gams.com/">GAMS</a></strong> – General Algebraic Modeling System for LP, NLP, and MILP.</p></li>
+<li><p><strong><a class="reference external" href="https://yalmip.github.io/">YALMIP</a></strong> – Optimization modeling toolbox for MATLAB.</p></li>
+<li><p><strong><a class="reference external" href="http://cvxr.com/cvx/">CVX (MATLAB)</a></strong> – Convex optimization modeling in MATLAB.</p></li>
+</ul>
+</section>
+<section id="optimization-functions-within-toolboxes">
+<h3><strong>🔹 Optimization functions within toolboxes</strong><a class="headerlink" href="#optimization-functions-within-toolboxes" title="Permalink to this headline">#</a></h3>
+<p>Here’s a list of <strong>optimization functions within toolboxes</strong> for popular programming environments like MATLAB, SciPy, and Julia.</p>
+<hr class="docutils" />
+<section id="optimization-functions-in-matlab-from-optimization-toolbox-and-other-toolboxes">
+<h4><strong>🔹 Optimization functions in MATLAB</strong> <em>(from Optimization Toolbox and other toolboxes)</em><a class="headerlink" href="#optimization-functions-in-matlab-from-optimization-toolbox-and-other-toolboxes" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/optim/ug/fmincon.html">fmincon</a></strong> – Solves constrained nonlinear optimization problems.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/optim/ug/linprog.html">linprog</a></strong> – Linear programming solver for minimizing linear objectives subject to linear constraints.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/optim/ug/quadprog.html">quadprog</a></strong> – Solves quadratic programming (QP) problems.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/optim/ug/fminunc.html">fminunc</a></strong> – Unconstrained nonlinear optimization.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/optim/ug/lsqnonlin.html">lsqnonlin</a></strong> – Solves nonlinear least-squares problems.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/gads/ga.html">ga</a></strong> – Genetic algorithm solver for global optimization.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/gads/particleswarm.html">particleswarm</a></strong> – Particle swarm optimization (PSO) for global optimization.</p></li>
+<li><p><strong><a class="reference external" href="https://www.mathworks.com/help/gads/simulannealbnd.html">simulannealbnd</a></strong> – Simulated annealing for constrained or unconstrained problems.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="optimization-functions-in-scipy-python-from-scipy-optimize-module">
+<h4><strong>🔹 Optimization functions in SciPy (Python)</strong> <em>(from <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code> module)</em><a class="headerlink" href="#optimization-functions-in-scipy-python-from-scipy-optimize-module" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">scipy.optimize.minimize</a></strong> – General function for unconstrained/constrained minimization with multiple algorithms (BFGS, Nelder-Mead, SLSQP, etc.).</p></li>
+<li><p><strong><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html">scipy.optimize.linprog</a></strong> – Linear programming solver.</p></li>
+<li><p><strong><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html">scipy.optimize.least_squares</a></strong> – Nonlinear least-squares solver.</p></li>
+<li><p><strong><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html">scipy.optimize.curve_fit</a></strong> – Curve fitting using nonlinear least squares.</p></li>
+<li><p><strong><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html">scipy.optimize.differential_evolution</a></strong> – Global optimization using evolutionary algorithms.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="optimization-unctions-in-julia-from-jump-and-optim-jl-packages">
+<h3><strong>🔹 Optimization unctions in Julia</strong> <em>(from <code class="docutils literal notranslate"><span class="pre">JuMP</span></code> and <code class="docutils literal notranslate"><span class="pre">Optim.jl</span></code> packages)</em><a class="headerlink" href="#optimization-unctions-in-julia-from-jump-and-optim-jl-packages" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://jump.dev/JuMP.jl/stable/"><code class="docutils literal notranslate"><span class="pre">JuMP.optimize!</span></code></a></strong> – Defines and solves optimization models.</p></li>
+<li><p><strong><a class="reference external" href="https://julianlsolvers.github.io/Optim.jl/stable/"><code class="docutils literal notranslate"><span class="pre">Optim.optimize</span></code></a></strong> – General-purpose unconstrained optimization.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/JuliaOpt/NLopt.jl"><code class="docutils literal notranslate"><span class="pre">NLopt.optimize</span></code></a></strong> – Interfaces nonlinear optimization methods in Julia.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/robertfeldt/BlackBoxOptim.jl"><code class="docutils literal notranslate"><span class="pre">BlackBoxOptim.optimize</span></code></a></strong> – Black-box optimization algorithms like genetic algorithms.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="state-space.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">State-space representation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="control-certificates.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Control certificate functions</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
