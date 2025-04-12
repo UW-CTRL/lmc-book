@@ -4,27 +4,29 @@ In this section, we describe control synthesis techniques for ensuring the stabi
 Namely, we consider:
 
 - **Control Lyapunov Functions** (CLF) to certify stabilizability
-- **Control Barrier Functions**( (CBF)) to certify safety
+- **Control Barrier Functions** (CBF) to certify safety
 
 The term *certificate* is used in the literature, particularly in formal methods and control theory contexts, where such functions are interpreted as evidence that a control policy exists to guarantee a certain property.
 
-First we recap Lyapunov theory and stability, then extend the ideas to *control* Lyapunov theory, and then show that a natural extension to Lyapunov theory is *barrier* functions and *control* barrier functions (CBFs).
-Then we show that for control affine dynamics, synthesizing a controller that satisfies the CLF and CBF constraints results in a quadratic program which is a convex optimization problem that is straight forward to solve.
+First, we recap Lyapunov theory and stability, then extend the ideas to *control* Lyapunov theory, and then show that a natural extension to Lyapunov theory is *barrier* functions and *control* barrier functions (CBFs).
+Then we show that for control affine dynamics, synthesizing a controller that satisfies the CLF and CBF constraints results in a quadratic program, which is a convex optimization problem that is straightforward to solve.
 
 ## Types of stability
 
 Consider an LTI system $\dot{x} = Ax$. Let $x^\mathrm{eq}$ be an equilibrium state, where $f(x^\mathrm{eq}) = 0$.
-Then the the equilibrium is:
-- **(Lyapunov) stable**: $\forall\epsilon>0, \exists\delta>0$  such that $|x(0)-x^\mathrm{eq}|<\delta \Rightarrow |x(t)-x^\mathrm{eq}|<\epsilon, \forall t\geq0 $
-- **Asymptotically stable**: $\forall\epsilon>0, \exists\delta>0$,  such that $|x(0)-x^\mathrm{eq}|<\delta \Rightarrow \lim_{t\to\infty}|x(t)-x^\mathrm{eq}|=0$
-- **Exponentially stable**: $\forall\epsilon>0, \exists\delta>0, K>0$, such that $|x(0)-x^*|<\delta, |x(t)-x^*|\leq \alpha e^{-\lambda t}|x(0)-x^*| , \forall t\geq 0$
+Then the equilibrium is:
+- **(Lyapunov) stable**: $\forall\epsilon>0, \exists\delta>0$ such that $|x(0)-x^\mathrm{eq}|<\delta \Rightarrow |x(t)-x^\mathrm{eq}|<\epsilon, \forall t\geq0$
+- **Asymptotically stable**: $\forall\epsilon>0, \exists\delta>0$, such that $|x(0)-x^\mathrm{eq}|<\delta \Rightarrow \lim_{t\to\infty}|x(t)-x^\mathrm{eq}|=0$
+- **Exponentially stable**: $\forall\epsilon>0, \exists\delta>0, K>0$, such that $|x(0)-x^*|<\delta$, $|x(t)-x^*|\leq \alpha e^{-\lambda t}|x(0)-x^*|$, $\forall t\geq 0$
 
-These above types of stability are in regards to an equilibium state---whether of the not the system remains close or converges to the equilibium state if the initial state were to be close to it.
-As such, these stability definition describe *local* stability properties.
+These above types of stability are in regard to an equilibrium state—whether or not the system remains close or converges to the equilibrium state if the initial state were to be close to it.
+As such, these stability definitions describe *local* stability properties.
+
 
 ```{margin} Contraction theory
-For the interested reader, *contraction theory* is a control certificate technique for determining the global stability of a system. Check out [this paper](https://www.sciencedirect.com/science/article/abs/pii/S0005109898000193) which introduces the idea of contraction analysis and [this paper](https://arxiv.org/abs/1503.03144) for control feedback design using contraction metrics.
+For the interested reader, *contraction theory* is a control certificate technique for determining the global stability of a system. Check out [this paper](https://www.sciencedirect.com/science/article/abs/pii/S0005109898000193), which introduces the idea of contraction analysis, and [this paper](https://arxiv.org/abs/1503.03144) for control feedback design using contraction metrics.
 ```
+
 For *any* initial conditions, not just ones close to the equilibrium state of interest, then this refers to *global* stability, which is a much stronger condition and often harder to prove.
 
 | **Type**                      | **Definition**                                                                 | **Notes**                             |
@@ -44,7 +46,7 @@ There are techniques for determining whether a system is stable.
 If the system is linear (assuming no control input), that is, we have $\dot{x} = Ax$, then system is (expoentially) stable if the real parts of all the eigenvalues of $A$ are strictly negative.
 
 ```{admonition} Pause and think
-Why is this this the case?
+Why is this the case?
 ```
 
 ```{admonition} Solution to $\dot{x} = Ax$
@@ -63,12 +65,12 @@ What about for discrete-time linear dynamics $x_{t+1} = A x_t$?
 
 For nonlinear systems, determining its stability is generally challenging. However, Lyapunov theory provides a general approach to proving the stability of a nonlinear system. At a high-level, if we can find a Lyapunov function such that a set of conditions are true, then the system is stable. The Lyapunov conditions are somewhat straightforward, and avoids the need to explicitly compute solution of system responses. The challenge is finding such a Lyapunov function. But if one can be found, then the existence of it is a certificate for stability.
 
-```{admonition} Definition (Lyapunov function)
+```{admonition} Theorem (Lyapunov function)
 Given a general nonlinear dynamical system $\dot{x} = f(x)$, $x \in \mathcal{X} \subset \mathbb{R}^n$.
 Without loss of generality, let $x=0$ be an equilibrium state.
 Let $V:\mathbb{R}^n \rightarrow \mathbb{R}$ be a scalar function that is continuous, and has continuous first derivatives.
 Then the origin $x=0$ is Lyapunov stable if:
-- $V(0) = 0
+- $V(0) = 0$
 - $V(x) > 0 \, \forall x\in\mathcal{X} \setminus \{ 0\}$
 - $\dot{V}(x) = \nabla V(x)^Tf(x) \leq 0\, \forall  x\in\mathcal{X}$
 ```
@@ -102,7 +104,7 @@ Given a general nonlinear dynamical system $\dot{x} = f(x, u)$, $x \in \mathcal{
 Without loss of generality, let $x=0$ be an equilibrium state.
 Let $V:\mathbb{R}^n \rightarrow \mathbb{R}$ be a scalar function that is continuous, and has continuous first derivatives.
 Then the origin $x=0$ is Lyapunov stable if:
-- $V(0) = 0
+- $V(0) = 0$
 - $V(x) > 0 \, \forall x\in\mathcal{X} \setminus \{ 0\}$
 - $\min_{u\in \mathcal{U}}\nabla V(x)^Tf(x,u) \leq 0\, \forall  x\in\mathcal{X}$
 ```
@@ -112,6 +114,8 @@ Likewise as before, we can also have asumptotic and exponential stability by sli
 
 
 So if we can find a valid CLF, then we know that there is always a control $u$ that ensures that our system will be stable.
+
+
 
 ### CLF controller
 
@@ -136,6 +140,53 @@ Thus making the constraint in {eq}`eq-clf-optimization` a challenging optimizati
 ```
 
 the constraint in {eq}`eq-clf-optimization` becomes linear in $u$, making the optimization problem a quadratic program (QP). Quadratic programs are convex optimization problems and can be solved efficiently using standard solvers.
+
+```{admonition} Example: Control Lyapunov Function for a Nonlinear System
+
+Consider the nonlinear dynamical system:
+
+$$
+\dot{x}_1 = x_2, \quad \dot{x}_2 = -x_1 + u
+$$
+
+
+This system represents a simple pendulum with control input $ u $. We aim to stabilize the system at the origin $ (x_1, x_2) = (0, 0) $.
+
+A natural choice for a Lyapunov function is the total energy of the system:
+
+$$
+V(x) = \frac{1}{2}x_1^2 + \frac{1}{2}x_2^2
+$$
+
+This function is positive definite and radially unbounded. Its derivative along the system's trajectories is:
+
+$$
+\dot{V}(x) = \nabla V(x)^T f(x, u) = x_1 \dot{x}_1 + x_2 \dot{x}_2 = x_1 x_2 + x_2(-x_1 + u)
+$$
+
+Simplifying:
+
+$$
+\dot{V}(x) = x_2(-x_1 + x_1 + u) = x_2 u
+$$
+
+To ensure $ \dot{V}(x) \leq 0 $, we choose a control input $ u $ such that:
+
+$$
+u = -kx_2, \quad k > 0
+$$
+
+Substituting this into $ \dot{V}(x) $:
+
+$$
+\dot{V}(x) = x_2(-kx_2) = -k x_2^2
+$$
+
+Since $ k > 0 $, $ \dot{V}(x) \leq 0 $, and the system is Lyapunov stable. This demonstrates that $ V(x) $ is a valid control Lyapunov function for the given system.
+
+```
+
+
 
 ## Control Invariant Set
 
@@ -181,20 +232,21 @@ Intuitively, a class $\mathcal{K}$ or extended class $\mathcal{K}$ functions are
 
 Now we formally define a control barrier function
 
-```{admonition} Control barrier function
+```{admonition} Definition (Control barrier function)
 Given a set $\mathcal{S} = \{ x \mid b(x) \geq 0\}$ where $b:\mathbb{R}^n \rightarrow \mathbb{R}$. Then $b$ is a control barrier function for a system $\dot{x} = f(x,u)$ if there exists a class $\mathcal{K}$ function $\alpha$ such that
 
 ```{math}
 :label: eq-cbf
 \max_{u\in\mathcal{U}} \nabla b(x)^Tf(x,u)  \geq -\alpha(b(x)) , \quad \forall \: x\in\mathcal{S}
 ```
-This definition is similar to the definition introduced beforehand, but instead of 0 on the RHS, we have $-\alpha(b(x))$ which provides the behavior we want where we gradually restrict the motion of the system as it approaches the boundary of $\mathcal{S}$.
+This definition is similar CLFs introduced beforehand, but instead of 0 on the RHS, we have $-\alpha(b(x))$ which provides the behavior we want where we gradually restrict the motion of the system as it approaches the boundary of $\mathcal{S}$.
 The $\max$ operation there is to ensure that there exists at least one control $u\in\mathcal{U}$ that satisfies the inequality.
 
 If we can find such a function $b$ and $\alpha$ that satisfy the CBF inequality over the domain, then we can guarantee that if the system starts inside $\mathcal{S}$, then it will remain inside $\mathcal{S}$ for all future time.
 
 ### Finding valid CBFs
 In general, finding a valid CBF (and CLF for that matter) is challenging. One may construct one based on deep understanding of the system, or develop techniques to synthesize one. Later we will learn about HJ reachability and HJ reachability value functions are valid CBFs.
+
 
 ## CBF safety filter
 
@@ -223,6 +275,79 @@ u^\star = &\underset{u}{\text{argmin}} \: \| u - u_\mathrm{nom}\|_2^2\\
 
 If the dynamics are *control affine*, then {eq}`eq-cbf-optimization` is a quadratic program and can be solved very efficiently.
 
+
+```{admonition} Example: Control Barrier Function for a Nonlinear System
+Consider the nonlinear system:
+
+$$
+\dot{x}_1 = x_2, \quad \dot{x}_2 = -x_1 + u
+$$
+
+This system represents a simple pendulum with control input $u$. We aim to ensure that the system remains within a safe set $\mathcal{S}$ defined as:
+
+$$
+\mathcal{S} = \{ x \mid b(x) \geq 0 \}, \quad b(x) = 1 - x_1^2 - x_2^2
+$$
+
+Here, $\mathcal{S}$ is a circular region centered at the origin with radius 1. The goal is to ensure the system stays within this region.
+
+The gradient of $b(x)$ is:
+
+$$
+\nabla b(x) = \begin{bmatrix} -2x_1 \\ -2x_2 \end{bmatrix}
+$$
+
+The system dynamics are:
+
+$$
+\dot{x} = \begin{bmatrix} x_2 \\ -x_1 + u \end{bmatrix}
+$$
+
+Substituting the dynamics into $\nabla b(x)^T f(x, u)$:
+
+$$
+\nabla b(x)^T f(x, u) = \begin{bmatrix} -2x_1 & -2x_2 \end{bmatrix} \begin{bmatrix} x_2 \\ -x_1 + u \end{bmatrix}
+$$
+
+Simplifying:
+
+$$
+\nabla b(x)^T f(x, u) = -2x_1 x_2 - 2x_2(-x_1 + u) = -2x_1 x_2 + 2x_1 x_2 - 2x_2 u = -2x_2 u
+$$
+
+To satisfy the CBF condition:
+
+$$
+-2x_2 u \geq -\alpha(b(x))
+$$
+
+where $\alpha(b(x))$ is a class $\mathcal{K}$ function, e.g., $\alpha(b(x)) = kb(x)$ with $k > 0$. Substituting $\alpha(b(x))$:
+
+$$
+-2x_2 u \geq -k(1 - x_1^2 - x_2^2)
+$$
+
+Rearranging:
+
+$$
+u \leq \frac{k(1 - x_1^2 - x_2^2)}{2x_2}, \quad x_2 \neq 0
+$$
+
+To ensure safety, we solve the following quadratic program (QP):
+
+$$
+u^\star = &\underset{u}{\text{argmin}} \: \| u - u_\mathrm{nom}\|_2^2\\
+&\text{subj. to} \:\: -2x_2 u \geq -k(1 - x_1^2 - x_2^2)
+$$
+
+Here, $u_\mathrm{nom}$ is a nominal control input designed for other objectives (e.g., stabilization). The QP adjusts $u_\mathrm{nom}$ minimally to ensure the system remains within the safe set $\mathcal{S}$.
+```
+
+
+```{admonition} Pause and think
+What are other choices of $\alpha$ that we could use? What kind of behaviors would they induce?
+```
+
 ## CBF-CLF controller
 We can combine both the CLF and CBF constraints into a single optimization, where we seek to achieve both stability (or convergence to a goal state) and safety simultaneously.
 
@@ -235,10 +360,15 @@ u^\star = &\underset{u}{\text{argmin}} \: \| u - u_\mathrm{nom}\|_2^2\\
 
 
 ```{admonition} Pause and think
-Are there any potential issues we may encounter when solving {eq}`eq-cbf-clf-optimization`?
+Are there any potential issues we may encounter when solving {eq}`eq-cbf-clf-optimization`? What could we do to address these issues?
 ```
 
-## Other topics
-- [High-order CBFs](https://ieeexplore.ieee.org/document/9516971)
-- [Neural CBFs and CLFs](https://ieeexplore.ieee.org/document/10015199)
-- [Learning CBFs from demonstrations](https://arxiv.org/abs/2004.03315)
+## Other topics and extra readings
+
+- Depending on the choice of your CLF/CBF for your given control affine dynamics $\dot{x} = f(x) + g(x)u$, you may find that for  $\nabla b(x)^Tg(x) = 0$ for all $x\in\mathcal{X}$. This occurs when the relative degree of the CLF/CBF for yhr dynamics is greater than 1. In that case, you will need to either change your CLF/CBF to make the relatively gree 1, or apply [high-order CBFs](https://ieeexplore.ieee.org/document/9516971).
+
+- Finding a value CLF/CBF is not always straightforward and is challenging for general nonlinear systems. Recent work looks into parameterizing CLF/CBFs as deep neural networks and optimizing the network weights to ensure the CLF/CBF conditions are satisfied. Survey paper: [Neural CBFs and CLFs](https://ieeexplore.ieee.org/document/10015199)
+
+- Another way to come up with a CBF (and perhaps also a CLF) is to use human demonstrations as example trajectories satisfying a CBF. Then we can parameterize a CBF and optimize a set of parameters that best explains the data. Paper: [Learning CBFs from demonstrations](https://arxiv.org/abs/2004.03315)
+
+- Related to the above two points on learning CBFs data, this is a nice survey paper from IEEE Control Systems Magazine on [Data-Driven Safety Filters](https://ieeexplore.ieee.org/document/10266799).
