@@ -10,7 +10,10 @@ The purpose of the project is for you to dive deeper into any of the topics cove
 
 Note that you do not need to implement things from scratch. It is encouraged to utilize any material from your homework or demos from the course, material from other courses, and use open-source material. Of course, proper acknowledgment/referencing must be given.
 
-You may work on the project individually or in groups of 2. For group projects, the expectation is that the project should be larger in scope compared to an individual project, and that the activities of each group member and the collaboration plan are clearly scoped out. See proposal section for more details.
+You may work on the project individually or in groups of 2 or 3. For group projects, the expectation is that the project should be larger in scope compared to an individual project, and that the activities of each group member and the collaboration plan are clearly scoped out. See proposal section for more details.
+
+**NOTE:** For those working in groups, it is critical to have a thought-out collaboration plan and have the project scope clearly defined, including each member's role and deliverables. And consider potential bottlenecks and find ways to mitigate them. Since it is a group project, the project needs to be larger in scope compared to an individual project, but that means more moving parts and possible sources of issues. Ensure there are contingency plans so that if some components don't go to plan, the other components are not significantly affected. This information should be described in the collaboration plan (item 6 below).
+
 
 
 ## Proposal
@@ -47,7 +50,8 @@ Below are the key components to include and tips to help you craft a compelling 
 
 **6. Collaboration Plan (for group projects)**
 - If working in a group, describe how tasks will be divided among team members.
-- Include a brief plan for how you will collaborate and ensure accountability.
+- Describe each member's ownership of the project (i.e., which component are they in charge of) and how the components connect with each other.
+- Include a plan for how you will collaborate and ensure accountability.
 
 **7. Project scope (for projects overlapping with another course)**
 - If you are combining your course project with another course, describe which part of the project belongs to this course, and how efforts for that part will be different from the rest of the project.
