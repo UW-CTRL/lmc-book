@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>State-space representation &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to optimization" href="optimization.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Homework
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw_solution_writeup.html">
+   Homework solution and worked example guidelines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw01.html">
+   Homework 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw02.html">
+   Homework 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../homework/hw03.html">
+   Homework 3
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/project.html">
+   Project
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/state-space.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/lectures/state-space.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-space-definition">
+   State-space definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control-affine-dynamics">
+   Control affine dynamics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-state-space-model">
+   Linear state-space model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linearization">
+     Linearization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linearization-about-an-equilibrium-point">
+       Linearization about an equilibrium point
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-discretization">
+   Time discretization
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>State-space representation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-space-definition">
+   State-space definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control-affine-dynamics">
+   Control affine dynamics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-state-space-model">
+   Linear state-space model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linearization">
+     Linearization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linearization-about-an-equilibrium-point">
+       Linearization about an equilibrium point
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-discretization">
+   Time discretization
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="state-space-representation">
+<h1>State-space representation<a class="headerlink" href="#state-space-representation" title="Permalink to this headline">#</a></h1>
+<p>For a general system, there may be multiple outputs that one may need information on, and also multiple inputs in which one can influence the system. For example, for a car, one may be interested in the position, heading, and velocity, and the car’s motion can be influenced by throttle/braking and steering. We refer to a system with <em>multiple</em> inputs and <em>multiple</em> outputs as a <strong>MIMO</strong> system. As there are multiple inputs and multiple outputs, control design for MIMO systems is naturally more complex than <em>single</em> input <em>single</em> output (SISO) systems since MIMO systems need to handle complex interactions between multiple variables.<a class="footnote-reference brackets" href="#id3" id="id1">1</a></p>
+<p>An efficient way to describe MIMO systems is via state-space representation, a mathematical framework for modeling a dynamical system using a set of <em>state variables</em> to track how inputs influence system behavior over time through first-order differential or difference equations.
+The state variables are selected to capture the essential information about the system’s current status, and with knowledge about the dynamics and external inputs (e.g., controls, disturbances), the future behavior or next state can be predicted.</p>
+<section id="state-space-definition">
+<h2>State-space definition<a class="headerlink" href="#state-space-definition" title="Permalink to this headline">#</a></h2>
+<p>Given a system of interest, let <span class="math notranslate nohighlight">\(x\in\mathbb{R}^n\)</span> be the <em>state vector</em> where <span class="math notranslate nohighlight">\(n\)</span> denotes the smallest number of variables possible that can represent the entire state of the system at any given time. Let <span class="math notranslate nohighlight">\(u\in\mathbb{R}^m\)</span> denote the <em>control vector</em> where <span class="math notranslate nohighlight">\(m\)</span> denotes the number of control inputs.<a class="footnote-reference brackets" href="#id4" id="id2">2</a>
+Then, for a continuous time system, the future states can be predicted via a first-order differential equation,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{x}(t) = f(x(t), u(t), t) = \begin{bmatrix} f_1(x(t), u(t), t) \\ \vdots \\ f_n(x(t), u(t), t) \end{bmatrix}
+\end{split}\]</div>
+<p>For mechanical systems, the first order differential equation typically describe the kinematics of dynamics of the system.</p>
+<p>For the time being, let us assume the system is <em>fully observable</em>, meaning that we can measure every state variable. In practice, that is not usually the case and we can only measure some of the states, and we rely on a estimator (e.g., Kalman filter) to esimate the values of states that we cannot directly measure.</p>
+<p>This general state space representation is particularly powerful for MIMO systems because it naturally handles multiple inputs and outputs, and it provides a framework for modern control design techniques such as state feedback, observers, and optimal control.</p>
+<p>Note that the choice of state is somewhat vague. How does one go about defining a state?
+Well, it depends on what exactly one is interested in modeling and the degree of detail one needs. For high-fidelity models, one may need many state variables to fully describe the system. While that may lead to a more accurate model, fully characterizing the dynamics may be difficult or expensive, and control synthesis for a high number of dimension may be computationally challenging. So there is a trade-off in model accuracy/fidelity and computational cost.</p>
+<p>Additionally, the choice of state is not unique! This may be more apparent when considering <a class="reference external" href="#linear-state-space-model">linear dynamical systems</a>. One can consider a new state representation (same dimension) which is a transformation of a different one. The transformation may be motivated as a “math trick” to simplify the dynamics and its interpretation (e.g., choosing the eigenbasis). Fun fact: if you’ve ever seen discussion of vibrational “modes”, those mode shapes and frequencies are found by a coordinate transformation of the state space representation.</p>
+</section>
+<section id="control-affine-dynamics">
+<h2>Control affine dynamics<a class="headerlink" href="#control-affine-dynamics" title="Permalink to this headline">#</a></h2>
+<p>The dynamics is control affine if it has the following form,</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{x} = f_0(x,t) + B(x)u
+\]</div>
+<p>where only the control appears linearly, while the rest of the terms, referred to as the <em>drift</em> dynamics, is grouped together in the <span class="math notranslate nohighlight">\(f_0(x,t)\)</span> term.
+Given any general nonlinear dynamics, we can convert it into a control-affine system by augmenting the state with the controls, and treating <span class="math notranslate nohighlight">\(\dot{u}\)</span> as the control instead.</p>
+</section>
+<section id="linear-state-space-model">
+<h2>Linear state-space model<a class="headerlink" href="#linear-state-space-model" title="Permalink to this headline">#</a></h2>
+<p>If the system is <strong>linear</strong>, then the dynamics take on a very specific form,</p>
+<div class="math notranslate nohighlight" id="equation-eq-linear-dynamics">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-linear-dynamics" title="Permalink to this equation">#</a></span>\[\begin{split}\dot{x}(t) = A x(t) + B u(t)\\
+y(t) = Cx(t) + Du(t)\end{split}\]</div>
+<p>Here:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x(t)\)</span> is the state vector, representing the internal state of the system.</p></li>
+<li><p><span class="math notranslate nohighlight">\(u(t)\)</span> is the input vector, representing external control inputs to the system.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y(t)\)</span> is the output vector, representing the system’s outputs.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, and <span class="math notranslate nohighlight">\(D\)</span> are matrices that define the system dynamics and input-output relationships.</p></li>
+</ul>
+<p>The second equation describes how the measured output <span class="math notranslate nohighlight">\(y\)</span> depends on the state <span class="math notranslate nohighlight">\(x\)</span>. For now, we can ignore it, or just assume that <span class="math notranslate nohighlight">\(y(t) = x(t)\)</span>.</p>
+<p>Linear systems are nice because key system properties, like stability, controllability, observability, etc (things from AA/EE/ME 547) can be determined from knowing the <span class="math notranslate nohighlight">\(A, B, C\)</span> and <span class="math notranslate nohighlight">\(D\)</span> matrices.
+Unfortunately, more often than not, our dynamics are not linear. What we can do instead is to <strong>linearize</strong> the system about a reference state and control, such as an equilibrium state and control, and consider linear dynamics <em>local</em> to the point of linearization.
+Note that this linearization is only valid in a local region about the point of linearization. But, as it turns out, repeatedly linearizing and applying linear control techniques has proven to be extremely effective and widely used in practice.</p>
+<section id="linearization">
+<h3>Linearization<a class="headerlink" href="#linearization" title="Permalink to this headline">#</a></h3>
+<p>Linearization of a dynamical system <span class="math notranslate nohighlight">\(\dot{x} = f(x,u)\)</span> is the process of finding a linear dynamical system <span class="math notranslate nohighlight">\(\dot{x} = Ax + Bu\)</span> that approximates the original system. For example, consider the following first-order dynamical system of a single scalar state variable:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{x} = \sin(x).
+\]</div>
+<p>This is plotted below, for a <span class="math notranslate nohighlight">\(x\)</span> from <span class="math notranslate nohighlight">\(-8\)</span> to <span class="math notranslate nohighlight">\(8\)</span>.</p>
+<p><img alt="" src="../_images/AA548_sp25_state_space_fig_1.png" /></p>
+<p>Suppose we want to find a line which approximates this function. We immediately see that any such approximation will only be valid <em>locally</em>, and there is no one line that gives the best approximation over the whole domain.</p>
+<p><img alt="" src="../_images/AA548_sp25_state_space_fig_2.png" /></p>
+<p>Thus we have to decide <em>at which point we want the linear approximation to be good</em>. Hence, when we linearize a system, we have to linearize it “about a point” which we choose. At this point, the “approximation” is exact; close to this point, it’s pretty good; far away, it won’t be very good at all. Once we’ve chosen that point, we find our approximation by taking a first-order Taylor series about that point.</p>
+<p>Suppose we have a state and control <span class="math notranslate nohighlight">\((x_0, u_0)\)</span> that we wish to linearize nonlinear state-space dynamics <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,t)\)</span> about. Then we can apply a first-order Taylor expansion around <span class="math notranslate nohighlight">\((x_0, u_0)\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{x} = f(x,u,t) \approx f(x_0, u_0, t) + \nabla_xf(x_0, u_0,t)^T (x - x_0) +  \nabla_uf(x_0, u_0,t)^T (u - u_0) + \ldots
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_xf(x, u,t)^T =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} &amp; \frac{\partial f_1}{\partial x_2} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \\
+\frac{\partial f_2}{\partial x_1} &amp; \frac{\partial f_2}{\partial x_2} &amp; \cdots &amp; \frac{\partial f_2}{\partial x_n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial f_n}{\partial x_1} &amp; \frac{\partial f_n}{\partial x_2} &amp; \cdots &amp; \frac{\partial f_n}{\partial x_n}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\nabla_xf_1(x, u, t)^T \\ \vdots \\  \nabla_xf_n(x, u, t)^T
+\end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_uf(x, u,t)^T =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial u_1} &amp; \frac{\partial f_1}{\partial u_2} &amp; \cdots &amp; \frac{\partial f_1}{\partial u_m} \\
+\frac{\partial f_2}{\partial u_1} &amp; \frac{\partial f_2}{\partial u_2} &amp; \cdots &amp; \frac{\partial f_2}{\partial u_m} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial f_n}{\partial u_1} &amp; \frac{\partial f_n}{\partial u_2} &amp; \cdots &amp; \frac{\partial f_n}{\partial u_m}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\nabla_uf_1(x, u, t)^T \\ \vdots \\  \nabla_uf_n(x, u, t)^T
+\end{bmatrix}
+\end{split}\]</div>
+<p>The term <span class="math notranslate nohighlight">\(\nabla_xf(x, u,t)^T\)</span> and <span class="math notranslate nohighlight">\(\nabla_uf(x, u,t)^T\)</span> are the <strong>Jacobians</strong> of the dynamics with respect to the state and control respectively. Each row of the jacobian is the gradient vector for each element of the dynamics vector.</p>
+<p>This first-order Taylor approximation actually results in <em>affine</em> dynamics of the form</p>
+<div class="math notranslate nohighlight">
+\[ \dot{x} = Ax + Bu + C.\]</div>
+<p>While this is not strictly linear, for optimization-based control (which we study later), practically speaking, it does not affect the way we solve the optimization problem.</p>
+<section id="linearization-about-an-equilibrium-point">
+<h4>Linearization about an equilibrium point<a class="headerlink" href="#linearization-about-an-equilibrium-point" title="Permalink to this headline">#</a></h4>
+<p>Suppose that we consider the <em>error state</em> <span class="math notranslate nohighlight">\(\delta x = x - x_0\)</span> and <em>error controls</em> <span class="math notranslate nohighlight">\(\delta u = u - u_0\)</span> about an equilibrium point <span class="math notranslate nohighlight">\((x_0, u_0)\)</span> where <span class="math notranslate nohighlight">\(f(x_0, u_0, t) = 0\)</span>. Then the <em>error dynamics</em> is</p>
+<div class="math notranslate nohighlight">
+\[
+\delta\dot{x} = \dot{x} - \dot{x}_0 = \dot{x} \approx \nabla_xf(x_0, u_0,t)^T \delta x +  \nabla_uf(x_0, u_0,t)^T \delta u
+\]</div>
+<p>which can be expressed as the linear dynamics</p>
+<div class="math notranslate nohighlight">
+\[
+\delta\dot{x} \approx A \delta x +  B \delta u
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are the Jacobian matrices with respect to state and control respectively.</p>
+</section>
+</section>
+</section>
+<section id="time-discretization">
+<h2>Time discretization<a class="headerlink" href="#time-discretization" title="Permalink to this headline">#</a></h2>
+<p>So far, we have been discussing <em>continuous-time</em> dynamics. We can analogously consider <em>discrete-time</em> dynamics, where instead of a first-order differential equation, we simply have a first-order <em>difference equation</em>.</p>
+<div class="math notranslate nohighlight">
+\[ x_{t+1} = f_d(x_t, u_t,t)\]</div>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> denotes a time step index, rather than a specific value of time.
+Like the continuous-time case, we can also have linear discrete-time dynamics.</p>
+<p>Discrete-time dynamics may be more desirable to work with, especially if we are taking an optimization-based approach to synthesizing a controller. By discretizing time, we can essentially optimize over a finite discrete sequence of state and controls, rather than optimizing over functions.
+So how do we obtain discrete-time dynamics? We just integrate!</p>
+<div class="math notranslate nohighlight">
+\[
+\underbrace{x(t + \Delta t)}_{x_{k+1}} = \underbrace{x(t)}_{x_k} + \int_t^{t+\Delta t} f(x(\tau), u(\tau), \tau) d\tau
+\]</div>
+<p>Here, we used <span class="math notranslate nohighlight">\(k\)</span> for the discrete time indexing to (hopefully) reduce confusion and avoid overloading <span class="math notranslate nohighlight">\(t\)</span>, but generally, the time indexing should be inferred from context.
+Quickly, you may see a problem. Computing the integrals can be nasty! For some relatively simple systems, you may want to compute the integral analytically, but generally, you would just solve the integrals via numerical methods, such as Euler integration or Runge-Kutta integration which are computationally cheap. We can also leverage automatic differentiation tools to efficiently compute Jacobians to linearize the discrete-time dynamics.
+(You will do this in homework 1.)</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>If you took a course in feedback control where you first learned about transfer functions, root locus, Bode plots, etc, then you have worked with SISO systems.</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>We can additionally consider disturbance inputs, but we omit this for the time being.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="introduction.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="optimization.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to optimization</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

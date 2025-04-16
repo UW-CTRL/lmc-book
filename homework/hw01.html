@@ -1,0 +1,1575 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Homework 1 &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Homework 2" href="hw02.html" />
+    <link rel="prev" title="Homework solution and worked example guidelines" href="hw_solution_writeup.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Homework
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="hw_solution_writeup.html">
+   Homework solution and worked example guidelines
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Homework 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hw02.html">
+   Homework 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hw03.html">
+   Homework 3
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/project.html">
+   Project
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lectures/control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/UW-CTRL/lmc-book/blob/master/homework/hw01.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Fhomework/hw01.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/homework/hw01.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instructions">
+   Instructions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-1">
+   Problem 1
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-setting-up-dynamics">
+     (a) Setting up dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-obtaining-discrete-time-dynamics">
+     (b) Obtaining discrete-time dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-simulating-dynamics">
+     (c) Simulating dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-jax-vmap">
+     (d)
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jax.vmap
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#e-jax-jit-optional-reading">
+     (e)
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jax.jit
+      </span>
+     </code>
+     (optional reading)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-2">
+   Problem 2
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-linearize-dynamics-analytically">
+     (a) Linearize dynamics analytically
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-evaluate-linearized-dynamics-analytic">
+     (b) Evaluate linearized dynamics (analytic)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-linearize-dynamics-using-jax-autodiff">
+     (c) Linearize dynamics using JAX autodiff
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-linearize-discrete-time-dynamics">
+     (d) Linearize discrete-time dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#e-applying-vmap-to-linearize-over-multiple-points">
+     (e) Applying
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       vmap
+      </span>
+     </code>
+     to linearize over multiple points
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-3-unconstrained-optimization">
+   Problem 3 Unconstrained optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#some-background-on-optimization">
+     Some background on optimization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gradient-descent-on-unconstrained-optimization-problem">
+     (a) Gradient descent on unconstrained optimization problem
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-applying-log-barrier-for-solving-constrained-optimization-problems">
+     (b) Applying log-barrier for solving constrained optimization problems
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c">
+     (c)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-4-cvxpy">
+   Problem 4 (
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cvxpy
+    </span>
+   </code>
+   )
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-5-control-barrier-function-and-cbf-qp">
+   Problem 5 (Control Barrier Function and CBF-QP)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-computing-the-lie-derivative">
+     (a) Computing the Lie derivative
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-solving-the-cbf-qp">
+     (b) Solving the CBF-QP
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-applying-the-cbf-safety-filter">
+     (c) Applying the CBF safety filter
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Homework 1</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instructions">
+   Instructions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-1">
+   Problem 1
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-setting-up-dynamics">
+     (a) Setting up dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-obtaining-discrete-time-dynamics">
+     (b) Obtaining discrete-time dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-simulating-dynamics">
+     (c) Simulating dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-jax-vmap">
+     (d)
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jax.vmap
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#e-jax-jit-optional-reading">
+     (e)
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jax.jit
+      </span>
+     </code>
+     (optional reading)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-2">
+   Problem 2
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-linearize-dynamics-analytically">
+     (a) Linearize dynamics analytically
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-evaluate-linearized-dynamics-analytic">
+     (b) Evaluate linearized dynamics (analytic)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-linearize-dynamics-using-jax-autodiff">
+     (c) Linearize dynamics using JAX autodiff
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-linearize-discrete-time-dynamics">
+     (d) Linearize discrete-time dynamics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#e-applying-vmap-to-linearize-over-multiple-points">
+     (e) Applying
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       vmap
+      </span>
+     </code>
+     to linearize over multiple points
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-3-unconstrained-optimization">
+   Problem 3 Unconstrained optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#some-background-on-optimization">
+     Some background on optimization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gradient-descent-on-unconstrained-optimization-problem">
+     (a) Gradient descent on unconstrained optimization problem
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-applying-log-barrier-for-solving-constrained-optimization-problems">
+     (b) Applying log-barrier for solving constrained optimization problems
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c">
+     (c)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-4-cvxpy">
+   Problem 4 (
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cvxpy
+    </span>
+   </code>
+   )
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-5-control-barrier-function-and-cbf-qp">
+   Problem 5 (Control Barrier Function and CBF-QP)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-computing-the-lie-derivative">
+     (a) Computing the Lie derivative
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-solving-the-cbf-qp">
+     (b) Solving the CBF-QP
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-applying-the-cbf-safety-filter">
+     (c) Applying the CBF safety filter
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-1">
+<h1>Homework 1<a class="headerlink" href="#homework-1" title="Permalink to this headline">#</a></h1>
+<section id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">#</a></h2>
+<p>Download this jupyer notebook (button at the top of the page or download from the Github repository). Provide your answers as Markdown text, Python code, and/or produce plots as appropriate. The notebook should run all the cells in order without errors.<br />
+Submit both the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> and a <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> to Canvas.</p>
+<p>Make sure the <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> has all the relevant outputs showing. To save as <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> you can first export the notebook as <code class="docutils literal notranslate"><span class="pre">.html</span></code>, open it in a browers and then “Print to PDF”.</p>
+<p><strong>NOTE:</strong> As we will be sharing the files for peer grading, please keep your submission anonymous.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cvxpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-1">
+<h2>Problem 1<a class="headerlink" href="#problem-1" title="Permalink to this headline">#</a></h2>
+<p>In this problem, you will familiarize yourself with the basic operations with dynamical systems and useful JAX operations.</p>
+<p>Given the following dynamics class below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Dynamics</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="n">dynamics_func</span><span class="p">:</span> <span class="n">Callable</span>
+    <span class="n">state_dim</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">control_dim</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dynamics_func</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dynamics_func</span> <span class="o">=</span> <span class="n">dynamics_func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_dim</span> <span class="o">=</span> <span class="n">state_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_dim</span> <span class="o">=</span> <span class="n">control_dim</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="a-setting-up-dynamics">
+<h3>(a) Setting up dynamics<a class="headerlink" href="#a-setting-up-dynamics" title="Permalink to this headline">#</a></h3>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">Dynamics</span></code> class, construct the continuous time dynamics for the dynamically extended unicycle model.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \dot{\mathbf{x}} = \begin{bmatrix}
+        \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{v}
+    \end{bmatrix} = \begin{bmatrix}
+        v\cos\theta \\ v\sin\theta \\ \omega \\ a
+    \end{bmatrix}, \qquad u=(\omega, a)
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dynamic_unicycle_ode</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    fill code here</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># update this line</span>
+
+
+<span class="n">state_dim</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">control_dim</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">continuous_dynamics</span> <span class="o">=</span> <span class="n">Dynamics</span><span class="p">(</span><span class="n">dynamic_unicycle_ode</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="b-obtaining-discrete-time-dynamics">
+<h3>(b) Obtaining discrete-time dynamics<a class="headerlink" href="#b-obtaining-discrete-time-dynamics" title="Permalink to this headline">#</a></h3>
+<p>With the continuous time dynamics, we can obtain the discrete time dynamics by integrating over a time step <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<p>Implement both Euler integation and Runge-Kutta integration to obtain the discrete-time dynamics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">euler_integrate</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="c1"># zero-order hold</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrator</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        fill code here</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># update this line</span>
+
+    <span class="k">return</span> <span class="n">integrator</span>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">runge_kutta_integrator</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="c1"># zero-order hold</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrator</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        fill code here</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># update this line</span>
+
+    <span class="k">return</span> <span class="n">integrator</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example usage of the integrators</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># timestep size</span>
+
+<span class="n">discrete_dynamics_euler</span> <span class="o">=</span> <span class="n">Dynamics</span><span class="p">(</span>
+    <span class="n">euler_integrate</span><span class="p">(</span><span class="n">continuous_dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span>
+<span class="p">)</span>
+<span class="n">discrete_dynamics_rk</span> <span class="o">=</span> <span class="n">Dynamics</span><span class="p">(</span>
+    <span class="n">runge_kutta_integrator</span><span class="p">(</span><span class="n">continuous_dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-simulating-dynamics">
+<h3>(c) Simulating dynamics<a class="headerlink" href="#c-simulating-dynamics" title="Permalink to this headline">#</a></h3>
+<p>Simulate your dynamics over 5 seconds for different values of <span class="math notranslate nohighlight">\(\Delta t\)</span> and compare the trajectories.</p>
+<p>Show on the same plot, the simulated trajectories for the following cases:</p>
+<ul class="simple">
+<li><p>Discrete-time dynamics with Euler integration, <span class="math notranslate nohighlight">\(\Delta t = 0.01\)</span></p></li>
+<li><p>Discrete-time dynamics with Euler integration, <span class="math notranslate nohighlight">\(\Delta t = 0.5\)</span></p></li>
+<li><p>Discrete-time dynamics with RK integration, <span class="math notranslate nohighlight">\(\Delta t = 0.01\)</span></p></li>
+<li><p>Discrete-time dynamics with RK integration, <span class="math notranslate nohighlight">\(\Delta t = 0.5\)</span></p></li>
+</ul>
+<p>How does the choice of integration scheme and time step size influence the resulting trajectories? Feel free to try different time step values, but you don’t need to submit plots of them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    fill code here</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># update this line</span>
+
+
+<span class="c1"># code to loop over the different integrators and step sizes</span>
+<span class="c1"># and plot the corresponding trajectories</span>
+
+<span class="n">initial_state</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">control</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>  <span class="c1"># constant control over the 5 second duration.</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">dts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="n">dts</span><span class="p">:</span>
+    <span class="n">num_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span>
+    <span class="n">controls</span> <span class="o">=</span> <span class="p">[</span><span class="n">control</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_steps</span>
+    
+    <span class="c1"># construct the discrete dynamics for given timestep</span>
+    <span class="n">discrete_dynamics_euler</span> <span class="o">=</span> <span class="n">Dynamics</span><span class="p">(</span>
+        <span class="n">euler_integrate</span><span class="p">(</span><span class="n">continuous_dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span>
+    <span class="p">)</span>
+    <span class="n">discrete_dynamics_rk</span> <span class="o">=</span> <span class="n">Dynamics</span><span class="p">(</span>
+        <span class="n">runge_kutta_integrator</span><span class="p">(</span><span class="n">continuous_dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># simulate dynamics</span>
+    <span class="n">xs_euler</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">discrete_dynamics_euler</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+    <span class="n">xs_rk</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">discrete_dynamics_rk</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+
+    <span class="c1"># plot the trajectories</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xs_euler</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;dt = </span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2"> Euler&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs_rk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xs_rk</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;dt = </span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2"> RK&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [m]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;y [m]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/hw01_11_2.png" src="../_images/hw01_11_2.png" />
+</div>
+</div>
+</section>
+<section id="d-jax-vmap">
+<h3>(d) <code class="docutils literal notranslate"><span class="pre">jax.vmap</span></code><a class="headerlink" href="#d-jax-vmap" title="Permalink to this headline">#</a></h3>
+<p>Suppose now that you want to simulate <em>many</em> trajectories. Rather than wrapping the <code class="docutils literal notranslate"><span class="pre">simulate</span></code> function in a for loop, we can use <code class="docutils literal notranslate"><span class="pre">jax.vmap</span></code> which is a <em>vectorize map</em> function, allowing us to apply a function, in this case <code class="docutils literal notranslate"><span class="pre">simulate</span></code> over multiple inputs.</p>
+<p>An example usage of how to use the <code class="docutils literal notranslate"><span class="pre">jax.vmap</span></code> is shown below. Notice that we can specify which argument should be vectorized and along which dimension.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">zs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+
+<span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>  <span class="c1"># non-vectorized version</span>
+<span class="c1"># vectorized version for all inputs, 0 is the batch dimension for all inputs</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>  
+
+<span class="c1"># x not batched, but ys and zs are with 0 as the batch dimension</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])(</span><span class="n">x</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>  
+
+<span class="c1"># y not batched, but xs and zs are with 0 as the batch dimension</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">])(</span><span class="n">xs</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>  
+
+<span class="c1"># z not batched, but xs and ys are with 0 as the batch dimension</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">])(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>  
+
+<span class="c1"># x and y not batched, but zs is with 0 as the batch dimension</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">])(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>  
+
+<span class="c1"># vectorized version for all inputs, batch dimension for xs is 1, </span>
+<span class="c1"># while 0 is the batch dimension for yx and zs</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Array([[-1.2538369 ,  0.12075341,  2.2055624 , ..., -1.9187174 ,
+        -2.1281056 , -1.3823409 ],
+       [ 1.3120089 ,  1.7435511 ,  1.3031819 , ..., -0.5297465 ,
+         0.7245584 , -0.3042593 ],
+       [-1.112686  ,  2.891265  , -0.74139583, ..., -0.91224337,
+        -1.0426707 , -2.7127206 ],
+       ...,
+       [-1.6429691 ,  1.6220993 ,  0.01744688, ...,  1.0358354 ,
+         1.7151467 ,  0.9076389 ],
+       [ 1.3972276 , -2.3116093 ,  0.5010667 , ..., -0.4693023 ,
+         3.4066825 , -2.825294  ],
+       [-0.19126296,  1.9233212 ,  3.159225  , ...,  2.913409  ,
+        -2.5060945 ,  1.0602078 ]], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Apply <code class="docutils literal notranslate"><span class="pre">jax.vmap</span></code> for the simulate function for the following batch of initial states and control inputs
+Choose <span class="math notranslate nohighlight">\(\Delta t = 0.1\)</span>.
+Use the following values and simulate multiple trajectories using the <code class="docutils literal notranslate"><span class="pre">jax.vmap</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state_dim</span> <span class="o">=</span> <span class="n">continuous_dynamics</span><span class="o">.</span><span class="n">state_dim</span>
+<span class="n">control_dim</span> <span class="o">=</span> <span class="n">continuous_dynamics</span><span class="o">.</span><span class="n">control_dim</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_time_steps</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">initial_states</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">))</span>
+<span class="n">controls</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">n_time_steps</span><span class="p">,</span> <span class="n">control_dim</span><span class="p">))</span>
+
+
+
+<span class="n">trajs</span> <span class="o">=</span> <span class="n">initial_states</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="o">...</span><span class="p">]</span> <span class="c1"># update this line</span>
+
+<span class="c1"># plot to visualize all the trajectories</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="e-jax-jit-optional-reading">
+<h3>(e) <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> (optional reading)<a class="headerlink" href="#e-jax-jit-optional-reading" title="Permalink to this headline">#</a></h3>
+<p>Bleh! You notice that it takes some time to run it. And if you increased the duration or number of trajectories to simulate, the computation would increase.
+If only we could compile the code to help reduce computation time. With JAX, you can! We can use the <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> function that performs just-in-time compilation. JAX will figure out the expected sizes of the input arrays and allocate memory based on that.</p>
+<p>There are number of ways to just <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code>, and it can get a bit tricky as your code becomes more complex. Best to read up the JAX documentation for more information.
+But for relatively simple functions, you can usually just apply <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> without any fuss, and get significant speedup in your code.</p>
+<p>Uncomment the following cells to see the computational benefits of <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # without jitting</span>
+<span class="c1"># %timeit jax.vmap(simulate, in_axes=[None, 0, 0, None])(discrete_dynamics_rk, initial_states, controls, jnp.array(dt)).block_until_ready()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # method 1: directly apply jax.jit over the jax.vmap function</span>
+<span class="c1"># # need to provide the static_argnums argument to the first argument since that is a function input and not an array input</span>
+<span class="c1"># sim_jit = jax.jit(jax.vmap(simulate, in_axes=[None, 0, 0, None]), static_argnums=0)</span>
+        
+<span class="c1"># # time the run</span>
+<span class="c1"># %timeit sim_jit(discrete_dynamics_rk, initial_states, controls, jnp.array(dt)).block_until_ready()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # method 2: apply jax.jit over the simulate function and then apply jax.vmap</span>
+<span class="c1"># sim_jit = jax.jit(simulate, static_argnums=0)</span>
+<span class="c1"># sim_jit_vmap = jax.vmap(sim_jit, in_axes=[None, 0, 0, None])</span>
+<span class="c1"># %timeit sim_jit_vmap(discrete_dynamics_rk, initial_states, controls, jnp.array(dt)).block_until_ready()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Method 3: apply jax.jit over the simulate function during function construction and then apply jax.vmap</span>
+<span class="c1"># @functools.partial(jax.jit, static_argnames=(&quot;dynamics&quot;))</span>
+<span class="c1"># def simulate(dynamics, initial_state, controls, dt):</span>
+<span class="c1">#     xs = [initial_state]</span>
+<span class="c1">#     time = 0</span>
+<span class="c1">#     for u in controls:</span>
+<span class="c1">#         xs.append(dynamics(xs[-1], u, time))</span>
+<span class="c1">#         time += dt</span>
+<span class="c1">#     return jnp.stack(xs)</span>
+
+<span class="c1"># sim_jit_vmap = jax.vmap(simulate, in_axes=[None, 0, 0, None])</span>
+<span class="c1"># %timeit sim_jit_vmap(discrete_dynamics_rk, initial_states, controls, jnp.array(dt)).block_until_ready()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-2">
+<h2>Problem 2<a class="headerlink" href="#problem-2" title="Permalink to this headline">#</a></h2>
+<p>We continue to consider the dynamically-extended unicycle model and investigate a way to linearize the dynamics around any state.
+First, we will perform the linearization analytically, and then leverage modern computation tools which will be incredibly helpful especially if the dynamics are complicated!
+We can efficiently compute gradients via automatic differentiation.
+JAX is an automatic differentiation library.</p>
+<section id="a-linearize-dynamics-analytically">
+<h3>(a) Linearize dynamics analytically<a class="headerlink" href="#a-linearize-dynamics-analytically" title="Permalink to this headline">#</a></h3>
+<p>Linearize the dynamics given in Problem 1 part (a) about a point <span class="math notranslate nohighlight">\((\mathbf{x}_0, \mathbf{u}_0)\)</span>. That is, for linearized dynamics of the form <span class="math notranslate nohighlight">\(\dot{\mathbf{x}} \approx A\mathbf{x}+ B\mathbf{u} + C\)</span>, give expressions for <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, and <span class="math notranslate nohighlight">\(C\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(A=\ldots\)</span></p>
+<p><span class="math notranslate nohighlight">\(B=\ldots\)</span></p>
+<p><span class="math notranslate nohighlight">\(C=\ldots\)</span></p>
+<p>Also code up your analytic expression in <code class="docutils literal notranslate"><span class="pre">linearize_unicycle_continuous_time_analytic</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">linearize_unicycle_continuous_time_analytic</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Linearizes the continuous time dynamics of the dynamic unicyle using analytic expression</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        state     : A jax.numpy array of size (n,)</span>
+<span class="sd">        control   : A jax.numpy array of size (m,)</span>
+<span class="sd">        time      : A real scalar</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        A : A jax.numpy array of size (n,n)</span>
+<span class="sd">        B : A jax.numpy array of size (n,m)</span>
+<span class="sd">        C : A jax.numpy array of size (n,1)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    fill code here</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># update this line</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="b-evaluate-linearized-dynamics-analytic">
+<h3>(b) Evaluate linearized dynamics (analytic)<a class="headerlink" href="#b-evaluate-linearized-dynamics-analytic" title="Permalink to this headline">#</a></h3>
+<p>Using your answer from 2(a), evaluate <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, and <span class="math notranslate nohighlight">\(C\)</span> for <span class="math notranslate nohighlight">\(\mathbf{x}_0 = [0, 0, \frac{\pi}{4}, 2.]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}_0 = [0.1, 1.]^T\)</span>. Give your answer to 2 decimal places.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add your code here to test the function</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-linearize-dynamics-using-jax-autodiff">
+<h3>(c) Linearize dynamics using JAX autodiff<a class="headerlink" href="#c-linearize-dynamics-using-jax-autodiff" title="Permalink to this headline">#</a></h3>
+<p>Time to test out Jax’s autodifferentiation capabilities! JAX has an <a class="reference external" href="https://docs.jax.dev/en/latest/notebooks/autodiff_cookbook.html">Autodiff Cookbook</a> that provides more details about the various autodiff functions, forward vs backward autodiff, jacboians, hessians, and so forth. You are strongly encouraged read through it.</p>
+<p>Using Jax and its built-in <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code> function, fill in the <code class="docutils literal notranslate"><span class="pre">linearize_autodiff</span></code> function that takes in a dynamics function, and a state and control to linearize about, and returns the <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, and <span class="math notranslate nohighlight">\(C\)</span> matrices describing the linearized dynamics. Test your function using the continuous-time dynamics with <span class="math notranslate nohighlight">\(\mathbf{x}_0 = [0.0, 0.0, \frac{\pi}{4}, 2.0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}_0 = [0.1, 1.0]^T\)</span> and use the provided test code to verify that the outputs you get from your function are the same as the values you get from <code class="docutils literal notranslate"><span class="pre">linearize_unicycle_continuous_time_analytic</span></code>.</p>
+<p>Side note for the curious: the <code class="docutils literal notranslate"><span class="pre">jnp.allclose</span></code> function tests if all corresponding elements of two arrays are within a small tolerance of each other. When working with finite-precision machine arithmetic, you can almost never test two numbers for exact equality directly, because different rounding errors in different computations very often result in very slightly different values even when the two calculations should theoretically result in the same number. For this reason, real numbers in software (which on almost all modern hardware are represented in <a class="reference external" href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754 floating-point format</a>) are usually considered to be equal if they are close enough that their difference could be reasonably explained by rounding errors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">linearize_autodiff</span><span class="p">(</span><span class="n">function_name</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Linearizes the any dynamics using jax autodiff.</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        function_name: name of function to be linearized. Takes state, control, and time as inputs.</span>
+<span class="sd">        state     : A jax.numpy array of size (n,); the state to linearize about</span>
+<span class="sd">        control   : A jax.numpy array of size (m,); the control to linearize about</span>
+<span class="sd">        time      : A real scalar; the time to linearize about</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        A : A jax.numpy array of size (n,n)</span>
+<span class="sd">        B : A jax.numpy array of size (n,m)</span>
+<span class="sd">        C : A jax.numpy array of size (n,1)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    fill code here</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># update this line</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test code:</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
+<span class="n">control</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="n">time</span> <span class="o">=</span> <span class="mf">0.</span>
+
+<span class="n">A_autodiff</span><span class="p">,</span> <span class="n">B_autodiff</span><span class="p">,</span> <span class="n">C_autodiff</span> <span class="o">=</span> <span class="n">linearize_autodiff</span><span class="p">(</span><span class="n">continuous_dynamics</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+<span class="n">A_analytic</span><span class="p">,</span> <span class="n">B_analytic</span><span class="p">,</span> <span class="n">C_analytic</span> <span class="o">=</span> <span class="n">linearize_unicycle_continuous_time_analytic</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A matrices match:&#39;</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A_autodiff</span><span class="p">,</span> <span class="n">A_analytic</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B matrices match:&#39;</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">B_autodiff</span><span class="p">,</span> <span class="n">B_analytic</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C matrices match:&#39;</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C_autodiff</span><span class="p">,</span> <span class="n">C_analytic</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A matrices match: True
+B matrices match: True
+C matrices match: True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-linearize-discrete-time-dynamics">
+<h3>(d) Linearize discrete-time dynamics<a class="headerlink" href="#d-linearize-discrete-time-dynamics" title="Permalink to this headline">#</a></h3>
+<p>Assuming your answer from 2(c) matched 2(b) and that you are convinced of the power of automatic differentiation, use your <code class="docutils literal notranslate"><span class="pre">linearize_autodiff</span></code> function on <code class="docutils literal notranslate"><span class="pre">discrete_dynamics_euler</span></code> and <code class="docutils literal notranslate"><span class="pre">discrete_dynamics_rk</span></code> with <span class="math notranslate nohighlight">\(\mathbf{x}_0 = [0.0, 0.0, \frac{\pi}{4}, 2.0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}_0 = [0.1, 1.0]^T\)</span>. (Imagine trying to differentiate the expressions analytically! It would be tedious!)</p>
+<p>Let <span class="math notranslate nohighlight">\(\Delta t=0.1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="e-applying-vmap-to-linearize-over-multiple-points">
+<h3>(e) Applying <code class="docutils literal notranslate"><span class="pre">vmap</span></code> to linearize over multiple points<a class="headerlink" href="#e-applying-vmap-to-linearize-over-multiple-points" title="Permalink to this headline">#</a></h3>
+<p>Now, try to linearize your dynamics over multiple state-control values using <code class="docutils literal notranslate"><span class="pre">vmap</span></code>!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># Set a fixed seed</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">state_dim</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># 4-dimensional state</span>
+<span class="n">ctrl_dim</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># 2-dimensional control</span>
+
+<span class="n">time</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">random_states</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">))</span>
+<span class="n">random_controls</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">ctrl_dim</span><span class="p">))</span>
+
+<span class="c1"># add your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-3-unconstrained-optimization">
+<h2>Problem 3 Unconstrained optimization<a class="headerlink" href="#problem-3-unconstrained-optimization" title="Permalink to this headline">#</a></h2>
+<p>The goal of this problem is to introduce some basic optimization theory and understanding how automatic differentition can be used for solving unconstrained optimization problems (and essentially powering deep learning libraries under the hood).</p>
+<p>In this problem, we will implement a simple version of the gradient descent algorithm to solve an unconstrained optimization problem. Specifically, you will learn about the log-barrier method which is used to cast a <em>constrained</em> optimization problem into an unconstrained one which can be easily solved using gradient descent.</p>
+<section id="some-background-on-optimization">
+<h3>Some background on optimization<a class="headerlink" href="#some-background-on-optimization" title="Permalink to this headline">#</a></h3>
+<p>In mathematics, <em>optimization</em> is the process of finding which value of an argument to a function makes the output of that function as high or as low as possible. In other words, given a function <span class="math notranslate nohighlight">\(f(x)\)</span> (called the <em>cost function</em> or <em>objective function</em>), which value of <span class="math notranslate nohighlight">\(x\)</span> makes <span class="math notranslate nohighlight">\(f(x)\)</span> as high (or as low) as possible?</p>
+<p>In controls, we often consider the objective as a <em>cost</em> function (e.g., total fuel or control effort, distance traveled) and thus aim to make <span class="math notranslate nohighlight">\(f(x)\)</span> as <em>low</em> as possible; in other words, we often only consider the problem of minimizing <span class="math notranslate nohighlight">\(f(x)\)</span>. While in reinforcement learning, typically the objective is viewed as a <em>reward</em>, and therefore the aim is to maximize <span class="math notranslate nohighlight">\(f(x)\)</span>. But note that this is just the same thing as minimizing <span class="math notranslate nohighlight">\(-f(x)\)</span>, so maximization and minimization actually turn out to be basically the same mathematical problem, but the convention depends on the community.</p>
+<p>Optimization is very useful in engineering; for example, if <span class="math notranslate nohighlight">\(x\)</span> is a variable that somehow represents the design of an airplane (maybe it’s a vector of design parameters such as wing aspect ratio, engine thrust, cargo space, etc), and if we can find a function <span class="math notranslate nohighlight">\(f(x)\)</span> that computes the fuel consumption of the final airplane as a function of the design parameters, than finding <span class="math notranslate nohighlight">\(x\)</span> which minimizes <span class="math notranslate nohighlight">\(f(x)\)</span> amounts to designing the most fuel-efficient airplane possible under the design assumptions. We often denote the value of <span class="math notranslate nohighlight">\(x\)</span> which optimizes <span class="math notranslate nohighlight">\(f(x)\)</span> as <span class="math notranslate nohighlight">\(x^*\)</span>, and the optimal value of <span class="math notranslate nohighlight">\(f(x)\)</span> is then <span class="math notranslate nohighlight">\(f(x^*)\)</span>.</p>
+<p>You may remember from undergrad calculus that we can minimize <span class="math notranslate nohighlight">\(f(x)\)</span> by taking its derivative <span class="math notranslate nohighlight">\(f'(x)\)</span>, setting <span class="math notranslate nohighlight">\(f'(x^*) = 0\)</span>, and solving for <span class="math notranslate nohighlight">\(^*x\)</span>. If <span class="math notranslate nohighlight">\(f(x)\)</span> is scalar-valued but has a vector-valued input, we would generalize this to taking the <em>gradient</em> <span class="math notranslate nohighlight">\(\nabla f(x)\)</span>, setting to zero, and solving for <span class="math notranslate nohighlight">\(x^*\)</span>. However, in many practical applications <span class="math notranslate nohighlight">\(\nabla f(x)\)</span> is far too complicated to solve <span class="math notranslate nohighlight">\(\nabla f(x^*) = 0\)</span> analytically; just think how complicated our fuel consumption function in the example above would be. Thus, in practice we often use iterative numerical optimization algorithms such as <em>gradient descent</em>.</p>
+<p>Gradient descent (for a scalar function of a single scalar argument) works as follows. First, assume some initial guess <span class="math notranslate nohighlight">\(x_0\)</span>. Then, iteratively improve successive guesses <span class="math notranslate nohighlight">\(x_k\)</span> like so:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{k+1} = x_k - \alpha \nabla f(x_k),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is some small positive fixed “step size” parameter which we choose. This has the effect of moving our successive guesses “down the hill” of the function <span class="math notranslate nohighlight">\(f(x)\)</span>. This process is repeated until successive iterates converge to some specified convergence tolerance <span class="math notranslate nohighlight">\(\epsilon\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\left\lvert x_{k+1} - x_k \right\rvert &lt; \epsilon \implies \text{stop iterating.}
+\]</div>
+<p>The final <span class="math notranslate nohighlight">\(x\)</span> iterate we take to be our optimal <span class="math notranslate nohighlight">\(x^*\)</span>.</p>
+<p>You may notice that your solution, or whether you may converge, depends on your choice of step size. There are techniques to choose and adapt the step size. We won’t discuss this further in the course, but <a class="reference external" href="https://arxiv.org/abs/1412.6980">ADAM</a> is a popular approach.</p>
+</section>
+<section id="a-gradient-descent-on-unconstrained-optimization-problem">
+<h3>(a) Gradient descent on unconstrained optimization problem<a class="headerlink" href="#a-gradient-descent-on-unconstrained-optimization-problem" title="Permalink to this headline">#</a></h3>
+<p>Consider the objective function <span class="math notranslate nohighlight">\(f(x) = (x + 2)^2 + 5\tanh (x)\)</span>, defined in code and plotted below. The value of <span class="math notranslate nohighlight">\(x\)</span> which minimizes <span class="math notranslate nohighlight">\(f(x)\)</span> is <span class="math notranslate nohighlight">\(x^* = -2.13578\)</span>, and <span class="math notranslate nohighlight">\(f(x^*) = -4.84389\)</span>. In the next code cell, fill out the <code class="docutils literal notranslate"><span class="pre">minimize_with_gradient_descent</span></code> function; you can use Jax’s autodiff capabilities to compute <span class="math notranslate nohighlight">\(f'(x)\)</span>. The starter code in that cell will use your gradient descent function with an initial guess of <span class="math notranslate nohighlight">\(x = 5\)</span>, a step size of <span class="math notranslate nohighlight">\(0.1\)</span>, and a convergence tolerance of <span class="math notranslate nohighlight">\(10^{-8}\)</span> to minimize <span class="math notranslate nohighlight">\(f(x)\)</span>; verify that your algorithm does indeed find the correct minimizing <span class="math notranslate nohighlight">\(x^*\)</span> and minimal value <span class="math notranslate nohighlight">\(f(x^*)\)</span>.</p>
+<p>Fun fact: with <span class="math notranslate nohighlight">\(f(x) = (x + 2)^2 + 5\tanh (x)\)</span>, then <span class="math notranslate nohighlight">\(f'(x)\)</span> is a transcendental function, and <span class="math notranslate nohighlight">\(f'(x) = 0\)</span> <em>can’t</em> be solved algebraically. If your gradient descent code worked, congratulations! You’ve written code that numerically solved a math problem in milliseconds that can’t be solved analytically at all.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Objective function&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/hw01_39_0.png" src="../_images/hw01_39_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">minimize_with_gradient_descent</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">convergence_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Minimizes a scalar function of a single variable.</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        func              : name of function to be optimized. Takes initial_guess as input.</span>
+<span class="sd">        initial_guess     : a real number</span>
+<span class="sd">        convergence_tol   : convergence tolerace; when current and next guesses of of optimal x are closer</span>
+<span class="sd">                            together than this, algorithm terminates and returns current estimate of optimal x</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        cur_x : current best estimate of x which minimizes f(x)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    fill code here</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="n">initial_guess</span> <span class="c1"># update this line</span>
+        
+
+
+<span class="n">x_opt</span> <span class="o">=</span> <span class="n">minimize_with_gradient_descent</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+
+<span class="c1"># output and plot:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;optimal x:&#39;</span><span class="p">,</span> <span class="n">x_opt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;optimal value of f(x):&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x_opt</span><span class="p">))</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">args</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_opt</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x_opt</span><span class="p">),</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;optimal point&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;x_opt = </span><span class="si">{:.4f}</span><span class="s1">, f(x_opt) = </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_opt</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x_opt</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>optimal x: 5.0
+optimal value of f(x): 53.999546
+</pre></div>
+</div>
+<img alt="../_images/hw01_40_1.png" src="../_images/hw01_40_1.png" />
+</div>
+</div>
+</section>
+<section id="b-applying-log-barrier-for-solving-constrained-optimization-problems">
+<h3>(b) Applying log-barrier for solving constrained optimization problems<a class="headerlink" href="#b-applying-log-barrier-for-solving-constrained-optimization-problems" title="Permalink to this headline">#</a></h3>
+<p>Now suppose we want to add a <em>constraint</em> to our optimization problem; that is, a restriction on the set of <span class="math notranslate nohighlight">\(x\)</span> values we’ll consider acceptable. In particular, in this case we’ll say that we only want values of <span class="math notranslate nohighlight">\(x\)</span> such that, for some specified <em>constraint function</em> <span class="math notranslate nohighlight">\(g(x)\)</span>, we have <span class="math notranslate nohighlight">\(g(x) &lt; 0\)</span>; this is called an <em>inequality constraint</em>.</p>
+<p>The gradient descent algorithm described above has no way to enforce a constraint like this; <span class="math notranslate nohighlight">\(x\)</span> is allowed to wander wherever the gradient takes it. Thus we must modify the algorithm to allow it to find constrained optima under inequality constraints. There are several ways to do this, but in this problem we will be using the <em>log-barrier method</em>.</p>
+<p>In this method, we construct from the objective function <span class="math notranslate nohighlight">\(f(x)\)</span> a different objective function <span class="math notranslate nohighlight">\(\phi (x)\)</span> that has the following properties:</p>
+<ul class="simple">
+<li><p>When <span class="math notranslate nohighlight">\(x\)</span> is such that <span class="math notranslate nohighlight">\(g(x)\)</span> is far away from <span class="math notranslate nohighlight">\(0\)</span>, then <span class="math notranslate nohighlight">\(\phi(x)\)</span> must approximate <span class="math notranslate nohighlight">\(f(x)\)</span>, so that minimizing <span class="math notranslate nohighlight">\(\phi(x)\)</span> approximately minimizes <span class="math notranslate nohighlight">\(f(x)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi(x)\)</span> must grow to infinity as <span class="math notranslate nohighlight">\(g(x)\)</span> approaces <span class="math notranslate nohighlight">\(0\)</span>. This will prevent <span class="math notranslate nohighlight">\(x\)</span> from crossing over the boundary of <span class="math notranslate nohighlight">\(g(x) &lt; 0\)</span>.</p></li>
+</ul>
+<p>To accomplish these goals, we construct <span class="math notranslate nohighlight">\(\phi(x)\)</span> like so:
+$<span class="math notranslate nohighlight">\(
+\phi(x) = f(x) - t\ln(-g(x)),
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>t$ is a weighting parameter that we choose.</p>
+<p>Suppose we want to minimize the same objective function as before, <span class="math notranslate nohighlight">\(f(x) = (x + 2)^2 + 5\tanh (x)\)</span>, but now we want a constraint <span class="math notranslate nohighlight">\(x &gt; 1\)</span>. In the code block below, fill out the functions <code class="docutils literal notranslate"><span class="pre">g</span></code> and <code class="docutils literal notranslate"><span class="pre">phi</span></code>. The starter code will plot <span class="math notranslate nohighlight">\(f(x)\)</span>, as well as <span class="math notranslate nohighlight">\(\phi(x)\)</span> for <span class="math notranslate nohighlight">\(t = 0.5,\ 2,\ 5\)</span>. Comment on how <span class="math notranslate nohighlight">\(\phi(x)\)</span> changes with changing <span class="math notranslate nohighlight">\(t\)</span>. Note that since <span class="math notranslate nohighlight">\(\ln(y)\)</span> is not defined (in the real numbers) for <span class="math notranslate nohighlight">\(y \le 0\)</span>, the domain of <span class="math notranslate nohighlight">\(\phi(x)\)</span> is restricted to <span class="math notranslate nohighlight">\(x &gt; 1\)</span>.</p>
+<p>Hint: for your <code class="docutils literal notranslate"><span class="pre">phi</span></code> function to work well with the next parts of this problem, be sure to use <code class="docutils literal notranslate"><span class="pre">jnp.log</span></code> instead of <code class="docutils literal notranslate"><span class="pre">np.log</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fill out g(x) so that the statement g(x) &lt; 0 is equivalent to the statement x &gt; 1</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">phi</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes phi(x).</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        f  : name of f(x) function; takes x as input</span>
+<span class="sd">        x  : variable to be optimized</span>
+<span class="sd">        g  : constraint function; we want to ensure g(x) &lt;= 0</span>
+<span class="sd">        t  : log-barrier weighting parameter</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        phi(x)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    fill code here</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># update this line</span>
+
+<span class="n">x_upper</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">f_x_domain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="n">x_upper</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="n">phi_x_domain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1.00001</span><span class="p">,</span> <span class="n">x_upper</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_x_domain</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">f_x_domain</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi_x_domain</span><span class="p">,</span> <span class="n">phi</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">phi_x_domain</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;phi(x), t = 5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi_x_domain</span><span class="p">,</span> <span class="n">phi</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">phi_x_domain</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;phi(x), t = 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi_x_domain</span><span class="p">,</span> <span class="n">phi</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">phi_x_domain</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;phi(x), t = 0.5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;x = 1&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x), phi(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;f(x) and phi(x) vs x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="c1"># plt.ylim(-10, 40)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/hw01_42_0.png" src="../_images/hw01_42_0.png" />
+</div>
+</div>
+</section>
+<section id="c">
+<h3>(c)<a class="headerlink" href="#c" title="Permalink to this headline">#</a></h3>
+<p>Now, we can use our <code class="docutils literal notranslate"><span class="pre">minimize_with_gradient_descent</span></code> function to minimize <span class="math notranslate nohighlight">\(\phi(x)\)</span> instead of <span class="math notranslate nohighlight">\(f(x)\)</span>. Do so below, for a few different values of <span class="math notranslate nohighlight">\(t\)</span>, and comment on the results. The true constrained optimal point is <span class="math notranslate nohighlight">\(x^* = 1\)</span>, <span class="math notranslate nohighlight">\(f(x^*) = 12.808\)</span>.</p>
+<ul class="simple">
+<li><p>Does the log-barrier method find the true constrained optimal point?</p></li>
+<li><p>How does the point found by the log-barrier method change as you change <span class="math notranslate nohighlight">\(t\)</span>?</p></li>
+</ul>
+<p>You may find that as you decrease <span class="math notranslate nohighlight">\(t\)</span>, you also need to decrease the gradient descent step size to get good behavior (in particular, to avoid “overshooting” the constraint and finding an <span class="math notranslate nohighlight">\(x^*\)</span> estimate which does not respect the constraint). Also, for the log-barrier method to work, your initial guess must itself respect the constraint (in this case, your initial guess must be greater than one).</p>
+<p>Hint: the <code class="docutils literal notranslate"><span class="pre">minimize_with_gradient_descent</span></code> function requires an objective function that takes only <span class="math notranslate nohighlight">\(x\)</span> as an argument: <span class="math notranslate nohighlight">\(f(x)\)</span>. But our <code class="docutils literal notranslate"><span class="pre">phi</span></code> Python function defined above takes <code class="docutils literal notranslate"><span class="pre">f</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">g</span></code>, and <code class="docutils literal notranslate"><span class="pre">t</span></code>; you may find Python’s “lambda function” capabilities useful or the <code class="docutils literal notranslate"><span class="pre">functools.partial</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ========================== hint: lambdas ==============================</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hint_func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">arg1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">arg2</span> <span class="o">+</span> <span class="n">arg3</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hint_func_caller</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<span class="n">foo</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">hint_func</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">bar</span><span class="p">)</span> <span class="c1"># this essentially defines a function of x only, that calls hint_func(x, 42, 100)</span>
+
+<span class="c1"># hint_func_caller expects a function that takes only one argument. But we can use a lambda expression to</span>
+<span class="c1"># &quot;prepopulate&quot; all but one argument of hint_func, &quot;turning it into&quot; an argument of one function:</span>
+
+<span class="n">hint_func_caller</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">hint_func</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">bar</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># this will work and give 152</span>
+
+<span class="c1"># ^^^^^^^^^^^^^^^^^^^^^^^^^^ hint: lambdas ^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="c1"># ========================== hint: functools.partial ==============================</span>
+
+<span class="n">new_func</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hint_func</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span> <span class="c1"># this is equivalent to lambda x: hint_func(foo, x, bar)</span>
+<span class="n">new_func</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># this will give 152</span>
+
+<span class="c1"># OR</span>
+
+<span class="n">new_func</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hint_func</span><span class="p">,</span> <span class="n">arg1</span><span class="o">=</span><span class="n">foo</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span> <span class="c1"># this is equivalent to lambda x: hint_func(foo, x, bar)</span>
+<span class="n">new_func</span><span class="p">(</span><span class="n">arg2</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># this will give 152</span>
+
+<span class="c1"># ^^^^^^^^^^^^^^^^^^^^^^^^^^ hint: functools.partial ^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+
+
+
+<span class="c1"># add you code here</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>152
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-4-cvxpy">
+<h2>Problem 4 (<code class="docutils literal notranslate"><span class="pre">cvxpy</span></code>)<a class="headerlink" href="#problem-4-cvxpy" title="Permalink to this headline">#</a></h2>
+<p>In this problem we will explore the basics of <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code>, a Python package for solving convex optimization problems. <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> has a good tutorial <a class="reference external" href="https://www.cvxpy.org/tutorial/intro/index.html">here</a>, so read that page before proceeding with this problem (the section on “parameters”, while useful, is not important for this homework, so consider that section optional for now).</p>
+<p>Consider a vector variable <span class="math notranslate nohighlight">\(x = [x_1,  x_2,  x_3]^T\)</span>. Use <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> to compute the minimizer of the following objective function
+$<span class="math notranslate nohighlight">\(
+x_1^2 + 2x_2^2 + 3.5x_3^2,
+\)</span>$</p>
+<p>subject to the constraint</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+0.707 &amp; 0.707 &amp; 0 \\
+-1 &amp; 0 &amp; 0 \\
+0 &amp; -1 &amp; 0 \\
+0 &amp; 0 &amp; -1
+\end{bmatrix}x \le \begin{bmatrix}
+2 \\
+-1 \\
+-1 \\
+-3
+\end{bmatrix}.
+\end{split}\]</div>
+<p>Print the optimal <span class="math notranslate nohighlight">\(x\)</span> and the optimal value of the objective function.</p>
+<p>Notice how much easier it is to use <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> than to write our own optimization algorithm from scratch!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add you code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-5-control-barrier-function-and-cbf-qp">
+<h2>Problem 5 (Control Barrier Function and CBF-QP)<a class="headerlink" href="#problem-5-control-barrier-function-and-cbf-qp" title="Permalink to this headline">#</a></h2>
+<p>In this problem, using the concepts and code you have developed in the previous problems, you will implement a CBF-QP safety filter.
+We will restrict ourselves to a simple 1D system so that you can verify your results analytically if needed, but note that the theory extends to higher dimensional problems, and try to keep your code general so that it could still work on a different system and choice of CBF.</p>
+<p>Consider the following 1D single integator dynamics <span class="math notranslate nohighlight">\( \dot{x} = u \)</span> and let <span class="math notranslate nohighlight">\(b(x) = x^2 - 1\)</span>.</p>
+<section id="a-computing-the-lie-derivative">
+<h3>(a) Computing the Lie derivative<a class="headerlink" href="#a-computing-the-lie-derivative" title="Permalink to this headline">#</a></h3>
+<p>What is the expression for <span class="math notranslate nohighlight">\(\nabla b(x)^T f(x,u)\)</span>?</p>
+<p><span class="math notranslate nohighlight">\(\nabla b(x) = \ldots\)</span></p>
+<p><span class="math notranslate nohighlight">\(f(x,u) = \ldots\)</span></p>
+<p><span class="math notranslate nohighlight">\(\nabla b(x)^Tf(x,u) = \ldots\)</span></p>
+</section>
+<section id="b-solving-the-cbf-qp">
+<h3>(b) Solving the CBF-QP<a class="headerlink" href="#b-solving-the-cbf-qp" title="Permalink to this headline">#</a></h3>
+<p>Suppose that your desired control is <span class="math notranslate nohighlight">\(u_\mathrm{des}=0.5\)</span>, which is to move in the positive <span class="math notranslate nohighlight">\(x\)</span>-direction at constant velocity. But the safety filter enforces that <span class="math notranslate nohighlight">\(x^2 \geq 1\)</span>, i.e., keep a 1 unit away from the origin.</p>
+<p>The CBF safety filter essentially chooses a control input that is as close to <span class="math notranslate nohighlight">\(u_\mathrm{des}\)</span> as possible while satisfying the CBF inequality constraint.</p>
+<div class="math notranslate nohighlight">
+\[
+u_\mathrm{safe}(x) = \underset{u}{\text{argmin}} \| u - u_\mathrm{des}\|_2^2 \:\: \text{subj. to} \:\: \nabla b(x)^Tf(x,u) \geq -\alpha(b(x))
+\]</div>
+<p>This is referred to as the CBF-QP since it is a quadratic program (quadratic objective and linear constraints). For simplicity, we assume there are no other constraints on controls.</p>
+<p>Let <span class="math notranslate nohighlight">\(\alpha(z) = az\)</span>, <span class="math notranslate nohighlight">\(a=0.5\)</span>
+Use <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> to solve the CBF-QP for <span class="math notranslate nohighlight">\(x=-3\)</span>, <span class="math notranslate nohighlight">\(x=-2\)</span> and <span class="math notranslate nohighlight">\(x=-1.1\)</span>.</p>
+<p>Report the corresponding safe control values.</p>
+<p>Hint: You may find the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> variable in <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> helpful. It allows you to update certain parameters without needing to reconstruct the optimization each time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add you code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-applying-the-cbf-safety-filter">
+<h3>(c) Applying the CBF safety filter<a class="headerlink" href="#c-applying-the-cbf-safety-filter" title="Permalink to this headline">#</a></h3>
+<p>Now, simulate the system starting from <span class="math notranslate nohighlight">\(x=-5\)</span> and with <span class="math notranslate nohighlight">\(u_\mathrm{des}=0.5\)</span>, but the CBF safety filter is applied. Plot the state and control sequence for <span class="math notranslate nohighlight">\(a=2\)</span>, <span class="math notranslate nohighlight">\(a=1\)</span>, <span class="math notranslate nohighlight">\(a=0.5\)</span> and <span class="math notranslate nohighlight">\(a=0.1\)</span> where <span class="math notranslate nohighlight">\(\alpha(z) = az\)</span>.
+Comment on how the trajectory changes as <span class="math notranslate nohighlight">\(a\)</span> changes. What is your interpretation of <span class="math notranslate nohighlight">\(a\)</span>?</p>
+<p>Use <span class="math notranslate nohighlight">\(\Delta t = 0.05\)</span> and simulate for 500 steps.</p>
+<p>Note that the CBF theory is for continuous-time dynamics, but when we simulate, we use discrete-time dynamics. There are some practical issues that we need to be careful about (see <a class="reference external" href="https://arxiv.org/abs/2404.12329">this paper</a> for more details), but right now, let’s stick to using a reasonably small time step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add you code here</span>
+
+<span class="c1"># define continuous-time dynamics</span>
+<span class="c1"># construct discrete-time dynamics</span>
+<span class="c1"># simulate system, during which the CBF-QP safety filter is applied.</span>
+<span class="c1"># loop over various values of a.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="hw_solution_writeup.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Homework solution and worked example guidelines</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="hw02.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Homework 2</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
