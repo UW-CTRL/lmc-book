@@ -20,6 +20,7 @@ parts:
   - file: lectures/state-space
   - file: lectures/optimization
   - file: lectures/control-certificates
+  - file: lectures/sequential-dm
 
 
 
