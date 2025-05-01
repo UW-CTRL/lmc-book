@@ -21,8 +21,9 @@ parts:
   - file: lectures/optimization
   - file: lectures/control-certificates
   - file: lectures/sequential-dm
-
-
+- caption: Code Examples
+  chapters:
+  - file: examples/hj_reachability_basics
 
 
 # - caption: A. Math Review

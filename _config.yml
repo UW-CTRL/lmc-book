@@ -43,7 +43,8 @@ sphinx:
       scipy [latest]: ['https://docs.scipy.org/doc/scipy/reference/', null]
       jax [latest]: ['https://jax.readthedocs.io/en/latest/', null]
       seaborn [stable]: ['https://seaborn.pydata.org/', null]
-      exmol [latest]: ['https://ur-whitelab.github.io/exmol/', null]
+      hj-reachbility: ['https://github.com/StanfordASL/hj_reachability', null]
+
 
 execute:
   #exclude_patterns          : ['livecomj/*', 'dl/pretraining.ipynb', 'applied/*', 'ml/*', 'dl/xai.ipynb', 'NLP.ipynb', 'flows.ipynb',
