@@ -23,6 +23,7 @@ parts:
   - file: lectures/sequential-dm
 - caption: Code Examples
   chapters:
+  - file: examples/clf_controller
   - file: examples/hj_reachability_basics
 
 
