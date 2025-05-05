@@ -25,6 +25,12 @@ parts:
   chapters:
   - file: examples/clf_controller
   - file: examples/hj_reachability_basics
+- caption: Worked Examples by Students
+  chapters:
+  - file: worked_examples/oaldaz_Genetic_Algorithm_Worked_Example
+  - file: worked_examples/thomas_bieniewicz_WorkedExample-1
+  - file: worked_examples/eli_orona_example_weeks1_2
+  - file: worked_examples/carlos_morales_DP_LQR-1
 
 
 # - caption: A. Math Review
