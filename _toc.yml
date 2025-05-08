@@ -25,6 +25,12 @@ parts:
   chapters:
   - file: examples/clf_controller
   - file: examples/hj_reachability_basics
+- caption: Worked Examples by Students
+  chapters:
+  - file: worked_examples/week01_aldaz_genetic_algorithm.ipynb
+  - file: worked_examples/week01_bieniewicz_adaptive_runge_kutta.ipynb
+  - file: worked_examples/week01_orona_numerical_integration_methods.ipynb
+  - file: worked_examples/week03_morales_lqr.ipynb
 
 
 # - caption: A. Math Review
