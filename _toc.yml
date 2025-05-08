@@ -27,10 +27,10 @@ parts:
   - file: examples/hj_reachability_basics
 - caption: Worked Examples by Students
   chapters:
-  - file: worked_examples/oaldaz_Genetic_Algorithm_Worked_Example
-  - file: worked_examples/thomas_bieniewicz_WorkedExample-1
-  - file: worked_examples/eli_orona_example_weeks1_2
-  - file: worked_examples/carlos_morales_DP_LQR-1
+  - file: worked_examples/week01_aldaz_genetic_algorithm.ipynb
+  - file: worked_examples/week01_bieniewicz_adaptive_runge_kutta.ipynb
+  - file: worked_examples/week01_orona_numerical_integration_methods.ipynb
+  - file: worked_examples/week03_morales_lqr.ipynb
 
 
 # - caption: A. Math Review
