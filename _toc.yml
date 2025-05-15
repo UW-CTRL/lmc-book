@@ -26,6 +26,7 @@ parts:
   - file: examples/clf_controller
   - file: examples/hj_reachability_basics
   - file: examples/tracking_LQR
+  - file: examples/direct_methods
 - caption: Worked Examples by Students
   chapters:
   - file: worked_examples/week01_aldaz_genetic_algorithm.ipynb
