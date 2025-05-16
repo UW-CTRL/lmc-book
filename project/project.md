@@ -10,7 +10,7 @@ The purpose of the project is for you to dive deeper into any of the topics cove
 
 Note that you do not need to implement things from scratch. It is encouraged to utilize any material from your homework or demos from the course, material from other courses, and use open-source material. Of course, proper acknowledgment/referencing must be given.
 
-You may work on the project individually or in groups of 2 or 3. For group projects, the expectation is that the project should be larger in scope compared to an individual project, and that the activities of each group member and the collaboration plan are clearly scoped out. See proposal section for more details.
+You may work on the project individually or in groups of 2. For group projects, the expectation is that the project should be larger in scope compared to an individual project, and that the activities of each group member and the collaboration plan are clearly scoped out. See proposal section for more details.
 
 **NOTE:** For those working in groups, it is critical to have a thought-out collaboration plan and have the project scope clearly defined, including each member's role and deliverables. And consider potential bottlenecks and find ways to mitigate them. Since it is a group project, the project needs to be larger in scope compared to an individual project, but that means more moving parts and possible sources of issues. Ensure there are contingency plans so that if some components don't go to plan, the other components are not significantly affected. This information should be described in the collaboration plan (item 6 below).
 
@@ -68,12 +68,14 @@ Below are the key components to include and tips to help you craft a compelling 
 
 ## Lightning pitch
 
-**Happening during Monday week 10**
+**Happening during Monday Lecture Week 10 June 2nd**
 
 You will be required to give a lightning pitch (a.k.a. spotlight talk) to the rest of the class.
 Given the current enrollment, you will have less than 2 minutes.
 
 Your pitch should be catchy, concise, and accessible to a general audience. Use of slides is optional.
+
+If you use slides, please add to this [Google slide](https://docs.google.com/presentation/d/1v2NoB55LCJFY0Yei4vZiMQrEwGKvxyDzKG1eZz5osIc/edit?usp=sharing).
 
 
 The **RISE** framework is a simple approach to constructing an effective pitch.
@@ -87,19 +89,75 @@ The **RISE** framework is a simple approach to constructing an effective pitch.
 **E**vidence: Provide the evidence to show that your solution has successfully addressed the issues.
 
 ## Poster session
-**Happening during Wednesday week 10**
+**Happening during Wednesday Lecture Week 10 June 4th**
 
-We will have a poster session during regular class time. There will be two sessions ~35 minutes each where one half of the course is presenting the poster and the other half will go check out the posters. Then the two halves will swap.
+We will have a poster session during regular class time. There will be two sessions ~35 minutes each where one half of the course is presenting the poster and the other half will go check out the posters. Then the two halves will swap. Students will be assigned posters to peer review and provide feedback to their peers.
 
-Students will be assigned posters to peer review and provide feedback to their peers.
+The poster session is a medium for you to practice your technical communication skills, both in the written format (in the form of a poster), and in a verbal format (in the way you communicate with the audience). The peer review is an opportunity for you to give feedback toy our peers and also receive feedback from them.
 
-*More details to follow*
+### Some tips and guidelines on how to create and present your poster
 
-## Project report
+- Keep each discussion to less than 10 minutes per person (each session is only 30 minutes and you should have at least two visitors!)
+- Make use of figures, plots, tables, bullet points, equations and avoid large blocks of continuous text. This makes it easier for you to quickly refer to key information rather than scan and search through lines of text.
+- Avoid standing silently and watching the audience just read your poster. Greet them! Introduce yourself! And offer them your 30-second elevator pitch.
+- Help the audience "walk through" your poster by giving short summaries for each section of your poster.
+- Pause and allow the audience to ask questions.
+- If multiple people are at your poster at the same time, try your best to include everyone in the discussion.
 
-**Due finals week**
 
-*More details to follow*
+
+### Poster printing instructions
+You are required to create a poster, print it, and bring it to the poster session. Please take a look at the suggested [$30 \times 24$ inches poster template](https://github.com/UW-CTRL/lmc-book/blob/main/_static/poster_template.pptx). For reference, $30 \times 24$ inches is approximately the size of $3 \times 3$ letter-sized paper. But you are free to use a different design or size.
+
+There are several printing options:
+
+1. ($\approx$\$10) As a student, you should have access to [The Mill](https://hfs.uw.edu/perks-recreation/the-mill) on campus which offers printing service for a small fee (~\$10 from what I hear). Typically this can be done on the spot. Your poster will be on a large sheet of (thick) paper. Though you should check if the printer is working beforehand as it can often be out-of-order.
+2. ($\approx$\$30) FedEx offers poster printing services, but may take a few days.
+3. ($\approx$ free) You can print your poster with a regular printer but spread over multiple pages. In Adobe Acrobat Reader, in the print settings, click on  [`Poster' button](https://github.com/UW-CTRL/lmc-book/blob/main/_static/images/adobe.jpg). You will need tape to put the poster together and scissors to trim the edges of the paper.
+4. (free) If you submit your poster **before 9:30AM on Wednesday June 4th** (day of poster session), the teaching team will print them out using **Option 3**. The printed poster can be picked up at the A&A front office. But you must tape them together. It is your responsibility to check the print out and find alternative solutions if the printing is not what you expect.
+    [Link to submit your pdf](https://forms.gle/7QcqFj489yTa8rXk9): `https://forms.gle/7QcqFj489yTa8rXk9`
+
+**NOTE**: For options 3 and 4, you are responsible for taping the pieces of papers **BEFORE** the poster session. There will be no tape or any stationery provided at the poster session.
+
+## Peer evaluation
+
+**Due Friday Week 10 June 6th**
+
+You must **submit 2 reviews** based on your assigned posters via the [Google Form](https://forms.gle/k4ppdMu2mNjU4dTJ6).
+
+It is recommended you take a photo of the poster in case you want to refer to it later as you write up your peer review.
+
+**NOTE**: Your reviews will be shared with the author(s). So please write your review as though you could be receiving the feedback yourself. It is fine to be critical, but please be constructive and professional and you should not be mean/aggressive in your phrasing.
+
+These reviews guidelines share similar principles to how one should approach reviewing research papers/journals.
+In your review, you should include the following:
+
+
+- In your own words, provide a concise summary of the project (i.e., objective, technical approach, results)
+- Were there any insights/knowledge/perspectives that you gained from this work? New technique? New application? New formulation?
+- What did you find enjoyable and interesting about the work? This can include anything from the technical details, the clarity in which the work is presented, the figures, experimental design, etc.
+- What could be improved about this work? Again, this can be anything from the technical details, technical approach, experimental plan, poster organization, figures, etc.
+- How was the interaction during the poster session? Was there anything the presenter did that was particularly effective? Anything that could be improved?
+- Any other comments/feedback (e.g., typos, minor questions/comments about specific details that don't make or break the work).
+
+
+
+## Project report or website
+
+**Due June 11th 11:59PM. Submit on Canvas.**
+
+
+You have two options to choose from:
+
+1. A written report in a [IEEE conference format](https://github.com/UW-CTRL/lmc-book/blob/main/_static/report_template.zip) that should be accessible to a first year graduate student. The report should be 4--6 pages. See the template for guidelines on what to include.
+
+2. A blog-like project webpage that is accessible to a high-school senior or college freshman. It should have approximately 4--6 pages worth of content. You may use any website format you wish. Google sites is recommended as it is the easiest and most straightforward to create and publish.
+
+Both are valuable options to consider. The first could potentially evolve into an actual conference paper in the future, while the latter could be shared on your personal website/resume for a more general audience to enjoy and learn from.
+
+In either option, you will need to submit a PDF (of the report or webpage) to Canvas before the assigned deadline. For the webpage, also include the link.
+
+You will be evaluated on technical correctness, clarity, and organization.
 
 
 
