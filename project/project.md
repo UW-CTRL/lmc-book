@@ -153,6 +153,8 @@ You have two options to choose from:
 
 2. A blog-like project webpage that is accessible to a high-school senior or college freshman. It should have approximately 4--6 pages worth of content. You may use any website format you wish. Google sites is recommended as it is the easiest and most straightforward to create and publish.
 
+**Group projects** For page limit for group projects, you can submit up to 8 pages for the entire group, or equivalent to 8 pages for the website.
+
 Both are valuable options to consider. The first could potentially evolve into an actual conference paper in the future, while the latter could be shared on your personal website/resume for a more general audience to enjoy and learn from.
 
 In either option, you will need to submit a PDF (of the report or webpage) to Canvas before the assigned deadline. For the webpage, also include the link.
