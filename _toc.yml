@@ -21,6 +21,7 @@ parts:
   - file: lectures/optimization
   - file: lectures/control-certificates
   - file: lectures/sequential-dm
+  - file: lectures/reachability
 - caption: Code Examples
   chapters:
   - file: examples/clf_controller
