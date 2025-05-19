@@ -107,13 +107,13 @@ The poster session is a medium for you to practice your technical communication 
 
 
 ### Poster printing instructions
-You are required to create a poster, print it, and bring it to the poster session. Please take a look at the suggested [$30 \times 24$ inches poster template](https://github.com/UW-CTRL/lmc-book/blob/main/_static/poster_template.pptx). For reference, $30 \times 24$ inches is approximately the size of $3 \times 3$ letter-sized paper. But you are free to use a different design or size.
+You are required to create a poster, print it, and bring it to the poster session. Please take a look at the suggested [$30 \times 24$ inches poster template](../_static/poster_template.pptx). For reference, $30 \times 24$ inches is approximately the size of $3 \times 3$ letter-sized paper. But you are free to use a different design or size.
 
 There are several printing options:
 
 1. ($\approx$\$10) As a student, you should have access to [The Mill](https://hfs.uw.edu/perks-recreation/the-mill) on campus which offers printing service for a small fee (~\$10 from what I hear). Typically this can be done on the spot. Your poster will be on a large sheet of (thick) paper. Though you should check if the printer is working beforehand as it can often be out-of-order.
 2. ($\approx$\$30) FedEx offers poster printing services, but may take a few days.
-3. ($\approx$ free) You can print your poster with a regular printer but spread over multiple pages. In Adobe Acrobat Reader, in the print settings, click on  [`Poster' button](https://github.com/UW-CTRL/lmc-book/blob/main/_static/images/adobe.jpg). You will need tape to put the poster together and scissors to trim the edges of the paper.
+3. ($\approx$ free) You can print your poster with a regular printer but spread over multiple pages. In Adobe Acrobat Reader, in the print settings, click on  [`Poster' button](../_static/images/adobe.jpg). You will need tape to put the poster together and scissors to trim the edges of the paper.
 4. (free) If you submit your poster **before 9:30AM on Wednesday June 4th** (day of poster session), the teaching team will print them out using **Option 3**. The printed poster can be picked up at the A&A front office. But you must tape them together. It is your responsibility to check the print out and find alternative solutions if the printing is not what you expect.
     [Link to submit your pdf](https://forms.gle/7QcqFj489yTa8rXk9): `https://forms.gle/7QcqFj489yTa8rXk9`
 
@@ -149,7 +149,7 @@ In your review, you should include the following:
 
 You have two options to choose from:
 
-1. A written report in a [IEEE conference format](https://github.com/UW-CTRL/lmc-book/blob/main/_static/report_template.zip) that should be accessible to a first year graduate student. The report should be 4--6 pages. See the template for guidelines on what to include.
+1. A written report in a [IEEE conference format](../_static/report_template.zip) that should be accessible to a first year graduate student. The report should be 4--6 pages. See the template for guidelines on what to include.
 
 2. A blog-like project webpage that is accessible to a high-school senior or college freshman. It should have approximately 4--6 pages worth of content. You may use any website format you wish. Google sites is recommended as it is the easiest and most straightforward to create and publish.
 
