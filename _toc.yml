@@ -22,6 +22,7 @@ parts:
   - file: lectures/control-certificates
   - file: lectures/sequential-dm
   - file: lectures/reachability
+  - file: lectures/kalman-filter
 - caption: Code Examples
   chapters:
   - file: examples/clf_controller
