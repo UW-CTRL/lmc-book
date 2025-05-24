@@ -178,16 +178,25 @@ Thus we have computed the optimal path from state A (or from any state onward) t
 Note that the computational effort involved scales linearly with the time horizon; considering a time horizon twice as long would only incur twice as much computational effort. A brute-force approach in which we simply enumerate every possible path through the state space and pick the best one would scale exponentially in the time horizon; a time horizon twice as long would _square_ the computation time.
 ```
 ### Stochastic dynamic programming
-In many cases, we do not know precisely which state we will end up in when we take a certain action. For example, if we are controlling a rocket, in the real world the thrust produced by the engine for any given throttle command is not precesely known; thus we cannot precisely tell what the vehicle's state will be some time in the future. Or, suppose we are playing a game of chess; even if we know the state (i.e., the board position) perfectly, when we make a move we don't know what the opponent will do. We may have an idea of which moves are likely or unlikely based on our knowledge of the game and our opponent, and in fact the skill of playing chess is to try to influence your opponent to make moves favorable to you, but we ultimately don't know the future perfectly.
+In many cases, we do not know precisely which state we will end up in when we take a certain action.
+That is, given $x_t, u_t$, the next state $x_{t+1}$ is not deterministic.
+For example, if we are controlling a rocket, in the real world the thrust produced by the engine for any given throttle command is not precesely known; thus we cannot precisely tell what the vehicle's state will be some time in the future. Or, suppose we are playing a game of chess; even if we know the state (i.e., the board position) perfectly, when we make a move we don't know what the opponent will do. We may have an idea of which moves are likely or unlikely based on our knowledge of the game and our opponent, and in fact the skill of playing chess is to try to influence your opponent to make moves favorable to you, but we ultimately don't know the future perfectly.
 
 In cases like these we must use methods which can handle the inherent stochasticity of the system. One common approach is to use dynamic programming to maximize not the value function $V(x,t)$, but the [_expected value_](https://en.wikipedia.org/wiki/Expected_value) of the value function, $\mathbb{E}[V(x,t)]$.
+
+Additionally, the cost function may depend not only on state and control, but also may depend on next state. Since there is uncertainty on the next state, there cost is also uncertain.
+
+Adapting the previous notation slightly to account for stochasticity in the problem:
+
+- Instead of dynamics $x_{t+1} = f(x_t, u_t, t)$, we consider state transition probabilities where $x_{t+1} \sim p(x_{t+1} \mid x_t, u_t)$.
+- Instead of a cost $J(x_t, u_t, t)$, we consider $J(x_t, u_t, x_{t+1}, t)$.
 
 
 ```{admonition} Stochastic Bellman Equation (discrete time, finite horizon)
 ```{math}
 :label: eq-stoch-bellman
-&V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + \mathbb{E}[V^*(x_{t+1}, t+1)] \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
-&\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + \mathbb{E}[V^*(x_{t+1}, t+1)] \biggl)
+&V^*(x_{t},t) = \min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl), \\
+&\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl)
 ```
 
 <!-- ## Worked example (discrete-time, stochastic) -->
@@ -220,15 +229,18 @@ Often we are interested in problems with an infinite time horizon. For example, 
 
 In infinite-horizon dynamic programming, it no longer makes sense to consider a terminal state cost, since there is no terminal state. Instead, we use the infinite-horizon Bellman equation, which includes a "discount factor" $\gamma$ multiplying $V(x_{t+1}, t+1)$, where $0 < \gamma < 1$:
 
+It also does not make sense to keep track of timestep in the infinite horizon case since the horizon is, well, infinite. Keeping track of what the value is at timestep, say, 1000000 versus time step 100 is not particularly useful since the horizon is infinite. As such, drop the time argument in our value function definition.
+
 ```{admonition} Infinite-Horizon Bellman Equation (discrete time)
 ```{math}
 :label: eq-inf-bellman
-&V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + \gamma V^*(x_{t+1}, t+1) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
-&\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + \gamma V^*(x_{t+1}, t+1) \biggl)
+&V^*(x) = \min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\
+&\pi^*(x_{t}) = \mathrm{arg}\min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\
 ```
+
 This has the effect of "discounting" future costs, so that they mattter less the further in the future they are. As we work backwards through time in the dynamic programming process, the value function at later time steps will be multiplied by higher and higher powers of $\gamma$, which converge to zero.
 
-But how do we use this? Since in the dynamic programming process we have to work backwards through time, it seems like the infinite-horizon problem is inherently intractable; we can't compute infinitely many iterations. That's where $\gamma$ comes in. The inclusion of that discount factor, strictly between 0 and 1, means that the value function $V(x, t)$ converges as you iterate through the DP process; that is, it asymptotically approaches a limiting value. Furthermore, we can pick an arbitrary "terminal state value" to start our DP iteration; the discount factor eliminates the influence of the terminal state value over time, and the limiting value of $V(x,t)$ does not depend on the terminal state value we pick. So, we can simply pick an arbitrary initialization for $V(x,t$ and iterate until $V(x,t)$ converges to within some chosen convergence tolerance $\epsilon$.
+But how do we use this? Since in the dynamic programming process we have to work backwards through time, it seems like the infinite-horizon problem is inherently intractable; we can't compute infinitely many iterations. That's where $\gamma$ comes in. The inclusion of that discount factor, strictly between 0 and 1, means that the value function $V(x, t)$ converges as you iterate through the DP process; that is, it asymptotically approaches a limiting value. Furthermore, we can pick an arbitrary "terminal state value" to start our DP iteration; the discount factor eliminates the influence of the terminal state value over time, and the limiting value of $V(x)$ does not depend on the terminal state value we pick. So, we can simply pick an arbitrary initialization for $V(x)$ and iterate until $V(x)$ converges to within some chosen convergence tolerance $\epsilon$.
 
 <!-- ## Worked example (discrete-time, infinite-horizon) -->
 
