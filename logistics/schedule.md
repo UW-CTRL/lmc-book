@@ -11,7 +11,7 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | April 28 <br> April 30 |   5    | HJB, HJI, HJ reachability, linear quadratic regulator | Project proposal due | [lec09 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_09.pdf),  [lec10 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_10.pdf), [Pursuit-Evasion](https://github.com/StanfordASL/AA203-Examples/blob/2022/Lecture-12/HJ%20Reachability%20--%20Pursuit%20Evasion.ipynb), [HJ code basics](../examples/hj_reachability_basics.ipynb)|
 | May 5 <br> May 7       |   6    | LQR (DT), LQR (CT), Tracking LQR | | [lec11 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_11.pdf) |
 | May 12 <br> May 14     |   7    | iLQR, Trajectory optimization, model predictive control | hw 2 due <br> hw3 out| [lec13 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_13.pdf), [lec14 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_14.pdf) |
-| May 19 <br> May 21     |   8    | *Guest lecture(?), Kalman filter*| | |
-| May 26 <br> May 28     |   9    | (No lecture; Memorial Day) <br> *Technical communication* | hw 3 due | |
+| May 19 <br> May 21     |   8    | Guest lecture (Chris Hayner [OpenSCvx](https://github.com/haynec/OpenSCvx)), Kalman filter| | [lec16 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_16.pdf)|
+| May 26 <br> May 28     |   9    | (No lecture; Memorial Day) <br> Kalman filter, technical communication | hw 3 due | |
 | June 2 <br> June 4     |   10   | Project spotlight presentation <br> Project poster presentation | Due project pitch <br> Due project poster | |
 |                        | Finals | Due final report or website | | |
