@@ -328,6 +328,11 @@ $$
 $$
 
 This result implies that if we use a discrete Kalman filter with a small $\Delta t$ for continuous-time systemms, then the discrete Kalman gain tends to zero, which isn't useful.
+Instead we define the continuous-time Kalman gain as the average of the discrete-time Kalman gain over the timestep $\Delta t$. Intuitively, the discrete Kalman gain is applied over the timestep $\Delta t$. So if we want to determine the Kalman gain at an instance in continuous-time, then since the discrete Kalman gain is applied over $\Delta t$, the "spreading" that gain across $\Delta$ evenly, we get $\frac{1}{\Delta t} K_t$ at any time instance over that interval. Then we take the limit as $\Delta t \rightarrow 0$.
+
+$$
+K(t) = \lim_{\Delta t \rightarrow 0}\frac{1}{\Delta t} K_t  = P_t^pC^T R^{-1}
+$$
 
 
 You should also find that
