@@ -127,7 +127,7 @@ Summarizing the prediction step, given the estimate from the previous time step 
 :label: eq-kf-prediction
 
 \textbf{Predicted mean:}& \quad \mu_t^p = A\mu_{t-1} + Bu_{t-1}\\
-\textbf{Predicted error covariance:}& \quad P_t^T = AP_{t-1}A^T + Q\\
+\textbf{Predicted error covariance:}& \quad P_t^p = AP_{t-1}A^T + Q\\
 \textbf{Predicted estimate:}& \quad \hat{x}_t^p \sim \mathcal{N}(\mu _t^p, P_t^p)\\
 ```
 
@@ -354,3 +354,47 @@ $$
 
 Notice that this last equation is again the continuous-time Riccati equation which is essentially the same as what we saw in the continuous-time LQR derivation.
 Again, we see this duality relationship in the continuous-time setting.
+
+
+## Extended Kalman Filter
+
+The Kalman Filter assumes linear dynamics and measurement models. Of course, many systems are not linear. But similar to what we saw with LQR (and a common theme in this course), we can *linearize* the system at each time and approximate the system as linear and apply the Kalman Filter. But we must re-linearize at every time step given the current state estimate.
+The **Extended Kalman Filter** is precisely just this. It is applying the standard Kalman Filter, but re-linearizing at each time step to obtain $A$ and $C$ matrices.
+
+Given the same set up as before, but instead, we assume a nonlinear dynamics and measurement model.
+
+```{math}
+:label: eq-gaussian-nonlinear-dynamics
+
+&x_{t+1} = f(x_t, u_t) + w_t, \qquad &\mathbb{E}[w_tw_t^T] = Q, \qquad &w_t \sim \mathcal{N}(0, Q)\\
+&y_t = g(x_t) + v_t, \qquad &\mathbb{E}[v_tv_t^T] = R, \qquad &v_t \sim \mathcal{N}(0, R)
+```
+
+Note that in the standard Kalman Filter equation, the covariance prediction and update relied on the linear structure of the dynamics and measurement model. While predicting the mean and computing the measurement residual did not.
+When computing the covariance prediction and update, we need $A$ to compute $P_t^p$, and $C$ to compute $K_t$ and $P_t$.
+To obtain these quantities, we simply compute the Jacobian with respect to the current mean of the state estimate.
+
+$$
+A = \nabla_x f(x_t, u_t)\lvert_{x_t = \mu_{t-1}}^T, \qquad C =  \nabla_xg(x_t)\lvert_{x_t = \mu_t^p}^T
+$$
+
+With $A$ and $C$ computed using the state estimate at each time step, we apply (almost) the same set of equations we saw with the standarf KF.
+
+
+```{admonition} Prediction step (Extended KF)
+```{math}
+:label: eq-kf-prediction
+
+\textbf{Predicted mean:}& \quad \mu_t^p = f(\mu_{t-1}, u_{t-1})\\
+\textbf{Predicted error covariance:}& \quad P_t^p = AP_{t-1}A^T + Q\\
+\textbf{Predicted estimate:}& \quad \hat{x}_t^p \sim \mathcal{N}(\mu _t^p, P_t^p)\\
+```
+
+```{admonition} Update step (Extended KF)
+```{math}
+:label: eq-kf-update
+\textbf{Updated mean:}& \quad \mu_t = \mu_t^p + K_t(y_t - g(u_t^p))\\
+\textbf{Kalman gain:}& \quad K_t = P_t^pC^T(CP_t^pC^T + R)^{-1}\\
+\textbf{Updated error covariance:}& \quad P_t = (I - K_tC)P_t^p\\
+\textbf{Updated estimate:}& \quad \hat{x}_t \sim \mathcal{N}(\mu _t, P_t)\\
+```
