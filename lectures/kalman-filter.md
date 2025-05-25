@@ -45,9 +45,9 @@ Mathematically, we assume the dynamics and measurement model have the following 
 
 
 
-```{admonition} Gaussian Linear Dynamics
+```{admonition} Gaussian Linear Dynamics (Discrete-time)
 ```{math}
-:label: eq-gaussian-linear-dynamics
+:label: eq-gaussian-linear-dynamics-dt
 
 &x_{t+1} = Ax_t + Bu_t + w_t, \qquad &\mathbb{E}[w_tw_t^T] = Q, \qquad &w_t \sim \mathcal{N}(0, Q)\\
 &y_t = Cx_t + v_t, \qquad &\mathbb{E}[v_tv_t^T] = R, \qquad &v_t \sim \mathcal{N}(0, R)
@@ -258,3 +258,99 @@ This connection between LQR (control) and Kalman Filter (estimation) is known as
 | State cost          | $Q$               | $Q$              | Process noise covariance|
 | Control cost        | $R$               | $R$              | Measurement noise covariance|
 | Terminal cost       | $Q_T$             | $P_0$            | Initial state covariance|
+
+
+## Continuous-time Kalman Filter
+We have so far considered a discrete-time Kalman filter. Let's see what happens with the continous-time case.
+
+Consider the analogous continuous-time Gaussian linear dynamics.
+
+```{admonition} Gaussian Linear Dynamics (Continous-time)
+```{math}
+:label: eq-gaussian-linear-dynamics-ct
+
+&\dot{x} = Ax(t) + Bu(t) + w(t), \qquad &\mathbb{E}[w(t)w(t)^T] = Q, \qquad &w(t) \sim \mathcal{N}(0, Q)\\
+&y(t) = Cx(t) + v(t), \qquad &\mathbb{E}[v(t)v(t)^T] = R, \qquad &v(t) \sim \mathcal{N}(0, R)
+```
+
+What we will do is convert these continuous-time dynamics into discrete-time dynamics with time-step $\Delta t$ and apply the discrete-time Kalman Filter equations, and then see what happens with $\Delta t \rightarrow 0$. This is similar to what we did when we went from discrete-time Bellman equation to continous-time HJB equation.
+
+
+Let $\Delta t$ denote a time step. Then we have:
+
+$$
+x(t+\Delta t) &= x(t) + \Delta t (Ax(t) + Bu(t)) \\
+& = (I + A\Delta t)x(t) + B\Delta t u(t)\\
+& = (I+A\Delta t)x_t + B\Delta t u_t\\
+\therefore x_{t+1} & = \tilde{A}x_t + \tilde{B}u_t, \quad \text{where}\: \tilde{A} = I+A\Delta t, \: \tilde{B} = B\Delta t
+$$
+
+But what happens to the process and Gaussian noise when we consider the system over timestep $\Delta t$.
+
+Let $\tilde{w}_t$ be the process noise for the discrete-time system. It should capture the total noise over timestep $\Delta$. So we have $\tilde{w}_t = \int_t^{t+\Delta t} w(\tau) d\tau $. Then what is its corresponding covariance?
+
+$$
+\mathbb{E}[\tilde{w}_t\tilde{w}_t^T] &= \mathbb{E}[\int_t^{t+\Delta t}\int_t^{t+\Delta t} w(\tau)w(\tau^\prime)^T d\tau^\prime d\tau]\\
+&= \int_t^{t+\Delta t}\int_t^{t+\Delta t} \mathbb{E}[w(\tau)w(\tau^\prime)^T] d\tau^\prime d\tau\\
+&= \int_t^{t+\Delta t} Q d\tau , \quad (\mathbb{E}[w(\tau)w(\tau^\prime)^T] = 0, \tau \neq \tau^\prime)\\
+\tilde{Q} &= Q\Delta t\\
+$$
+
+
+What about the measurement noise? Let $\tilde{v}_t$ be the measurement noise for the discrete-time system. It measures the measurement noise at that particular timestep. But measurements are taken at every $\Delta t$ interval. As such, the measurement noise should be the mean noise of $v(t)$ over an interval $\Delta t$. So we have  $\tilde{v}_t = \frac{1}{\Delta t}\int_t^{t+\Delta t} v(\tau) d\tau $. Then what is its corresponding covariance?
+
+$$
+\mathbb{E}[\tilde{v}_t\tilde{v}_t^T] &= \mathbb{E}\biggl[\frac{1}{\Delta t^2}\int_t^{t+\Delta t}\int_t^{t+\Delta t} v(\tau)v(\tau^\prime)d\tau^\prime d\tau \biggl]\\
+&= \frac{1}{\Delta t^2}\int_t^{t+\Delta t}\int_t^{t+\Delta t} \mathbb{E}[v(\tau)v(\tau^\prime)]d\tau^\prime d\tau \\
+&= \frac{1}{\Delta t^2}\int_t^{t+\Delta t}Rd\tau^\prime d\tau, \quad (\mathbb{E}[v(\tau)v(\tau^\prime)^T] = 0, \tau \neq \tau^\prime) \\
+\tilde{R} &= \frac{R}{\Delta t}
+$$
+
+So we now have a discrete-time Kalman Filter problem for the following dynamics where $A, B, Q, R$ are defined for the *continous-time* system.
+
+
+```{math}
+:label: eq-discrete-time-system-from-continous-time
+
+&x_{t+1} = (I + A\Delta t)x_t + B\Delta t u_t + \tilde{w}_t, \qquad & \mathbb{E}[\tilde{w}_t\tilde{w}_t^T] = Q\Delta t, \qquad & \tilde{w}_t \sim \mathcal{N}(0, Q\Delta t)\\
+&y_t = Cx_t + \tilde{v}_t, \qquad &\mathbb{E}[\tilde{v}_t\tilde{v}_t^T] = \frac{R}{\Delta t}, \qquad &\tilde{v}_t  \sim \mathcal{N}(0, \frac{R}{\Delta t})
+```
+
+Now, we can use the prediction and update steps described previously and let $\Delta t \rightarrow 0$ and see what happens...
+We leave this working out as an exercise.
+
+But doing this exercise, you should get the following expression for the Kalman gain.
+
+$$
+\frac{1}{\Delta t}K_t &= P_t^pC^T(CP_t^pC\Delta t + R)^{-1}\\
+\Rightarrow &\lim_{\Delta t \rightarrow 0} \frac{1}{\Delta t}K_t = P_t^pC^T R^{-1}\\
+\Rightarrow &\lim_{\Delta t \rightarrow 0} K_t = 0
+$$
+
+This result implies that if we use a discrete Kalman filter with a small $\Delta t$ for continuous-time systemms, then the discrete Kalman gain tends to zero, which isn't useful.
+
+
+You should also find that
+
+$$
+P_t^p &= P_{t-1} + (AP_{t-1} + P_{t-1}A^T + Q)\Delta t + O(\Delta t^2)\\
+P_t &= (I - K_t C)P_t^p\\
+\Rightarrow P_t^p &= (I-K_{t-1}C)P_{t-1}^p + (A(I - K_{t-1}C)P_{t-1}^p + (I - K_{t-1}C)P_{t-1}^pA^T + Q)\Delta t + O(\Delta t^2)
+$$
+
+Rearranging the last expression, we have
+
+$$
+\frac{1}{\Delta t} (P_{t}^p - P_{t-1}^p) = (AP_{t-1}^p + P_{t-1}^pA^T + Q - AK_{t-1}CP_{t-1}^p - K_{t-1}CP_{t-1}^pA^T) - \frac{1}{\Delta t}K_{t-1}CP_{t-1}^p+ O(\Delta t)
+$$
+
+And then taking the limit $\Delta t \rightarrow 0$.
+
+$$
+\dot{P}^p(t) & = \lim_{\Delta t \rightarrow 0} \frac{1}{\Delta t} (P_{t}^p - P_{t-1}^p) \\
+& = \lim_{\Delta t \rightarrow 0}  (AP_{t-1}^p + P_{t-1}^pA^T + Q - AK_{t-1}CP_{t-1}^p - K_{t-1}CP_{t-1}^pA^T) - \frac{1}{\Delta t}K_{t-1}CP_{t-1}^p+ O(\Delta t)\\
+\dot{P}^p(t) & = AP^p(t) + P^p(t)A^T + Q - P^p(t)C^T R^{-1}CP^p(t)\\
+$$
+
+Notice that this last equation is again the continuous-time Riccati equation which is essentially the same as what we saw in the continuous-time LQR derivation.
+Again, we see this duality relationship in the continuous-time setting.

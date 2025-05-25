@@ -29,7 +29,6 @@ parts:
   - file: examples/hj_reachability_basics
   - file: examples/tracking_LQR
   - file: examples/direct_methods
-  - file: examples/asteroids
 - caption: Worked Examples by Students
   chapters:
   - file: worked_examples/week01_aldaz_genetic_algorithm.ipynb
