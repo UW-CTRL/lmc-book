@@ -1,4 +1,4 @@
-# Sequential Decision-Making
+# Sequential decision-making
 
 In the previous chapters (specifically, the CBF-CLF filters), we saw that a control input could be synthesized by adjusting the desired control as little as possible to satisfy the CBF and CLF constraints. But how was the desired control selected? And since we change the desired control for the *current* time, how does this effect the future behavior of the system? Would adjusting the desired control now affect the performance of the system in the future?
 
@@ -261,6 +261,39 @@ Now we move one time step back and repeat the process, finding again that the op
 Notice that as we go backward in time, $V(x)$ increases; however, it appears to be slowing down. Going one time step back from the end of time, $V(x)$ increased by more than it did when we went one step further. This pattern will continue until eventually $V(x)$ converges. In this case, the values that $V(x)$ converges to are $V(A) = 10, V(B) = 12$. (Try this yourself! Write some code to iteratively compute these values. Also try different initializations of $V(x)$ other than zero; does it make a difference?)
 
 ```
+
+## Hamilton-Jacobi-Bellman equation
+So far, we have considered a *discrete-time* setting. What about the continuous-time setting?
+We can derive the continuous-time case by casting the continuous time problem into a discrete-time problem with timestep $\Delta t$ and let $\Delta t\rightarrow 0$ and see what we get as a result of taking that limit.
+With the continuous-time setting, our dynamics are $\dot{x} = f(x,u,t)$ and the cost is $\int_0^T J(x,u,t) dt + J_T(x(T))$. Note that the cost is an integral, but to "convert to discrete-time", the cost over a $\Delta t$ time step is approximated to be $J(x,u,t) \Delta t$.
+
+Considering we are at timestep $t$ and we consider a timestep size of $\Delta t$, the Bellman equation can be written as,
+
+$$
+V^*(x(t),t) = \min_{u(t)} \biggl( J(x(t), u(t), t)\Delta t + V^*(x(t+\Delta t), t+\Delta t) \biggl)
+$$
+
+Now we rearrange the terms and take the limit $\Delta t\rightarrow 0$.
+
+$$
+0 &= \min_{u(t)} \biggl( J(x(t), u(t), t)\Delta t + V^*(x(t+\Delta t), t+\Delta t) - V^*(x(t),t) \biggl)\\
+0 &= \min_{u(t)} \biggl( J(x(t), u(t), t) + \frac{V^*(x(t+\Delta t), t+\Delta t) - V^*(x(t),t)}{\Delta t} \biggl), \qquad (\div \Delta t)\\
+\lim_{\Delta t \rightarrow 0} 0 &= \lim_{\Delta t \rightarrow 0} \min_{u(t)} \biggl( J(x(t), u(t), t) + \underbrace{\frac{V^*(x(t+\Delta t), t+\Delta t) - V^*(x(t),t)}{\Delta t}}_{\text{Total derivative}} \biggl)\\
+&= \min_{u(t)} \biggl( J(x(t), u(t), t) + \frac{\partial V^*}{\partial t}(x,t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)\\
+0 &= \frac{\partial V^*}{\partial t}(x,t) +  \min_{u(t)} \biggl( J(x(t), u(t), t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)
+$$
+
+The resulting expression is a partial differential equation where the solution is the value function. We have $V(x,T) = J_T(x)$ as a boundary condition, and we must solve the PDE backward in time to get the value function over all entire time horizon.
+
+```{admonition} Hamilton-Jacobi-Bellman Equation (continuous-time, finite horizon)
+```{math}
+:label: eq-hjb
+0 &= \frac{\partial V^*}{\partial t}(x,t) +  \min_{u(t)} \biggl( J(x(t), u(t), t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)\\
+V^*(x,T) &= J_T(x)
+```
+
+
+
 ## Additional reading
 
 - [Chapter 4: Reinforcement Learning: An Introduction (2nd Ed) by Richard S. Sutton and Andrew Barto](http://incompleteideas.net/book/RLbook2020.pdf)
