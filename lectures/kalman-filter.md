@@ -107,7 +107,7 @@ Next, we need to predict the covariance of the estimate $P_t^p$. Let the predict
 
 $$
 \mathbb{E}[e_t^p {e_t^p}^T] & = \mathbb{E}[(x_t - \hat{x}_t^p)(x_t - \hat{x}_t^p)^T]\\
-&= \mathbb{E}[(Ax_{t-1} + Bu_{t-1} + w_t - A\hat{x}_{t-1} + Bu_{t-1})((Ax_{t-1} + Bu_{t-1} + w_t - A\hat{x}_{t-1} + Bu_{t-1}))^T]\\
+&= \mathbb{E}[(Ax_{t-1} + Bu_{t-1} + w_t - A\hat{x}_{t-1} - Bu_{t-1})((Ax_{t-1} + Bu_{t-1} + w_t - A\hat{x}_{t-1} - Bu_{t-1}))^T]\\
 &= \mathbb{E}[(Ax_{t-1}  + w_t - A\hat{x}_{t-1} )(Ax_{t-1}  + w_t - A\hat{x}_{t-1} )^T]\\
 &= \mathbb{E}[(A(x_{t-1} - \hat{x}_{t-1})  + w_t )(A(x_{t-1} - \hat{x}_{t-1})  + w_t )^T]\\
 &= \mathbb{E}[(Ae_{t-1}  + w_t )(Ae_{t-1}  + w_t )^T]\\
