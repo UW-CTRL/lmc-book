@@ -21,6 +21,7 @@ parts:
   - file: lectures/optimization
   - file: lectures/control-certificates
   - file: lectures/sequential-dm
+  - file: lectures/lqr
   - file: lectures/reachability
   - file: lectures/kalman-filter
 - caption: Code Examples
