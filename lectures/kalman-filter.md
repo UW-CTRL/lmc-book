@@ -153,7 +153,7 @@ So we need to determine what $\mu_t$ and $P_t$ are.
 
 Like in the prediction step, we have
 
-$$\mu_t = \mu_t^p + K_t(y_t - Cu_t^p)$$
+$$\mu_t = \mu_t^p + K_t(y_t - C\mu_t^p)$$
 
 but $K_t$ is to be chosen such that $P_t$, which describes the uncertainty in our estimate, is made to be "as small as possible". This hints that some kind of optimization problem to be solved.
 So let's first compute an expression for $P_t$.
@@ -198,7 +198,7 @@ Summarizing the update step, we have,
 ```{admonition} Update step
 ```{math}
 :label: eq-kf-update
-\textbf{Updated mean:}& \quad \mu_t = \mu_t^p + K_t(y_t - Cu_t^p)\\
+\textbf{Updated mean:}& \quad \mu_t = \mu_t^p + K_t(y_t - C\mu_t^p)\\
 \textbf{Kalman gain:}& \quad K_t = P_t^pC^T(CP_t^pC^T + R)^{-1}\\
 \textbf{Updated error covariance:}& \quad P_t = (I - K_tC)P_t^p\\
 \textbf{Updated estimate:}& \quad \hat{x}_t \sim \mathcal{N}(\mu _t, P_t)\\
@@ -216,7 +216,7 @@ Starting with $\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)$,
 mu_previous = mu0
 P_previous = P0
 for t = 0,...,N
-    mu_predict, P_predict = predict_step(mu_previous, P_previous, A, B, Q)
+    mu_predict, P_predict = predict_step(mu_previous, P_previous, A, B, Q, control)
     y = receive measurement from sensor
     mu_update, P_update = update_step(mu_predict, P_predict, y, C, R)
     mu_previous = mu_previous
