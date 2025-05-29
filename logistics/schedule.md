@@ -12,6 +12,6 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | May 5 <br> May 7       |   6    | LQR (DT), LQR (CT), Tracking LQR | | [lec11 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_11.pdf) |
 | May 12 <br> May 14     |   7    | iLQR, Trajectory optimization, model predictive control | hw 2 due <br> hw3 out| [lec13 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_13.pdf), [lec14 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_14.pdf) |
 | May 19 <br> May 21     |   8    | Guest lecture (Chris Hayner [OpenSCvx](https://github.com/haynec/OpenSCvx)), Kalman filter| | [lec16 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_16.pdf)|
-| May 26 <br> May 28     |   9    | (No lecture; Memorial Day) <br> Kalman filter, technical communication | hw 3 due | |
+| May 26 <br> May 28     |   9    | (No lecture; Memorial Day) <br> Kalman filter, technical communication | hw 3 due | [lec18 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_18.pdf)|
 | June 2 <br> June 4     |   10   | Project spotlight presentation <br> Project poster presentation | Due project pitch <br> Due project poster | |
 |                        | Finals | Due final report or website | | |
