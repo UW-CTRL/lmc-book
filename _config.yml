@@ -60,3 +60,8 @@ parse:
     - dollarmath
     - linkify
     - substitution
+
+
+html_theme_options:
+  head_html: |
+    <meta name="google-site-verification" content="googlebdf5c27da73925e5.html" />
