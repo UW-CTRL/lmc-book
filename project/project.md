@@ -104,6 +104,11 @@ The poster session is a medium for you to practice your technical communication 
 - Pause and allow the audience to ask questions.
 - If multiple people are at your poster at the same time, try your best to include everyone in the discussion.
 
+Some example posters:
+- [Towards Safe and Predictable Social Navigation for Autonomous Ground Vehicles](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/Mizuta.SHARC.2025.pdf)
+- [Building Trust in Autononomous Social Navigation with Egocentric Visual Feedback](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/Warren.Keesing.SHARC.2025.pdf)
+
+
 
 
 ### Poster printing instructions
