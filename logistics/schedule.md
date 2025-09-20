@@ -1,17 +1,16 @@
 # Week-by-week schedule
 Note: *Italicized* text indicates planned topics, but subject to change.
 
-|  Date      |  Week  |  Topic  |  Milestones  |  Links  |
+|  Date      |  Week  |  Topic  |  Milestones  |  Materials  |
 | :--------- | ------ | :---- | :--------- | :-------------- |
-| <img width=150/> ||||
-| March 31 <br> April 2  |   1    | Introduction, state-space dynamics, linearization, continuous and discrete time dynamics | hw 1 out | [lec01 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_01.pdf)|
-| April 7 <br> April 9   |   2    | Intro to optimization, Control Lyapunov Functions, control invariant sets, Control barrier functions, CLF-CBF-QP | | [lec03 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_03.pdf), [lec04 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_04.pdf)|
-| April 14 <br> April 16 |   3    | Guest lecture ([Dr. Max Cohen](https://scholar.google.com/citations?hl=en&user=e_0yKw0AAAAJ&view_op=list_works&sortby=pubdate)) CBFs in the real-world!, <br>Guest lecture ([Dr. Edward Schmerling](https://scholar.google.com/citations?user=b4Kj6MIAAAAJ&hl=en)) Introduction to sequential decision-making  | | [lec05 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_05.pdf), Pre-reading for guest lecture: [Control barrier functions via reduced-order models](https://arxiv.org/pdf/2403.09865), [lec06 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_06.pdf) |
-| April 21 <br> April 23 |   4    | Value function, Bellman equation, value iteration, stochastic DP | hw 1 due; <br> hw 2 out |  [lec07 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_07.pdf)|
-| April 28 <br> April 30 |   5    | HJB, HJI, HJ reachability, linear quadratic regulator | Project proposal due | [lec09 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_09.pdf),  [lec10 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_10.pdf), [Pursuit-Evasion](https://github.com/StanfordASL/AA203-Examples/blob/2022/Lecture-12/HJ%20Reachability%20--%20Pursuit%20Evasion.ipynb), [HJ code basics](../examples/hj_reachability_basics.ipynb)|
-| May 5 <br> May 7       |   6    | LQR (DT), LQR (CT), Tracking LQR | | [lec11 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_11.pdf) |
-| May 12 <br> May 14     |   7    | iLQR, Trajectory optimization, model predictive control | hw 2 due <br> hw3 out| [lec13 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_13.pdf), [lec14 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_14.pdf) |
-| May 19 <br> May 21     |   8    | Guest lecture (Chris Hayner [OpenSCvx](https://github.com/haynec/OpenSCvx)), Kalman filter| | [lec16 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_16.pdf)|
-| May 26 <br> May 28     |   9    | (No lecture; Memorial Day) <br> Kalman filter, technical communication | hw 3 due | [lec18 pdf](https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/lecture_18.pdf)|
-| June 2 <br> June 4     |   10   | Project spotlight presentation <br> Project poster presentation | Due project pitch <br> Due project poster | |
-|                        | Finals | Due final report or website | | |
+| Sep 30  |   1    | Introduction, state space representation, coding basics | | |
+| Oct 7   |   2    | Optimization, classical feedback control | | |
+| Oct 14  |   3    | Stability and invariance, Lyapunov and barrier functions // Mini guest lecture: Isaac Remy | | (research papers, TRI, Ames, learning from demonstrations) |
+| Oct 21  |   4    | Introduction to sequential decision making and optimal control | | |
+| Oct 28  |   5    | Value function, dynamic programming, Bellman equation | | |
+| Nov 4   |   6    | Markov Decision Process, POMDPs // Guest lecture: Liam Kruse | | (Papers) |
+| Nov 11  |   7    | Linear quadratic regulator | | |
+| Nov 18  |   8    | Trajectory optimization, learning-based control // Mini guest lecture: Tyler Han, Chris Hayner | | (Papers) |
+| Nov 25  |   9    | Kalman filter and Linear Quadratic Gaussian | | |
+| Dec 2   |   10   | Special topic // Flex | | |
+|         | Finals | | Due video | |
