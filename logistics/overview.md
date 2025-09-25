@@ -24,13 +24,13 @@ Below is the breakdown for the grading for the course. For more information, ple
 
 - **Exercises:** 30% You will need to submit short exercises, due throughout the quarter. We will go through some exercises interactively during lectures, and others you will do in your own time. Collaboration is encouraged.
 
-- **Tutorial:** 35% You will pick a technique related to the course material, and create a tutorial/worked example on that topic so that it's accessible to an undergraduate senior. The deliverables are:
+- **Tutorial:** 40% You will pick a technique related to the course material, and create a tutorial/worked example on that topic so that it's accessible to an undergraduate senior. The deliverables are:
     - ~15 minute recording of you presenting the topic. You may present the material however you like, such as using slides, writing on a tablet, at a whiteboard, YouTube short, etc.
     - A jupyter notebook accompanying your tutorial.
 
 - **Peer review:** 15% You will assigned another students' tutorial, and you will watch it, pose questions, and provide feedback on their tutorial.
 
-- **Research paper presentation:** 20% You will find a published research paper on a topic of your choice, and you give a short presentation on the paper.
+- **Research paper presentation:** 15% You will find a published research paper on a topic of your choice, and you give a short presentation on the paper.
 
 ## Course material
 
