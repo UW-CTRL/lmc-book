@@ -1,13 +1,28 @@
 # State-space representation
 
 For a general system, there may be multiple outputs that one may need information on, and also multiple inputs in which one can influence the system. For example, for a car, one may be interested in the position, heading, and velocity, and the car's motion can be influenced by throttle/braking and steering. We refer to a system with *multiple* inputs and *multiple* outputs as a **MIMO** system. As there are multiple inputs and multiple outputs, control design for MIMO systems is naturally more complex than *single* input *single* output (SISO) systems since MIMO systems need to handle complex interactions between multiple variables.[^1]
+If you have taken a feedback control course in your undergraduate degree, it is likely that was on SISO systems.
 
 An efficient way to describe MIMO systems is via state-space representation, a mathematical framework for modeling a dynamical system using a set of *state variables* to track how inputs influence system behavior over time through first-order differential or difference equations.
 The state variables are selected to capture the essential information about the system's current status, and with knowledge about the dynamics and external inputs (e.g., controls, disturbances), the future behavior or next state can be predicted.
 
 ## State-space definition
 
-Given a system of interest, let $x\in\mathbb{R}^n$ be the *state vector* where $n$ denotes the smallest number of variables possible that can represent the entire state of the system at any given time. Let $u\in\mathbb{R}^m$ denote the *control vector* where $m$ denotes the number of control inputs.[^2]
+Given a system of interest, let $x\in\mathbb{R}^n$ be the *state vector* where $n$ denotes the smallest number of variables possible that can represent the necessary information about system at any given time. By necessary, we mean the desired information needed by the user/engineer to understand the system to, for instance,  make decisions.
+
+```{admonition} Example: State representation for a car
+Given a car, there are multiple state space representations possible, each corresponding to a different level of modeling fidelity. To describe the motion of the car coarsely, the state could simply be $[x, y, \theta, v]^T$, the position, heading, and velocity of the car. This would be a sufficient choice if we were simply interested in where the car was, where it is heading, and how fast it is going.
+Alternatively, if we were instead considering a *race* car, then we may also want to know more information to assess the "health" of the vehicle, like the amount of wear on the tires, the temperature of the engine, etc. And these additional variables may also affect how much power or acceleration can be provided, and therefore impact how velocity changes over time.
+```
+
+```{admonition} Example: State representation for a quadrotor
+For example, given a car, there are multiple state space representations possible, each corresponding to a different level of modeling fidelity. To describe the motion of the car coarsely, the state could simply be $[x, y, \theta, v]^T$, the position, heading, and velocity of the car. This would be a sufficient choice if we were simply interested in where the car was, where it is heading, and how fast it is going.
+Alternatively, if we were instead considering a *race* car, then we may also want to know more information to assess the "health" of the vehicle, like the amount of wear on the tires, the temperature of the engine, etc. And these additional variables may also affect how much power or acceleration can be provided, and therefore impact how velocity changes over time.
+```
+
+
+
+ Let $u\in\mathbb{R}^m$ denote the *control vector* where $m$ denotes the number of control inputs.[^2]
 Then, for a continuous time system, the future states can be predicted via a first-order differential equation,
 
 $$

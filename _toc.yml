@@ -5,15 +5,17 @@ parts:
   chapters:
   - file: logistics/overview
   - file: logistics/schedule
-- caption: Homework
+# - caption: Notebooks
+#   chapters:
+#   - file: homework/hw_solution_writeup
+#   - file: homework/hw01
+#   - file: homework/hw02
+#   - file: homework/hw03
+- caption: Deliverables
   chapters:
-  - file: homework/hw_solution_writeup
-  - file: homework/hw01
-  - file: homework/hw02
-  - file: homework/hw03
-- caption: Project
-  chapters:
-  - file: project/project
+  - file: project/exercises
+  - file: project/paper-review
+  - file: project/tutorial
 - caption: Lectures
   chapters:
   - file: lectures/introduction
@@ -24,19 +26,13 @@ parts:
   - file: lectures/lqr
   - file: lectures/reachability
   - file: lectures/kalman-filter
-- caption: Code Examples
-  chapters:
-  - file: examples/clf_controller
-  - file: examples/hj_reachability_basics
-  - file: examples/tracking_LQR
-  - file: examples/direct_methods
-- caption: Worked Examples by Students
-  chapters:
-  - file: worked_examples/week01_aldaz_genetic_algorithm.ipynb
-  - file: worked_examples/week01_bieniewicz_adaptive_runge_kutta.ipynb
-  - file: worked_examples/week01_orona_numerical_integration_methods.ipynb
-  - file: worked_examples/week03_morales_lqr.ipynb
-  - file: worked_examples/week05_rohpan_inverted_pendulum
+# - caption: Code Examples
+#   chapters:
+#   - file: examples/clf_controller
+#   - file: examples/hj_reachability_basics
+#   - file: examples/tracking_LQR
+#   - file: examples/direct_methods
+
 
 
 # - caption: A. Math Review
