@@ -30,7 +30,7 @@ Below is the breakdown for the grading for the course. For more information, ple
 
 - **Peer review:** 15% You will assigned another students' tutorial, and you will watch it, pose questions, and provide feedback on their tutorial.
 
-- **Research paper presentation:** 15% You will find a published research paper on a topic of your choice, and you give a short presentation on the paper.
+- **Research paper presentation:** 15% You will find a published research paper on a topic of your choice, and you give a short presentation on the paper and Q&A.
 
 ## Course material
 

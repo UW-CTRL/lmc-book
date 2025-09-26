@@ -39,7 +39,7 @@ If $f$ is not differentiable, or evaluating $f$ is an expensive process (e.g., r
 
 ### Gradient descent
 One of the most popular and simplest approach is gradient descent.
-If $f$ is nice smooth differentiable function where it is possible, and hopefully cheap, to compute $\nabla f(x)$, the *gradient* of $f$, then we can simply update our value of $x$ by moving moving in the direction og steepest descent.
+If $f$ is nice smooth differentiable function where it is possible, and hopefully cheap, to compute $\nabla f(x)$, the *gradient* of $f$, then we can simply update our value of $x$ by moving moving in the direction of steepest descent.
 Mathematically, if $\alpha$ is a step size, and $x_k$ is the current guess for the optimal solution, then we can update our guess by applying the update rule,
 
 $$
@@ -52,7 +52,7 @@ What are some practical considerations when performing gradient descent?
 ```
 
 ```{margin} Convex Optimization
-The textbook [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf) by Lieven Vandenberghe and Stephen P. Boyd is to go-to text for learning about convex optimization. Lectures of 2023 Stanford EE 364a [course offering are ou Youtube](https://youtu.be/kV1ru-Inzl4?si=S2Nf1e1gu_M6H2zq).
+The textbook [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf) by Lieven Vandenberghe and Stephen P. Boyd is the go-to text for learning about convex optimization. Lectures of 2023 Stanford EE 364a [course offering are on Youtube](https://youtu.be/kV1ru-Inzl4?si=S2Nf1e1gu_M6H2zq).
 ```
 
 ```{admonition} Practical considerations
@@ -60,8 +60,8 @@ The textbook [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvx
 
 
 We need to be careful about how to pick $\alpha$; if it is too small, then you may need to take many steps, but if it's too big, you may struggle to converge to a (local) optimum.
-We can perform [line search](https://optimization.cbe.cornell.edu/index.php?title=Line_search_methods) where you search in the along the direction to find a suitable step size.
-There are more advanced techniques that consider the *momentum** that can adaptive change $\alpha$ based on the geometry of $f$. We won't discuss further here, but [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) touches on this and has some useful references.
+We can perform a [line search](https://optimization.cbe.cornell.edu/index.php?title=Line_search_methods) where you search along the steepest descent direction to find a suitable step size.
+There are more advanced techniques that consider the *momentum** that can adaptively change $\alpha$ based on the geometry of $f$. We won't discuss further here, but [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) touches on this and has some useful references.
 
 
 
@@ -71,7 +71,7 @@ Just because the objective is differentiable does not mean you will always find 
 
 
 However, if $f$ is *convex*, loosely speaking, "bowl-shaped", then that implies that any minimum found is the global minimum. We won't go into too much detail into convex optimization, but we will use the fact later on that *quadratic* and *linear* functions are convex.
-But if your problem is convex, then generally (in most cases), this is tractable to solve, and there are many well-support tools and solvers for solving convex optimization problems. In this course, we will use [`cvxpy`](https://www.cvxpy.org/).
+But if your problem is convex, then generally (in most cases), this is tractable to solve, and there are many well-supported tools and solvers for solving convex optimization problems. In this course, we will use [`cvxpy`](https://www.cvxpy.org/).
 ```
 
 
@@ -105,13 +105,13 @@ What are some ways you could go about handling these constraints?
 
 There are a few ways to go about handling these constraints. Again, we won't be going into depth here, but we are briefly mentioning these approaches in case you want to read more about them.
 
-- **Projected gradient descent**: Take a gradient descent step as normal, and then project the solution back to the closest feasible point in the feasible set. This projection may involve solving another optimization problem(!) but for certain geometries of the feasible set, the projection could be found in closed form.
+- **Projected gradient descent**: Take a gradient descent step as normal, and then project the solution back to the closest feasible point in the feasible set. This projection may involve solving another optimization problem(!), but for certain geometries of the feasible set, the projection could be found in closed form.
 
-- **Use the Lagrangian**: A special way to convert a constrained optimization problem into an unconstrained one. But this is performed in a specific way where *Lagrangian multipliers* are introduced, and the neccesary conditions for optimality are given by the *Karush–Kuhn–Tucker (KKT) conditions*. There are duality connections between the lagrangian (dual problem) and the original problem (primal problem) where solving the dual problem gives you insight about the primal problem.
+- **Use the Lagrangian**: A special way to convert a constrained optimization problem into an unconstrained one. But this is performed in a specific way where *Lagrangian multipliers* are introduced, and the necessary conditions for optimality are given by the *Karush–Kuhn–Tucker (KKT) conditions*. There are duality connections between the Lagrangian (dual problem) and the original problem (primal problem), where solving the dual problem gives you insight about the primal problem.
 
-- **Treat constraints as (big) penalities in the objective**: We can add the constraint functions as part of the objective function so that there is a high cost then the constraints are violated. This turns the constrained problem into an unconstrained one, but then you have to carefully tune the weightings on the constraints, and there is not guarantee that the constraints will be perfectly satisfied.
+- **Treat constraints as (big) penalties in the objective**: We can add the constraint functions as part of the objective function so that there is a high cost then the constraints are violated. This turns the constrained problem into an unconstrained one, but then you have to carefully tune the weightings on the constraints, and there is no guarantee that the constraints will be perfectly satisfied.
 
-- **Log-barrier**: A version of the approach above expect that a log function is applied on the constraint to so that the cost approaches infinity as $x$ approaches the the infeasible region. See homework 1.
+- **Log-barrier**: A version of the approach above except that a log function is applied on the constraint so that the cost approaches infinity as $x$ approaches the infeasible region. See homework 1.
 ```
 
 
