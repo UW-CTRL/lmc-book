@@ -6,7 +6,7 @@ html_meta:
 <!-- ![Header image showing molecules plotted in two different ways](_static/images/header.png) -->
 
 # Linear Multivariable Control
-These are (work-in-progress) course notes for University of Washington AA/EE/ME 548.
+These are (work-in-progress) course notes for University of Washington AA/EE/ME 548 and AE 513.
 
 ## Overview
 
