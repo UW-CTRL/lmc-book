@@ -10,7 +10,7 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | Oct 28  |   5    | *Markov Decision Process, POMDPs // Guest lecture: Dr. Liam Kruse*| Week 3-4 exercises due Thurs |  |
 | Nov 4   |   6    | *Linear quadratic regulator* | Self-assessment due Thurs | |
 | Nov 11  |   7    | *(No lecture / Veterans Day)* | Week 5-6 exercises due Thurs | |
-| Nov 18  |   8    | *Trajectory optimization, learning-based control* | Self-assessment due Thurs | |
+| Nov 18  |   8    | *Trajectory optimization, MPC, learning-based control* | Self-assessment due Thurs | |
 | Nov 25  |   9    | *Kalman filter and Linear Quadratic Gaussian* | Week 8-9 exercises due Fri | |
 | Dec 2   |   10   | Research paper presentation | Self-assessment due Fri | |
 |         | Finals | | Video and feedback due | |
