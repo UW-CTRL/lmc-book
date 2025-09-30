@@ -6,6 +6,8 @@ You will be expected to submit completed exercises by the set deadline. You will
 
 These exercises cannot be turned in late for credit other than in exceptional circumstances, and you must request extensions in advance of the deadline. This is because solutions will be released immediately after the due date to facilitate the self-assessment portion.
 
+**[Link to exercises](https://github.com/UW-CTRL/lmc-exercises)**
+
 
 ## Self-assessment
 
@@ -25,10 +27,13 @@ Do not give yourself the 2 points if you got an incorrect problem and corrected 
 To specify grades and provide explanations of any errors, use the Comment feature in Canvas's Assignment page for the homework.
 
 
-### Notes and caveats intended to ensure the integrity of this process:
+### Notes and caveats intended to ensure the integrity of this process
 - If you did not attempt the problem initially, you will receive 0 points. There is no opportunity to earn more points by providing an explanation.
 - If you grade incorrectly (i.e. initial solution is incomplete or incorrect and your explanation is incomplete or incorrect), you will receive 1 or 0 at the discretion of the instructional staff (this ensures you cannot simply assign all "2"s, nor can you receive full credit for incomplete or incorrect explanations). Stating "the solution makes sense" is not sufficient.
 
 ## Submission guidelines
 The exercises will be in the form of a Jupyter notebook. You can download the notebook as PDF and upload to Canvas.
-For non-code problems, you can still use Jupyter notebook as you can typeset your answers using Latex and regular text.
+For non-code problems, you can still use Jupyter notebook as you can typeset your answers using Latex and markdown.
+
+Exercises are due **Thursday midnight** unless stated otherwise. See [schedule](/logistics/schedule).
+Self-assessments are due 1 week after.
