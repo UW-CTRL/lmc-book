@@ -10,9 +10,9 @@ Moreover, the measurements may only provide a signal to part of the state (e.g.,
 ## Problem set up
 
 Let us set up this state estimation problem more formally. To start off, let us consider a discrete-time setting.
-Suppose we have a dynamical system with state vector $x_t\in \mathbb{R}^n$, control input $u_t\in\mathbb{R}^m$ and measurement $y_t\in \mathbb{R}^p$ at time step $t$. Let $u_0,u_1,\ldots,u_{t-1}$ denote a sequence of control inputs the system executes right before timestep $t$. This is assumed to be known (since we get to choose the controls to execute). And let $y_1, y_2,\ldots, y_t$ denote a sequence of measurements up until timestep $t$.
+Suppose we have a dynamical system with state vector $x_t\in \mathbb{R}^n$, control input $u_t\in\mathbb{R}^m$ and measurement $y_t\in \mathbb{R}^p$ at time step $t$. Let $u_0,u_1,\ldots,u_{t-1}$ denote a sequence of control inputs the system executes right before time-step $t$. This is assumed to be known (since we get to choose the controls to execute). And let $y_1, y_2,\ldots, y_t$ denote a sequence of measurements up until time-step $t$.
 
-Then, the goal is to develop an algorithm that takes in $u_0,u_1,\ldots,u_{t-1}$ and $y_1, y_2,\ldots, y_t$ to estimate the state $x_t$ at timestep $t$ with some estimate $\hat{x}_t \sim p(\hat{x}_t \mid \text{past controls}, \text{past and current obsevations})$ such that the error between the true and estimated state $\| x_t - \hat{x}_t\|$ is "as small as possible".
+Then, the goal is to develop an algorithm that takes in $u_0,u_1,\ldots,u_{t-1}$ and $y_1, y_2,\ldots, y_t$ to estimate the state $x_t$ at time-step $t$ with some estimate $\hat{x}_t \sim p(\hat{x}_t \mid \text{past controls}, \text{past and current observations})$ such that the error between the true and estimated state $\| x_t - \hat{x}_t\|$ is "as small as possible".
 
 In general, this estimation problem is a challenging optimization problem for a number of reasons. For example, the uncertainty in the measurement and dynamics model present itself in a very complicated way, such as being state-dependent, a distribution that isn't well described by standard distributions (e.g., Gaussian), the measurement and dynamics model are nonlinear, and the measurements are high-dimensional (e.g., an image).
 
@@ -20,14 +20,14 @@ There's been a lot of progress made, especially with deep learning techniques, t
 But in this chapter, we will study a particular state estimation algorithm that is very tractable, simple, and powerful, despite certain simplifying assumptions it makes.
 
 ## Intuition
-In the process of estimating the state, we assume we have (i) a dynamics model, (ii) a measurement model, and (iii) a description of of the process and measurement noise.
+In the process of estimating the state, we assume we have (i) a dynamics model, (ii) a measurement model, and (iii) a description of the process and measurement noise.
 With the dynamics model, we could propagate the current state estimate through the dynamics and get a prediction of the next state. While with the measurement model, we could analyze a measurement and predict where the state could be that way. But which one should be trust more? The prediction from the dynamics model or the prediction from the measurement model?
 
 Well, ideally both! And this depends on how much we should trust each of the models. The level of "trust" would depend on how much noise they each encompass. That is, we should consider the "relative magnitudes" of uncertainty in the process and measurement noise models. We have put "relative magnitudes" in quotes since it's not always straightforward to compare uncertainties given two arbitrary probability distributions.
 
 At a high-level, a state estimation algorithm that we will dive into next has the following steps. Given the previous state estimate $\hat{x}_{t-1}$, we then perform:
 
-1. **Prediction step**. Using the dynamics, *predict* where the next state should be according to ther dynamics model. But with the understanding that this is only a *prediction* since the true system is subject to process noise, and the exact noise quantity is not something we know or can measure.
+1. **Prediction step**. Using the dynamics, *predict* where the next state should be according to the dynamics model. But with the understanding that this is only a *prediction* since the true system is subject to process noise, and the exact noise quantity is not something we know or can measure.
 2. **Receive a measurement $y_t$.** Compare what the predicted measurement would have been using the predicted next state and measurement model. This difference is a *measurement residual*.
 3. **Update step**. Obtain an updated prediction of the next state by reasoning about the predicted state and the measurement residual, and figuring out an optimal way to fuse these two pieces of information together.
 
@@ -36,7 +36,7 @@ At a high-level, a state estimation algorithm that we will dive into next has th
 ## The Kalman Filter
 
 ### Key assumptions
-To make the state estimation procedure tractable, we need to make some simplying assumption. Not too surprisingly (given the name of this course), we will assume the **dynamics and measurement models are linear**.
+To make the state estimation procedure tractable, we need to make some simplyfing assumption. Not too surprisingly (given the name of this course), we will assume the **dynamics and measurement models are linear**.
 In terms of simplifying assumptions on the noise, we make the following assumptions:
 - The process and measurement noise is *additive*.
 - The noise is *Gaussian white noise*, meaning the noise is uncorrelated across different time steps, and is drawn from a normal distribution with mean 0 and with some covariance to be set by user.
@@ -58,10 +58,10 @@ Note: For further simplicity, we have assumed time-invariant dynamics, measureme
 
 
 ### Set up
-Our estimate is not exactly a specific value, but rather is a *proability distribution* over $\hat{x}_t$. That is, we want to estimate the probability distribution $p$ where $\hat{x}_t \sim  p(\hat{x}_t \mid u_{0:t-1}, y_{1:t}, x_0)$.
+Our estimate is not exactly a specific value, but rather is a *probability distribution* over $\hat{x}_t$. That is, we want to estimate the probability distribution $p$ where $\hat{x}_t \sim  p(\hat{x}_t \mid u_{0:t-1}, y_{1:t}, x_0)$.
 But what does this probability distribution look like?
 ```{margin} Compare with LQR
-This is analogous to LQR. By assuming the value function is quadratic, after appling the Bellman update, the value function at the next time step is also quadratic!
+This is analogous to LQR. By assuming the value function is quadratic, after applying the Bellman update, the value function at the next time step is also quadratic!
 ```
 Well, it turns out that there is a reason why we chose Gaussian white noise and linear dynamics. When we apply an affine transformation to a Gaussian, the output is another Gaussian but with a different mean and covariance. So if we assume that our state estimate is represented by a Gaussian distribution. Then "passing" that estimate through the dynamics and measurement model will result in the updated estimate being Gaussian as well!
 
@@ -79,7 +79,7 @@ As such, we would like to minimize the uncertainty in our error estimate by *min
 Summarizing the ideas above:
 - Initial state estimate $\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)$ chosen by user.
 - Error estimate $e_t = x_t - \hat{x}_t$ where $\mathbb{E}[e_te_t^T] = P_t$.
-- Want to minimizing the diagonal entries of $P_t$ at every time step.
+- Want to minimize the diagonal entries of $P_t$ at every time step.
 
 So let's begin the estimation process where we first *predict* the next state, receive a measurement, and then fuse the measurement information with the prediction.
 
@@ -92,7 +92,7 @@ $$
 \hat{x}_t^p = A\hat{x}_{t-1} + Bu_{t-1}
 $$
 
-Since $\hat{x}_{t-1}$ is a random variable and is passed through an affine transformation, then $\hat{x}_t^p$ is also a random variable. If $\hat{x}_{t-1}\sim\mathcal{N}(\mu_{t-1}, P_{t-1})$, then $\hat{x}_t^p \sim\mathcal{N}(\mu_t^p, P_t^p)$, but with a different mean and covariance to be determined. Since we assume that $\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)$, and Gaussians remain Gaussians under affine transformations, then it follows that all $\hat{x}_t^p$ (and \hat{x}_t$) will also be normally distributed.
+Since $\hat{x}_{t-1}$ is a random variable and is passed through an affine transformation, then $\hat{x}_t^p$ is also a random variable. If $\hat{x}_{t-1}\sim\mathcal{N}(\mu_{t-1}, P_{t-1})$, then $\hat{x}_t^p \sim\mathcal{N}(\mu_t^p, P_t^p)$, but with a different mean and covariance to be determined. Since we assume that $\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)$, and Gaussians remain Gaussians under affine transformations, then it follows that all $\hat{x}_t^p$ (and $\hat{x}_t$) will also be normally distributed.
 
 So we have $\hat{x}_{t-1}\sim\mathcal{N}(\mu_{t-1}, P_{t-1})$. Recalling that the expectation is a linear operator, then we have,
 
@@ -145,7 +145,7 @@ The way we fuse these two pieces of information is as follows:
 
 $$ \hat{x}_t = \hat{x}_t^p + K_t (y_t - C\hat{x}_t^p), \qquad \hat{x}_t \sim \mathcal{N}(\mu_t, P_t)$$
 
-where $K_t$ is the **Kalman gain** which is a gain matrix which tradeoff our "trust" in the dynamics model and the measurement model. Intuitively, $K_t$ should consider the relative sizes of $Q$ and $R$, the uncertainty i the dynamics and measurement model. If there is more uncertainty in the dynamics then we should trust our measurement model more, and vice versa.
+where $K_t$ is the **Kalman gain** which is a gain matrix which trade-off our "trust" in the dynamics model and the measurement model. Intuitively, $K_t$ should consider the relative sizes of $Q$ and $R$, the uncertainty in the dynamics and measurement model. If there is more uncertainty in the dynamics then we should trust our measurement model more, and vice versa.
 
 
 Notice that the mean $\mu_t$ and $P_t$ are updated since the superscript $p$ is dropped.
@@ -261,11 +261,11 @@ This connection between LQR (control) and Kalman Filter (estimation) is known as
 
 
 ## Continuous-time Kalman Filter
-We have so far considered a discrete-time Kalman filter. Let's see what happens with the continous-time case.
+We have so far considered a discrete-time Kalman filter. Let's see what happens with the continuous-time case.
 
 Consider the analogous continuous-time Gaussian linear dynamics.
 
-```{admonition} Gaussian Linear Dynamics (Continous-time)
+```{admonition} Gaussian Linear Dynamics (Continuous-time)
 ```{math}
 :label: eq-gaussian-linear-dynamics-ct
 
@@ -273,7 +273,7 @@ Consider the analogous continuous-time Gaussian linear dynamics.
 &y(t) = Cx(t) + v(t), \qquad &\mathbb{E}[v(t)v(t)^T] = R, \qquad &v(t) \sim \mathcal{N}(0, R)
 ```
 
-What we will do is convert these continuous-time dynamics into discrete-time dynamics with time-step $\Delta t$ and apply the discrete-time Kalman Filter equations, and then see what happens with $\Delta t \rightarrow 0$. This is similar to what we did when we went from discrete-time Bellman equation to continous-time HJB equation.
+What we will do is convert these continuous-time dynamics into discrete-time dynamics with time-step $\Delta t$ and apply the discrete-time Kalman Filter equations, and then see what happens with $\Delta t \rightarrow 0$. This is similar to what we did when we went from discrete-time Bellman equation to continuous-time HJB equation.
 
 
 Let $\Delta t$ denote a time step. Then we have:
@@ -285,9 +285,9 @@ x(t+\Delta t) &= x(t) + \Delta t (Ax(t) + Bu(t)) \\
 \therefore x_{t+1} & = \tilde{A}x_t + \tilde{B}u_t, \quad \text{where}\: \tilde{A} = I+A\Delta t, \: \tilde{B} = B\Delta t
 $$
 
-But what happens to the process and Gaussian noise when we consider the system over timestep $\Delta t$.
+But what happens to the process and Gaussian noise when we consider the system over time-step $\Delta t$.
 
-Let $\tilde{w}_t$ be the process noise for the discrete-time system. It should capture the total noise over timestep $\Delta$. So we have $\tilde{w}_t = \int_t^{t+\Delta t} w(\tau) d\tau $. Then what is its corresponding covariance?
+Let $\tilde{w}_t$ be the process noise for the discrete-time system. It should capture the total noise over time-step $\Delta$. So we have $\tilde{w}_t = \int_t^{t+\Delta t} w(\tau) d\tau $. Then what is its corresponding covariance?
 
 $$
 \mathbb{E}[\tilde{w}_t\tilde{w}_t^T] &= \mathbb{E}[\int_t^{t+\Delta t}\int_t^{t+\Delta t} w(\tau)w(\tau^\prime)^T d\tau^\prime d\tau]\\
@@ -297,7 +297,7 @@ $$
 $$
 
 
-What about the measurement noise? Let $\tilde{v}_t$ be the measurement noise for the discrete-time system. It measures the measurement noise at that particular timestep. But measurements are taken at every $\Delta t$ interval. As such, the measurement noise should be the mean noise of $v(t)$ over an interval $\Delta t$. So we have  $\tilde{v}_t = \frac{1}{\Delta t}\int_t^{t+\Delta t} v(\tau) d\tau $. Then what is its corresponding covariance?
+What about the measurement noise? Let $\tilde{v}_t$ be the measurement noise for the discrete-time system. It measures the measurement noise at that particular time-step. But measurements are taken at every $\Delta t$ interval. As such, the measurement noise should be the mean noise of $v(t)$ over an interval $\Delta t$. So we have  $\tilde{v}_t = \frac{1}{\Delta t}\int_t^{t+\Delta t} v(\tau) d\tau $. Then what is its corresponding covariance?
 
 $$
 \mathbb{E}[\tilde{v}_t\tilde{v}_t^T] &= \mathbb{E}\biggl[\frac{1}{\Delta t^2}\int_t^{t+\Delta t}\int_t^{t+\Delta t} v(\tau)v(\tau^\prime)d\tau^\prime d\tau \biggl]\\
@@ -306,11 +306,11 @@ $$
 \tilde{R} &= \frac{R}{\Delta t}
 $$
 
-So we now have a discrete-time Kalman Filter problem for the following dynamics where $A, B, Q, R$ are defined for the *continous-time* system.
+So we now have a discrete-time Kalman Filter problem for the following dynamics where $A, B, Q, R$ are defined for the *continuous-time* system.
 
 
 ```{math}
-:label: eq-discrete-time-system-from-continous-time
+:label: eq-discrete-time-system-from-continuous-time
 
 &x_{t+1} = (I + A\Delta t)x_t + B\Delta t u_t + \tilde{w}_t, \qquad & \mathbb{E}[\tilde{w}_t\tilde{w}_t^T] = Q\Delta t, \qquad & \tilde{w}_t \sim \mathcal{N}(0, Q\Delta t)\\
 &y_t = Cx_t + \tilde{v}_t, \qquad &\mathbb{E}[\tilde{v}_t\tilde{v}_t^T] = \frac{R}{\Delta t}, \qquad &\tilde{v}_t  \sim \mathcal{N}(0, \frac{R}{\Delta t})
@@ -322,13 +322,13 @@ We leave this working out as an exercise.
 But doing this exercise, you should get the following expression for the Kalman gain.
 
 $$
-\frac{1}{\Delta t}K_t &= P_t^pC^T(CP_t^pC\Delta t + R)^{-1}\\
+\frac{1}{\Delta t}K_t &= P_t^pC^T(CP_t^pC^T\Delta t + R)^{-1}\\
 \Rightarrow &\lim_{\Delta t \rightarrow 0} \frac{1}{\Delta t}K_t = P_t^pC^T R^{-1}\\
 \Rightarrow &\lim_{\Delta t \rightarrow 0} K_t = 0
 $$
 
-This result implies that if we use a discrete Kalman filter with a small $\Delta t$ for continuous-time systemms, then the discrete Kalman gain tends to zero, which isn't useful.
-Instead we define the continuous-time Kalman gain as the average of the discrete-time Kalman gain over the timestep $\Delta t$. Intuitively, the discrete Kalman gain is applied over the timestep $\Delta t$. So if we want to determine the Kalman gain at an instance in continuous-time, then since the discrete Kalman gain is applied over $\Delta t$, the "spreading" that gain across $\Delta$ evenly, we get $\frac{1}{\Delta t} K_t$ at any time instance over that interval. Then we take the limit as $\Delta t \rightarrow 0$.
+This result implies that if we use a discrete Kalman filter with a small $\Delta t$ for continuous-time systems, then the discrete Kalman gain tends to zero, which isn't useful.
+Instead we define the continuous-time Kalman gain as the average of the discrete-time Kalman gain over the time-step $\Delta t$. Intuitively, the discrete Kalman gain is applied over the time-step $\Delta t$. So if we want to determine the Kalman gain at an instance in continuous-time, then since the discrete Kalman gain is applied over $\Delta t$, the "spreading" that gain across $\Delta$ evenly, we get $\frac{1}{\Delta t} K_t$ at any time instance over that interval. Then we take the limit as $\Delta t \rightarrow 0$.
 
 $$
 K(t) = \lim_{\Delta t \rightarrow 0}\frac{1}{\Delta t} K_t  = P_t^pC^T R^{-1}
@@ -383,7 +383,7 @@ $$
 A = \nabla_x f(x_t, u_t)\lvert_{x_t = \mu_{t-1}}^T, \qquad C =  \nabla_xg(x_t)\lvert_{x_t = \mu_t^p}^T
 $$
 
-With $A$ and $C$ computed using the state estimate at each time step, we apply (almost) the same set of equations we saw with the standarf KF.
+With $A$ and $C$ computed using the state estimate at each time step, we apply (almost) the same set of equations we saw with the standard KF.
 
 
 ```{admonition} Prediction step (Extended KF)
