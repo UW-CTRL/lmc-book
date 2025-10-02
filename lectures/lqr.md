@@ -2,8 +2,8 @@
 
 In the previous chapter, we learned about sequential decision-making and saw that using the principle of optimality, an optimal control problem could be broken down into a sequence of smaller decisions which could be solved recursively.
 The resulting equations we derived were the **Bellman Equation** (discrete time) and the **Hamilton-Jacobi-Bellman Equation** (continuous time).
-However, despite these nice equations that, in theory, tells us how to solve for the optimal control policy, they are in general, difficult to solve and often intractable. This is due to a number of reasons, like having a large state and control space (if discrete and finite) or the minimization problem is a difficult to solve (i.e., non-convex). For the latter, the difficulty of the minimization problem can stem from the functional form of the cost function, dynamics, and value function. If the functional form (e.g., whether it is linear, quadratic, exponential, etc) is not conducive to making the minimization problem tractable, then solving the Bellman equation or HJB equation is going to be very challenging.
-Another, perhaps more subtle point, is that even if we can solve time instance of the minimization problem, is there any guarantees that we can solve the problem for the next time step? Since we are essentially performing dynamic programming and iterating backward in time, we want to make sure that whatever solution we get at time $t$ will make the next iteration at the previous time step also tractable.
+However, despite these nice equations that, in theory, tells us how to solve for the optimal control policy, they are in general difficult to solve and often intractable. This is due to a number of reasons, like having a large state and control space (if discrete and finite) or the minimization problem is difficult to solve (i.e., non-convex). For the latter, the difficulty of the minimization problem can stem from the functional form of the cost function, dynamics, and value function. If the functional form (e.g., linear, quadratic, exponential, etc.) is not conducive to making the minimization problem tractable, then solving the Bellman equation or HJB equation is going to be very challenging.
+Another, perhaps more subtle, point is that even if we can solve time instance of the minimization problem, is there are any guarantees that we can solve the problem for the next time step? Since we are essentially performing dynamic programming and iterating backward in time, we want to make sure that whatever solution we get at time $t$ will make the next iteration at the previous time step also tractable.
 
 *So under what conditions is solving these equations tractable?*
 
@@ -16,7 +16,7 @@ For now, let's consider a discrete-time setting and we will later extend the ana
 ```{admonition} Key assumptions of LQR
 :label: eq-lqr-assumptions
 - **Linear dynamics.** We assume the dynamics are linear: $x_{t+1} = A_tx_t + B_tu_t$. Note that they can be time-varying (there are subscripts on $A$ and $B$).
-- **Quadratic cost.** The we assume that the cost function for the optimal control problem is quadratic in state and controls. That is, the stage cost is $J(x_t, u_t, t) = x_t^TQ_tx_t + u_t^TR_tu_t$ and the terminal cost is $J_T(x_T) = x_T^TQ_Tx_T$ where $Q^T=Q\succeq 0$, $Q_T^T=Q_T\succeq 0$, and  $R^T=R\succ 0$.
+- **Quadratic cost.** We assume that the cost function for the optimal control problem is quadratic in state and controls. That is, the stage cost is $J(x_t, u_t, t) = x_t^TQ_tx_t + u_t^TR_tu_t$ and the terminal cost is $J_T(x_T) = x_T^TQ_Tx_T$ where $Q^T=Q\succeq 0$, $Q_T^T=Q_T\succeq 0$, and  $R^T=R\succ 0$.
 - **No additional constraints.** There are no other constraints other than constraints on dynamics and initial states. This means there are no constraints on controls (e.g., control limits) or state constraints (e.g., avoid obstacles).
 ```
 
@@ -50,7 +50,7 @@ $$
 V^*(x_{t},t) = \min_{u_{t}} \biggl( x_t^TQx_t + u_t^TRu_t + V^*(Ax_t + Bu_t, t+1) \biggl)
 $$
 
-To start of the recursion at the end of the horizon, we initialize the value function with $V^*(x,T) = x^TP_Tx$ where $P_T = Q_T$.
+To start off the recursion at the end of the horizon, we initialize the value function with $V^*(x,T) = x^TP_Tx$ where $P_T = Q_T$.
 
 $$
 V^*(x_{T-1},T-1) &= \min_{u_{T-1}} \biggl( x_{T-1}^TQx_{T-1} + u_{T-1}^TRu_{T-1} + V^*(Ax_{T-1} + Bu_{T-1}, T) \biggl)\\
@@ -65,8 +65,8 @@ V^*(x_{T-1},T-1) &= \min_{u_{T-1}} \biggl( x_{T-1}^TQx_{T-1} + u_{T-1}^TRu_{T-1}
 &= \min_{u_{T-1}} \biggl( x_{T-1}^T(Q + A^TP_TA)x_{T-1} + u_{T-1}^T(B^TP_TB+R)u_{T-1} + 2u_{T-1}^TB^TP_TAx_{T-1} \biggl)\\
 $$
 
-Note that the expression that we want to minimize with respect to $u_{T-1}$ is *quadratic in $u_{T-1}$! It consists of a constant term (depends on $x_{T-1}$), a linear term term, and a quadratic term.
-This is very convenient since it is straightforward to take the derivatie and set it to zero. We also use the fact that $B^TP_TB+R \succeq 0$ so that first order conditions for optimality are also sufficient.
+Note that the expression that we want to minimize with respect to $u_{T-1}$ is *quadratic in $u_{T-1}$! It consists of a constant term (depends on $x_{T-1}$), a linear term, and a quadratic term.
+This is very convenient since it is straightforward to take the derivative and set it to zero. We also use the fact that $B^TP_TB+R \succeq 0$ so that first order conditions for optimality are also sufficient.
 
 Recall from vector calculus: $\frac{d}{dx} x^TMx = 2Mx$ and $\frac{d}{dx} x^T M = M$. We have
 
@@ -77,7 +77,7 @@ $$
 & u^*_{T-1} = - K_{T-1}x_{T-1}, \quad K_{T-1} = (B^TP_TB+R)^{-1}B^TP_TA
 $$
 
-This turns out to be a rather interesting results. It tells us that the *optimal control* at time step $T-1$ is *linear in state*! Despite the seemingly complex set up and optimal control framework, the optimal controller is simply a linear controller. While we could have, in theory, spent a lot of time turning a linear controller, we can now find an *optimal* gain with respect to our cost function.
+This turns out to be a rather interesting results. It tells us that the *optimal control* at time step $T-1$ is *linear in state*! Despite the seemingly complex set up and optimal control framework, the optimal controller is simply a linear controller. While we could have, in theory, spent a lot of time tuning a linear controller, we can now find an *optimal* gain with respect to our cost function.
 
 Now, let's plug our optimal controller back into the value function and see what $V^*(x_{T-1},T-1)$ ends up being. Note that $Q_T = P_T = P_T^T$, $(A^T)^{-1} = (A^{-1})^T$, and $(AB)^T = B^TA^T$.
 
@@ -106,7 +106,7 @@ K_{t} &= (B^TP_{t+1}B+R)^{-1}B^TP_{t+1}A\\
 u^*_{t} &= -K_{t}x_{t}
 ```
 
-The update equation for this discrete-time finite horizong setting is called the **dynamic Riccati equation**.
+The update equation for this discrete-time finite horizon setting is called the **dynamic Riccati equation**.
 We can find the values for $P_T, P_{T-1},\ldots, P_1, P_0$ offline, simply by using the dynamic Riccati equation, starting from $T$ and iterating *backward* in time.
 Once we find all the values for $P_t$, we can also compute all the gains $K_0, K_1, \ldots, K_{T-1}$, also offline.
 The online, to find the optimal control at time step $t$, we simply look up our value for $K_t$ and compute $u^*_t = -K_tx_t$.
@@ -155,7 +155,7 @@ This equation is referred to as the **continuous time algebraic Riccati equation
 
 
 ## Connection with Lyapunov theory
-Notice that for both the discrete- and continuous-time setting, the resulting Riccati equations look similar to the Lyapunov equations, but there some extra terms in the LQR equations.
+Notice that for both the discrete- and continuous-time setting, the resulting Riccati equations look similar to the Lyapunov equations, but there are some extra terms in the LQR equations.
 Considering the discrete-time setting for now (the continuous-time setting follows similarly), it turns out that for our *closed-loop* dynamics $x_{t+1} = (A - BK_t)x_t$ where $K_t = (B^TP_{t+1}B+R)^{-1}B^TP_{t+1}A$, then $V(x,t) = x^TP_tx$ is a valid Lyapunov function for the closed-loop system.
 Differently put, LQR provides a constructive method for finding a valid control Lyapunov function for linear dynamics.
 
@@ -176,7 +176,7 @@ This means that with LQR, we are guaranteed stability to the origin (assuming so
 
 ## Tracking LQR
 
-The above LQR formulation assumed that we wanted the state to regulate to zero. But that's not always the case. In fact, we often would like come up with a control that enables our system to track a nominal trajective given by $(\bar{x}_0, \bar{u}_0), (\bar{x}_1,\bar{u}_1), \ldots$.
+The above LQR formulation assumed that we wanted the state to regulate to zero. But that's not always the case. In fact, we often would like come up with a control that enables our system to track a nominal trajectory given by $(\bar{x}_0, \bar{u}_0), (\bar{x}_1,\bar{u}_1), \ldots$.
 What can we do?
 Well actually, we would like the difference between the nominal state/control and the state/control to regulate to zero instead. As such, we should consider the *error* states and controls like so.
 
@@ -184,10 +184,10 @@ $$
 \delta x_t = x_t - \bar{x}_t, \quad \delta u_t = u_t - \bar{u}_t
 $$
 
-Given this defintion of error states, it follows that $ \delta x_{t+1} = A \delta x_t + B \delta u_t$.
+Given this definition of error states, it follows that $ \delta x_{t+1} = A \delta x_t + B \delta u_t$.
 We can also define the cost to be quadratic in $\delta x_t$ and $\delta u_t$ which essentially penalizes the controller for deviations away from the nominal trajectory.
 As such, we can solve the same LQR problem described above but with the error states, controls, dynamics, and cost.
-As a results, we will get the optimal control
+As a result, we will get the optimal control
 
 $$
 \delta u_t^* = -K_t \delta x_t
