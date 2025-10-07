@@ -14,3 +14,5 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | Nov 25  |   9    | *Kalman filter and Linear Quadratic Gaussian* | Week 8-9 exercises due Fri | |
 | Dec 2   |   10   | Research paper presentation | Self-assessment due Fri | |
 |         | Finals | | Video and feedback due | |
+
+<!-- bust: 25107-11501 -->
