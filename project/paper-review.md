@@ -19,6 +19,7 @@ In general, the first step is to find a general topic area, then find reserach g
 - Look up recorded seminars, see which title and speaker resonantes with your interests (perhaps start off with the first 10-15 minutes).
     - [Autonomy Talks](https://www.youtube.com/@autonomytalks)
     - [Stanford Robotics Seminar](https://stanfordasl.github.io/robotics_seminar/)
+    - [UPenn GRASP Seminar and Talks](https://www.youtube.com/@grasplab/videos)
 
 - Look at conferences and their list of workshop/sessions, and dig around those websites. NOTE: For IEEE conferences, try searching "IEEE <paper title>" to find the official IEEE page, and you should be able to access the paper with UW credentials.
     - Control conferences: American Control Conference,  IEEE Conference on Decision and Control
