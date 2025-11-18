@@ -1,5 +1,10 @@
 # Tutorial
 
+**Tutorial due date: Wednesday December 10 midnight**
+
+**Peer review due date: Monday December 15 noon**
+
+
 You will create a ~15-minute video presentation on a topic of your choice that relates to the content of the course.
 
 You may select any topic, provided it is connected to the themes and material we have covered.
@@ -27,14 +32,25 @@ After submission, your peers will:
 - Ask clarifying questions.
 - Provide constructive feedback on your tutorial.
 
+## Recording your tutorial
+
+While you are welcome to use any method of recording. But here are some options you can try.
+
+- **Zoom option**: You can enter your own Zoom room and start recording. During then, you can share your screen (e.g., iPad or slides). You can download the recording afterwards, and then edit the clip a needed. This is a very easy and straightforward recording solution. The potential downside is that you will need to record everything in one take. While you could do multiple takes, you may need to do some editing to remove the unwanted takes and stitch the good takes together.
+- **Microsoft powerpoint**: You can record slide show on Microsoft powerpoint. There is an option to "record slide show" and you would present the slides like normal, but there will be a video/audio recording (make sure your camera and microphone is working and is set to the right one!) Then you can export the powerpoint as an mp4 file. The upside is that you can record slide by slide, and redo a slide if necessary. Not sure if there is a proper down side, but from my personal experience, Microsoft Powerpoint can be a bit buggy, but mostly is ok.
+
 ## Submission Requirements
 
-You will submit:
+For the tutorial submittion, you will submit:
 
 - A video recording of your tutorial.
 - Your code notebook/Colab.
 
-The exact video submission instruction and peer review format will be finalized later. One option is to upload your video to a private YouTube channel, which would allow classmates to post comments and questions directly, and also answer other questions too.
+You will upload your recording and colab to a shared google folder (see Canvas for link), and also share the title of your tutorial on the spreadsheet.
+
+
+For the peer review, you will be assigned a tutorial to watch, and you will fill out a Google Form with your feedback (see Canvas for link).
+
 
 
 ## Tips for a Successful Tutorial
