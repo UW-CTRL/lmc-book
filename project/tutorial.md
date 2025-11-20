@@ -1,6 +1,6 @@
 # Tutorial
 
-**Tutorial due date: Wednesday December 10 midnight**
+**Tutorial due date: Thursday December 11 midnight**
 
 **Peer review due date: Monday December 15 noon**
 
@@ -41,7 +41,7 @@ While you are welcome to use any method of recording. But here are some options 
 
 ## Submission Requirements
 
-For the tutorial submittion, you will submit:
+For the tutorial submission, you will submit:
 
 - A video recording of your tutorial.
 - Your code notebook/Colab.
