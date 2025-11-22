@@ -10,9 +10,11 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | Oct 28  |   5    | Markov Decision Process, POMDPs // Guest lecture: Dr. Liam Kruse| Exercises 4, 5, 6, 7, 8 due Thurs | [Guest lecture](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/guest_lecture_MDP.pdf), [Ex 9](https://github.com/UW-CTRL/lmc-exercises/blob/main/09_dynamic_programming.ipynb) |
 | Nov 4   |   6    | Linear quadratic regulator | Self-assessment due Thurs | [lec06](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_06.pdf)[(annotated)](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_06_annotated.pdf), [Ex 10](https://github.com/UW-CTRL/lmc-exercises/blob/main/10_lqr_finite_horizon.ipynb), [Ex 11](https://github.com/UW-CTRL/lmc-exercises/blob/main/11_lqr_infinite_horizon.ipynb), [Ex 12](https://github.com/UW-CTRL/lmc-exercises/blob/main/12_tracking_lqr.ipynb)|
 | Nov 11  |   7    | (No lecture / Veterans Day) | Exercises 9, 10, 11, 12 due Thurs | [lec07](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_07.pdf)[(annotated)](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_07_annotated.pdf), [HJ notebook](https://github.com/UW-CTRL/lmc-exercises/blob/main/hj_reachability_basics.ipynb) |
-| Nov 18  |   8    | Trajectory optimization, MPC, learning-based control | Self-assessment due Thurs | [lec08](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_08.pdf)[(annotated)](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_08_annotated.pdf)|
-| Nov 25  |   9    | *Kalman filter and Linear Quadratic Gaussian* | Exercises from weeks 8 & 9 due Fri | |
-| Dec 2   |   10   | Research paper presentation | Self-assessment due Fri | |
-|         | Finals | | Video and feedback due | |
+| Nov 18  |   8    | Trajectory optimization, MPC, learning-based control | Self-assessment due Thurs | [lec08](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_08.pdf)[(annotated)](https://github.com/UW-CTRL/lmc-book/blob/main/pdfs/lecture_08_annotated.pdf),  [Ex 14](https://github.com/UW-CTRL/lmc-exercises/blob/main/14_mpc.ipynb)|
+| Nov 25  |   9    | *Kalman filter and Linear Quadratic Gaussian* |  | |
+| Dec 2   |   10   | Research paper presentation | Exercises 13 & 14 due Mon (Dec 1) | |
+|         | Finals | | Video and feedback due, Self-assessment due Mon (Dec 8) | |
 
 <!-- bust: 25107-11501 -->
+
+
