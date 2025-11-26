@@ -103,21 +103,21 @@ $$
 \mu_t^p & = A\mu_{t-1} + Bu_{t-1}
 $$
 
-Next, we need to predict the covariance of the estimate $P_t^p$. Let the predicted error estimate be $e_t^p = x_t - \hat{x}_t^p$ and $P_t^p = \mathbb{E}[e_t^p {e_t^p}^T]$. Noting that the true state evolves according to $x_t = Ax_{t-1} + Bu_{t-1} + w_t$, we then have
+Next, we need to predict the covariance of the estimate $P_t^p$. Let the predicted error estimate be $e_t^p = x_t - \hat{x}_t^p$ and $P_t^p = \mathbb{E}[e_t^p {e_t^p}^T]$. Noting that the true state evolves according to $x_t = Ax_{t-1} + Bu_{t-1} + w_{t-1}$, we then have
 
 $$
 \mathbb{E}[e_t^p {e_t^p}^T] & = \mathbb{E}[(x_t - \hat{x}_t^p)(x_t - \hat{x}_t^p)^T]\\
-&= \mathbb{E}[(Ax_{t-1} + Bu_{t-1} + w_t - A\hat{x}_{t-1} - Bu_{t-1})((Ax_{t-1} + Bu_{t-1} + w_t - A\hat{x}_{t-1} - Bu_{t-1}))^T]\\
-&= \mathbb{E}[(Ax_{t-1}  + w_t - A\hat{x}_{t-1} )(Ax_{t-1}  + w_t - A\hat{x}_{t-1} )^T]\\
-&= \mathbb{E}[(A(x_{t-1} - \hat{x}_{t-1})  + w_t )(A(x_{t-1} - \hat{x}_{t-1})  + w_t )^T]\\
-&= \mathbb{E}[(Ae_{t-1}  + w_t )(Ae_{t-1}  + w_t )^T]\\
-&= \mathbb{E}[Ae_{t-1}e_{t-1}^TA^T + Ae_{t-1}w_t^T + w_t e_{t-1}^TA^T + w_tw_t^T]\\
-&= \mathbb{E}[Ae_{t-1}e_{t-1}^TA^T] + \mathbb{E}[Ae_{t-1}w_t^T] + \mathbb{E}[w_t e_{t-1}^TA^T] + \mathbb{E}[w_tw_t^T]\\
-&= A\mathbb{E}[e_{t-1}e_{t-1}^T]A^T + A\mathbb{E}[e_{t-1}w_t^T] + \mathbb{E}[w_t e_{t-1}^T]A^T + \mathbb{E}[w_tw_t^T]\\
+&= \mathbb{E}[(Ax_{t-1} + Bu_{t-1} + w_{t-1} - A\hat{x}_{t-1} - Bu_{t-1})((Ax_{t-1} + Bu_{t-1} + w_{t-1} - A\hat{x}_{t-1} - Bu_{t-1}))^T]\\
+&= \mathbb{E}[(Ax_{t-1}  + w_{t-1} - A\hat{x}_{t-1} )(Ax_{t-1}  + w_{t-1} - A\hat{x}_{t-1} )^T]\\
+&= \mathbb{E}[(A(x_{t-1} - \hat{x}_{t-1})  + w_{t-1} )(A(x_{t-1} - \hat{x}_{t-1})  + w_{t-1} )^T]\\
+&= \mathbb{E}[(Ae_{t-1}  + w_{t-1} )(Ae_{t-1}  + w_{t-1} )^T]\\
+&= \mathbb{E}[Ae_{t-1}e_{t-1}^TA^T + Ae_{t-1}w_{t-1}^T + w_{t-1} e_{t-1}^TA^T + w_{t-1}w_{t-1}^T]\\
+&= \mathbb{E}[Ae_{t-1}e_{t-1}^TA^T] + \mathbb{E}[Ae_{t-1}w_{t-1}^T] + \mathbb{E}[w_{t-1} e_{t-1}^TA^T] + \mathbb{E}[w_{t-1}w_{t-1}^T]\\
+&= A\mathbb{E}[e_{t-1}e_{t-1}^T]A^T + A\mathbb{E}[e_{t-1}w_{t-1}^T] + \mathbb{E}[w_{t-1} e_{t-1}^T]A^T + \mathbb{E}[w_{t-1}w_{t-1}^T]\\
 P_t^p&= AP_{t-1}A^T + Q
 $$
 
-Note that $\mathbb{E}[e_{t-1}w_t^T] = \mathbb{E}[w_t e_{t-1}^T]=0$ because the error at $t-1$ is independent of the noise that is happening at $t$.
+Note that $\mathbb{E}[e_{t-1}w_{t-1}^T] = \mathbb{E}[w_{t-1} e_{t-1}^T]=0$ because the noise $w_{t-1}$ accumulates between $k-1$ and $k$, whereas the error $e_{k-1}$ is the error up until time $k-1$.
 
 Summarizing the prediction step, given the estimate from the previous time step $\hat{x}_{t-1} \sim \mathcal{N}(\mu_{t-1}, P_{t-1})$, we have:
 
