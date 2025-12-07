@@ -1,0 +1,750 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Linear Quadratic Regulator &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="HJ reachability" href="reachability.html" />
+    <link rel="prev" title="Sequential decision-making" href="sequential-dm.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deliverables
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/exercises.html">
+   Exercises
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/paper-review.html">
+   Research paper presentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/tutorial.html">
+   Tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sequential-dm.html">
+   Sequential decision-making
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Linear Quadratic Regulator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reachability.html">
+   HJ reachability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman-filter.html">
+   State estimation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/lqr.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/lectures/lqr.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-assumption-of-lqr">
+   Key assumption of LQR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-is-it-called-linear-quadratic-regulator">
+     Why is it called Linear Quadratic Regulator?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discrete-time-lqr">
+   Discrete-time LQR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#infinite-horizon-case">
+     Infinite horizon case
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#continuous-time-lqr">
+   Continuous-time LQR
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-with-lyapunov-theory">
+   Connection with Lyapunov theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discussion">
+   Discussion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tracking-lqr">
+   Tracking LQR
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iterative-lqr">
+   Iterative LQR
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Linear Quadratic Regulator</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-assumption-of-lqr">
+   Key assumption of LQR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-is-it-called-linear-quadratic-regulator">
+     Why is it called Linear Quadratic Regulator?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discrete-time-lqr">
+   Discrete-time LQR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#infinite-horizon-case">
+     Infinite horizon case
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#continuous-time-lqr">
+   Continuous-time LQR
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-with-lyapunov-theory">
+   Connection with Lyapunov theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discussion">
+   Discussion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tracking-lqr">
+   Tracking LQR
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iterative-lqr">
+   Iterative LQR
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-quadratic-regulator">
+<h1>Linear Quadratic Regulator<a class="headerlink" href="#linear-quadratic-regulator" title="Permalink to this headline">#</a></h1>
+<p>In the previous chapter, we learned about sequential decision-making and saw that using the principle of optimality, an optimal control problem could be broken down into a sequence of smaller decisions which could be solved recursively.
+The resulting equations we derived were the <strong>Bellman Equation</strong> (discrete time) and the <strong>Hamilton-Jacobi-Bellman Equation</strong> (continuous time).
+However, despite these nice equations that, in theory, tells us how to solve for the optimal control policy, they are in general difficult to solve and often intractable. This is due to a number of reasons, like having a large state and control space (if discrete and finite) or the minimization problem is difficult to solve (i.e., non-convex). For the latter, the difficulty of the minimization problem can stem from the functional form of the cost function, dynamics, and value function. If the functional form (e.g., linear, quadratic, exponential, etc.) is not conducive to making the minimization problem tractable, then solving the Bellman equation or HJB equation is going to be very challenging.
+Another, perhaps more subtle, point is that even if we can solve time instance of the minimization problem, is there are any guarantees that we can solve the problem for the next time step? Since we are essentially performing dynamic programming and iterating backward in time, we want to make sure that whatever solution we get at time <span class="math notranslate nohighlight">\(t\)</span> will make the next iteration at the previous time step also tractable.</p>
+<p><em>So under what conditions is solving these equations tractable?</em></p>
+<section id="key-assumption-of-lqr">
+<h2>Key assumption of LQR<a class="headerlink" href="#key-assumption-of-lqr" title="Permalink to this headline">#</a></h2>
+<p>We make the following simplifying assumptions on the optimal control problem, and show that with these assumptions, solving the Bellman and HJB equations is very tractable and exhibits very nice structure.
+For now, let’s consider a discrete-time setting and we will later extend the analysis to the continuous-time setting.</p>
+<p>Given these assumptions, the resulting optimal control problem becomes,</p>
+<div class="admonition-lqr-optimal-control-problem admonition">
+<p class="admonition-title">LQR optimal control problem</p>
+<div class="math notranslate nohighlight" id="equation-eq-lqr-ocp">
+<span class="eqno">(14)<a class="headerlink" href="#equation-eq-lqr-ocp" title="Permalink to this equation">#</a></span>\[\begin{split}\min_{u_0,\ldots u_{T-1}} &amp; \: x_T^TQ_Tx_T + \sum_{t=0}^{T-1} x_t^TQ_tx_t + u_t^TR_tu_t\\
+\text{subject to} &amp; \: x_{t+1} = A_tx_t + B_tu_t\\
+&amp; \: x_0 = x_\mathrm{current}\end{split}\]</div>
+</div>
+<p>A result of these assumptions is that the value function <span class="math notranslate nohighlight">\(V(x,t)\)</span> is quadratic! In fact, we have <span class="math notranslate nohighlight">\(V(x,t) = x^TP_tx\)</span>. While it may not be obvious, we will show this below. Intuitively, this result stems from the fact that we assume a quadratic (terminal) cost, and since we initialize the value function <span class="math notranslate nohighlight">\(V(x,T) = J_T(x) = x^TQ_Tx^T\)</span>, it turns out that this quadratic function form of <span class="math notranslate nohighlight">\(V(x,t)\)</span> is preserved.</p>
+<section id="why-is-it-called-linear-quadratic-regulator">
+<h3>Why is it called Linear Quadratic Regulator?<a class="headerlink" href="#why-is-it-called-linear-quadratic-regulator" title="Permalink to this headline">#</a></h3>
+<p>Given the key assumptions, it may be more clear why the name Linear Quadratic Regulator is the way it is.
+<strong>Linear</strong> because the dynamics are assumed to be linear. But it also turns out that the optimal control is linear too!
+<strong>Quadratic</strong> because the cost is assumed to be quadratic. But it also turns out that the value function is quadratic too!
+<strong>Regulator</strong> because given how the cost is defined, the controller will drive the system’s state variables to zero.</p>
+</section>
+</section>
+<section id="discrete-time-lqr">
+<h2>Discrete-time LQR<a class="headerlink" href="#discrete-time-lqr" title="Permalink to this headline">#</a></h2>
+<p>Consider the discrete-time and finite horizon setting, and for simplicity, let’s also assume a time-invariant setting (drop the subscripts in <span class="math notranslate nohighlight">\(A, B, Q, R\)</span>).
+Recall the Bellman equation <a class="reference internal" href="sequential-dm.html#equation-eq-bellman">(10)</a>. Let’s update the equation with the LQR assumptions.</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(x_{t},t) = \min_{u_{t}} \biggl( x_t^TQx_t + u_t^TRu_t + V^*(Ax_t + Bu_t, t+1) \biggl)
+\]</div>
+<p>To start off the recursion at the end of the horizon, we initialize the value function with <span class="math notranslate nohighlight">\(V^*(x,T) = x^TP_Tx\)</span> where <span class="math notranslate nohighlight">\(P_T = Q_T\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+V^*(x_{T-1},T-1) &amp;= \min_{u_{T-1}} \biggl( x_{T-1}^TQx_{T-1} + u_{T-1}^TRu_{T-1} + V^*(Ax_{T-1} + Bu_{T-1}, T) \biggl)\\
+&amp;= \min_{u_{T-1}} \biggl( x_{T-1}^TQx_{T-1} + u_{T-1}^TRu_{T-1} + (Ax_{T-1} + Bu_{T-1})^TP_T(Ax_{T-1} + Bu_{T-1}) \biggl)\\
+\end{split}\]</div>
+<p>Now, we expand this expression and rearrange some terms.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+V^*(x_{T-1},T-1) &amp;= \min_{u_{T-1}} \biggl( x_{T-1}^TQx_{T-1} + u_{T-1}^TRu_{T-1} + (Ax_{T-1} + Bu_{T-1})^TP_T(Ax_{T-1} + Bu_{T-1}) \biggl)\\
+&amp;= \min_{u_{T-1}} \biggl( x_{T-1}^TQx_{T-1} + u_{T-1}^TRu_{T-1} + x_{T-1}^TA^TP_TAx_{T-1} + 2u_{T-1}^TB^TP_TAx_{T-1} + u_{T-1}^TB^TP_TBu_{T-1} \biggl)\\
+&amp;= \min_{u_{T-1}} \biggl( x_{T-1}^T(Q + A^TP_TA)x_{T-1} + u_{T-1}^T(B^TP_TB+R)u_{T-1} + 2u_{T-1}^TB^TP_TAx_{T-1} \biggl)\\
+\end{split}\]</div>
+<p>Note that the expression that we want to minimize with respect to <span class="math notranslate nohighlight">\(u_{T-1}\)</span> is *quadratic in <span class="math notranslate nohighlight">\(u_{T-1}\)</span>! It consists of a constant term (depends on <span class="math notranslate nohighlight">\(x_{T-1}\)</span>), a linear term, and a quadratic term.
+This is very convenient since it is straightforward to take the derivative and set it to zero. We also use the fact that <span class="math notranslate nohighlight">\(B^TP_TB+R \succeq 0\)</span> so that first order conditions for optimality are also sufficient.</p>
+<p>Recall from vector calculus: <span class="math notranslate nohighlight">\(\frac{d}{dx} x^TMx = 2Mx\)</span> and <span class="math notranslate nohighlight">\(\frac{d}{dx} x^T M = M\)</span>. We have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+0 &amp;= \frac{d}{du_{T-1}}  \biggl( x_{T-1}^T(Q + A^TP_TA)x_{T-1} + u_{T-1}^T(B^TP_TB+R)u_{T-1} + 2u_{T-1}^TB^TP_TAx_{T-1} \biggl)\\
+&amp;= 2(B^TP_TB+R)u_{T-1} + 2B^TP_TAx_{T-1}\\
+\Rightarrow u_{T-1}^* &amp;= - \underbrace{(B^TP_TB+R)^{-1}B^TP_TA}_{K_{T-1}}x_{T-1}\\
+&amp; u^*_{T-1} = - K_{T-1}x_{T-1}, \quad K_{T-1} = (B^TP_TB+R)^{-1}B^TP_TA
+\end{split}\]</div>
+<p>This turns out to be a rather interesting results. It tells us that the <em>optimal control</em> at time step <span class="math notranslate nohighlight">\(T-1\)</span> is <em>linear in state</em>! Despite the seemingly complex set up and optimal control framework, the optimal controller is simply a linear controller. While we could have, in theory, spent a lot of time tuning a linear controller, we can now find an <em>optimal</em> gain with respect to our cost function.</p>
+<p>Now, let’s plug our optimal controller back into the value function and see what <span class="math notranslate nohighlight">\(V^*(x_{T-1},T-1)\)</span> ends up being. Note that <span class="math notranslate nohighlight">\(Q_T = P_T = P_T^T\)</span>, <span class="math notranslate nohighlight">\((A^T)^{-1} = (A^{-1})^T\)</span>, and <span class="math notranslate nohighlight">\((AB)^T = B^TA^T\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+V^*(x_{T-1},T-1) &amp;= \min_{u_{T-1}} \biggl( x_{T-1}^T(Q + A^TP_TA)x_{T-1} + u_{T-1}^T(B^TP_TB+R)u_{T-1} + 2u_{T-1}^TB^TP_TAx_{T-1} \biggl)\\
+&amp; = x_{T-1}^T(Q + A^TP_TA)x_{T-1} + x_{T-1}^TK_{T-1}^T(B^TP_TB+R)K_{T-1}x_{T-1} - 2x_{T-1}^TK_{T-1}^TB^TP_TAx_{T-1}\\
+&amp; = x_{T-1}^T\biggl( Q + A^TP_TA +  K_{T-1}^T(B^TP_TB+R)K_{T-1} - 2K_{T-1}^TB^TP_TA  \biggl)x_{T-1}\\
+&amp; = x_{T-1}^T\biggl( Q + A^TP_TA +  A^TP_TB(B^TP_TB+R)^{-1}(B^TP_TB+R)(B^TP_TB+R)^{-1}B^TP_TA - 2A^TP_TB(B^TP_TB+R)^{-1}B^TP_TA  \biggl)x_{T-1}\\
+&amp; = x_{T-1}^T\biggl( Q + A^TP_TA +  A^TP_TB(B^TP_TB+R)^{-1}B^TP_TA - 2A^TP_TB(B^TP_TB+R)^{-1}B^TP_TA  \biggl)x_{T-1}\\
+&amp; = x_{T-1}^T\underbrace{\biggl( Q + A^TP_TA -  A^TP_TB(B^TP_TB+R)^{-1}B^TP_TA  \biggl)}_{\succeq 0}x_{T-1}\\
+\end{split}\]</div>
+<p>In the final expression, we find that we get another quadratic expression! Given the assumptions on <span class="math notranslate nohighlight">\(P_T\)</span>, that quadratic term is PSD.
+Also note that it only depends on <span class="math notranslate nohighlight">\(P_T\)</span>, the dynamics <span class="math notranslate nohighlight">\((A,B)\)</span> and the cost matrices <span class="math notranslate nohighlight">\((Q,R)\)</span>.</p>
+<p>If we let <span class="math notranslate nohighlight">\(P_{T-1} =  Q + A^TP_TA -  A^TP_TB(B^TP_TB+R)^{-1}B^TP_TA \)</span>, then we will have <span class="math notranslate nohighlight">\(V(x, T-1) = x^TP_{T-1}x\)</span>, another quadratic expression!
+But this was just <em>one</em> dynamic programming step. We would need to continue and find an expression for all other time step <span class="math notranslate nohighlight">\(T-2,\ldots, 1, 0\)</span>.
+Notice that although the above derivation was for <span class="math notranslate nohighlight">\(P_T = Q_T\)</span>, it only used the fact that <span class="math notranslate nohighlight">\(Q_T =Q_T^T \succeq 0\)</span>. Since we showed that <span class="math notranslate nohighlight">\(P_{T-1} \succeq 0\)</span>, then carrying out the next dynamic programming step would yield the same results but with the time index reduced by one.
+Essentially, we have derived an <em>update</em> equation for <span class="math notranslate nohighlight">\(P_t\)</span> where <span class="math notranslate nohighlight">\(V(x,t) = x^TP_tx\)</span>.</p>
+<div class="admonition-discrete-time-finite-horizon-lqr admonition">
+<p class="admonition-title">Discrete-time finite horizon LQR</p>
+<div class="math notranslate nohighlight" id="equation-eq-dt-finite-lqr">
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-dt-finite-lqr" title="Permalink to this equation">#</a></span>\[\begin{split}P_{t-1} &amp;= Q + A^TP_tA -  A^TP_tB(B^TP_tB+R)^{-1}B^TP_tA, \quad P_T = Q_T\\
+K_{t} &amp;= (B^TP_{t+1}B+R)^{-1}B^TP_{t+1}A\\
+u^*_{t} &amp;= -K_{t}x_{t}\end{split}\]</div>
+</div>
+<p>The update equation for this discrete-time finite horizon setting is called the <strong>dynamic Riccati equation</strong>.
+We can find the values for <span class="math notranslate nohighlight">\(P_T, P_{T-1},\ldots, P_1, P_0\)</span> offline, simply by using the dynamic Riccati equation, starting from <span class="math notranslate nohighlight">\(T\)</span> and iterating <em>backward</em> in time.
+Once we find all the values for <span class="math notranslate nohighlight">\(P_t\)</span>, we can also compute all the gains <span class="math notranslate nohighlight">\(K_0, K_1, \ldots, K_{T-1}\)</span>, also offline.
+The online, to find the optimal control at time step <span class="math notranslate nohighlight">\(t\)</span>, we simply look up our value for <span class="math notranslate nohighlight">\(K_t\)</span> and compute <span class="math notranslate nohighlight">\(u^*_t = -K_tx_t\)</span>.</p>
+<section id="infinite-horizon-case">
+<h3>Infinite horizon case<a class="headerlink" href="#infinite-horizon-case" title="Permalink to this headline">#</a></h3>
+<p>The above derivation was for a finite horizon setting. What if now <span class="math notranslate nohighlight">\(T\rightarrow \infty\)</span>? We cannot iterate on <span class="math notranslate nohighlight">\(P_t\)</span> forever!
+It turns out that after some time, the value for <span class="math notranslate nohighlight">\(P_t\)</span> converges. That is <span class="math notranslate nohighlight">\(P_t = P_{t+1}\)</span> for some sufficiently large <span class="math notranslate nohighlight">\(t\)</span>.
+Assuming <span class="math notranslate nohighlight">\(P_t\)</span> has converged, and setting <span class="math notranslate nohighlight">\(P_\infty =P_t = P_{t+1}\)</span>, the dynamic Riccati equation becomes,</p>
+<div class="admonition-discrete-time-infinite-horizon-lqr-dare admonition">
+<p class="admonition-title">Discrete-time infinite horizon LQR (DARE)</p>
+<div class="math notranslate nohighlight" id="equation-eq-dare">
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-dare" title="Permalink to this equation">#</a></span>\[P_\infty = Q + A^TP_\infty A -  A^TP_\infty B(B^TP_\infty B+R)^{-1}B^TP_\infty A.\]</div>
+</div>
+<p>This equation is referred to as the <strong>discrete time algebraic Riccati equation (DARE)</strong> for which there are well-established ways to solve that linear matrix equation. Practically, there are built-in functions in control system packages that we can call to find <span class="math notranslate nohighlight">\(P_\infty\)</span>. But don’t forget to read the documentation to know how to use it properly!</p>
+</section>
+</section>
+<section id="continuous-time-lqr">
+<h2>Continuous-time LQR<a class="headerlink" href="#continuous-time-lqr" title="Permalink to this headline">#</a></h2>
+<p>Now that we understand the derivation for the discrete-time LQR, it becomes relatively straightforward to derive the continuous-time LQR.
+We leave this as an exercise, but provide a high-level sketch of the steps (which essentially mirrors that for the discrete-time setting).</p>
+<ol class="simple">
+<li><p>Instead of using the Bellman equation, we use the HJB equation: <span class="math notranslate nohighlight">\(\frac{\partial V}{\partial t}(x,t) + \min_u J(x,u,t) + \nabla V(x,t)^Tf(x,u,t) = 0\)</span></p></li>
+<li><p>The value function has the form <span class="math notranslate nohighlight">\(V(x,t) = x^TP(t)x\)</span> and <span class="math notranslate nohighlight">\(P(T) = Q_T\)</span></p></li>
+<li><p>When we have <span class="math notranslate nohighlight">\(x^T M x\)</span> where <span class="math notranslate nohighlight">\(M\)</span> is any square matrix which can be written as <span class="math notranslate nohighlight">\(M = \frac{1}{2}(M + M^T) + \frac{1}{2}(M - M^T)\)</span>, only the symmetric part of <span class="math notranslate nohighlight">\(M\)</span> remains, whereas the skew-symmetric part will be cancelled out. So <span class="math notranslate nohighlight">\(x^TMx = \frac{1}{2}x^T(M+M^T)x\)</span>.</p></li>
+</ol>
+<p>After working out the details, you should find,</p>
+<div class="admonition-continuous-time-finite-horizon-lqr admonition">
+<p class="admonition-title">Continuous-time finite horizon LQR</p>
+<div class="math notranslate nohighlight" id="equation-eq-ct-finite-lqr">
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-ct-finite-lqr" title="Permalink to this equation">#</a></span>\[\begin{split}0 &amp; = \dot{P}(t) + Q + A^TP(t) + P(t)A - P(t)BR^{-1}B^TP(t), \quad P(T) = Q_T\\
+K(t) &amp;= R^{-1}B^TP(t)\\
+u^*(t) &amp;= -K(t)x(t)\end{split}\]</div>
+</div>
+<p>Then for the infinite horizon case, with <span class="math notranslate nohighlight">\(P(t)\)</span> converging to a constant value, we have <span class="math notranslate nohighlight">\(\dot{P} = 0\)</span>.</p>
+<div class="admonition-continuous-time-infinite-horizon-lqr-care admonition">
+<p class="admonition-title">Continuous-time infinite horizon LQR (CARE)</p>
+<div class="math notranslate nohighlight" id="equation-eq-care">
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-care" title="Permalink to this equation">#</a></span>\[0 =  Q + A^TP_\infty  + P_\infty A - P_\infty BR^{-1}B^TP_\infty\]</div>
+</div>
+<p>This equation is referred to as the <strong>continuous time algebraic Riccati equation (CARE)</strong> for which there are well-established ways to solve that linear matrix equation. Like DARE, there are built-in functions in control system packages that we can use.</p>
+</section>
+<section id="connection-with-lyapunov-theory">
+<h2>Connection with Lyapunov theory<a class="headerlink" href="#connection-with-lyapunov-theory" title="Permalink to this headline">#</a></h2>
+<p>Notice that for both the discrete- and continuous-time setting, the resulting Riccati equations look similar to the Lyapunov equations, but there are some extra terms in the LQR equations.
+Considering the discrete-time setting for now (the continuous-time setting follows similarly), it turns out that for our <em>closed-loop</em> dynamics <span class="math notranslate nohighlight">\(x_{t+1} = (A - BK_t)x_t\)</span> where <span class="math notranslate nohighlight">\(K_t = (B^TP_{t+1}B+R)^{-1}B^TP_{t+1}A\)</span>, then <span class="math notranslate nohighlight">\(V(x,t) = x^TP_tx\)</span> is a valid Lyapunov function for the closed-loop system.
+Differently put, LQR provides a constructive method for finding a valid control Lyapunov function for linear dynamics.</p>
+<div class="admonition-pause-and-think admonition">
+<p class="admonition-title">Pause and think</p>
+<p>Can you prove that the value function is a valid Lyapunov function for the closed-loop system?</p>
+</div>
+<p>This means that with LQR, we are guaranteed stability to the origin (assuming some basic assumptions are met).</p>
+</section>
+<section id="discussion">
+<h2>Discussion<a class="headerlink" href="#discussion" title="Permalink to this headline">#</a></h2>
+<p>(TODO)</p>
+<ul class="simple">
+<li><p>Conditions for LQR to work (controllability, stabilizability, detectability, etc)</p></li>
+<li><p>Time-varying LQR</p></li>
+</ul>
+</section>
+<section id="tracking-lqr">
+<h2>Tracking LQR<a class="headerlink" href="#tracking-lqr" title="Permalink to this headline">#</a></h2>
+<p>The above LQR formulation assumed that we wanted the state to regulate to zero. But that’s not always the case. In fact, we often would like come up with a control that enables our system to track a nominal trajectory given by <span class="math notranslate nohighlight">\((\bar{x}_0, \bar{u}_0), (\bar{x}_1,\bar{u}_1), \ldots\)</span>.
+What can we do?
+Well actually, we would like the difference between the nominal state/control and the state/control to regulate to zero instead. As such, we should consider the <em>error</em> states and controls like so.</p>
+<div class="math notranslate nohighlight">
+\[
+\delta x_t = x_t - \bar{x}_t, \quad \delta u_t = u_t - \bar{u}_t
+\]</div>
+<p>Given this definition of error states, it follows that <span class="math notranslate nohighlight">\( \delta x_{t+1} = A \delta x_t + B \delta u_t\)</span>.
+We can also define the cost to be quadratic in <span class="math notranslate nohighlight">\(\delta x_t\)</span> and <span class="math notranslate nohighlight">\(\delta u_t\)</span> which essentially penalizes the controller for deviations away from the nominal trajectory.
+As such, we can solve the same LQR problem described above but with the error states, controls, dynamics, and cost.
+As a result, we will get the optimal control</p>
+<div class="math notranslate nohighlight">
+\[
+\delta u_t^* = -K_t \delta x_t
+\]</div>
+<p>But recall that <span class="math notranslate nohighlight">\(\delta u_t = u_t - \bar{u}_t\)</span> and <span class="math notranslate nohighlight">\(u_t\)</span> is actually the control we execute on the system, and <span class="math notranslate nohighlight">\(\bar{u}_t\)</span> is the nominal control (known <em>a priori</em>). Thus the control we should feed to the system is</p>
+<div class="math notranslate nohighlight">
+\[
+u_t = \bar{u}_t + \delta u_t^* = \bar{u}_t - K_t\delta x_t
+\]</div>
+</section>
+<section id="iterative-lqr">
+<h2>Iterative LQR<a class="headerlink" href="#iterative-lqr" title="Permalink to this headline">#</a></h2>
+<p>(TODO)</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="sequential-dm.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Sequential decision-making</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="reachability.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">HJ reachability</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

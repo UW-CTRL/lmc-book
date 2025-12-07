@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Sequential decision-making &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linear Quadratic Regulator" href="lqr.html" />
+    <link rel="prev" title="Control certificate functions" href="control-certificates.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deliverables
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/exercises.html">
+   Exercises
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/paper-review.html">
+   Research paper presentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/tutorial.html">
+   Tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Sequential decision-making
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lqr.html">
+   Linear Quadratic Regulator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reachability.html">
+   HJ reachability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman-filter.html">
+   State estimation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/sequential-dm.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/lectures/sequential-dm.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#some-motivating-examples">
+   Some motivating examples
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#principle-of-optimality">
+   Principle of Optimality
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-set-up-optimal-control-problem">
+   Problem set-up: Optimal Control Problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-value-function-i-e-cost-to-go">
+   The Value Function (i.e., cost-to-go)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimal-value-function-and-policy">
+     Optimal value function and policy
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bellman-equation">
+   Bellman equation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#representing-the-value-function">
+     Representing the value function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stochastic-dynamic-programming">
+     Stochastic dynamic programming
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#infinite-time-horizon-dynamic-programming">
+     Infinite time horizon dynamic programming
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hamilton-jacobi-bellman-equation">
+   Hamilton-Jacobi-Bellman equation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additional-reading">
+   Additional reading
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Sequential decision-making</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#some-motivating-examples">
+   Some motivating examples
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#principle-of-optimality">
+   Principle of Optimality
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-set-up-optimal-control-problem">
+   Problem set-up: Optimal Control Problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-value-function-i-e-cost-to-go">
+   The Value Function (i.e., cost-to-go)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimal-value-function-and-policy">
+     Optimal value function and policy
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bellman-equation">
+   Bellman equation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#representing-the-value-function">
+     Representing the value function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stochastic-dynamic-programming">
+     Stochastic dynamic programming
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#infinite-time-horizon-dynamic-programming">
+     Infinite time horizon dynamic programming
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hamilton-jacobi-bellman-equation">
+   Hamilton-Jacobi-Bellman equation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additional-reading">
+   Additional reading
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sequential-decision-making">
+<h1>Sequential decision-making<a class="headerlink" href="#sequential-decision-making" title="Permalink to this headline">#</a></h1>
+<p>In the previous chapters (specifically, the CBF-CLF filters), we saw that a control input could be synthesized by adjusting the desired control as little as possible to satisfy the CBF and CLF constraints. But how was the desired control selected? And since we change the desired control for the <em>current</em> time, how does this effect the future behavior of the system? Would adjusting the desired control now affect the performance of the system in the future?</p>
+<p>To answer these questions, we must consider a <em>sequence</em> of decisions (i.e., control inputs or actions) and reason about how each decision may have enduring consequences.</p>
+<section id="some-motivating-examples">
+<h2>Some motivating examples<a class="headerlink" href="#some-motivating-examples" title="Permalink to this headline">#</a></h2>
+<p><strong>Going through college:</strong> What are the consequences of (a) sleeping in and skipping lecture versus (b) waking up early and attending lecture? In option (a), the immediate reward is high/cost is low since you get to sleep in and relax, but in the future, you may be ill-prepared for the midterm and that requires you to spend <em>more</em> effort to revise for the midterm. So your future reward is low/cost is high. With option (b), your immediate reward is low/cost is high since you have to wake up early and spend effort paying attention in class, but you will be more prepared for the upcoming midterm and will not need to spend too much effort in revising for the midterm. So your future reward is high/cost is low.
+So which option should you take? Well, that depends on the how much the immediate reward/cost compares with the future reward/cost.</p>
+<p>We can extend this example, and consider the your decisions when taking a pre-requisite course (e.g., linear algebra) and how that may effect your performance in a future engineering course, which then may affect your competitiveness when applying for jobs or graduate programs, and so forth.</p>
+<p><strong>Playing chess:</strong> In the game of chess, your moves early in the game affect how your pieces are distributed across the board, and therefore will affect what moves you can make in the future, and ultimately, your ability to win the game. This is a rather challenging sequential decision-making problem because (i) there are many possible moves to make at any turn and many possible board configurations to consider, (ii) there is another player (the opponent) involved and they make moves that we have no control over, (iii) the game is (typically) a long one, involving many moves before a winner is determined, and the payoff of a move right now may not be immediate, but may not come until many moves later.</p>
+<p><strong>Healthcare:</strong> Suppose you want to treat a patient with a chronic condition. You can offer some treatment options which incur low risk, but which require some amount of effort or time/money cost for the patient, like regular exercise and monthly gym membership, regular therapy sessions that they need to drive to, or eating healthy food which costs more money to buy and time to make. Or, you could offer medium-risk treatment options such as taking a prescription drug that has some potential side effects, or you could offer high-risk surgery which is expensive, time-consuming, and has potential serious side effects. Then the question is: which treatment option should you offer over time as the patient’s condition evolves over time?</p>
+<p>These motivating examples involve the need to make a sequence of decisions where each decision will have a consequence—one that will be experienced immediately, and another which will be experienced in the future which will depend on the decision taken right now. Deciding which decision to make ultimately depends on how much you care about the consequences now versus the consequences in the future.
+This is generally a very difficult choice to make for many reasons, but in particular, it is because (i) knowing exactly what the future consequences are is very challenging because there could be so many external influences that could affect it (i.e., stochasticity in the dynamics and disturbances), (ii) there could be many possible situations that arise and it is difficult to consider all the possible cases (i.e., large state space), and (iii) it is difficult to know the true cost/reward of a decision (e.g., how to do you measure the reward of sleeping in versus waking up on time to attend class?).</p>
+<p>In the rest of the chapter, we will discuss a principled approach to solving these sequential decision-making problems, and how one may go about solving these problems.</p>
+</section>
+<section id="principle-of-optimality">
+<h2>Principle of Optimality<a class="headerlink" href="#principle-of-optimality" title="Permalink to this headline">#</a></h2>
+<p>The <strong>Principle of Optimality</strong> is a foundational concept in sequential decision-making and dynamic programming. There are many ways to describe it, here are some different versions of the same concept:</p>
+<ul class="simple">
+<li><p>An optimal solution to a problem contains within it optimal solutions to its subproblems.</p></li>
+<li><p>Given an optimal policy, any tail portion of that policy is also optimal for that sub-problem.</p></li>
+<li><p>If you’re following an optimal control policy, then no matter what state you’re in along the optimal trajectory, the remaining path must also follow the optimal policy from that state onward.</p></li>
+</ul>
+<p>This principle suggests that if a problem is being solved optimally, then regardless of the decisions made in the past, the decisions that follow must also be optimal for the current state. This recursive nature enables us to decompose complex sequential decision-making problems into smaller, more manageable subproblems.
+By leveraging the principle of optimality, we can systematically compute the best sequence of decisions by solving these subproblems, often using techniques like dynamic programming. By iteratively solving for the tail subproblems, we can then contruct the optimal policy—the optimal control to take from any state.</p>
+</section>
+<section id="problem-set-up-optimal-control-problem">
+<h2>Problem set-up: Optimal Control Problem<a class="headerlink" href="#problem-set-up-optimal-control-problem" title="Permalink to this headline">#</a></h2>
+<p>First, let us mathematically define the optimal control problem we seek to solve.
+To start off, let us consider a <em>discrete time</em> and <em>finite-horizon</em> setting. The idea for continuous time is similar, but the resulting key equation we get at the end will be a partial differential equation instead of a difference equation.</p>
+<p>Let <span class="math notranslate nohighlight">\(x_t, u_t\)</span> denote the state and control at time step <span class="math notranslate nohighlight">\(t\)</span>. Suppose we seek to find an optimal sequence of controls that minimizes the total cost over a time horizon <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-ocp">
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-ocp" title="Permalink to this equation">#</a></span>\[\begin{split}\min_{u_{0:T-1}} &amp; \quad \sum_{t=0}^{T-1} J(x_t, u_t, t) + J_T(x_T)\\
+\text{subject to} &amp; \quad  x_{t+1} = f(x_t, u_t, t)\\
+&amp; \quad x_0 = x_\mathrm{current}\\
+&amp; \quad u_t \in \mathcal{U}(x_t, t), x_t \in\mathcal{X}_t\\
+&amp; \quad \text{Other constraints...}\end{split}\]</div>
+<p>What we have set up above is an <em>optimal control problem</em>. In addition to dynamics, initial state constraints, and control and state constraints, there could potentially be other constraints depending on the problem, like obstacle constraints, or something more complex like state-triggered constraints, or spatio-temporal constraints.</p>
+<p>We have made an assumption here that the cost has an <em>additive</em> cost structure, where the total cost is sum of the cost for being at a state <span class="math notranslate nohighlight">\(x\)</span> and executing a control <span class="math notranslate nohighlight">\(u\)</span> at timestep <span class="math notranslate nohighlight">\(t\)</span>. This additive cost structure is important as this allows us to break down the problem into smaller subproblems. Also note that we have a <em>terminal cost</em> <span class="math notranslate nohighlight">\(J_T\)</span> which denotes the cost of being at state <span class="math notranslate nohighlight">\(x_T\)</span> at the end of the planning horizon.</p>
+</section>
+<section id="the-value-function-i-e-cost-to-go">
+<h2>The Value Function (i.e., cost-to-go)<a class="headerlink" href="#the-value-function-i-e-cost-to-go" title="Permalink to this headline">#</a></h2>
+<p>As the Principle of Optimality states, we can break down the search for an optimal policy into smaller tail subproblems. Given this, we define the concept of a <em>value function</em> <span class="math notranslate nohighlight">\(V_\pi(x,t)\)</span>, which is a function that describes the <em>future accumulated cost/reward</em> starting at state <span class="math notranslate nohighlight">\(x\)</span> at time <span class="math notranslate nohighlight">\(t\)</span> and following a policy <span class="math notranslate nohighlight">\(\pi\)</span>. Recall, a policy is a function that maps state <span class="math notranslate nohighlight">\(x\)</span> to a control <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(u=\pi(x)\)</span>.
+Mathematically, the value function is defined as (for discrete time and finite horizon),</p>
+<div class="math notranslate nohighlight" id="equation-eq-value-function">
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-value-function" title="Permalink to this equation">#</a></span>\[V_\pi(x,t) = \sum_{k=t}^{T-1} J(x_k, \pi(x_k), k) + J_T(x_T)\]</div>
+<p>Simply put, we just sum up the total cost from following a policy <span class="math notranslate nohighlight">\(\pi\)</span> from state <span class="math notranslate nohighlight">\(x\)</span>, starting at timestep <span class="math notranslate nohighlight">\(t\)</span>. The value function is interpreted as, and often referred to as, the <em>cost-to-go</em> as it quite literally represents the total future cost from state <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Naturally, depending on the choice of <span class="math notranslate nohighlight">\(\pi\)</span>, your value would be different. So how do we go about picking the <em>optimal policy</em> <span class="math notranslate nohighlight">\(\pi^*\)</span>?</p>
+<section id="optimal-value-function-and-policy">
+<h3>Optimal value function and policy<a class="headerlink" href="#optimal-value-function-and-policy" title="Permalink to this headline">#</a></h3>
+<p>To find the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> (and corresponding optimal value function <span class="math notranslate nohighlight">\(V^*\)</span>), we simply need to find the policy that minimizes the total cost.</p>
+<div class="math notranslate nohighlight" id="equation-eq-optimal-value-function">
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-optimal-value-function" title="Permalink to this equation">#</a></span>\[\begin{split}V^*(x_t,t) = \min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T) \quad \text{subject to constraints...}\\
+\pi^*(x_t,t) = \mathrm{arg}\min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T) \quad \text{subject to constraints...}\end{split}\]</div>
+<p>To simplify the problem a little bit for ease of notation, let’s remove the constraints for now (except for dynamics constraints).</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+V^*(x_t,t) = \min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T)\\
+\pi^*(x_t,t) = \mathrm{arg}\min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T)
+\end{split}\]</div>
+<p>Even with the constraints removed, while it may become more tractable to solve each individual optimization problem, we would still need to solve this optimization problem for every state in our state space and for all time steps. Hopefully you can see that this will become intractable very quickly, especially for large state spaces and long horizons. Even if it is a relatively small problem and we could enumerate over all possible state, control, and timesteps, it would involve a lot of repeated and wasted computations. This is where the principle of optimality helps!</p>
+</section>
+</section>
+<section id="bellman-equation">
+<h2>Bellman equation<a class="headerlink" href="#bellman-equation" title="Permalink to this headline">#</a></h2>
+<p>Using the principle of optimality, we can break up the defintion of the value function <a class="reference internal" href="#equation-eq-optimal-value-function">(9)</a> into two parts as follows (again, removing the constraints to make it more notationally simple)</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(x_t,t) = \min_{u_{t}} \biggl( J(x_t, u_t, t) + \min_{u_{1:T-1}} \sum_{k=t+1}^{T-1} J(x_k, u_k, k) + J_T(x_T) \biggl)
+\]</div>
+<p>We have simply separated out the first term of the summation. But note that the remaining summation term is simply <span class="math notranslate nohighlight">\(V^*(x_{t+1}, t+1)\)</span>, the value function at the next state and next time step!
+Now, we can rewrite it as,</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(x_t,t) = \min_{u_{t}} \biggl( J(x_t, u_t, t) + V^*(x_{t+1}, t+1) \biggl) = \min_{u_{t}} \biggl( J(x_t, u_t, t) + V^*(f(x_t, u_t, t), t+1) \biggl)
+\]</div>
+<p>So now this optimization problem looks relatively easy to compute! Out of all the possible controls, pick the one that minimizes the sum of the immediate cost <span class="math notranslate nohighlight">\(J(x_t, u_t, t)\)</span> plus the value at the next state <span class="math notranslate nohighlight">\(V^*(x_{t+1}, t+1)\)</span>.
+Okay! But first we need to know <span class="math notranslate nohighlight">\(V^*(x_{t+1}, t+1)\)</span>. Well that just looks like the original problem we had, but the time step has progressed by one. So we can repeat what we have above for for <span class="math notranslate nohighlight">\(t+1\)</span>. But then we will have the same problem again for <span class="math notranslate nohighlight">\(t+2\)</span>, and so forth.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+&amp;V^*(x_{t+1},t+1) = \min_{u_{t+1}} \biggl( J(x_{t+1}, u_{t+1}, t+1) + V^*(x_{t+2}, t+2) \biggl)\\
+&amp;V^*(x_{t+2},t+2) = \min_{u_{t+2}} \biggl( J(x_{t+2}, u_{t+2}, t+2) + V^*(x_{t+3}, t+3) \biggl)\\
+&amp;\vdots\\
+&amp;V^*(x_{T-1},T-1) = \min_{u_{T-1}} \biggl( J(x_{T-1}, u_{T-1}, T-1) + V^*(x_{T}, T) \biggl)
+\end{split}\]</div>
+<p>Then we notice that at the end of horizon at timestep <span class="math notranslate nohighlight">\(T\)</span>, the value at being at state <span class="math notranslate nohighlight">\(x_T\)</span> is given by <span class="math notranslate nohighlight">\(J_T(x_T)\)</span>. As such, we have a terminal condition, <span class="math notranslate nohighlight">\(V^*(x_{T}, T)=J_T(x_T)\)</span>.
+Basically, what we have described just now is dynamic programming! and the base case is at timestep <span class="math notranslate nohighlight">\(T\)</span> with <span class="math notranslate nohighlight">\(V^*(x_{T}, T)=J_T(x_T)\)</span>.
+With the base case defined, we can then sweep through the timestep, working <em>backward</em> in time, <span class="math notranslate nohighlight">\(T, T-1,...,2,1,0\)</span>.</p>
+<p>The Bellman equation essentially describes this recursion,</p>
+<div class="admonition-bellman-equation-discrete-time-finite-horizon admonition">
+<p class="admonition-title">Bellman Equation (discrete time, finite horizon)</p>
+<div class="math notranslate nohighlight" id="equation-eq-bellman">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-bellman" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
+&amp;\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl)\end{split}\]</div>
+</div>
+<div class="admonition-pause-and-think admonition">
+<p class="admonition-title">Pause and think</p>
+<p>Although the Bellman equation provides a nice recursive relationship to use, is it straightforward to compute the value function for a general setting, say with nonlinear dynamics, non-trivial constraints, and nonlinear cost terms?</p>
+</div>
+<section id="representing-the-value-function">
+<h3>Representing the value function<a class="headerlink" href="#representing-the-value-function" title="Permalink to this headline">#</a></h3>
+<p>Depending on the nature of the state and control space, the value function can be represented differently.</p>
+<ul class="simple">
+<li><p>Discrete (finite) state: The value function can be stored in tabular form, with an index for state, and another for time. But if the state space and horizon is very large (e.g., game of chess) then this look-up table would be too large, and in that case, a function approximation (e.g., deep neural network) would be used.</p></li>
+<li><p>Continuous state: A function approximation (e.g., deep neural network) would typically be used. But for some very simple settings (e.g., Linear Quadratic Regular), the value function is quadratic.</p></li>
+</ul>
+<p>The same can be said for storing the policy.</p>
+<p>Another note to mention. We have thus far defined a <em>state-value</em> function where the value is determined purely by the state and timestep.
+However, another common term is the <em>state-action-value</em> or <em>Q-function</em> which is also used (often in reinforcement learning literature) which considers the action (i.e., control) as an input:</p>
+<div class="math notranslate nohighlight">
+\[
+Q_\pi(x_t,u_t,t) = J(x_t,u_t,t) + V_\pi(x_{t+1}).
+\]</div>
+<!-- ## Worked example (discrete-time, deterministic) -->
+<div class="admonition-example-discrete-time-deterministic-dynamics-discrete-state-and-control admonition">
+<p class="admonition-title">Example: discrete-time, deterministic dynamics, discrete state and control.</p>
+<p>Suppose we wish to find the lowest-cost path through the graph shown below. Each node represents a state of some system, and each edge represents an action we can take in a given state to transition to another state. Each edge is labeled with the cost of traversing it (i.e., taking that action), and the final node F is labeled with the known terminal state cost of ending up at that node (in this case, 3). Note then that for this terminal state, the value function <span class="math notranslate nohighlight">\(V\)</span> is equal to three; at first, this is the only state for which we know <span class="math notranslate nohighlight">\(V\)</span>.</p>
+<p><img alt="" src="../_images/baseline_graph.png" /></p>
+<p>We will use dynamic programming to find the optimal path. First, we must find <span class="math notranslate nohighlight">\(V\)</span> for each of the states D and E. Since each of these states has only one possible action we can take, this is easy; the value function for each state is equal to the cost of the (one) action we can take in that state, plus the value of the state we end up at (F). Now we can label the graph with the known values of <span class="math notranslate nohighlight">\(V\)</span> at states D and E, as well as highlight the optimal actions to take in states D and E (although there is only one action from each of those states in this case).</p>
+<p><img alt="" src="../_images/step_one.png" /></p>
+<p>Now things become more interesting. We now need to determine the optimal action and value of <span class="math notranslate nohighlight">\(V\)</span> for each of states B and C. Now we have choices; for example, from state B, we could choose to go to either state D or state E. Which one is best? Again we use the Bellman equation. Let’s look at state B. If we choose to go to state D, we will incur a cost of <span class="math notranslate nohighlight">\(8 + V(D) = 8 + 8 = 16\)</span>. If we choose to go to state E we will incur a cost of <span class="math notranslate nohighlight">\(9 + V(E) = 9 + 6 = 15\)</span>. Thus we see that the lowest-cost option is to go to state E, and by choosing that action we have <span class="math notranslate nohighlight">\(V = 15\)</span> for state B.</p>
+<p><img alt="" src="../_images/step_two.png" /></p>
+<p>Turning our attention to state C: if we choose to go to state D, we incur a cost of <span class="math notranslate nohighlight">\(2 + V(D) = 2 + 8 = 10\)</span>, and if we choose to go to state E we incur a cost of <span class="math notranslate nohighlight">\(3 + V(E) = 3 + 6 = 9\)</span>. Thus going to E is the optimal choice, and doing so we have <span class="math notranslate nohighlight">\(V =9\)</span> for state B.</p>
+<p><img alt="" src="../_images/step_three.png" /></p>
+<p>Finally, looking at state A, we see that if we go to state B, we incur a cost of <span class="math notranslate nohighlight">\(2 + V(B) = 2 + 15 = 17\)</span>, and if we go to state C we incur a cost of <span class="math notranslate nohighlight">\(7 + V(C) = 7 + 9 = 15\)</span>. Thus C is the optimal choice, and <span class="math notranslate nohighlight">\(V = 15\)</span> for state A.</p>
+<p><img alt="" src="../_images/step_four.png" /></p>
+<p>Thus we have computed the optimal path from state A (or from any state onward) to state F.</p>
+<p>Note that the computational effort involved scales linearly with the time horizon; considering a time horizon twice as long would only incur twice as much computational effort. A brute-force approach in which we simply enumerate every possible path through the state space and pick the best one would scale exponentially in the time horizon; a time horizon twice as long would <em>square</em> the computation time.</p>
+</div>
+</section>
+<section id="stochastic-dynamic-programming">
+<h3>Stochastic dynamic programming<a class="headerlink" href="#stochastic-dynamic-programming" title="Permalink to this headline">#</a></h3>
+<p>In many cases, we do not know precisely which state we will end up in when we take a certain action.
+That is, given <span class="math notranslate nohighlight">\(x_t, u_t\)</span>, the next state <span class="math notranslate nohighlight">\(x_{t+1}\)</span> is not deterministic.
+For example, if we are controlling a rocket, in the real world the thrust produced by the engine for any given throttle command is not precesely known; thus we cannot precisely tell what the vehicle’s state will be some time in the future. Or, suppose we are playing a game of chess; even if we know the state (i.e., the board position) perfectly, when we make a move we don’t know what the opponent will do. We may have an idea of which moves are likely or unlikely based on our knowledge of the game and our opponent, and in fact the skill of playing chess is to try to influence your opponent to make moves favorable to you, but we ultimately don’t know the future perfectly.</p>
+<p>In cases like these we must use methods which can handle the inherent stochasticity of the system. One common approach is to use dynamic programming to maximize not the value function <span class="math notranslate nohighlight">\(V(x,t)\)</span>, but the <a class="reference external" href="https://en.wikipedia.org/wiki/Expected_value"><em>expected value</em></a> of the value function, <span class="math notranslate nohighlight">\(\mathbb{E}[V(x,t)]\)</span>.</p>
+<p>Additionally, the cost function may depend not only on state and control, but also may depend on next state. Since there is uncertainty on the next state, there cost is also uncertain.</p>
+<p>Adapting the previous notation slightly to account for stochasticity in the problem:</p>
+<ul class="simple">
+<li><p>Instead of dynamics <span class="math notranslate nohighlight">\(x_{t+1} = f(x_t, u_t, t)\)</span>, we consider state transition probabilities where <span class="math notranslate nohighlight">\(x_{t+1} \sim p(x_{t+1} \mid x_t, u_t)\)</span>.</p></li>
+<li><p>Instead of a cost <span class="math notranslate nohighlight">\(J(x_t, u_t, t)\)</span>, we consider <span class="math notranslate nohighlight">\(J(x_t, u_t, x_{t+1}, t)\)</span>.</p></li>
+</ul>
+<div class="admonition-stochastic-bellman-equation-discrete-time-finite-horizon admonition">
+<p class="admonition-title">Stochastic Bellman Equation (discrete time, finite horizon)</p>
+<div class="math notranslate nohighlight" id="equation-eq-stoch-bellman">
+<span class="eqno">(11)<a class="headerlink" href="#equation-eq-stoch-bellman" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;V^*(x_{t},t) = \min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl), \\
+&amp;\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl)\end{split}\]</div>
+</div>
+<!-- ## Worked example (discrete-time, stochastic) -->
+<div class="admonition-example-discrete-time-stochastic-dynamics-discrete-state-and-control admonition">
+<p class="admonition-title">Example: discrete-time, stochastic dynamics, discrete state and control.</p>
+<p>Suppose we wish to find the lowest-cost path through the graph shown below. Each node represents a state of some system, and each edge represents a possible transition between states. Note that in the stocastic case, state transitions do not correspond directly to actions. In this example, we assume that in each state, there are two actions we can take: “Action 1” and “Action 2”. Each transition edge is labeled with two numbers; the first is the probability of that state transition occuring if we take Action 1, and the second is the probability of that state transition occuring if we take Action 2. The value of ending up in either of the two final states is marked in the graph. Taking Action 1 costs 1 unit of value, and taking Action 2 costs 2 units of value. We seek to find a sequence of actions that maximizes the expected total value of the path.</p>
+<p><img alt="" src="../_images/stochastic_dp_example_0.png" /></p>
+<p>We will use dynamic programming to find the optimal path. First, we must find <span class="math notranslate nohighlight">\(V\)</span> for each of the states D and E. Starting with state D: the expected total value if we take Action 1 is <span class="math notranslate nohighlight">\(0.2\times V(F) + 0.8\times V(G) - 1 = 0.2\times4 + 0.8\times 2 - 1 = 1.4\)</span>. The expected total value if we take Action 2 is <span class="math notranslate nohighlight">\(0.65\times V(F) + 0.35\times V(G) - 2 = 0.65\times 4 + 0.35\times 2 - 2 = 1.3\)</span>. Of these, 1.4 is greater, and so the optimal action to take in state D is Action 1, and <span class="math notranslate nohighlight">\(V(D) = 1.4\)</span>. Performing the same process for state E, we find that the optimal action is again Action 1, and <span class="math notranslate nohighlight">\(V(E) = 2.5\)</span>.</p>
+<p><img alt="" src="../_images/stochastic_dp_example_1.png" /></p>
+<p>Now we proceed to states B and C. For state B: if we take Action 1, the expected total value is <span class="math notranslate nohighlight">\(0.52\times V(D) + 0.48\times V(E) - 1 = 0.52\times 1.4 + 0.48\times 2.5 - 1 = 0.928\)</span>. If we take Action 2, the expected total value is <span class="math notranslate nohighlight">\(0.33\times V(D) + 0.67\times V(E) - 2 = 0.33\times 1.4 + 0.67\times 2.5 - 2 = 0.137\)</span>. Of these, 0.928 is greater, and so Action 1 is the optimal action and <span class="math notranslate nohighlight">\(V(B) = 0.928\)</span>. By a similar process we find the optimal action for state C, and also <span class="math notranslate nohighlight">\(V(C)\)</span>.</p>
+<p><img alt="" src="../_images/stochastic_dp_example_2.png" /></p>
+<p>Finally, the same procedure lets us compute the optimal action at state a, and also <span class="math notranslate nohighlight">\(V(A)\)</span>.</p>
+<p><img alt="" src="../_images/stochastic_dp_example_3.png" /></p>
+<p>Thus we have computed the optimal actions to take from state A (or from any state onward) to the end.</p>
+<p>Note that for this particular case, Action 1 was always the best action to take (turns out it’s hard to make up an example that you know in advance will give “interesting” results). But this highlights the power of dynamic programming: imagine how hard it would be to tell what the right action is in each state just by looking at the graph, and not going throught the stochastic dynamic programming process.</p>
+</div>
+</section>
+<section id="infinite-time-horizon-dynamic-programming">
+<h3>Infinite time horizon dynamic programming<a class="headerlink" href="#infinite-time-horizon-dynamic-programming" title="Permalink to this headline">#</a></h3>
+<p>Often we are interested in problems with an infinite time horizon. For example, suppose we are designing a stabilization system for a cruise ship, to reduce rolling due to waves. The cruise ship will put out to sea, activate the stabilization system, and leave it running “indefinitely”, or at least until it gets back to port. Since we don’t know how long the stabilizer will have to run (and in any case it will run for a very long time on each journey), we can just assume it will run “forever”. In cases like these, infinite-horizon dynamic programming is useful.</p>
+<p>In infinite-horizon dynamic programming, it no longer makes sense to consider a terminal state cost, since there is no terminal state. Instead, we use the infinite-horizon Bellman equation, which includes a “discount factor” <span class="math notranslate nohighlight">\(\gamma\)</span> multiplying <span class="math notranslate nohighlight">\(V(x_{t+1}, t+1)\)</span>, where <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; 1\)</span>:</p>
+<p>It also does not make sense to keep track of timestep in the infinite horizon case since the horizon is, well, infinite. Keeping track of what the value is at timestep, say, 1000000 versus time step 100 is not particularly useful since the horizon is infinite. As such, drop the time argument in our value function definition.</p>
+<div class="admonition-infinite-horizon-bellman-equation-discrete-time admonition">
+<p class="admonition-title">Infinite-Horizon Bellman Equation (discrete time)</p>
+<div class="math notranslate nohighlight" id="equation-eq-inf-bellman">
+<span class="eqno">(12)<a class="headerlink" href="#equation-eq-inf-bellman" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;V^*(x) = \min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\
+&amp;\pi^*(x_{t}) = \mathrm{arg}\min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\\end{split}\]</div>
+</div>
+<p>This has the effect of “discounting” future costs, so that they mattter less the further in the future they are. As we work backwards through time in the dynamic programming process, the value function at later time steps will be multiplied by higher and higher powers of <span class="math notranslate nohighlight">\(\gamma\)</span>, which converge to zero.</p>
+<p>But how do we use this? Since in the dynamic programming process we have to work backwards through time, it seems like the infinite-horizon problem is inherently intractable; we can’t compute infinitely many iterations. That’s where <span class="math notranslate nohighlight">\(\gamma\)</span> comes in. The inclusion of that discount factor, strictly between 0 and 1, means that the value function <span class="math notranslate nohighlight">\(V(x, t)\)</span> converges as you iterate through the DP process; that is, it asymptotically approaches a limiting value. Furthermore, we can pick an arbitrary “terminal state value” to start our DP iteration; the discount factor eliminates the influence of the terminal state value over time, and the limiting value of <span class="math notranslate nohighlight">\(V(x)\)</span> does not depend on the terminal state value we pick. So, we can simply pick an arbitrary initialization for <span class="math notranslate nohighlight">\(V(x)\)</span> and iterate until <span class="math notranslate nohighlight">\(V(x)\)</span> converges to within some chosen convergence tolerance <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
+<!-- ## Worked example (discrete-time, infinite-horizon) -->
+<div class="admonition-example-discrete-time-deterministic-dynamics-discrete-state-and-control-infinite-horizon admonition">
+<p class="admonition-title">Example: discrete-time, deterministic dynamics, discrete state and control, infinite-horizon.</p>
+<p>Suppose we have a discrete-time system with two states, A and B. At each time step we can remain in the state we’re in, or transition to the other; each action has a certain cost. A graph representation of this system is shown below, at some imaginary “end of time” from which we initialize the DP process; you can imagine that the graph extends infinitely to the left. The graph edges represent the possible state transitions from one time step to the next, and are lebeled with their costs. We seek to find the optimal action in each state to minimize the total cost until the end of time, using the infinite-horizon Bellman equation. We arbitrarily assign <span class="math notranslate nohighlight">\(V(A) = V(B)  = 0\)</span> at the “end of time”, and in this case we will consider a discount factor of <span class="math notranslate nohighlight">\(\gamma = 0.9\)</span>.</p>
+<p><img alt="" src="../_images/infinite_horizon_dp_example_0.png" /></p>
+<p>Now we begin the dynamic programming process. Consider state A, one time step back from the “end of time”. What is the optimal action, and value of <span class="math notranslate nohighlight">\(V(A)\)</span>? If we remain in state A, we will incur a total cost of <span class="math notranslate nohighlight">\(1 + 0.9\times 0 = 1\)</span>, and if we transition to state B, we will incur a total cost of <span class="math notranslate nohighlight">\(2 + 0.9\times 0 = 2\)</span>. Of the two, remaining in state A has the lower cost, so that is the optimal action, and at this time step <span class="math notranslate nohighlight">\(V(A) = 1)\)</span>. Now consider state B: if we remain in state B, we will incur a total cost of <span class="math notranslate nohighlight">\(4 + 0.9\times 0 = 4\)</span>, and if we transition to state A we will incur a total cost of <span class="math notranslate nohighlight">\(3+0.9\times 0 = 3\)</span>. Thus we should transition to state A, and at this time step <span class="math notranslate nohighlight">\(V(B) = 3\)</span>. The optimal transitions are highlighted below.</p>
+<p><img alt="" src="../_images/infinite_horizon_dp_example_1.png" /></p>
+<p>Now we move one time step back and repeat the process, finding again that the optimal action is to remain in state A if you’re already there, or to transition to state A if you’re in state B. The optimal values of <span class="math notranslate nohighlight">\(V(x, t)\)</span> and optimal actions are shown below.</p>
+<p><img alt="" src="../_images/infinite_horizon_dp_example_2.png" /></p>
+<p>Notice that as we go backward in time, <span class="math notranslate nohighlight">\(V(x)\)</span> increases; however, it appears to be slowing down. Going one time step back from the end of time, <span class="math notranslate nohighlight">\(V(x)\)</span> increased by more than it did when we went one step further. This pattern will continue until eventually <span class="math notranslate nohighlight">\(V(x)\)</span> converges. In this case, the values that <span class="math notranslate nohighlight">\(V(x)\)</span> converges to are <span class="math notranslate nohighlight">\(V(A) = 10, V(B) = 12\)</span>. (Try this yourself! Write some code to iteratively compute these values. Also try different initializations of <span class="math notranslate nohighlight">\(V(x)\)</span> other than zero; does it make a difference?)</p>
+</div>
+</section>
+</section>
+<section id="hamilton-jacobi-bellman-equation">
+<h2>Hamilton-Jacobi-Bellman equation<a class="headerlink" href="#hamilton-jacobi-bellman-equation" title="Permalink to this headline">#</a></h2>
+<p>So far, we have considered a <em>discrete-time</em> setting. What about the continuous-time setting?
+We can derive the continuous-time case by casting the continuous time problem into a discrete-time problem with timestep <span class="math notranslate nohighlight">\(\Delta t\)</span> and let <span class="math notranslate nohighlight">\(\Delta t\rightarrow 0\)</span> and see what we get as a result of taking that limit.
+With the continuous-time setting, our dynamics are <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,t)\)</span> and the cost is <span class="math notranslate nohighlight">\(\int_0^T J(x,u,t) dt + J_T(x(T))\)</span>. Note that the cost is an integral, but to “convert to discrete-time”, the cost over a <span class="math notranslate nohighlight">\(\Delta t\)</span> time step is approximated to be <span class="math notranslate nohighlight">\(J(x,u,t) \Delta t\)</span>.</p>
+<p>Considering we are at timestep <span class="math notranslate nohighlight">\(t\)</span> and we consider a timestep size of <span class="math notranslate nohighlight">\(\Delta t\)</span>, the Bellman equation can be written as,</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(x(t),t) = \min_{u(t)} \biggl( J(x(t), u(t), t)\Delta t + V^*(x(t+\Delta t), t+\Delta t) \biggl)
+\]</div>
+<p>Now we rearrange the terms and take the limit <span class="math notranslate nohighlight">\(\Delta t\rightarrow 0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+0 &amp;= \min_{u(t)} \biggl( J(x(t), u(t), t)\Delta t + V^*(x(t+\Delta t), t+\Delta t) - V^*(x(t),t) \biggl)\\
+0 &amp;= \min_{u(t)} \biggl( J(x(t), u(t), t) + \frac{V^*(x(t+\Delta t), t+\Delta t) - V^*(x(t),t)}{\Delta t} \biggl), \qquad (\div \Delta t)\\
+\lim_{\Delta t \rightarrow 0} 0 &amp;= \lim_{\Delta t \rightarrow 0} \min_{u(t)} \biggl( J(x(t), u(t), t) + \underbrace{\frac{V^*(x(t+\Delta t), t+\Delta t) - V^*(x(t),t)}{\Delta t}}_{\text{Total derivative}} \biggl)\\
+&amp;= \min_{u(t)} \biggl( J(x(t), u(t), t) + \frac{\partial V^*}{\partial t}(x,t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)\\
+0 &amp;= \frac{\partial V^*}{\partial t}(x,t) +  \min_{u(t)} \biggl( J(x(t), u(t), t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)
+\end{split}\]</div>
+<p>The resulting expression is a partial differential equation where the solution is the value function. We have <span class="math notranslate nohighlight">\(V(x,T) = J_T(x)\)</span> as a boundary condition, and we must solve the PDE backward in time to get the value function over all entire time horizon.</p>
+<div class="admonition-hamilton-jacobi-bellman-equation-continuous-time-finite-horizon admonition">
+<p class="admonition-title">Hamilton-Jacobi-Bellman Equation (continuous-time, finite horizon)</p>
+<div class="math notranslate nohighlight" id="equation-eq-hjb">
+<span class="eqno">(13)<a class="headerlink" href="#equation-eq-hjb" title="Permalink to this equation">#</a></span>\[\begin{split}0 &amp;= \frac{\partial V^*}{\partial t}(x,t) +  \min_{u(t)} \biggl( J(x(t), u(t), t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)\\
+V^*(x,T) &amp;= J_T(x)\end{split}\]</div>
+</div>
+</section>
+<section id="additional-reading">
+<h2>Additional reading<a class="headerlink" href="#additional-reading" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://incompleteideas.net/book/RLbook2020.pdf">Chapter 4: Reinforcement Learning: An Introduction (2nd Ed) by Richard S. Sutton and Andrew Barto</a></p></li>
+<li><p><a class="reference external" href="https://underactuated.csail.mit.edu/index.html">Chapter 7: Underactuated Robotics Course Notes by Russ Tedrake</a></p></li>
+<li><p><a class="reference external" href="https://www.mit.edu/~dimitrib/dpbook.html">Dynamic Programming and Optimal Control by Dimitri P. Bertsekas</a> (No free online version, but there are some online videos available.)</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="control-certificates.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Control certificate functions</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="lqr.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Linear Quadratic Regulator</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

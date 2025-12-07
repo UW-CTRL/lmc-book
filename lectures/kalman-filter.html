@@ -1,0 +1,986 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>State estimation &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="HJ reachability" href="reachability.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deliverables
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/exercises.html">
+   Exercises
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/paper-review.html">
+   Research paper presentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/tutorial.html">
+   Tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sequential-dm.html">
+   Sequential decision-making
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lqr.html">
+   Linear Quadratic Regulator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reachability.html">
+   HJ reachability
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   State estimation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/kalman-filter.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/lectures/kalman-filter.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-set-up">
+   Problem set up
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intuition">
+   Intuition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-kalman-filter">
+   The Kalman Filter
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#key-assumptions">
+     Key assumptions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up">
+     Set up
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-kalman-filter-steps">
+     The Kalman Filter steps
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prediction-step">
+       <strong>
+        1. Prediction step
+       </strong>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#receive-measurement">
+       <strong>
+        2. Receive measurement
+       </strong>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#update-step">
+       <strong>
+        3. Update step
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-kalman-filter-algorithm">
+     The Kalman Filter algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#connection-with-lqr">
+     Connection with LQR
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#continuous-time-kalman-filter">
+   Continuous-time Kalman Filter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extended-kalman-filter">
+   Extended Kalman Filter
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>State estimation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-set-up">
+   Problem set up
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intuition">
+   Intuition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-kalman-filter">
+   The Kalman Filter
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#key-assumptions">
+     Key assumptions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up">
+     Set up
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-kalman-filter-steps">
+     The Kalman Filter steps
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prediction-step">
+       <strong>
+        1. Prediction step
+       </strong>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#receive-measurement">
+       <strong>
+        2. Receive measurement
+       </strong>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#update-step">
+       <strong>
+        3. Update step
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-kalman-filter-algorithm">
+     The Kalman Filter algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#connection-with-lqr">
+     Connection with LQR
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#continuous-time-kalman-filter">
+   Continuous-time Kalman Filter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extended-kalman-filter">
+   Extended Kalman Filter
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="state-estimation">
+<h1>State estimation<a class="headerlink" href="#state-estimation" title="Permalink to this headline">#</a></h1>
+<p>So far, we have assumed we had perfect state information. That is, we could observe the state perfectly. In practice, this isn’t always true. For instance, we don’t typically know the <em>true</em> position of a robot (relative to some frame). Instead, we take measurements, such as GPS signals, LiDAR range measurements, or measurements from a motion capture system. Using these measurements, we can back out, or <em>estimate</em> what the state could be. But again, this is only an <em>estimate</em> since the measurements are not perfect either, but some can be more accurate than others. That is to say, our measurement model is subject to <em>measurement noise</em>.</p>
+<p>Not only is there uncertainty introduced through the measurements, but there is also uncertainty in the dynamics of the system. While we can derive a dynamics model that, in theory, describes the motion of the system, there are typically sources of uncertainty that make this dynamics model not perfect. For instance, there may be things that are not captured in the model (e.g., wind affecting an aircraft, ice on the road that affects a vehicle’s tire friction). We refer to the uncertainty in the dynamics model as <em>process noise</em>.</p>
+<p>Moreover, the measurements may only provide a signal to part of the state (e.g., GPS readings provide information on position but not velocity). So we need to also estimate part of the state that we may not be able to directly measure.</p>
+<section id="problem-set-up">
+<h2>Problem set up<a class="headerlink" href="#problem-set-up" title="Permalink to this headline">#</a></h2>
+<p>Let us set up this state estimation problem more formally. To start off, let us consider a discrete-time setting.
+Suppose we have a dynamical system with state vector <span class="math notranslate nohighlight">\(x_t\in \mathbb{R}^n\)</span>, control input <span class="math notranslate nohighlight">\(u_t\in\mathbb{R}^m\)</span> and measurement <span class="math notranslate nohighlight">\(y_t\in \mathbb{R}^p\)</span> at time step <span class="math notranslate nohighlight">\(t\)</span>. Let <span class="math notranslate nohighlight">\(u_0,u_1,\ldots,u_{t-1}\)</span> denote a sequence of control inputs the system executes right before time-step <span class="math notranslate nohighlight">\(t\)</span>. This is assumed to be known (since we get to choose the controls to execute). And let <span class="math notranslate nohighlight">\(y_1, y_2,\ldots, y_t\)</span> denote a sequence of measurements up until time-step <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>Then, the goal is to develop an algorithm that takes in <span class="math notranslate nohighlight">\(u_0,u_1,\ldots,u_{t-1}\)</span> and <span class="math notranslate nohighlight">\(y_1, y_2,\ldots, y_t\)</span> to estimate the state <span class="math notranslate nohighlight">\(x_t\)</span> at time-step <span class="math notranslate nohighlight">\(t\)</span> with some estimate <span class="math notranslate nohighlight">\(\hat{x}_t \sim p(\hat{x}_t \mid \text{past controls}, \text{past and current observations})\)</span> such that the error between the true and estimated state <span class="math notranslate nohighlight">\(\| x_t - \hat{x}_t\|\)</span> is “as small as possible”.</p>
+<p>In general, this estimation problem is a challenging optimization problem for a number of reasons. For example, the uncertainty in the measurement and dynamics model present itself in a very complicated way, such as being state-dependent, a distribution that isn’t well described by standard distributions (e.g., Gaussian), the measurement and dynamics model are nonlinear, and the measurements are high-dimensional (e.g., an image).</p>
+<p>There’s been a lot of progress made, especially with deep learning techniques, to estimate the state (and also a map of the environment—this is referred to as Simultaneous Localization and Mapping, or SLAM).
+But in this chapter, we will study a particular state estimation algorithm that is very tractable, simple, and powerful, despite certain simplifying assumptions it makes.</p>
+</section>
+<section id="intuition">
+<h2>Intuition<a class="headerlink" href="#intuition" title="Permalink to this headline">#</a></h2>
+<p>In the process of estimating the state, we assume we have (i) a dynamics model, (ii) a measurement model, and (iii) a description of the process and measurement noise.
+With the dynamics model, we could propagate the current state estimate through the dynamics and get a prediction of the next state. While with the measurement model, we could analyze a measurement and predict where the state could be that way. But which one should be trust more? The prediction from the dynamics model or the prediction from the measurement model?</p>
+<p>Well, ideally both! And this depends on how much we should trust each of the models. The level of “trust” would depend on how much noise they each encompass. That is, we should consider the “relative magnitudes” of uncertainty in the process and measurement noise models. We have put “relative magnitudes” in quotes since it’s not always straightforward to compare uncertainties given two arbitrary probability distributions.</p>
+<p>At a high-level, a state estimation algorithm that we will dive into next has the following steps. Given the previous state estimate <span class="math notranslate nohighlight">\(\hat{x}_{t-1}\)</span>, we then perform:</p>
+<ol class="simple">
+<li><p><strong>Prediction step</strong>. Using the dynamics, <em>predict</em> where the next state should be according to the dynamics model. But with the understanding that this is only a <em>prediction</em> since the true system is subject to process noise, and the exact noise quantity is not something we know or can measure.</p></li>
+<li><p><strong>Receive a measurement <span class="math notranslate nohighlight">\(y_t\)</span>.</strong> Compare what the predicted measurement would have been using the predicted next state and measurement model. This difference is a <em>measurement residual</em>.</p></li>
+<li><p><strong>Update step</strong>. Obtain an updated prediction of the next state by reasoning about the predicted state and the measurement residual, and figuring out an optimal way to fuse these two pieces of information together.</p></li>
+</ol>
+<p>[TODO: add figure]</p>
+</section>
+<section id="the-kalman-filter">
+<h2>The Kalman Filter<a class="headerlink" href="#the-kalman-filter" title="Permalink to this headline">#</a></h2>
+<section id="key-assumptions">
+<h3>Key assumptions<a class="headerlink" href="#key-assumptions" title="Permalink to this headline">#</a></h3>
+<p>To make the state estimation procedure tractable, we need to make some simplyfing assumption. Not too surprisingly (given the name of this course), we will assume the <strong>dynamics and measurement models are linear</strong>.
+In terms of simplifying assumptions on the noise, we make the following assumptions:</p>
+<ul class="simple">
+<li><p>The process and measurement noise is <em>additive</em>.</p></li>
+<li><p>The noise is <em>Gaussian white noise</em>, meaning the noise is uncorrelated across different time steps, and is drawn from a normal distribution with mean 0 and with some covariance to be set by user.</p></li>
+</ul>
+<p>Mathematically, we assume the dynamics and measurement model have the following form:</p>
+<div class="admonition-gaussian-linear-dynamics-discrete-time admonition">
+<p class="admonition-title">Gaussian Linear Dynamics (Discrete-time)</p>
+<div class="math notranslate nohighlight" id="equation-eq-gaussian-linear-dynamics-dt">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-gaussian-linear-dynamics-dt" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;x_{t+1} = Ax_t + Bu_t + w_t, \qquad &amp;\mathbb{E}[w_tw_t^T] = Q, \qquad &amp;w_t \sim \mathcal{N}(0, Q)\\
+&amp;y_t = Cx_t + v_t, \qquad &amp;\mathbb{E}[v_tv_t^T] = R, \qquad &amp;v_t \sim \mathcal{N}(0, R)\end{split}\]</div>
+</div>
+<p>Note: For further simplicity, we have assumed time-invariant dynamics, measurement, and noise. We can consider a time-variant setting by simply adding a subscript <span class="math notranslate nohighlight">\(t\)</span> on the <span class="math notranslate nohighlight">\(A, B, C, Q, R\)</span> matrices.</p>
+</section>
+<section id="set-up">
+<h3>Set up<a class="headerlink" href="#set-up" title="Permalink to this headline">#</a></h3>
+<p>Our estimate is not exactly a specific value, but rather is a <em>probability distribution</em> over <span class="math notranslate nohighlight">\(\hat{x}_t\)</span>. That is, we want to estimate the probability distribution <span class="math notranslate nohighlight">\(p\)</span> where <span class="math notranslate nohighlight">\(\hat{x}_t \sim  p(\hat{x}_t \mid u_{0:t-1}, y_{1:t}, x_0)\)</span>.
+But what does this probability distribution look like?</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Compare with LQR</p>
+<p>This is analogous to LQR. By assuming the value function is quadratic, after applying the Bellman update, the value function at the next time step is also quadratic!</p>
+</aside>
+<p>Well, it turns out that there is a reason why we chose Gaussian white noise and linear dynamics. When we apply an affine transformation to a Gaussian, the output is another Gaussian but with a different mean and covariance. So if we assume that our state estimate is represented by a Gaussian distribution. Then “passing” that estimate through the dynamics and measurement model will result in the updated estimate being Gaussian as well!</p>
+<p>So let’s assume that the initial state estimate is represented by a normal distribution with mean <span class="math notranslate nohighlight">\(\mu_0\)</span> and covariance <span class="math notranslate nohighlight">\(P_0\)</span>, <span class="math notranslate nohighlight">\(\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)\)</span>. Here, <span class="math notranslate nohighlight">\(\mu_0\)</span> and <span class="math notranslate nohighlight">\(P_0\)</span> are chosen by the user. This represents an estimate of where the system’s starting state.</p>
+<!-- ```{margin} Some properties of Gaussians
+If $x\sim\mathcal{N}(\mu, \Sigma)$, and $z = c - x$ where $c$ is a constant, then $\mathbb{E}[z] = \mathbb{E}[c - x] = \mathbb{E}[c] - \mathbb{E}[x] = c - \mu$, since expectations is a linear operation. Also, $\mathrm{Cov}(aX + bY) = a^2 \mathrm{Cov}(X) + b^2 \mathrm{Cov}(Y)$.
+``` -->
+<p>Let’s also define the error at time <span class="math notranslate nohighlight">\(t\)</span> to be <span class="math notranslate nohighlight">\(e_t = x_t - \hat{x}_t\)</span> where <span class="math notranslate nohighlight">\(x_t\)</span> is the <em>true</em> state which is an actual value but unknown to us. Since <span class="math notranslate nohighlight">\(\hat{x}_t\sim\mathcal{N}(\mu_t, P_t)\)</span>, then <span class="math notranslate nohighlight">\(e_t \sim \mathcal{N}(x_t - \mu_t, P_t)\)</span>. This is because shifting a Gaussian by a constant will only change the mean, but keep the covariance the same.
+While knowing the mean of the error <span class="math notranslate nohighlight">\(x_t - \mu_t\)</span> is not possible since <span class="math notranslate nohighlight">\(x_t\)</span> is not known, knowing <span class="math notranslate nohighlight">\(P_t\)</span> is useful (and later we show possible to compute) since this measures the <em>uncertainty in the error of our estimate</em>.
+Specifically, we have <span class="math notranslate nohighlight">\(P_t = \mathbb{E}[e_te_t^T] = \mathbb{E}[(x_t - \mu_t)(x_t - \mu_t)^T]\)</span> and so we have the diagonal entries describing the mean squared error for each entry of the state.
+As such, we would like to minimize the uncertainty in our error estimate by <em>minimizing the trace of <span class="math notranslate nohighlight">\(P_t\)</span></em>, a fact that we will use later.</p>
+<p>Summarizing the ideas above:</p>
+<ul class="simple">
+<li><p>Initial state estimate <span class="math notranslate nohighlight">\(\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)\)</span> chosen by user.</p></li>
+<li><p>Error estimate <span class="math notranslate nohighlight">\(e_t = x_t - \hat{x}_t\)</span> where <span class="math notranslate nohighlight">\(\mathbb{E}[e_te_t^T] = P_t\)</span>.</p></li>
+<li><p>Want to minimize the diagonal entries of <span class="math notranslate nohighlight">\(P_t\)</span> at every time step.</p></li>
+</ul>
+<p>So let’s begin the estimation process where we first <em>predict</em> the next state, receive a measurement, and then fuse the measurement information with the prediction.</p>
+</section>
+<section id="the-kalman-filter-steps">
+<h3>The Kalman Filter steps<a class="headerlink" href="#the-kalman-filter-steps" title="Permalink to this headline">#</a></h3>
+<section id="prediction-step">
+<h4><strong>1. Prediction step</strong><a class="headerlink" href="#prediction-step" title="Permalink to this headline">#</a></h4>
+<p>Given the previous estimate <span class="math notranslate nohighlight">\(\hat{x}_{t-1}\)</span>, we would like to predict what <span class="math notranslate nohighlight">\(\hat{x}_t\)</span> is by considering only the dynamics without process noise. Since this is only a prediction and not our final estimate, we denote this prediction with a superscript <span class="math notranslate nohighlight">\(p\)</span>. So let’s “pass” our estimate <span class="math notranslate nohighlight">\(\hat{x}_{t-1}\)</span> through the linear dynamics.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{x}_t^p = A\hat{x}_{t-1} + Bu_{t-1}
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\hat{x}_{t-1}\)</span> is a random variable and is passed through an affine transformation, then <span class="math notranslate nohighlight">\(\hat{x}_t^p\)</span> is also a random variable. If <span class="math notranslate nohighlight">\(\hat{x}_{t-1}\sim\mathcal{N}(\mu_{t-1}, P_{t-1})\)</span>, then <span class="math notranslate nohighlight">\(\hat{x}_t^p \sim\mathcal{N}(\mu_t^p, P_t^p)\)</span>, but with a different mean and covariance to be determined. Since we assume that <span class="math notranslate nohighlight">\(\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)\)</span>, and Gaussians remain Gaussians under affine transformations, then it follows that all <span class="math notranslate nohighlight">\(\hat{x}_t^p\)</span> (and <span class="math notranslate nohighlight">\(\hat{x}_t\)</span>) will also be normally distributed.</p>
+<p>So we have <span class="math notranslate nohighlight">\(\hat{x}_{t-1}\sim\mathcal{N}(\mu_{t-1}, P_{t-1})\)</span>. Recalling that the expectation is a linear operator, then we have,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{E}[\hat{x}_t] &amp;= \mathbb{E}[A\hat{x}_{t-1} + Bu_{t-1}]\\
+&amp;= \mathbb{E}[A\hat{x}_{t-1}] + \mathbb{E}[Bu_{t-1}] \\
+&amp;= A\mathbb{E}[\hat{x}_{t-1}] + Bu_{t-1}\\
+\mu_t^p &amp; = A\mu_{t-1} + Bu_{t-1}
+\end{split}\]</div>
+<p>Next, we need to predict the covariance of the estimate <span class="math notranslate nohighlight">\(P_t^p\)</span>. Let the predicted error estimate be <span class="math notranslate nohighlight">\(e_t^p = x_t - \hat{x}_t^p\)</span> and <span class="math notranslate nohighlight">\(P_t^p = \mathbb{E}[e_t^p {e_t^p}^T]\)</span>. Noting that the true state evolves according to <span class="math notranslate nohighlight">\(x_t = Ax_{t-1} + Bu_{t-1} + w_{t-1}\)</span>, we then have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{E}[e_t^p {e_t^p}^T] &amp; = \mathbb{E}[(x_t - \hat{x}_t^p)(x_t - \hat{x}_t^p)^T]\\
+&amp;= \mathbb{E}[(Ax_{t-1} + Bu_{t-1} + w_{t-1} - A\hat{x}_{t-1} - Bu_{t-1})((Ax_{t-1} + Bu_{t-1} + w_{t-1} - A\hat{x}_{t-1} - Bu_{t-1}))^T]\\
+&amp;= \mathbb{E}[(Ax_{t-1}  + w_{t-1} - A\hat{x}_{t-1} )(Ax_{t-1}  + w_{t-1} - A\hat{x}_{t-1} )^T]\\
+&amp;= \mathbb{E}[(A(x_{t-1} - \hat{x}_{t-1})  + w_{t-1} )(A(x_{t-1} - \hat{x}_{t-1})  + w_{t-1} )^T]\\
+&amp;= \mathbb{E}[(Ae_{t-1}  + w_{t-1} )(Ae_{t-1}  + w_{t-1} )^T]\\
+&amp;= \mathbb{E}[Ae_{t-1}e_{t-1}^TA^T + Ae_{t-1}w_{t-1}^T + w_{t-1} e_{t-1}^TA^T + w_{t-1}w_{t-1}^T]\\
+&amp;= \mathbb{E}[Ae_{t-1}e_{t-1}^TA^T] + \mathbb{E}[Ae_{t-1}w_{t-1}^T] + \mathbb{E}[w_{t-1} e_{t-1}^TA^T] + \mathbb{E}[w_{t-1}w_{t-1}^T]\\
+&amp;= A\mathbb{E}[e_{t-1}e_{t-1}^T]A^T + A\mathbb{E}[e_{t-1}w_{t-1}^T] + \mathbb{E}[w_{t-1} e_{t-1}^T]A^T + \mathbb{E}[w_{t-1}w_{t-1}^T]\\
+P_t^p&amp;= AP_{t-1}A^T + Q
+\end{split}\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(\mathbb{E}[e_{t-1}w_{t-1}^T] = \mathbb{E}[w_{t-1} e_{t-1}^T]=0\)</span> because the noise <span class="math notranslate nohighlight">\(w_{t-1}\)</span> accumulates between <span class="math notranslate nohighlight">\(k-1\)</span> and <span class="math notranslate nohighlight">\(k\)</span>, whereas the error <span class="math notranslate nohighlight">\(e_{k-1}\)</span> is the error up until time <span class="math notranslate nohighlight">\(k-1\)</span>.</p>
+<p>Summarizing the prediction step, given the estimate from the previous time step <span class="math notranslate nohighlight">\(\hat{x}_{t-1} \sim \mathcal{N}(\mu_{t-1}, P_{t-1})\)</span>, we have:</p>
+<div class="admonition-prediction-step admonition">
+<p class="admonition-title">Prediction step</p>
+<div class="math notranslate nohighlight" id="equation-eq-kf-prediction">
+<span class="eqno">(37)<a class="headerlink" href="#equation-eq-kf-prediction" title="Permalink to this equation">#</a></span>\[\begin{split}\textbf{Predicted mean:}&amp; \quad \mu_t^p = A\mu_{t-1} + Bu_{t-1}\\
+\textbf{Predicted error covariance:}&amp; \quad P_t^p = AP_{t-1}A^T + Q\\
+\textbf{Predicted estimate:}&amp; \quad \hat{x}_t^p \sim \mathcal{N}(\mu _t^p, P_t^p)\\\end{split}\]</div>
+</div>
+</section>
+<section id="receive-measurement">
+<h4><strong>2. Receive measurement</strong><a class="headerlink" href="#receive-measurement" title="Permalink to this headline">#</a></h4>
+<p>We now receive a measurement <span class="math notranslate nohighlight">\(y_t\)</span>. We can compute the <em>measurement residual</em>, also referred to as the <em>innovation vector</em>, which is the error between the measurement and the predicted measurement using the predicted estimate <span class="math notranslate nohighlight">\(\hat{x}_t^p\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[h_t = y_t - C\hat{x}_t^p\]</div>
+</section>
+<section id="update-step">
+<h4><strong>3. Update step</strong><a class="headerlink" href="#update-step" title="Permalink to this headline">#</a></h4>
+<p>We now <em>update</em> our predicted estimate and get our final state estimate <span class="math notranslate nohighlight">\(\hat{x}_t\)</span>.
+Recall that we would like to <em>fuse</em> information from our prediction and measurement in some optimal manner.
+The way we fuse these two pieces of information is as follows:</p>
+<div class="math notranslate nohighlight">
+\[ \hat{x}_t = \hat{x}_t^p + K_t (y_t - C\hat{x}_t^p), \qquad \hat{x}_t \sim \mathcal{N}(\mu_t, P_t)\]</div>
+<p>where <span class="math notranslate nohighlight">\(K_t\)</span> is the <strong>Kalman gain</strong> which is a gain matrix which trade-off our “trust” in the dynamics model and the measurement model. Intuitively, <span class="math notranslate nohighlight">\(K_t\)</span> should consider the relative sizes of <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(R\)</span>, the uncertainty in the dynamics and measurement model. If there is more uncertainty in the dynamics then we should trust our measurement model more, and vice versa.</p>
+<p>Notice that the mean <span class="math notranslate nohighlight">\(\mu_t\)</span> and <span class="math notranslate nohighlight">\(P_t\)</span> are updated since the superscript <span class="math notranslate nohighlight">\(p\)</span> is dropped.
+So we need to determine what <span class="math notranslate nohighlight">\(\mu_t\)</span> and <span class="math notranslate nohighlight">\(P_t\)</span> are.</p>
+<p>Like in the prediction step, we have</p>
+<div class="math notranslate nohighlight">
+\[\mu_t = \mu_t^p + K_t(y_t - C\mu_t^p)\]</div>
+<p>but <span class="math notranslate nohighlight">\(K_t\)</span> is to be chosen such that <span class="math notranslate nohighlight">\(P_t\)</span>, which describes the uncertainty in our estimate, is made to be “as small as possible”. This hints that some kind of optimization problem to be solved.
+So let’s first compute an expression for <span class="math notranslate nohighlight">\(P_t\)</span>.</p>
+<p>From our definition of <span class="math notranslate nohighlight">\(P_t\)</span>, we have,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_t &amp;= \mathbb{E}[e_te_t^T]\\
+&amp;= \mathbb{E}[(x_t - \hat{x}_t)(x_t - \hat{x}_t)^T]\\
+&amp;= \mathbb{E}[(x_t - \hat{x}_t^p - K_t (y_t - C\hat{x}_t^p))(x_t - \hat{x}_t^p - K_t (y_t - C\hat{x}_t^p))^T]\\
+&amp;= \mathbb{E}[(x_t - \hat{x}_t^p - K_t (Cx_t + v_t - C\hat{x}_t^p))(x_t - \hat{x}_t^p - K_t (Cx_t + v_t - C\hat{x}_t^p))^T]\\
+&amp;= \mathbb{E}[(I-K_tC)(x_t - \hat{x}_t^p)(x_t - \hat{x}_t^p)^T(I-K_tC)^T + K_tv_tv_t^TK_t^T]\\
+&amp;= (I-K_tC)\mathbb{E}[(x_t - \hat{x}_t^p)(x_t - \hat{x}_t^p)^T](I-K_tC)^T + K_t\mathbb{E}[v_tv_t^T]K_t^T\\
+&amp;= (I-K_tC)P_t^p(I-K_tC)^T + K_tRK_t^T\\
+\end{split}\]</div>
+<p>We need to select <span class="math notranslate nohighlight">\(K_t\)</span> such that the uncertainty of our estimate is minimized.
+Note that the <em>diagonal entries</em> of <span class="math notranslate nohighlight">\(P_t\)</span> represents the mean squared error of the estimate. As such, we want find <span class="math notranslate nohighlight">\(K_t\)</span> that minimizes the <em>trace of <span class="math notranslate nohighlight">\(P_t\)</span></em>.</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{K_t} \mathrm{Tr}(P_t)
+\]</div>
+<p>After some algebra, and taking the derivative with respect to <span class="math notranslate nohighlight">\(K_t\)</span> and setting it zero, we have,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathrm{Tr}(P_t) &amp;= \mathrm{Tr}(P_t^p) - 2\mathrm{Tr}(K_tCP_t^p) + \mathrm{Tr}(K_tCP_t^pC^TK_t^T) + \mathrm{Tr}(K_tRK_t)\\
+\text{Given the following identities: } &amp;\frac{d}{dA}\mathrm{Tr}(ABA^T) = 2AB, \: B=B^T, \qquad \frac{d}{dA}\mathrm{Tr}(AC) = C^T\\
+\frac{d}{dK_t}\mathrm{Tr}(P_t) &amp;= -2P_t^pC^T + 2K_tCP_t^pC^T + 2K_tR\\
+0 &amp;= -2P_t^pC^T + 2K_tCP_t^pC^T + 2K_tR\\
+\Rightarrow &amp; \quad K_t^* = P_t^pC^T(CP_t^pC^T + R)^{-1}
+\end{split}\]</div>
+<p>Plugging <span class="math notranslate nohighlight">\(K_t^*\)</span> back into the <span class="math notranslate nohighlight">\(P_t\)</span> expression, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+P_t = (I - K_t^*C)P_t^p, \: \text{where} \: K_t^* = P_t^pC^T(CP_t^pC^T + R)^{-1}
+\]</div>
+<p>Summarizing the update step, we have,</p>
+<div class="admonition-update-step admonition">
+<p class="admonition-title">Update step</p>
+<div class="math notranslate nohighlight" id="equation-eq-kf-update">
+<span class="eqno">(38)<a class="headerlink" href="#equation-eq-kf-update" title="Permalink to this equation">#</a></span>\[\begin{split}\textbf{Updated mean:}&amp; \quad \mu_t = \mu_t^p + K_t(y_t - C\mu_t^p)\\
+\textbf{Kalman gain:}&amp; \quad K_t = P_t^pC^T(CP_t^pC^T + R)^{-1}\\
+\textbf{Updated error covariance:}&amp; \quad P_t = (I - K_tC)P_t^p\\
+\textbf{Updated estimate:}&amp; \quad \hat{x}_t \sim \mathcal{N}(\mu _t, P_t)\\\end{split}\]</div>
+</div>
+</section>
+</section>
+<section id="the-kalman-filter-algorithm">
+<h3>The Kalman Filter algorithm<a class="headerlink" href="#the-kalman-filter-algorithm" title="Permalink to this headline">#</a></h3>
+<p>Notice that the prediction and update equation depend only on the previous state estimate.
+Given an initial state estimate, and as we receive measurements (and control inputs), we can compute the next state estimate.</p>
+<p>The pseudocode for running a Kalman filter is as follows.
+Starting with <span class="math notranslate nohighlight">\(\hat{x}_0 \sim \mathcal{N}(\mu_0, P_0)\)</span>,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu_previous</span> <span class="o">=</span> <span class="n">mu0</span>
+<span class="n">P_previous</span> <span class="o">=</span> <span class="n">P0</span>
+<span class="k">for</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">N</span>
+    <span class="n">mu_predict</span><span class="p">,</span> <span class="n">P_predict</span> <span class="o">=</span> <span class="n">predict_step</span><span class="p">(</span><span class="n">mu_previous</span><span class="p">,</span> <span class="n">P_previous</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">receive</span> <span class="n">measurement</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sensor</span>
+    <span class="n">mu_update</span><span class="p">,</span> <span class="n">P_update</span> <span class="o">=</span> <span class="n">update_step</span><span class="p">(</span><span class="n">mu_predict</span><span class="p">,</span> <span class="n">P_predict</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+    <span class="n">mu_previous</span> <span class="o">=</span> <span class="n">mu_previous</span>
+    <span class="n">P_previous</span> <span class="o">=</span> <span class="n">P_update</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</section>
+<section id="connection-with-lqr">
+<h3>Connection with LQR<a class="headerlink" href="#connection-with-lqr" title="Permalink to this headline">#</a></h3>
+<p>The Kalman filter may have reminded you of the LQR algorithm, especially with the using the same letters to define matrices. But there are also some notable differences.
+For starters, the Kalman filter runs <em>forward</em> in time, while LQR requires solving for <span class="math notranslate nohighlight">\(P_t\)</span> <em>backward</em> in time.</p>
+<p>It turns out, the Kalman Filter prediction and update steps is actually the Riccati equation!</p>
+<p>Given that <span class="math notranslate nohighlight">\(P_t = (I - K_tC)P_t^p\)</span>, and <span class="math notranslate nohighlight">\(P_{t+1}^p = AP_tA^T + Q\)</span>, substituting the first equation into the second, we get:</p>
+<div class="math notranslate nohighlight">
+\[
+P_{t+1}^p = Q + AP_t^pA^T - AP_t^pC^T(CP_t^pC^T + R)^{-1} CP_t^pA^T
+\]</div>
+<p>Does this look familiar…?
+If we refer back to your LQR notes (for discrete time), the equation we derived was,</p>
+<div class="math notranslate nohighlight">
+\[
+P_{t-1} = Q + A^TP_tA - A^TP_tB(B^TP_tB + R)^{-1}B^TP_tA
+\]</div>
+<p>Doesn’t it look very similar, except for a few things:</p>
+<ul class="simple">
+<li><p>Kalman filter iterates <em>forward</em> in time, while LQR iterates <em>backward</em> in time.</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(A\)</span> matrices differ by a transpose</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(B\)</span> in LQR is <span class="math notranslate nohighlight">\(C^T\)</span> in the Kalman filter</p></li>
+</ul>
+<p>This connection between LQR (control) and Kalman Filter (estimation) is known as <strong>duality</strong>. Essentially, performing control and estimation ends up being the same algorithm (solving the Riccati equation), but with different variables and direction in the iteration.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>LQR description</strong></p></th>
+<th class="head"><p><strong>LQR variables</strong></p></th>
+<th class="head"><p><strong>KF variables</strong></p></th>
+<th class="head"><p><strong>KF description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dynamics</p></td>
+<td><p><span class="math notranslate nohighlight">\(A\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A^T\)</span></p></td>
+<td><p>Dynamics transposed</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control matrix</p></td>
+<td><p><span class="math notranslate nohighlight">\(B\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(C^T\)</span></p></td>
+<td><p>Observation transposed</p></td>
+</tr>
+<tr class="row-even"><td><p>State cost</p></td>
+<td><p><span class="math notranslate nohighlight">\(Q\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(Q\)</span></p></td>
+<td><p>Process noise covariance</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control cost</p></td>
+<td><p><span class="math notranslate nohighlight">\(R\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(R\)</span></p></td>
+<td><p>Measurement noise covariance</p></td>
+</tr>
+<tr class="row-even"><td><p>Terminal cost</p></td>
+<td><p><span class="math notranslate nohighlight">\(Q_T\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(P_0\)</span></p></td>
+<td><p>Initial state covariance</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="continuous-time-kalman-filter">
+<h2>Continuous-time Kalman Filter<a class="headerlink" href="#continuous-time-kalman-filter" title="Permalink to this headline">#</a></h2>
+<p>We have so far considered a discrete-time Kalman filter. Let’s see what happens with the continuous-time case.</p>
+<p>Consider the analogous continuous-time Gaussian linear dynamics.</p>
+<div class="admonition-gaussian-linear-dynamics-continuous-time admonition">
+<p class="admonition-title">Gaussian Linear Dynamics (Continuous-time)</p>
+<div class="math notranslate nohighlight" id="equation-eq-gaussian-linear-dynamics-ct">
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-gaussian-linear-dynamics-ct" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;\dot{x} = Ax(t) + Bu(t) + w(t), \qquad &amp;\mathbb{E}[w(t)w(t)^T] = Q, \qquad &amp;w(t) \sim \mathcal{N}(0, Q)\\
+&amp;y(t) = Cx(t) + v(t), \qquad &amp;\mathbb{E}[v(t)v(t)^T] = R, \qquad &amp;v(t) \sim \mathcal{N}(0, R)\end{split}\]</div>
+</div>
+<p>What we will do is convert these continuous-time dynamics into discrete-time dynamics with time-step <span class="math notranslate nohighlight">\(\Delta t\)</span> and apply the discrete-time Kalman Filter equations, and then see what happens with <span class="math notranslate nohighlight">\(\Delta t \rightarrow 0\)</span>. This is similar to what we did when we went from discrete-time Bellman equation to continuous-time HJB equation.</p>
+<p>Let <span class="math notranslate nohighlight">\(\Delta t\)</span> denote a time step. Then we have:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x(t+\Delta t) &amp;= x(t) + \Delta t (Ax(t) + Bu(t)) \\
+&amp; = (I + A\Delta t)x(t) + B\Delta t u(t)\\
+&amp; = (I+A\Delta t)x_t + B\Delta t u_t\\
+\therefore x_{t+1} &amp; = \tilde{A}x_t + \tilde{B}u_t, \quad \text{where}\: \tilde{A} = I+A\Delta t, \: \tilde{B} = B\Delta t
+\end{split}\]</div>
+<p>But what happens to the process and Gaussian noise when we consider the system over time-step <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\tilde{w}_t\)</span> be the process noise for the discrete-time system. It should capture the total noise over time-step <span class="math notranslate nohighlight">\(\Delta\)</span>. So we have <span class="math notranslate nohighlight">\(\tilde{w}_t = \int_t^{t+\Delta t} w(\tau) d\tau \)</span>. Then what is its corresponding covariance?</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{E}[\tilde{w}_t\tilde{w}_t^T] &amp;= \mathbb{E}[\int_t^{t+\Delta t}\int_t^{t+\Delta t} w(\tau)w(\tau^\prime)^T d\tau^\prime d\tau]\\
+&amp;= \int_t^{t+\Delta t}\int_t^{t+\Delta t} \mathbb{E}[w(\tau)w(\tau^\prime)^T] d\tau^\prime d\tau\\
+&amp;= \int_t^{t+\Delta t} Q d\tau , \quad (\mathbb{E}[w(\tau)w(\tau^\prime)^T] = 0, \tau \neq \tau^\prime)\\
+\tilde{Q} &amp;= Q\Delta t\\
+\end{split}\]</div>
+<p>What about the measurement noise? Let <span class="math notranslate nohighlight">\(\tilde{v}_t\)</span> be the measurement noise for the discrete-time system. It measures the measurement noise at that particular time-step. But measurements are taken at every <span class="math notranslate nohighlight">\(\Delta t\)</span> interval. As such, the measurement noise should be the mean noise of <span class="math notranslate nohighlight">\(v(t)\)</span> over an interval <span class="math notranslate nohighlight">\(\Delta t\)</span>. So we have  <span class="math notranslate nohighlight">\(\tilde{v}_t = \frac{1}{\Delta t}\int_t^{t+\Delta t} v(\tau) d\tau \)</span>. Then what is its corresponding covariance?</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{E}[\tilde{v}_t\tilde{v}_t^T] &amp;= \mathbb{E}\biggl[\frac{1}{\Delta t^2}\int_t^{t+\Delta t}\int_t^{t+\Delta t} v(\tau)v(\tau^\prime)d\tau^\prime d\tau \biggl]\\
+&amp;= \frac{1}{\Delta t^2}\int_t^{t+\Delta t}\int_t^{t+\Delta t} \mathbb{E}[v(\tau)v(\tau^\prime)]d\tau^\prime d\tau \\
+&amp;= \frac{1}{\Delta t^2}\int_t^{t+\Delta t}Rd\tau^\prime d\tau, \quad (\mathbb{E}[v(\tau)v(\tau^\prime)^T] = 0, \tau \neq \tau^\prime) \\
+\tilde{R} &amp;= \frac{R}{\Delta t}
+\end{split}\]</div>
+<p>So we now have a discrete-time Kalman Filter problem for the following dynamics where <span class="math notranslate nohighlight">\(A, B, Q, R\)</span> are defined for the <em>continuous-time</em> system.</p>
+<div class="math notranslate nohighlight" id="equation-eq-discrete-time-system-from-continuous-time">
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-discrete-time-system-from-continuous-time" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;x_{t+1} = (I + A\Delta t)x_t + B\Delta t u_t + \tilde{w}_t, \qquad &amp; \mathbb{E}[\tilde{w}_t\tilde{w}_t^T] = Q\Delta t, \qquad &amp; \tilde{w}_t \sim \mathcal{N}(0, Q\Delta t)\\
+&amp;y_t = Cx_t + \tilde{v}_t, \qquad &amp;\mathbb{E}[\tilde{v}_t\tilde{v}_t^T] = \frac{R}{\Delta t}, \qquad &amp;\tilde{v}_t  \sim \mathcal{N}(0, \frac{R}{\Delta t})\end{split}\]</div>
+<p>Now, we can use the prediction and update steps described previously and let <span class="math notranslate nohighlight">\(\Delta t \rightarrow 0\)</span> and see what happens…
+We leave this working out as an exercise.</p>
+<p>But doing this exercise, you should get the following expression for the Kalman gain.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{1}{\Delta t}K_t &amp;= P_t^pC^T(CP_t^pC^T\Delta t + R)^{-1}\\
+\Rightarrow &amp;\lim_{\Delta t \rightarrow 0} \frac{1}{\Delta t}K_t = P_t^pC^T R^{-1}\\
+\Rightarrow &amp;\lim_{\Delta t \rightarrow 0} K_t = 0
+\end{split}\]</div>
+<p>This result implies that if we use a discrete Kalman filter with a small <span class="math notranslate nohighlight">\(\Delta t\)</span> for continuous-time systems, then the discrete Kalman gain tends to zero, which isn’t useful.
+Instead we define the continuous-time Kalman gain as the average of the discrete-time Kalman gain over the time-step <span class="math notranslate nohighlight">\(\Delta t\)</span>. Intuitively, the discrete Kalman gain is applied over the time-step <span class="math notranslate nohighlight">\(\Delta t\)</span>. So if we want to determine the Kalman gain at an instance in continuous-time, then since the discrete Kalman gain is applied over <span class="math notranslate nohighlight">\(\Delta t\)</span>, the “spreading” that gain across <span class="math notranslate nohighlight">\(\Delta\)</span> evenly, we get <span class="math notranslate nohighlight">\(\frac{1}{\Delta t} K_t\)</span> at any time instance over that interval. Then we take the limit as <span class="math notranslate nohighlight">\(\Delta t \rightarrow 0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+K(t) = \lim_{\Delta t \rightarrow 0}\frac{1}{\Delta t} K_t  = P_t^pC^T R^{-1}
+\]</div>
+<p>You should also find that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_t^p &amp;= P_{t-1} + (AP_{t-1} + P_{t-1}A^T + Q)\Delta t + O(\Delta t^2)\\
+P_t &amp;= (I - K_t C)P_t^p\\
+\Rightarrow P_t^p &amp;= (I-K_{t-1}C)P_{t-1}^p + (A(I - K_{t-1}C)P_{t-1}^p + (I - K_{t-1}C)P_{t-1}^pA^T + Q)\Delta t + O(\Delta t^2)
+\end{split}\]</div>
+<p>Rearranging the last expression, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{\Delta t} (P_{t}^p - P_{t-1}^p) = (AP_{t-1}^p + P_{t-1}^pA^T + Q - AK_{t-1}CP_{t-1}^p - K_{t-1}CP_{t-1}^pA^T) - \frac{1}{\Delta t}K_{t-1}CP_{t-1}^p+ O(\Delta t)
+\]</div>
+<p>And then taking the limit <span class="math notranslate nohighlight">\(\Delta t \rightarrow 0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{P}^p(t) &amp; = \lim_{\Delta t \rightarrow 0} \frac{1}{\Delta t} (P_{t}^p - P_{t-1}^p) \\
+&amp; = \lim_{\Delta t \rightarrow 0}  (AP_{t-1}^p + P_{t-1}^pA^T + Q - AK_{t-1}CP_{t-1}^p - K_{t-1}CP_{t-1}^pA^T) - \frac{1}{\Delta t}K_{t-1}CP_{t-1}^p+ O(\Delta t)\\
+\dot{P}^p(t) &amp; = AP^p(t) + P^p(t)A^T + Q - P^p(t)C^T R^{-1}CP^p(t)\\
+\end{split}\]</div>
+<p>Notice that this last equation is again the continuous-time Riccati equation which is essentially the same as what we saw in the continuous-time LQR derivation.
+Again, we see this duality relationship in the continuous-time setting.</p>
+</section>
+<section id="extended-kalman-filter">
+<h2>Extended Kalman Filter<a class="headerlink" href="#extended-kalman-filter" title="Permalink to this headline">#</a></h2>
+<p>The Kalman Filter assumes linear dynamics and measurement models. Of course, many systems are not linear. But similar to what we saw with LQR (and a common theme in this course), we can <em>linearize</em> the system at each time and approximate the system as linear and apply the Kalman Filter. But we must re-linearize at every time step given the current state estimate.
+The <strong>Extended Kalman Filter</strong> is precisely just this. It is applying the standard Kalman Filter, but re-linearizing at each time step to obtain <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(C\)</span> matrices.</p>
+<p>Given the same set up as before, but instead, we assume a nonlinear dynamics and measurement model.</p>
+<div class="math notranslate nohighlight" id="equation-eq-gaussian-nonlinear-dynamics">
+<span class="eqno">(36)<a class="headerlink" href="#equation-eq-gaussian-nonlinear-dynamics" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;x_{t+1} = f(x_t, u_t) + w_t, \qquad &amp;\mathbb{E}[w_tw_t^T] = Q, \qquad &amp;w_t \sim \mathcal{N}(0, Q)\\
+&amp;y_t = g(x_t) + v_t, \qquad &amp;\mathbb{E}[v_tv_t^T] = R, \qquad &amp;v_t \sim \mathcal{N}(0, R)\end{split}\]</div>
+<p>Note that in the standard Kalman Filter equation, the covariance prediction and update relied on the linear structure of the dynamics and measurement model. While predicting the mean and computing the measurement residual did not.
+When computing the covariance prediction and update, we need <span class="math notranslate nohighlight">\(A\)</span> to compute <span class="math notranslate nohighlight">\(P_t^p\)</span>, and <span class="math notranslate nohighlight">\(C\)</span> to compute <span class="math notranslate nohighlight">\(K_t\)</span> and <span class="math notranslate nohighlight">\(P_t\)</span>.
+To obtain these quantities, we simply compute the Jacobian with respect to the current mean of the state estimate.</p>
+<div class="math notranslate nohighlight">
+\[
+A = \nabla_x f(x_t, u_t)\lvert_{x_t = \mu_{t-1}}^T, \qquad C =  \nabla_xg(x_t)\lvert_{x_t = \mu_t^p}^T
+\]</div>
+<p>With <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(C\)</span> computed using the state estimate at each time step, we apply (almost) the same set of equations we saw with the standard KF.</p>
+<div class="admonition-prediction-step-extended-kf admonition">
+<p class="admonition-title">Prediction step (Extended KF)</p>
+<div class="math notranslate nohighlight" id="equation-eq-kf-prediction">
+<span class="eqno">(37)<a class="headerlink" href="#equation-eq-kf-prediction" title="Permalink to this equation">#</a></span>\[\begin{split}\textbf{Predicted mean:}&amp; \quad \mu_t^p = f(\mu_{t-1}, u_{t-1})\\
+\textbf{Predicted error covariance:}&amp; \quad P_t^p = AP_{t-1}A^T + Q\\
+\textbf{Predicted estimate:}&amp; \quad \hat{x}_t^p \sim \mathcal{N}(\mu _t^p, P_t^p)\\\end{split}\]</div>
+</div>
+<div class="admonition-update-step-extended-kf admonition">
+<p class="admonition-title">Update step (Extended KF)</p>
+<div class="math notranslate nohighlight" id="equation-eq-kf-update">
+<span class="eqno">(38)<a class="headerlink" href="#equation-eq-kf-update" title="Permalink to this equation">#</a></span>\[\begin{split}\textbf{Updated mean:}&amp; \quad \mu_t = \mu_t^p + K_t(y_t - g(u_t^p))\\
+\textbf{Kalman gain:}&amp; \quad K_t = P_t^pC^T(CP_t^pC^T + R)^{-1}\\
+\textbf{Updated error covariance:}&amp; \quad P_t = (I - K_tC)P_t^p\\
+\textbf{Updated estimate:}&amp; \quad \hat{x}_t \sim \mathcal{N}(\mu _t, P_t)\\\end{split}\]</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="reachability.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">HJ reachability</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,843 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>HJ reachability &#8212; Linear Multivariable Control</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="State estimation" href="kalman-filter.html" />
+    <link rel="prev" title="Linear Quadratic Regulator" href="lqr.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/class_icon.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Syllabus
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/overview.html">
+   Course information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logistics/schedule.html">
+   Week-by-week schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deliverables
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/exercises.html">
+   Exercises
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/paper-review.html">
+   Research paper presentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project/tutorial.html">
+   Tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Lectures
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="state-space.html">
+   State-space representation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="optimization.html">
+   Introduction to optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="control-certificates.html">
+   Control certificate functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sequential-dm.html">
+   Sequential decision-making
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lqr.html">
+   Linear Quadratic Regulator
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   HJ reachability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman-filter.html">
+   State estimation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/reachability.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/lectures/reachability.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reachability-analysis">
+   Reachability analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#types-of-reachability">
+     Types of reachability
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#forward-reachability">
+       Forward reachability
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#backward-reachability">
+       Backward reachability
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#backward-reachable-tubes">
+         Backward reachable tubes
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-brs">
+     Computing BRS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-brt">
+     Computing BRT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#presence-of-disturbances">
+     Presence of disturbances
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hj-reachability-toolbox">
+   HJ reachability toolbox
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-few-remarks-and-comments">
+   A few remarks and comments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#todos">
+   TODOs
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>HJ reachability</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reachability-analysis">
+   Reachability analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#types-of-reachability">
+     Types of reachability
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#forward-reachability">
+       Forward reachability
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#backward-reachability">
+       Backward reachability
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#backward-reachable-tubes">
+         Backward reachable tubes
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-brs">
+     Computing BRS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-brt">
+     Computing BRT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#presence-of-disturbances">
+     Presence of disturbances
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hj-reachability-toolbox">
+   HJ reachability toolbox
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-few-remarks-and-comments">
+   A few remarks and comments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#todos">
+   TODOs
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="hj-reachability">
+<h1>HJ reachability<a class="headerlink" href="#hj-reachability" title="Permalink to this headline">#</a></h1>
+<p>In this chapter, we will introduce reachability analysis, and show that we can frame reachability as an optimal control problem and utilize the same machinery discussed in the previous chapter.</p>
+<section id="reachability-analysis">
+<h2>Reachability analysis<a class="headerlink" href="#reachability-analysis" title="Permalink to this headline">#</a></h2>
+<p>Reachability analysis, as the name suggests, is the study of the set of states a system can (or can’t) reach within some fixed time. Generally, we refer to this set of states as a <em>reachable set</em>. The reachable set depends on a number of factors including</p>
+<ul class="simple">
+<li><p>the dynamics of the system</p></li>
+<li><p>initial conditions</p></li>
+<li><p>set of controls</p></li>
+<li><p>disturbances affecting the system</p></li>
+</ul>
+<p>Reachability analysis is useful for a number of applications such as</p>
+<ul class="simple">
+<li><p>safety-critical control: knowing whether it is possible for the system to hit an obstacle is important, and if so, evasive control should be executed.</p></li>
+<li><p>robust control: if there is uncertainty or disturbances present, it is important to know where the system could possible reach and making sure that it does not intersect with obstacles.</p></li>
+<li><p>verification: computing the reachable sets based on the dynamics and assumptions about the system can help provide a certificate or guarantees on whether a system can reach a goal or can avoid obstacles.</p></li>
+</ul>
+<section id="types-of-reachability">
+<h3>Types of reachability<a class="headerlink" href="#types-of-reachability" title="Permalink to this headline">#</a></h3>
+<p>There are two types of reachability problem: Forward reachability and backward reachability.</p>
+<section id="forward-reachability">
+<h4>Forward reachability<a class="headerlink" href="#forward-reachability" title="Permalink to this headline">#</a></h4>
+<p>Given system dynamics, and the set of all allowable controls it can take. Then the <em>forward reachable set</em> is the set of the states the system could be in at some future time.
+Or differently phrased, starting from here, under any allowed input, where could the system end up?
+Let’s define this mathematically.
+Let <span class="math notranslate nohighlight">\(\mathbb{U}[0,t]:=\lbrace u \mid [0,t] \rightarrow \mathcal{U} \rbrace\)</span> be the set of all possible control signals over time interval <span class="math notranslate nohighlight">\([0,t]\)</span>. Given dynamics <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,t)\)</span>, let <span class="math notranslate nohighlight">\(\xi_{x_0, 0}^{u(\cdot)}(\tau) = x(\tau)\)</span> be the state the system will be in at time <span class="math notranslate nohighlight">\(t=\tau\)</span> if starting at <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(t=0\)</span> and executes some control signal <span class="math notranslate nohighlight">\(u(\cdot)\in\mathbb{U}[0,\tau]\)</span>.</p>
+<p>Then we define the forward reachable set <span class="math notranslate nohighlight">\(\mathcal{F}(x_0, \tau)\)</span> as follows,</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{F}(x_0, \tau) = \lbrace x \in \mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0, t], \: x = \xi_{x_0,0}^{u(\cdot)}(\tau) \rbrace\]</div>
+<p>which translates to, all the states in the domain where there exists a control signal that can make the system be in that state within time <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
+</section>
+<section id="backward-reachability">
+<h4>Backward reachability<a class="headerlink" href="#backward-reachability" title="Permalink to this headline">#</a></h4>
+<p>Given a <em>target set</em>, the backrward reachable set* is the set of states where it is possible reach that set at some future time.
+Or differently phrased, where must the system be now so that it can reach a target set in the future?
+Let’s define this mathematically.
+Let <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> be a target set that the system is interested in reaching. Then for a system starting at <span class="math notranslate nohighlight">\(t=0\)</span> and would like to reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at <span class="math notranslate nohighlight">\(t=\tau\)</span>, then the <em>backward reachable set</em> is</p>
+<div class="admonition-backward-reachable-set-reach-case admonition">
+<p class="admonition-title">Backward Reachable Set (Reach Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-reach">
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-brs-reach" title="Permalink to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.\]</div>
+</div>
+<p>This translates to, for all initial states in the domain, there exists a control signal where it will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at time <span class="math notranslate nohighlight">\(t=\tau\)</span>.</p>
+<p>The above assume that reaching the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is a good thing. That is, we are seeking whether there exists <em>at least</em> one control signal that would get us there in <span class="math notranslate nohighlight">\(\tau\)</span> time. As such, we use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> to denote the intention to <strong>r</strong>each <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
+<p>However, we can also treat <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as an undesirable set (e.g., collision set), and ask the question whether it is possible to <em>avoid</em> <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future. To check whether it is possible to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, we can equivalently determine whether <em>all</em> control signals would lead to the system being inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. Obviously, being inside this set would be undesirable because it would mean that all control signals would always lead the system to end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, i.e., there is nothing that can be done to avoid entering <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+We can compute this set in a similar way as above. We refer to this as the <em>avoid</em> set and use <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to denote it. This avoid set is also often referred to as the <em>Inevitable Collision Set (ICS)</em> if <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> represents a collision set.</p>
+<div class="admonition-backward-reachable-set-avoid-case admonition">
+<p class="admonition-title">Backward Reachable Set (Avoid Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-avoid">
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-brs-avoid" title="Permalink to this equation">#</a></span>\[\mathcal{A}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace\]</div>
+</div>
+<section id="backward-reachable-tubes">
+<h5>Backward reachable tubes<a class="headerlink" href="#backward-reachable-tubes" title="Permalink to this headline">#</a></h5>
+<p>Great! We just defined these sets that determine whether is it possible reach a target set (reach case), and whether it is impossible to avoid the target set (avoid case).
+However, the above definitions only considers whether the system is inside the target set only at the final time <span class="math notranslate nohighlight">\(\tau\)</span>. It is possible that the system enters the target set before <span class="math notranslate nohighlight">\(t&lt;\tau\)</span> but exits it and is outside of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at <span class="math notranslate nohighlight">\(t=\tau\)</span>.</p>
+<p>So we should also define the sets to consider entry into the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>anytime</em> between <span class="math notranslate nohighlight">\(t=0\)</span> and <span class="math notranslate nohighlight">\(t=\tau\)</span>.
+These sets are referred to as <em>Backward Reachable Tubes (BRT)</em> and had a very similar definition as above, but considers additional entry into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> for any time <span class="math notranslate nohighlight">\(s\in[0,\tau]\)</span>.</p>
+<div class="admonition-backward-reachable-tube-reach-case admonition">
+<p class="admonition-title">Backward Reachable Tube (Reach Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-reach">
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-brs-reach" title="Permalink to this equation">#</a></span>\[\widetilde{\mathcal{R}}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.\]</div>
+</div>
+<div class="admonition-backward-reachable-tube-avoid-case admonition">
+<p class="admonition-title">Backward Reachable Tube (Avoid Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-avoid">
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-brs-avoid" title="Permalink to this equation">#</a></span>\[\widetilde{\mathcal{A}}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid  \forall u(\cdot) \in \mathbb{U}[0,\tau], \: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s) \in \mathcal{T} \rbrace\]</div>
+</div>
+</section>
+</section>
+</section>
+<section id="computing-brs">
+<h3>Computing BRS<a class="headerlink" href="#computing-brs" title="Permalink to this headline">#</a></h3>
+<p>Great! We just defined what backward reachable sets and backward reachable tubes are. But how do we go about actually computing them?
+Let’s focus our attention to BRS for the moment. We are concerned with whether we end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the time horizon, and we must reason <em>backward</em> in time to determine what is the set of states that would lead to entry into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future.
+This aspect of reasoning <em>backward</em> in time strongly hints that we need to perform dynamic programming to determine the BRS. In fact, we can pose this reachability problem as an <em>optimal control problem</em> and solve it using the HJB equation.</p>
+<p>Note that in the BRS definition, we only care if we enter <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the horizon and nothing else. We don’t care about the total control effort used. With this idea, we can define the <em>terminal cost</em> based on the <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+Let us define a terminal cost function <span class="math notranslate nohighlight">\(g:\mathbb{R}^n \rightarrow \mathbb{R}\)</span> such that,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{T} = \lbrace x\in\mathcal{X} \mid g(x) \leq 0 \rbrace
+\]</div>
+<p>which means that the <span class="math notranslate nohighlight">\(g(x)\)</span> is negative if <span class="math notranslate nohighlight">\(x\in\mathcal{T}\)</span>, or <span class="math notranslate nohighlight">\(g(x)=0\)</span> if <span class="math notranslate nohighlight">\(x\in\partial\mathcal{T}\)</span> (i.e., on the boundary of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>).</p>
+<p>And we also set the running cost (or stage cost) to be zero—again, we are just concerned about whether the system ends up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the horizon, and nothing about the control effort or state error during the horizon. Below is an optimal control problem with the described cost structure, and no additonal constraints aside from ones constraining the dynamics and allowable state/control sets.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\min_{u(\cdot) \in \mathbb{U}[0,\tau]} &amp;\: J_T(x(T))\\
+\text{subject to} &amp;\: \dot{x} = f(x,u,t)\\
+                  &amp;\: u(t) \in \mathcal{U}, x(t) \in \mathcal{X}
+\end{split}\]</div>
+<p>With this cost structure, note that finding an optimal control policy that <em>minimizes</em> the cost is equivalent to finding an optimal control policy that drives the system into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+In fact, if <span class="math notranslate nohighlight">\(J_T\)</span> is defined as the <em>signed distance function</em> of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, then the more negative <span class="math notranslate nohighlight">\(J_T(x)\)</span>, the further <em>inside</em> <span class="math notranslate nohighlight">\(x\)</span> is of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> and the more positive <span class="math notranslate nohighlight">\(J_T(x)\)</span> is, the further <em>outside</em> <span class="math notranslate nohighlight">\(x\)</span> is from <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. Then the optimal policy would driven the system as far inside of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as possible.</p>
+<p>Recall that the (optimal) value function measures the future accumulated cost associated with state <span class="math notranslate nohighlight">\(x\)</span> if the system follows the (optimal) policy. With this particular choice of cost structure described above (zero running cost and terminal cost to have a zero sub-level set be <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>), the value function becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]}J_T(\xi_{x,t}^{u(\cdot)}(\tau)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[0,\tau]}J_T(\xi_{x,t}^{u(\cdot)}(\tau))
+\]</div>
+<p>which is simply the terminal cost evaluated at the state at time <span class="math notranslate nohighlight">\(\tau\)</span> if starting from state <span class="math notranslate nohighlight">\(x\)</span>, at time <span class="math notranslate nohighlight">\(t\)</span>, and following policy <span class="math notranslate nohighlight">\(\pi^*\)</span>. Since <span class="math notranslate nohighlight">\(J_T(x) \leq 0\)</span> implies <span class="math notranslate nohighlight">\(x\in \mathcal{T}\)</span>, this means that if <span class="math notranslate nohighlight">\(V(x,t) \leq 0\)</span>, then following the optimal policy from state <span class="math notranslate nohighlight">\(x\)</span> and time <span class="math notranslate nohighlight">\(t\)</span> will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at time <span class="math notranslate nohighlight">\(\tau\)</span> (i.e., at the end of the horizon).
+As such, this means that the zero sub-level set of <span class="math notranslate nohighlight">\(V(\cdot, t)\)</span> is precisely the BRS for a horizon of <span class="math notranslate nohighlight">\(\tau - t\)</span>! Concretely, we have,</p>
+<div class="admonition-backward-reachable-set-as-a-value-function-reach-case admonition">
+<p class="admonition-title">Backward Reachable Set as a Value Function (Reach Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-reach-value">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-brs-reach-value" title="Permalink to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, \tau - t) = \lbrace x\in \mathcal{X} \mid V^*(x,t) \leq 0 \rbrace, \qquad \text{where the planning horizon is }\tau\]</div>
+</div>
+<p>It may be easier to set the end of the time horizon to be <span class="math notranslate nohighlight">\(t=0\)</span> and since we are stepping backwards in time, we use <span class="math notranslate nohighlight">\(t=-\tau\)</span> to indicate <span class="math notranslate nohighlight">\(\tau\)</span> time units back in time. So we can also write <span class="math notranslate nohighlight">\(V(x,-\tau)\)</span> to indicate the BRS of a time horizon of <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
+<div class="admonition-backward-reachable-set-as-a-value-function-reparameterizing-time-reach-case admonition">
+<p class="admonition-title">Backward Reachable Set as a Value Function (reparameterizing time) (Reach Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-reach-value">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-brs-reach-value" title="Permalink to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, \tau) = \lbrace x\in \mathcal{X} \mid V^*(x,-\tau) \leq 0 \rbrace\]</div>
+</div>
+<p>What about the avoid case? Recall that the BRS for the avoid case is to determine the set of states where it is impossible to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> despite the system’s best effort.
+With the same cost described above, if the system instead aimed to <em>maximize</em> the terminal cost, then it is trying its best to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, but if <span class="math notranslate nohighlight">\(V^*(x,t) \leq 0\)</span> it means that the system will end up inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> (despite the system’s best effort).</p>
+<p>As such, the BRS for the avoid case is the same as the reach case, except that we are performing a <em>maximization</em> problem instead of a minimization one.</p>
+<p>Great! Now we have now posed the backward reachability problem as an optimal control problem and discussed how to interpret the value function. So how do we go about solving for the value function? We solve the Hamilton-Jacboi-Bellman equation! But the stage cost is set to zero.</p>
+<div class="admonition-hjb-equation-for-brs admonition">
+<p class="admonition-title">HJB equation for BRS</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-reach-avoid-value">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-brs-reach-avoid-value" title="Permalink to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) = 0 \qquad \text{Reach case}\\
+\frac{\partial V}{\partial t}(x,t) + \max_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) = 0 \qquad \text{Avoid case}\\
+V(x,0) = J_T(x) \qquad t\in[-\tau, 0]\\\end{split}\]</div>
+</div>
+</section>
+<section id="computing-brt">
+<h3>Computing BRT<a class="headerlink" href="#computing-brt" title="Permalink to this headline">#</a></h3>
+<p>What about the backward reachable tube? What want to check whether the system enters <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>any</em> time during the horizon. As such, we don’t want to compute the terminal cost at the end of the horizon, but rather, determine the lowest value anytime over the horizon. Mathematically, the value function becomes,</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x,t}^{u(\cdot)}(s)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x,t}^{u(\cdot)}(s)).
+\]</div>
+<p>We change the HJB PDE slightly to reflect the minimization over time,</p>
+<div class="admonition-hjb-equation-for-brt admonition">
+<p class="admonition-title">HJB equation for BRT</p>
+<div class="math notranslate nohighlight" id="equation-eq-brt-reach-avoid-value">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-brt-reach-avoid-value" title="Permalink to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t)\biggl) = 0 \qquad \text{Reach case}\\
+\frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \max_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t)\biggl) \qquad \text{Avoid case}\\
+V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
+</div>
+<p>which looks very similar to the standard HJB equation, except there is a <span class="math notranslate nohighlight">\(\min\)</span> with zero. Intuitively, if <span class="math notranslate nohighlight">\(\min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) &gt; 0 \)</span> (or <span class="math notranslate nohighlight">\(\max\)</span>), it means the system is moving in a direction where <span class="math notranslate nohighlight">\(V\)</span> increases (i.e., moving <em>away</em> from <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>). Since we want to find the <em>minimum</em> value of <span class="math notranslate nohighlight">\(V\)</span> over the horizon, whenever <span class="math notranslate nohighlight">\(V\)</span> is increasing, we want to “freeze” the value of <span class="math notranslate nohighlight">\(V\)</span>, essentially forcing <span class="math notranslate nohighlight">\(\frac{\partial V}{\partial t}=0\)</span>.
+Alternatively, if <span class="math notranslate nohighlight">\(\min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) &lt; 0 \)</span>, it means the system is moving towards <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> and we want to keep track of this and not “freeze” the value of <span class="math notranslate nohighlight">\(V\)</span>.</p>
+</section>
+<section id="presence-of-disturbances">
+<h3>Presence of disturbances<a class="headerlink" href="#presence-of-disturbances" title="Permalink to this headline">#</a></h3>
+<p>What if now there are disturbances added to the system? Assuming our dynamics are now <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,d)\)</span> and there is an external disturbance input <span class="math notranslate nohighlight">\(d\)</span> that affects the system. Then we want to ensure that it is still possible to reach the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, or whether it can still be avoided.</p>
+<p>For the <em>reach</em> case, we want to consider whether the system can still reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>regardless of any</em> disturbances possible. This means that the BRS/BRT should be defined such that the system can reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>for all</em> disturbances.</p>
+<div class="admonition-backward-reachable-set-tube-with-disturbances-reach-case admonition">
+<p class="admonition-title">Backward Reachable Set/Tube with Disturbances (Reach Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-brt-disturbance-reach">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-brs-brt-disturbance-reach" title="Permalink to this equation">#</a></span>\[ \begin{align}\begin{aligned}\mathcal{R}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall d(\cdot) \in \mathbb{D}[0, \tau],\: \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.\\\widetilde{\mathcal{R}}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall d(\cdot) \in \mathbb{D}[0, \tau],\: \exists u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.\end{aligned}\end{align} \]</div>
+</div>
+<p>For the <em>avoid</em> case, we want to consider whether there is at least one disturbance that would always lead the system into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> regardless of any possible control signal. In other words, the BRS/BRT is considering whether there is a disturbance signal that makes it impossible for the system to about <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+This means that the BRS/BRT should be defined such that there exists a disturbance signal such that the system will reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> regardless of any control signals.</p>
+<div class="admonition-backward-reachable-set-tube-with-disturbances-avoid-case admonition">
+<p class="admonition-title">Backward Reachable Set/Tube with Disturbances (Avoid Case)</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-brt-disturbance-avoid">
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-brs-brt-disturbance-avoid" title="Permalink to this equation">#</a></span>\[ \begin{align}\begin{aligned}\mathcal{A}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists d(\cdot) \in \mathbb{D}[0, \tau],\: \forall u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.\\\widetilde{\mathcal{A}}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists d(\cdot) \in \mathbb{D}[0, \tau],\: \forall u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.\end{aligned}\end{align} \]</div>
+</div>
+<p>So now, we have updated the definition of BRS/BRT with disturbances present.
+We can similarly update the HJB PDE to include the disturbance term.
+Since the disturbance is acting in a manner that tries to oppose the system’s best effort to reach/avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, if the system is trying perform a <span class="math notranslate nohighlight">\(\max\)</span>, then the disturbance will perform a <span class="math notranslate nohighlight">\(\min\)</span>, and vice versa.
+But there is a question as to which order we should compute this sequence of operations.
+Or differently put, what kind of information pattern we should assume. Does the system get to see what the disturbance is first when deciding the optimal control, or the other way around?
+Generally, we are using reachability analysis to be robust against disturbances/uncertainties, and therefore would like to take on a more conservative stance. That is, we would like to choose the ordering that would assume that the information pattern would benefit the disturbance.</p>
+<p>There is a max-min inequality that describes that the player acting second has the advantage.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Ordering</p>
+<p>To interpret <span class="math notranslate nohighlight">\(\max_{z\in Z} \min_{w\in W} g(z,w)\)</span>, we can consider it as <span class="math notranslate nohighlight">\(\max_{z\in Z} \biggl(\min_{w\in W} g(z,w)\biggl)\)</span>. So when <span class="math notranslate nohighlight">\(\max_{z\in Z}\)</span> is performed (i.e., going first), the <span class="math notranslate nohighlight">\(\min_{w\in W}\)</span> will be applied after (i.e., going second).</p>
+</aside>
+<div class="admonition-max-min-inequality admonition">
+<p class="admonition-title">Max-min inequality</p>
+<div class="math notranslate nohighlight">
+\[\sup_{z\in Z} \inf_{w\in W} f(z,w) \leq \inf_{w\in W} \sup_{z \ in Z} f(z,w)\]</div>
+</div>
+<p>With this max-min inequality, we assume the system chooses a control <em>first</em>, and then the disturbance will act second. With the addition of the disturbance term, the HJB equation becomes the <em>Hamilton-Jacboi-Isaacs</em> PDE.</p>
+<div class="admonition-hji-equation-for-brs admonition">
+<p class="admonition-title">HJI equation for BRS</p>
+<div class="math notranslate nohighlight" id="equation-eq-brs-reach-avoid-value-hji">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-brs-reach-avoid-value-hji" title="Permalink to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min_{u\in\mathcal{U}}\max_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t) = 0 \qquad \text{Reach case}\\
+\frac{\partial V}{\partial t}(x,t) + \max_{u\in\mathcal{U}}\min_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\qquad \text{Avoid case}\\
+V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
+</div>
+<div class="admonition-hji-equation-for-brt admonition">
+<p class="admonition-title">HJI equation for BRT</p>
+<div class="math notranslate nohighlight" id="equation-eq-brt-reach-avoid-value-hji">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-brt-reach-avoid-value-hji" title="Permalink to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \min_{u\in\mathcal{U}}\max_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\biggl) = 0 \qquad \text{Reach case}\\
+\frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \max_{u\in\mathcal{U}}\min_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\biggl) \qquad \text{Avoid case}\\
+V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
+</div>
+</section>
+</section>
+<section id="hj-reachability-toolbox">
+<h2>HJ reachability toolbox<a class="headerlink" href="#hj-reachability-toolbox" title="Permalink to this headline">#</a></h2>
+<p>This <a class="reference external" href="https://github.com/StanfordASL/hj_reachability"><code class="docutils literal notranslate"><span class="pre">hj_reachability</span></code></a> toolbox can be used to solve the corresponding HJI equation. The repo has a nice <code class="docutils literal notranslate"><span class="pre">quickstart</span></code> notebook. Also check out <span class="xref myst">this demo notebook</span></p>
+</section>
+<section id="a-few-remarks-and-comments">
+<h2>A few remarks and comments<a class="headerlink" href="#a-few-remarks-and-comments" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>It is assumed that the control and disturbance sets are <em>bounded</em>. The formulation considers a <em>worst-case</em> analysis on the disturbance input. As such, given a bounded disturbance set, the HJ reachability formulation will consider the worst disturbance in that set, even if it may be unlikely that disturbance will occur. This resulting computing would be conservative, but perhaps <em>too</em> conservative. The size of the sets could be reduced, but then that would compromise on the robustness of the computed BRS/BRT.</p></li>
+<li><p>If the dynamics are control and disturbance affine <span class="math notranslate nohighlight">\(\dot{x} = f_0(x) + B_u(x)u + B_d(x)d\)</span>, and the control and disturbances sets are bounded, then computing the <span class="math notranslate nohighlight">\(\min\)</span>/<span class="math notranslate nohighlight">\(\max\)</span> is relatively straight forward. Simply determine the sign of <span class="math notranslate nohighlight">\(\nabla V(x,t)^TB_u(x)\)</span> and <span class="math notranslate nohighlight">\(\nabla V(x,t)^TB_d(x)\)</span> and consider the largest/smallest values of <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(d\)</span> depending on whether you want <span class="math notranslate nohighlight">\(\nabla V(x,t)^TB_u(x)u\)</span> and <span class="math notranslate nohighlight">\(\nabla V(x,t)^TB_d(x)d\)</span> to be maximized or minimized. The resulting optimal control is <em>bang-bang</em>. This is not surprising since we have zero running cost, there is not penalty on control effort. So the optimal thing to do to reach/avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> would be to take the most extreme action, always.</p></li>
+<li><p>If the dynamics and control/disturbance sets are not nice (e.g., not affine, non-convex etc), then solving the HJB/HJI PDE involves solving a difficult optimization problem.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">hj_reachability</span></code> toolbox solves the PDEs explicity. That is, it discretizes the state space (i.e., creates a grid over the state space) and solves the PDE by considering each grid point. This explicit approach suffers from the curse of dimensionality—as the state dimension of the problem grows, the more grid points the solver must consider.</p></li>
+</ul>
+</section>
+<section id="todos">
+<h2>TODOs<a class="headerlink" href="#todos" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>add figures</p></li>
+<li><p>add papers</p></li>
+<li><p>add further readings</p></li>
+<li><p>add reach-avoid</p></li>
+</ul>
+<!-- Open loop because:
+Assume all possible control inputs are applied without correction along the way. I.e., no feedback.
+
+
+
+So far, we have formulated a sequential decision-making problem (e.g., a trajectory optimization problem), and studied how we can solve for the optimal policy by introducing a notion of a *value function* and solving for the value and policy for all states and time ahead of time. Online, we can simply use the value function to evaluate "how good" a state is at any point in time, and also "look up" the optimal control/action to take.
+
+We saw how we can frame solving for the value function reduces to a dynamic programming problem, and derived two key equations corresponding to a discrete and continuous time setting, the Bellman equation and Hamilton-Jacobi-Bellman equation, respectively.
+
+The value function carries an important interpretation---the further accumulated cost from the current time $t$ until the end of the horizon, potentially an infinite horizon.
+
+
+ -->
+<!-- Consider now, we are interested in *reaching* a target set $\mathcal{T}$. We are only concerned about whether we reach $\mathcal{T}$ at the end of the time horizon (assuming finite horizon), and -->
+<!-- ```{admonition} Bellman Equation (discrete time, finite horizon)
+```{math}
+:label: eq-bellman
+&V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
+&\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl)
+```
+
+```{admonition} Hamilton-Jacobi-Bellman Equation (continuous time, finite horizon)
+```{math}
+:label: eq-bellman
+&V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
+&\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl)
+```
+
+R -->
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="lqr.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Linear Quadratic Regulator</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="kalman-filter.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">State estimation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)<br/>
+  
+      &copy; Copyright 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
