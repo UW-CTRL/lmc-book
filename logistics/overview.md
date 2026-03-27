@@ -4,15 +4,17 @@
 
 **Instructor:** [Karen Leung](https://faculty.washington.edu/kymleung/)
 
-**TA:** [Shiva Shakeri](https://shivashakeri.com/)
+**TA:** Po-Chih Huang
 
-**Email communication:** `ae513-aut25-staff@uw.edu`
+**Email communication:** `aa548-spr26-staff@uw.edu`
 
-**Lecture:** Tuesday 6PM--9:50PM
+**Lecture:** Mon/Wed 11:30AM--12:50PM
 
-**Location:** GUG305 / Zoom
+**Location:** IEB 205 
 
-**Office hours:** TBD
+**Office hours:** 
+- **Karen's OH**: Monday 1PM GUG 311B (after class)
+- **TA's OH**: TBD
 
 **Recording:** Lectures will be recorded on a best-effort basis and there are no guarantees on the quality of the recording. Zoom link and recording can be found on Canvas.
 
@@ -20,17 +22,28 @@
 
 ## Grading
 
-Below is the breakdown for the grading for the course. For more information, please see the relevant chapters in this book.
+Below is the breakdown for the grading for the course. More details about each item will be provided throughout the course.
 
-- **Exercises:** 30% You will need to submit short exercises, due throughout the quarter. We will go through some exercises interactively during lectures, and others you will do in your own time. Collaboration is encouraged.
+- **Homework 35%:** There will be three homework assignments throughout the quarter. Each homework will involve coding (in Python), written responses, and a self-assessment.  
+    - Homework 1: 10%
+    - Homework 1 self-assessment: 5%
+    - Homework 2: 10%
+    - Homework 2 self-assessment: 5%
+    - Homework 3: 5%
 
-- **Tutorial:** 40% You will pick a technique related to the course material, and create a tutorial/worked example on that topic so that it's accessible to an undergraduate senior. The deliverables are:
-    - ~15 minute recording of you presenting the topic. You may present the material however you like, such as using slides, writing on a tablet, at a whiteboard, YouTube short, etc.
-    - A jupyter notebook accompanying your tutorial.
+    Late submissions on homework deliverables will incur a 20% deduction per day that is late.
 
-- **Peer review:** 15% You will assigned another students' tutorial, and you will watch it, pose questions, and provide feedback on their tutorial.
+- **Project 55%:** There will be a course project to provide you with an opportunity to diver deeper into techniques covered in this course and apply them to a system or application relevant to your interests. Project deliverables include:
+    - **Proposal 10%:** A document outlining the details of your proposed project.
+    - **Lightning talk 5%:** A short elevator pitch about your project. 
+    - **Poster presentation 10%:** Prepare a poster presentation as part of the in-class poster session
+    - **Report 20%:** A technical, conference-style write up of your work.
+    - **Peer review 10%** Peer evaluations on other student's reports and posters
 
-- **Research paper presentation:** 15% You will find a published research paper on a topic of your choice, and you give a short presentation on the paper and Q&A.
+    No late submissions allowed for project-related deliverables.
+
+- **Talk reflections 10%:** There will be two sets of guest speakers during the quarter. You will be required to submit a short reflection, such as describing what you learned, got inspired by, got curious about, what was surprising, or questions that you had after listening to the talks. 
+
 
 ## Course material
 
@@ -57,12 +70,12 @@ The teaching team has put a lot of effort into putting this course together to m
 
 ## Communication, Interaction and Collaboration
 Below is a summary the communication channels for the course.
-- Regarding personal administrative items: send email to `ae513-aut25-staff@uw.edu`.
+- Regarding personal administrative items: send email to `aa548-spr26-staff@uw.edu`.
 - Teaching staff making announcements to the class: Canvas announcements.
 - Discussion about course materials (lectures, homework, projects, etc): Ed Discussion board.
 
 
-For more urgent and time-sensitive matters, please send an email to `ae513-aut25-staff@uw.edu` and also follow up with the teaching team after lectures, or during office hours.
+For more urgent and time-sensitive matters, please send an email to `aa548-spr26-staff@uw.edu` and also follow up with the teaching team after lectures, or during office hours.
 For questions about the technical material covered in lectures, handouts, or homework, please use the Ed Discussion board. This way other students can chime in (and you will probably receive a faster response), and your questions and responses can also aid other students who have the same or similar questions.
 
 ## Computing
@@ -77,7 +90,7 @@ Note that part of the course goal to gain familiarity in modern software tooling
 
 **Instructor illness.**  In the event of instructor illness and the instructor is still able to lecture, all lectures will immediately move to virtual format on zoom.  Students will be notified if this situation occurs.  Zoom links for lectures can be found in the course canvas Zoom area.
 
-**Student illness.** If a student becomes ill, has caregiver responsibilities, or has other intermittent situations, please reach out to the teaching team `ae513-aut25-staff@uw.edu` as soon as possible to plan next steps following university guidelines.
+**Student illness.** If a student becomes ill, has caregiver responsibilities, or has other intermittent situations, please reach out to the teaching team `aa548-spr26-staff@uw.edu` as soon as possible to plan next steps following university guidelines.
 
 ## Inclusion
 Students of all backgrounds and experiences are welcome in this class. You are entitled to be treated respectfully by your classmates and the course staff.

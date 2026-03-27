@@ -13,9 +13,9 @@ parts:
 #   - file: homework/hw03
 - caption: Deliverables
   chapters:
-  - file: project/exercises
-  - file: project/paper-review
-  - file: project/tutorial
+  - file: deliverables/homework
+  - file: deliverables/project
+  - file: deliverables/talk
 - caption: Lectures
   chapters:
   - file: lectures/introduction
@@ -26,6 +26,9 @@ parts:
   - file: lectures/lqr
   - file: lectures/reachability
   - file: lectures/kalman-filter
+- caption: Miscellaneous
+  chapters:
+  - file: logistics/notebook_to_pdf
 # - caption: Code Examples
 #   chapters:
 #   - file: examples/clf_controller
