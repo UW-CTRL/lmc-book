@@ -4,47 +4,52 @@
 The textbook [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) by Mykel Kochenderfer and Tim A. Wheeler offers a comprehensive introduction to optimization with a focus on practical algorithms.
 ```
 
-In this chapter, we give a brief overview of mathematical optimization and highlight ways we can go about solving them.
+In this chapter, we present a concise overview of mathematical optimization and introduce several strategies for approaching and solving optimization problems.
 
-At a high-level, optimization is the process of finding the best solution to a problem by minimizing (or maximizing) an objective function while satisfying constraints.
-Humans are constantly solving some form of optimization problem in everyday activities. For example, to get to class on time, you may want to minimize the distance traveled while avoiding high-traffic areas and avoid stairs.
-In aerospace engineering, you want to minimize the weight and cost of an aircraft design (e.g., wing shape, fuselage size, engine placement) while ensuring the aircraft is stable, exhibits desired aerodynamic properties, and can withstand the forces during operations.
-In the context of controls, you want to pick the best sequence of control inputs that minimize fuel usage over the time while reaching the goal, avoiding obstacles, and obeying the system dynamics.
+At its core, mathematical optimization involves finding the best solution to a problem by minimizing (or maximizing) an objective function, subject to a set of constraints. We frequently solve optimization problems in our daily lives, often without realizing it. For instance, when trying to get to class on time, you might seek the shortest path while avoiding traffic and stairways. In aerospace engineering, designers aim to minimize the weight and cost of an aircraft—adjusting factors like wing shape, fuselage size, and engine placement—while ensuring stability, aerodynamic efficiency, and structural integrity. Similarly, in control systems, we strive to select the sequence of control inputs that minimizes fuel consumption, reaches a desired goal, avoids obstacles, and respects the dynamics of the system.
 
-While it may be simple to describe the optimization problem in words, ultimately we need to represent the problem mathematically and in such a way that can be tractably solved.
+Although optimization problems are often easy to describe in words, translating them into precise mathematical formulations—especially in a way that enables efficient computation—can be challenging.
 
-NOTE: We won't be diving deep into optimization theory and solvers in this course. Instead, we will learn how to frame control synthesis problems as optimization problems and in such a way that it is tractable (i.e., convex) to solve using off-the-shelf solvers/packages (e.g., `cvxpy`).
+**Note:** This course will not explore the full depth of optimization theory or solver algorithms. Our primary focus will be on expressing control synthesis problems as mathematical optimization problems, and in particular, reformulating them in ways (e.g., to make them convex) that permit efficient solution with modern, off-the-shelf solvers and packages such as `cvxpy`.
 
 
 
+## Unconstrained Optimization
 
+### Mathematical Formulation
 
-## Unconstrained optimization
+Let us begin by considering an **unconstrained optimization problem**. Such a problem involves two principal components: 
+- The *decision variable* $x \in \mathbb{R}^n$, representing the $n$ unknowns whose values we seek, and 
+- The *objective function* $f: \mathbb{R}^n \rightarrow \mathbb{R}$, which assigns a numerical value (often representing *cost*) to each possible $x$.
 
-### Mathematical description
-First, let's consider an **unconstrained optimization problem**.
-An (unconstrained) optimization problem consists of two main elements: $x\in\mathbb{R}^n$ is the *decision variable*; $n$ number of variables whose values are to be determined, and $f: \mathbb{R}^n \rightarrow \mathbb{R}$ an *objective function* that determines how desirable $x$ is. Supposing that $f$ describes the *cost*, or how expensive $x$ is, then naturally we want to choose $x$ that *minimizes* $f$.
-As such, the mathematical optimization problem becomes:
-
-$$\min_x \: f(x), \qquad x^\star = \underset{x}{\mathrm{argmin}} \: f(x)$$
-
-where the first equation describes the minimum value of $f$ over the variable $x$, while the second equation is describing the value of the *argument* that minimizes $f$. Typically the optimal decision variable, i.e., the *minimizer* is denoted by a superscript $\star$.
-
-### Solving unconstrained optimization problems
-Depending on the properties of $f$, finding the optimal solution can either be very straightforward, or very hard or expensive.
-If $f$ is "nice" and differentiable, then we can simply apply gradient descent to find the stationary points.
-If $f$ is not differentiable, or evaluating $f$ is an expensive process (e.g., running expensive simulations such as computational fluid dynamics), then we would likely need to use *derivative-free* techniques and computing the optimal solution can be very difficult.
-
-
-
-### Gradient descent
-One of the most popular and simplest approach is gradient descent.
-If $f$ is nice, smooth, differentiable function where it is possible, and hopefully cheap, to compute $\nabla f(x)$, the *gradient* of $f$, then we can simply update our value of $x$ by moving in the direction of steepest descent.
-Mathematically, if $\alpha$ is a step size, and $x_k$ is the current guess for the optimal solution, then we can update our guess by applying the update rule,
+If $f(x)$ represents the cost associated with a particular $x$, our aim is to select $x$ so as to *minimize* the cost. The problem is typically written as:
 
 $$
-x_{k+1} = x_k - \alpha \nabla f(x)
+\min_x \; f(x), \qquad x^\star = \arg\min_x f(x)
 $$
+
+The first expression seeks the minimum value of $f$ over all $x$, while the second denotes the *minimizer*: the particular value $x^\star$ attaining that minimum. Conventions often use the superscript $\star$ to indicate the optimal variable.
+
+### Approaches to Solving Unconstrained Optimization Problems
+
+The difficulty of solving an unconstrained optimization problem depends heavily on the properties of the objective function $f$. 
+
+- If $f$ is *smooth* (differentiable) and has a structure amenable to analysis, techniques like gradient descent can efficiently find stationary points.
+- However, if $f$ is non-differentiable, highly non-convex, or expensive to evaluate (e.g., each evaluation requires a costly simulation), then specialized *derivative-free* methods may be required, and obtaining an optimal solution can become substantially more challenging.
+
+
+
+### Gradient Descent
+
+One of the most popular and straightforward methods for solving unconstrained optimization problems is **gradient descent**. The key idea behind gradient descent is to iteratively improve your estimate of the optimal solution by moving in the direction of *steepest descent*—that is, the direction in which the function decreases most rapidly.
+
+Suppose $f$ is a smooth (differentiable) function and it is feasible—ideally inexpensive—to compute its gradient, $\nabla f(x)$. Then, at each iteration, we can update our current guess $x_k$ by taking a small step $\alpha$ (the *step size*, sometimes called the *learning rate*) in the negative gradient direction:
+
+$$
+x_{k+1} = x_k - \alpha \nabla f(x_k)
+$$
+
+Here, $x_{k+1}$ becomes the new guess, and the process is repeated until convergence, or a maximum number of steps is reached.
 
 
 ```{admonition} Pause and think
@@ -59,75 +64,73 @@ The textbook [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvx
 :class: dropdown
 
 
-We need to be careful about how to pick $\alpha$; if it is too small, then you may need to take many steps, but if it's too big, you may struggle to converge to a (local) optimum.
-We can perform a [line search](https://optimization.cbe.cornell.edu/index.php?title=Line_search_methods) where you search along the steepest descent direction to find a suitable step size.
-There are more advanced techniques that consider the *momentum* that can adaptively change $\alpha$ based on the geometry of $f$. We won't discuss further here, but [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) touches on this and has some useful references.
+Choosing the appropriate value for the step size $\alpha$ in gradient descent is crucial. If $\alpha$ is too small, the algorithm may require many iterations to make progress; if it is too large, you risk overshooting and may fail to converge to (even a local) minimum. 
 
+A common strategy is to use a [line search](https://optimization.cbe.cornell.edu/index.php?title=Line_search_methods), which determines a suitable step size by searching along the descent direction to find an appropriate value of $\alpha$ that sufficiently reduces the objective. For further efficiency, more advanced methods—such as those incorporating *momentum*—can adaptively adjust $\alpha$ based on the geometry of $f$. While we won't delve into these techniques here, [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) provides an excellent introduction and additional references.
 
+It is important to note that even if the objective function $f$ is differentiable, gradient descent may not always find the *global* optimum. The presence of multiple local minima means the algorithm might converge to a point $x_1$ with $\nabla f(x_1) = 0$, even though there could exist another point $x_2$ where $f(x_2) \leq f(x_1)$.
 
-Just because the objective is differentiable does not mean you will always find the *globally* optimal solution. The objective could have many local optima, meaning even if you converge to a value $x_1$ where $\nabla f(x_1) = 0$, there could be another value $x_2$ where $f(x_2) \leq f(x_1)$.
-
-
-
-
-However, if $f$ is *convex*, loosely speaking, "bowl-shaped", then that implies that any minimum found is the global minimum. We won't go into too much detail into convex optimization, but we will use the fact later on that *quadratic* and *linear* functions are convex.
-But if your problem is convex, then generally (in most cases), this is tractable to solve, and there are many well-supported tools and solvers for solving convex optimization problems. In this course, we will use [`cvxpy`](https://www.cvxpy.org/).
+However, if $f$ is *convex*—that is, roughly "bowl-shaped"—any local minimum is guaranteed to be the global minimum. Convex optimization is a rich and well-developed area; in particular, quadratic and linear functions are convex, and we will take advantage of this fact later in the course. For convex problems, efficient and reliable algorithms exist, and a variety of well-supported tools and solvers are available. In this course, we will make use of [`cvxpy`](https://www.cvxpy.org/) for formulating and solving convex optimization problems.
 ```
 
 
 
 ### Derivative-free
-What if you can't take gradients, or that you don't want to because it's very expensive or difficult to?! Well, there are many other methods that don't rely on gradient information at all.
-A common approach is a sampling-based, or population-based approach where you sample your search space to get a sense of the objective landscape, and from that, you can resample or refine your search towards more promising areas.
-Popular methods include cross-entropy method, simulated annealing, and genetic algorithms.
+What if you can't compute gradients, or doing so would be too expensive or difficult? In such cases, there are many alternative methods that do not require gradient information. 
 
+A common strategy is to use sampling-based or population-based methods, where you explore the search space by evaluating the objective function at a set of sampled points. Based on these samples, you can iteratively refine your search—focusing more on promising regions of the space.
+
+Popular derivative-free optimization methods include the cross-entropy method, simulated annealing, and genetic algorithms.
 
 
 ## Constrained optimization
-Suppose now that there are some values of $x$ that are not allowed. For example, a negative value may be physically impossible or undesirable, such as negative weight. Or that some values of $x$ must be a certain value. Or more generally, there is a function $g:\mathbb{R}^n \rightarrow \mathbb{R}^{m_\leq}$ and another function $h:\mathbb{R}^n \rightarrow \mathbb{R}^{m_=}$ such that we require $g(x) \leq 0$ and $h(x) = 0$. Here, $m_\leq$ and $m_=$ denotes the number of inequality and equality constraints, respectively.
+Now, let’s consider situations where certain values of $x$ are inadmissible. For instance, negative values might be physically impossible or undesirable (such as negative weights), or some variables may need to be fixed at specific values. More generally, we can represent such requirements using two constraint functions: $g:\mathbb{R}^n \rightarrow \mathbb{R}^{m_\leq}$ for inequality constraints and $h:\mathbb{R}^n \rightarrow \mathbb{R}^{m_=}$ for equality constraints, where we require that $g(x) \leq 0$ and $h(x) = 0$. Here, $m_\leq$ and $m_=$ denote the number of inequality and equality constraints, respectively.
 
-With these constraints, we can also consider a **constrained optimization problem**,
+With these constraints in place, we arrive at the general **constrained optimization problem**:
 
 $$
-\min_x &  \quad f(x)\\
-\text{subject to}&  \quad g(x) \leq 0\\
-&   \quad h(x) = 0
+\min_x \quad f(x) \\\\
+\text{subject to} \quad g(x) \leq 0 \\\\
+\phantom{\text{subject to}} \quad h(x) = 0
 $$
 
-This becomes a hard problem to solve, and applying regular gradient descent is not going to work because you may descend towards a region where the constraints are violated.
+Solving constrained optimization problems is generally much more challenging than the unconstrained case. Standard gradient descent is typically insufficient, since the algorithm may step into infeasible regions that violate the constraints.
 
 ```{admonition} Pause and think
-What are some ways you could go about handling these constraints?
+What are some effective strategies for handling constraints in optimization problems?
 ```
 
 ```{admonition} Handling constraints
 :class: dropdown
 
-There are a few ways to go about handling these constraints. Again, we won't be going into depth here, but we are briefly mentioning these approaches in case you want to read more about them.
+There are several well-established methods for managing constraints in optimization. While we won’t dive deeply into the technical details here, it’s useful to be aware of the main approaches, especially if you wish to explore them further:
 
-- **Projected gradient descent**: Take a gradient descent step as normal, and then project the solution back to the closest feasible point in the feasible set. This projection may involve solving another optimization problem(!), but for certain geometries of the feasible set, the projection could be found in closed form.
+- **Projected Gradient Descent**: After each standard gradient descent step, project the updated solution back onto the feasible set defined by the constraints. This may require solving an additional optimization problem, though for certain constraint sets, the projection can often be computed explicitly and efficiently.
 
-- **Use the Lagrangian**: A special way to convert a constrained optimization problem into an unconstrained one. But this is performed in a specific way where *Lagrangian multipliers* are introduced, and the necessary conditions for optimality are given by the *Karush–Kuhn–Tucker (KKT) conditions*. There are duality connections between the Lagrangian (dual problem) and the original problem (primal problem), where solving the dual problem gives you insight about the primal problem.
+- **Lagrangian Methods**: Reformulate constrained problems as unconstrained ones by introducing *Lagrange multipliers*. The resulting optimality conditions are known as the *Karush–Kuhn–Tucker (KKT) conditions*. Solving the so-called dual problem may provide valuable insight into the structure of the original (primal) problem.
 
-- **Treat constraints as (big) penalties in the objective**: We can add the constraint functions as part of the objective function so that there is a high cost when the constraints are violated. This turns the constrained problem into an unconstrained one, but then you have to carefully tune the weightings on the constraints, and there is no guarantee that the constraints will be perfectly satisfied.
+- **Penalty Methods**: Incorporate the constraint functions directly into the objective, adding a large penalty when constraints are violated. This effectively transforms the constrained problem into an unconstrained one, but requires careful tuning of the penalty terms, and feasibility of the resulting solution is not always guaranteed.
 
-- **Log-barrier**: A version of the approach above except that a log function is applied on the constraint so that the cost approaches infinity as $x$ approaches the infeasible region. See homework 1.
+- **Log-Barrier Methods**: An alternative penalty approach where a logarithmic barrier is added for the constraints. As the solution approaches the boundary of the feasible set, the cost increases sharply (approaching infinity), thereby discouraging constraint violations. (See homework 1 for a practical example.)
+
 ```
 
+As a final note, throughout this course we will emphasize formulating control problems as optimization problems, ensuring they are structured so that off-the-shelf optimization solvers can be applied directly and efficiently.
 
-
-A reminder again, in this course, we will focus on framing control problems as optimization problems and ensure that the optimization problem is formulated such that we directly use off-the-shelf optimizers.
 
 
 ## Optimization solvers
 
-There are many optimization solvers out there. Note there are some packages that are *modeling languages*, that is, a nice intuitive wrapper for users to define an optimization problem in a natural way that follows the math, rather than in the restrictive standard form required by solvers. Then the user can select different backend solvers. While other packages are the actual solvers and they come with their own interface.
-Others are simply a function you can use as part of a toolbox.
-In this class, we will mainly be using `cvxpy` as it is designed to be very intuitive and simple to use. Though for your project, you are welcome to use whatever solver/language/function you wish.
+There is a wide variety of optimization solvers available, each with its own strengths and interfaces. Some packages are *modeling languages*—user-friendly frameworks that allow you to define optimization problems in mathematical terms, freeing you from the rigid standard forms required by many solvers and enabling you to easily switch between different solver backends. Other packages are dedicated *solvers* with their own specific interfaces, while some environments offer optimization functionality through toolbox functions.
+
+In this course, we will primarily use `cvxpy` because of its intuitive, math-like syntax and ease of use. However, for your project work, you are welcome to use any solver, modeling language, or library that best fits your needs or interests.
 
 
 
-Here’s a list of **optimization solvers** and **modeling languages**, including links and short descriptions for each.
+
+Below is a curated list of commonly used **optimization solvers** and **modeling languages**, with links and brief descriptions for each. Please note: while this list draws on various sources (including AI-assisted compilation), the teaching team has not comprehensively tested every tool listed.
+
+
 ### **🔹 Optimization solvers**
 
 #### **Free & open-source solvers**
