@@ -211,9 +211,11 @@ The concept of barrier functions can be naturally generalized to *control barrie
 To accommodate the effect of control inputs, we slightly modify the classic barrier condition. Let $b : \mathbb{R}^n \rightarrow \mathbb{R}$ be a scalar function, and consider a system with dynamics $\dot{x} = f(x, u)$. We define the "safe set" as $\mathcal{S} = \{ x \mid b(x) \geq 0 \}$. 
 
 If, for every $x$ on the boundary ($b(x) = 0$), there exists at least one control action $u$ such that
+
 $$
 \max_{u \in \mathcal{U}} \nabla b(x)^T f(x, u) \geq 0,
 $$
+
 then, as long as $b(x(0)) \geq 0$, the state will remain inside $\mathcal{S}$ for all future times. Setting the right-hand side to $0$ provides the most flexibility – inside $\mathcal{S}$ the system can move freely, but at the boundary, the system must be able to avoid leaving $\mathcal{S}$.
 
 However, in many practical scenarios, we prefer a more progressive constraint as the state approaches the boundary. Intuitively, the closer the state gets to the boundary of $\mathcal{S}$, the tighter the restrictions on its motion should become – for example, the system should begin to slow down or divert to remain safe. Conversely, deep inside the safe region, we want to preserve maximum flexibility. To obtain this behavior, we generalize the condition by introducing a function on the right-hand side, leading to the following definition.
