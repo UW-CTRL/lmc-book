@@ -4,7 +4,7 @@
 The textbook [Algorithms for Optimization](https://mykel.kochenderfer.com/textbooks/) by Mykel Kochenderfer and Tim A. Wheeler offers a comprehensive introduction to optimization with a focus on practical algorithms.
 ```
 
-In this chapter, we present a concise overview of mathematical optimization and introduce several strategies for approaching and solving optimization problems.
+In this chapter, we present a concise overview of mathematical optimization and introduce several strategies for approaching and solving optimization problems..
 
 At its core, mathematical optimization involves finding the best solution to a problem by minimizing (or maximizing) an objective function, subject to a set of constraints. We frequently solve optimization problems in our daily lives, often without realizing it. For instance, when trying to get to class on time, you might seek the shortest path while avoiding traffic and stairways. In aerospace engineering, designers aim to minimize the weight and cost of an aircraft—adjusting factors like wing shape, fuselage size, and engine placement—while ensuring stability, aerodynamic efficiency, and structural integrity. Similarly, in control systems, we strive to select the sequence of control inputs that minimizes fuel consumption, reaches a desired goal, avoids obstacles, and respects the dynamics of the system.
 
