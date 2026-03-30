@@ -44,6 +44,8 @@ Below is the breakdown for the grading for the course. More details about each i
 
 - **Talk reflections 10%:** There will be two sets of guest speakers during the quarter. You will be required to submit a short reflection, such as describing what you learned, got inspired by, got curious about, what was surprising, or questions that you had after listening to the talks. 
 
+- **Extra credi 8%**: There will be an extra credit opportunity. See the [extra credit](/deliverables/extracredit.md) page for more details.
+
 
 ## Course material
 
