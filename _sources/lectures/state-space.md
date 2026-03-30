@@ -1,59 +1,77 @@
 # State-space representation
 
-For a general system, there may be multiple outputs that one may need information on, and also multiple inputs in which one can influence the system. For example, for a car, one may be interested in the position, heading, and velocity, and the car's motion can be influenced by throttle/braking and steering. We refer to a system with *multiple* inputs and *multiple* outputs as a **MIMO** system. As there are multiple inputs and multiple outputs, control design for MIMO systems is naturally more complex than *single*-input *single*-output (SISO) systems since MIMO systems need to handle complex interactions between multiple variables.[^1]
-If you have taken a feedback control course in your undergraduate degree, it is likely that was on SISO systems.
+In many real-world systems, we need to keep track of several variables to fully describe the "state"—that is, the minimum amount of information needed to predict the system's future evolution, given knowledge of its current configuration and inputs. In addition, there may be multiple inputs available to influence how the state evolves over time. 
+For instance, in the case of a car, key state variables might include position, heading, and velocity. The motion of the car can be affected by control inputs such as throttle/brake and steering. 
 
-An efficient way to describe MIMO systems is via state-space representation, a mathematical framework for modeling a dynamical system using a set of *state variables* to track how inputs influence system behavior over time through first-order differential or difference equations.
-The state variables are selected to capture the essential information about the system's current status, and with knowledge about the dynamics and external inputs (e.g., controls, disturbances), the future behavior or next state can be predicted.
+In practice, although a system’s state may be described by many variables, we are often able to directly observe or measure only a subset of them. These observations or measurements, which provide us with partial information about the system’s state, are referred to as *outputs*.
+
+When a system is influenced by *multiple* inputs and can be measured or characterized by *multiple* outputs, we refer to it as a **MIMO** (Multiple-Input, Multiple-Output) system. Control design for MIMO systems is inherently more complex than for *single*-input *single*-output (SISO) systems, since it requires careful management of the interactions among many variables and inputs.[^1]
+
+If your previous experience with feedback control was limited to undergraduate courses, you likely worked primarily with SISO systems.
+
+A powerful and systematic way to represent MIMO systems is through the state-space framework. In this approach, we model the dynamical system using a set of *state variables* that collectively encode all the essential information needed to predict how the system will evolve in response to inputs. The evolution of these state variables over time is governed by first-order differential or difference equations, which describe how current states and external inputs (such as controls or disturbances) determine the system’s future behavior. By carefully selecting the state variables, we ensure that the model captures the system’s critical characteristics, enabling us to accurately forecast its evolution.
 
 ## State-space definition
 
-Given a system of interest, let $x\in\mathbb{R}^n$ be the *state vector* where $n$ denotes the smallest number of variables possible that can represent the necessary information about the system at any given time. By necessary, we mean the desired information needed by the user/engineer to understand the system to, for instance, make decisions.
+
+Given a system of interest, let $x \in \mathbb{R}^n$ denote the *state vector*, where $n$ is the smallest number of variables needed to fully characterize the system at any given time. These variables capture exactly the information required by the user or engineer to understand and predict the system’s evolution and to make informed decisions.
 
 ```{admonition} Example: State representation for a car
-Given a car, there are multiple state-space representations possible, each corresponding to a different level of modeling fidelity. To describe the motion of the car coarsely, the state could simply be $[x, y, \theta, v]^T$, the position, heading, and velocity of the car. This would be a sufficient choice if we were simply interested in where the car was, where it is heading, and how fast it is going.
-Alternatively, if we were instead considering a *race* car, then we may also want to know more information to assess the "health" of the vehicle, like the amount of wear on the tires, the temperature of the engine, etc. And these additional variables may also affect how much power or acceleration can be provided, and therefore impact how velocity changes over time.
+Consider the case of a car. There are several possible state-space representations, each reflecting a different level of modeling detail. For a simple model, the state might be chosen as $[x, y, \theta, v]^T$, representing the car’s position, heading, and velocity. This selection suffices if our primary interest is tracking the car’s location, its direction, and how fast it is moving.
+
+However, if we are modeling a *race* car, it may be important to include additional variables that reflect the vehicle’s health and performance limits, such as tire wear, engine temperature, or other diagnostic measures. These extra variables can influence how much power or acceleration the car is able to deliver, and thus directly affect how its velocity or dynamics evolve over time.
 ```
+
 
 ```{admonition} Example: State representation for a quadrotor
-Given a quadrotor, there are multiple state-space representations possible, each corresponding to a different level of modeling fidelity. To describe the motion of the quadrotor coarsely, the state could simply be $[x, y, z, \phi, \theta, \psi]^T$, representing its position and orientation (roll, pitch, yaw). This would be a sufficient choice if we were only interested in where the quadrotor was and how it was oriented in space.
-Alternatively, if we were instead considering high-performance flight, then we may also want to know more detailed variables such as translational and angular velocities, rotor speeds, or even battery charge level. These additional states affect how thrust and torques can be generated, and therefore directly influence the quadrotor’s maneuverability and endurance.
+Consider the example of a quadrotor. There are several valid ways to represent its state, depending on the desired level of modeling detail. For a basic description of the quadrotor's motion, the state vector might be chosen as $[x, y, z, \phi, \theta, \psi]^T$, capturing its position in space and orientation—namely, roll ($\phi$), pitch ($\theta$), and yaw ($\psi$). This representation suffices if our primary interest is the quadrotor's location and its attitude.
+
+However, for applications involving high-performance flight, it may be important to model additional variables, such as translational and angular velocities, individual rotor speeds, or battery charge level. These extended state variables directly impact the system’s ability to generate thrust and moments, and thus play a critical role in determining the quadrotor’s maneuverability and endurance.
 ```
 
 
+Let $u \in \mathbb{R}^m$ represent the *control input vector*, where $m$ specifies the number of independent input channels or actuators influencing the system.[^2]
+For a continuous-time system, the evolution of the state can be described by a first-order differential equation:
 
- Let $u\in\mathbb{R}^m$ denote the *control vector* where $m$ denotes the number of control inputs.[^2]
-Then, for a continuous-time system, the future states can be predicted via a first-order differential equation,
+```{math}
+:label: eq-dynamics
+\dot{x}(t) = f(x(t), u(t), t) = \begin{bmatrix}
+    f_1(x(t), u(t), t) \\
+    \vdots \\
+    f_n(x(t), u(t), t)
+\end{bmatrix}
+```
 
-$$
-\dot{x}(t) = f(x(t), u(t), t) = \begin{bmatrix} f_1(x(t), u(t), t) \\ \vdots \\ f_n(x(t), u(t), t) \end{bmatrix}
-$$
+In mechanical and many physical systems, this first-order differential equation captures the kinematics or dynamics—that is, it details how the current state and control inputs determine the rate of change of each state variable over time.
 
-For mechanical systems, the first-order differential equation typically describe the kinematics or dynamics of the system.
+For now, let us assume the system is *fully observable*—that is, we are able to measure every state variable directly. In reality, this is often not the case: typically, only a subset of the state's components are accessible through measurements. To recover information about unmeasured states, we employ estimators or observers (such as the Kalman filter), leveraging available sensor data to construct an estimate of the full system state.
 
-For the time being, let us assume the system is *fully observable*, meaning that we can measure every state variable. In practice, that is not usually the case and we can only measure some of the states, and we rely on an estimator (e.g., Kalman filter) to estimate the values of states that we cannot directly measure.
+The state-space framework is especially powerful for MIMO systems, as it elegantly captures the interplay of multiple inputs and outputs, and serves as the foundation for modern control strategies—including state feedback, observers, and optimal control approaches.
 
-This general state-space representation is particularly powerful for MIMO systems because it naturally handles multiple inputs and outputs, and it provides a framework for modern control design techniques such as state feedback, observers, and optimal control.
+It is important to note that the definition of the "state" is nuanced and context-dependent. How should one choose the state variables? This choice depends on the goals of modeling and the desired level of detail. High-fidelity models may require a large number of state variables to capture complex system behavior, resulting in greater modeling accuracy. However, more detailed models are also more challenging to identify, simulate, and control, especially as the system’s dimensionality increases. Thus, there is an inherent trade-off between model fidelity and computational or practical tractability.
 
-Note that the choice of state is somewhat vague. How does one go about defining a state?
-Well, it depends on what exactly one is interested in modeling and the degree of detail one needs. For high-fidelity models, one may need many state variables to fully describe the system. While that may lead to a more accurate model, fully characterizing the dynamics may be difficult or expensive, and control synthesis for a high number of dimension may be computationally challenging. So there is a trade-off in model accuracy/fidelity and computational cost.
+Furthermore, the choice of state variables is not unique. For example, in the context of [linear dynamical systems](#linear-state-space-model), any invertible transformation of the state variables yields an equivalent description of the system dynamics. Such coordinate changes (e.g., choosing the eigenbasis) can substantially simplify analysis and design. As an illustrative example, if you have encountered the concept of vibrational "modes," these mode shapes and their associated frequencies arise from a coordinate transformation of the state-space representation.
 
-Additionally, the choice of state is not unique! This may be more apparent when considering [linear dynamical systems](#linear-state-space-model). One can consider a new state representation (same dimension) which is a transformation of a different one. The transformation may be motivated as a "math trick" to simplify the dynamics and its interpretation (e.g., choosing the eigenbasis). Fun fact: if you've ever seen discussion of vibrational "modes", those mode shapes and frequencies are found by a coordinate transformation of the state-space representation.
+The complexity and structure of the dynamics function in {eq}`eq-dynamics` play a crucial role in determining how difficult it will be to analyze the system and design an effective controller. Simpler or more structured dynamics often make analysis and control design more tractable, while highly nonlinear or intricate dynamics can significantly increase the challenge. Next, we describe some common types of dynamics.
 
 ## Control-affine dynamics
 
-The dynamics is control-affine if it has the following form,
+A system is said to have **control-affine dynamics** if its evolution can be expressed as
 
 $$
-\dot{x} = f_0(x,t) + B(x)u
+\dot{x} = f_0(x, t) + B(x)u,
 $$
-where only the control appears linearly, while the rest of the terms, referred to as the *drift* dynamics, is grouped together in the $f_0(x,t)$ term.
-Given any general nonlinear dynamics, we can convert it into a control-affine system by augmenting the state with the controls, and treating $\dot{u}$ as the control instead.
+
+where the control input $u$ enters the equation **linearly**, while all nonlinearities and autonomous effects—collectively known as the *drift* dynamics—are contained in the function $f_0(x, t)$. The matrix $B(x)$ maps the control input to its influence on the state.
+
+This structure is significant because many modern control techniques, such as feedback linearization and optimal control, rely on the system being control-affine.
+
+Importantly, given general nonlinear dynamics where the control does not appear in an affine fashion, it is sometimes possible to *convert* the system into control-affine form by augmenting the state vector with the control variables themselves, and then treating the control derivatives (e.g., $\dot{u}$) as the new control inputs. This transformation can allow us to apply tools and insights developed for control-affine systems even in situations that appear to be more complex at first glance.
 
 
 ## Linear state-space model
 
-If the system is **linear**, then the dynamics take on a very specific form,
+When a system is **linear**, its dynamics can be succinctly expressed in the following form:
 
 ```{math}
 :label: eq-linear-dynamics
@@ -61,48 +79,77 @@ If the system is **linear**, then the dynamics take on a very specific form,
 y(t) = Cx(t) + Du(t)
 ```
 
-Here:
-- $x(t)$ is the state vector, representing the internal state of the system.
-- $u(t)$ is the input vector, representing external control inputs to the system.
-- $y(t)$ is the output vector, representing the system's outputs.
-- $A$, $B$, $C$, and $D$ are matrices that define the system dynamics and input-output relationships.
+where:
+- $x(t)$ is the state vector, capturing the internal condition of the system at time $t$.
+- $u(t)$ is the input (or control) vector, representing external signals or commands applied to the system.
+- $y(t)$ is the output vector, corresponding to the quantities we can measure or observe.
+- $A$, $B$, $C$, and $D$ are matrices with dimensions determined by the number of states, inputs, and outputs; these matrices encode the structure of the system's dynamics and its input-output relationships.
 
-The second equation describes how the measured output $y$ depends on the state $x$. For now, we can ignore it, or just assume that $y(t) = x(t)$.
+The first equation describes the evolution of the system's internal state, while the second relates the state and control inputs to the measured outputs. Often, it's convenient to assume the entire state is measured directly (i.e., $y(t) = x(t)$), but in general, only a subset of the state variables are accessible; the output equation $y(t) = Cx(t) + Du(t)$ accommodates this generality.
 
-Linear systems are nice because key system properties, like stability, controllability, observability, etc (topics from AA/EE/ME 547) can be determined from knowing the $A, B, C$ and $D$ matrices.
-Unfortunately, more often than not, our dynamics are not linear. What we can do instead is to **linearize** the system about a reference state and control, such as an equilibrium state and control, and consider linear dynamics *local* to the point of linearization.
-Note that this linearization is only valid in a local region about the point of linearization. But, as it turns out, repeatedly linearizing and applying linear control techniques has proven to be extremely effective and widely used in practice.
+Linear systems are especially appealing because critical properties—such as stability, controllability, and observability (as discussed in AA/EE/ME 547)—can be systematically analyzed using the $A$, $B$, $C$, and $D$ matrices.
+
+
 
 
 
 ### Linearization
 
-Linearization of a dynamical system $\dot{x} = f(x,u)$ is the process of finding a linear dynamical system $\dot{x} = Ax + Bu$ that approximates the original system. For example, consider the following first-order dynamical system of a single scalar state variable:
+In practice, however, most real-world systems are fundamentally nonlinear. To make use of the powerful analytical and computational tools available for linear systems, we often **linearize** a nonlinear system about a particular operating point—typically an equilibrium state and control (i.e., $(x_0, u_0)$)—and analyze the linearized dynamics locally around this point. It is important to recognize that such linearizations are only accurate within a limited neighborhood of the linearization point. Nevertheless, sequentially updating the linearization as the system evolves and employing linear control methods in this local context has proved to be remarkably effective and is a standard approach in modern control practice.
+
+
+**Linearization** is the process of approximating a nonlinear dynamical system, $\dot{x} = f(x, u)$, with a linear system of the form $\dot{x} = Ax + Bu$ that closely represents the original dynamics near a particular operating point. 
+
+To illustrate the concept of linearization, let’s consider a simple example with a single scalar state:
 
 $$
 \dot{x} = \sin(x).
 $$
 
-This is plotted below, for $x$ from $-8$ to $8$.
+The figure below shows this function for $x$ ranging from $-8$ to $8$:
 
-![](../_static/images/AA548_sp25_state_space_fig_1.png)
+![A plot of a sine function y = sin(x), with domain [-8,, 8]](../_static/images/AA548_sp25_state_space_fig_1.png)
 
-Suppose we want to find a line which approximates this function. We immediately see that any such approximation will only be valid *locally*, and there is no one line that gives the best approximation over the whole domain.
+Suppose we wish to approximate this nonlinear function with a straight line. Clearly, any such linear approximation can only match the original function *locally*. There is no single line that can closely approximate $\sin(x)$ everywhere. Instead, each linear approximation is valid only near a specific point. (Can you point out which region each line is a good approximation of the nonlinear function?)
 
-![](../_static/images/AA548_sp25_state_space_fig_2.png)
+![A plot of a sine function y = sin(x), with domain [-8,, 8] with three straight lines drawn on it.](../_static/images/AA548_sp25_state_space_fig_2.png)
 
-Thus we have to decide *at which point we want the linear approximation to be good*. Hence, when we linearize a system, we have to linearize it "about a point" which we choose. At this point, the "approximation" is exact; close to this point, it's pretty good; far away, it won't be very good at all. Once we've chosen that point, we find our approximation by taking a first-order Taylor series about that point.
+Therefore, we must choose the *point* at which we want the linear approximation to be accurate. When we linearize a system, we always do so “about a point” of our choice. At that specific point, the approximation matches the original function exactly; nearby, the linear model is typically a good local representation, but as we move farther away, the approximation quality diminishes. Once we've selected the expansion point, the linear approximation is found by applying a first-order Taylor series about that point.
 
-Suppose we have a state and control $(x_0, u_0)$ that we wish to linearize nonlinear state-space dynamics $\dot{x} = f(x,u,t)$ about. Then we can apply a first-order Taylor expansion around $(x_0, u_0)$,
+
+#### Taylor series
+
+The **Taylor series** is a powerful mathematical tool that allows us to approximate complicated functions by expanding them as an infinite sum of terms, each based on the function's derivatives at a single point. Intuitively, the Taylor series provides a local polynomial approximation to a function, capturing its value and the shape (slope, curvature, etc.) near the point of expansion. This concept is crucial in control and systems theory, as it helps us approximate nonlinear systems with linear (or affine) models for analysis and controller design.
+
+For a scalar-valued function $f : \mathbb{R} \to \mathbb{R}$, the Taylor series about a point $x_0$ is:
 
 $$
-\dot{x} = f(x,u,t) \approx f(x_0, u_0, t) + \nabla_xf(x_0, u_0,t)^T (x - x_0) +  \nabla_uf(x_0, u_0,t)^T (u - u_0) + \ldots
+f(x) \approx f(x_0) + f'(x_0) (x - x_0) + \frac{1}{2} f''(x_0)(x - x_0)^2 + \cdots
 $$
 
-where
+The first term is the value at the expansion point, the second term uses the first derivative to capture the slope, and higher order terms use higher derivatives to account for curvature and beyond.
+
+For a vector-valued function with vector-valued inputs, such as $\mathbf{f} : \mathbb{R}^n \to \mathbb{R}^m$, the Taylor series expansion of $\mathbf{f}$ about a point $x_0 \in \mathbb{R}^n$ is given by:
 
 $$
-\nabla_xf(x, u,t)^T =
+\mathbf{f}(x) \approx \mathbf{f}(x_0) + J_{\mathbf{f}}(x_0) \, (x - x_0) + \frac{1}{2} (x - x_0)^T H_{\mathbf{f}}(x_0) (x - x_0) + \cdots
+$$
+
+Here, $J_{\mathbf{f}}(x_0)$ is the **Jacobian matrix** of $\mathbf{f}$ evaluated at $x_0$, which contains all first-order partial derivatives and has dimensions $m \times n$. The term $H_{\mathbf{f}}(x_0)$ represents the collection of **Hessian matrices** (one $n \times n$ Hessian for each output component of $\mathbf{f}$), capturing the second-order partial derivatives. The linear (first-order) term involving the Jacobian gives the best local linear approximation, while the second-order (quadratic) term with the Hessians refines the local approximation by accounting for curvature.
+
+#### Linearizing dynamics
+In the analysis of dynamical systems, we frequently employ a first-order (linear) approximation, retaining only the terms involving the first derivatives. This yields a local linear model that is valid in the vicinity of a chosen operating point.
+
+Suppose we are interested in linearizing a set of nonlinear state-space dynamics $\dot{x} = f(x, u, t)$ about a particular state and control $(x_0, u_0)$. By performing a first-order Taylor expansion around $(x_0, u_0)$, we have:
+
+$$
+\dot{x} = f(x, u, t) \approx f(x_0, u_0, t) + \nabla_x f(x_0, u_0, t)^T (x - x_0) + \nabla_u f(x_0, u_0, t)^T (u - u_0) + \ldots
+$$
+
+where the Jacobian matrices are defined as:
+
+$$
+\nabla_x f(x, u, t)^T =
 \begin{bmatrix}
 \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \cdots & \frac{\partial f_1}{\partial x_n} \\
 \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n} \\
@@ -111,12 +158,14 @@ $$
 \end{bmatrix}
 =
 \begin{bmatrix}
-\nabla_xf_1(x, u, t)^T \\ \vdots \\  \nabla_xf_n(x, u, t)^T
+\nabla_x f_1(x, u, t)^T \\ \vdots \\ \nabla_x f_n(x, u, t)^T
 \end{bmatrix}
 $$
 
+and
+
 $$
-\nabla_uf(x, u,t)^T =
+\nabla_u f(x, u, t)^T =
 \begin{bmatrix}
 \frac{\partial f_1}{\partial u_1} & \frac{\partial f_1}{\partial u_2} & \cdots & \frac{\partial f_1}{\partial u_m} \\
 \frac{\partial f_2}{\partial u_1} & \frac{\partial f_2}{\partial u_2} & \cdots & \frac{\partial f_2}{\partial u_m} \\
@@ -125,53 +174,60 @@ $$
 \end{bmatrix}
 =
 \begin{bmatrix}
-\nabla_uf_1(x, u, t)^T \\ \vdots \\  \nabla_uf_n(x, u, t)^T
+\nabla_u f_1(x, u, t)^T \\ \vdots \\ \nabla_u f_n(x, u, t)^T
 \end{bmatrix}
 $$
 
-The term $\nabla_xf(x, u,t)^T$ and $\nabla_uf(x, u,t)^T$ are the **Jacobians** of the dynamics with respect to the state and control respectively. Each row of the Jacobian is the gradient vector for each element of the dynamics vector.
+Here, $\nabla_x f(x, u, t)^T$ and $\nabla_u f(x, u, t)^T$ are the **Jacobians** of the dynamics with respect to the state and control, respectively. Each row of a Jacobian corresponds to the gradient vector of a particular component of $f$.
 
-This first-order Taylor approximation actually results in *affine* dynamics of the form
+This first-order Taylor expansion yields an *affine* system:
 
-$$ \dot{x} = Ax + Bu + C.$$
+$$
+\dot{x} = A x + B u + C,
+$$
 
-While this is not strictly linear, for optimization-based control (which we study later), practically speaking, it does not affect the way we solve the optimization problem.
-
+where $A$ and $B$ are the Jacobian matrices, and $C$ is a constant vector. Although this is technically affine (not strictly linear), in the context of optimization-based control (discussed later), this distinction has little practical impact on how we solve the problem.
 
 #### Linearization about an equilibrium point
 
-Suppose that we consider the *error state* $\delta x = x - x_0$ and *error control input* $\delta u = u - u_0$ about an equilibrium point $(x_0, u_0)$ where $f(x_0, u_0, t) = 0$. Then the *error dynamics* is
+Now, consider linearizing about an equilibrium point $(x_0, u_0)$, where $f(x_0, u_0, t) = 0$. Let the *error state* be $\delta x = x - x_0$, and the *error control input* be $\delta u = u - u_0$. The error dynamics are:
 
 $$
-\delta\dot{x} = \dot{x} - \dot{x}_0 = \dot{x} \approx \nabla_xf(x_0, u_0,t)^T \delta x +  \nabla_uf(x_0, u_0,t)^T \delta u
+\delta\dot{x} = \dot{x} - \dot{x}_0 = \dot{x} \approx \nabla_x f(x_0, u_0, t)^T \delta x + \nabla_u f(x_0, u_0, t)^T \delta u
 $$
 
-which can be expressed as the linear dynamics
+This can be written as a linear system:
 
 $$
-\delta\dot{x} \approx A \delta x +  B \delta u
+\delta\dot{x} \approx A \delta x + B \delta u,
 $$
-where $A$ and $B$ are the Jacobian matrices with respect to state and control respectively.
+
+where $A$ and $B$ are the Jacobian matrices evaluated at the equilibrium point with respect to the state and control, respectively.
+
+In summary, when you linearize a system around an equilibrium point and focus on the system’s behavior in the vicinity of that point, you can approximate the dynamics using a linear system. This makes analysis and controller design significantly more tractable near the equilibrium.
 
 ## Time discretization
 
-So far, we have been discussing *continuous-time* dynamics. We can analogously consider *discrete-time* dynamics, where instead of a first-order differential equation, we simply have a first-order *difference equation*.
+Up to this point, we've focused on *continuous-time* dynamics, described by first-order differential equations. However, it's often helpful to consider *discrete-time* dynamics, where the system evolves according to first-order *difference equations*:
 
-$$ x_{t+1} = f_d(x_t, u_t,t)$$
+$$ x_{k+1} = f_d(x_k, u_k, t_k) $$
 
-where $t$ denotes a time step index, rather than a specific value of time.
-Like the continuous-time case, we can also have linear discrete-time dynamics.
+Here, $k$ represents a time step index rather than a specific instant in time. Just as with continuous-time systems, discrete-time dynamics can also be linear, control affine, or nonlinear.
 
-Discrete-time dynamics may be more desirable to work with, especially if we are taking an optimization-based approach to synthesizing a controller. By discretizing time, we can essentially optimize over a finite discrete sequence of states and controls, rather than optimizing over functions.
-So how do we obtain discrete-time dynamics? We just integrate!
+Discrete-time models are particularly appealing when designing controllers using optimization-based methods. By discretizing time, we reduce the problem to optimizing over finite sequences of states and inputs, rather than over continuous-time functions—making the problem much more tractable in practice.
 
-$$
-\underbrace{x(t + \Delta t)}_{x_{k+1}} = \underbrace{x(t)}_{x_k} + \int_t^{t+\Delta t} f(x(\tau), u(\tau), \tau) d\tau
-$$
+But how do we actually obtain a discrete-time model from a continuous-time system? The answer lies in integration. Consider the following relationship:
 
-Here, we used $k$ for the discrete-time indexing to (hopefully) reduce confusion and avoid overloading $t$, but generally, the time indexing should be inferred from context.
-Quickly, you may see a problem. Computing the integrals can be nasty! For some relatively simple systems, you may want to compute the integral analytically, but generally, you would just solve the integrals via numerical methods, such as Euler integration or Runge-Kutta integration which are computationally cheap. We can also leverage automatic differentiation tools to efficiently compute Jacobians to linearize the discrete-time dynamics.
-(You will do this in homework 1.)
+```{math}
+:label: eq-convert-to-discrete-time
+\underbrace{x(t_k+\Delta t)}_{x_{k+1}} = \underbrace{x(t_k)}_{x_k} + \int_{t_k}^{t_k+\Delta t} f(x(\tau), u(\tau), \tau) \, d\tau
+```
+
+Equation {eq}`eq-convert-to-discrete-time` shows that the next state is obtained by starting from the current state and integrating the continuous-time dynamics over a time interval of length $\Delta t$.
+
+However, a challenge quickly emerges: evaluating this integral exactly is often far from straightforward! For some especially simple systems, you might be able to solve the integral analytically. In most practical scenarios, though, you'll want to use numerical integration techniques such as Euler or Runge-Kutta methods, which are computationally efficient and widely available. Modern computational tools—including automatic differentiation—can also be leveraged to rapidly compute Jacobians and facilitate the linearization of discrete-time systems.
+
+(You'll get hands-on experience with these approaches in Homework 1.)
 
 
 

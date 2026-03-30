@@ -10,16 +10,20 @@ These are (work-in-progress) course notes for University of Washington AA/EE/ME 
 
 ## Overview
 
-This course bridges foundational theory and practical application in multivariable control and estimation, with a focus on linear systems in both continuous and discrete time. It emphasizes the development of skills necessary for modeling complex systems and designing robust controllers, serving as a gateway to advanced topics in control theory, robotics, and optimization. A strong mathematical foundation in linear algebra and multivariable calculus is essential, as is familiarity with graduate-level systems theory (e.g., 547 or equivalent), including linear algebra, ordinary differential equations, feedback control, and scientific computing. The course places a strong emphasis on leveraging modern computational tools to implement and analyze control strategies, blending theoretical understanding with hands-on experience.
+This course provides a bridge between fundamental theory and practical tools in multivariable control, with a focus on both continuous and discrete-time systems. Alongside foundational topics, we will explore connections to modern learning-based control methods, complementing classical optimization-based approaches. The goal is to equip you with the essential skills needed to model complex dynamical systems and design robust controllers—preparing you for further work in control theory, robotics, and optimization.
 
+Success in this class requires a solid background in linear algebra, multivariable calculus, and graduate-level systems theory (such as AA/EE/ME 547 or equivalent), as well as familiarity with ordinary differential equations, feedback control, and scientific computing.
+
+Throughout the course, we will emphasize the use of modern computational tools—enabling you to implement and analyze control strategies by integrating theory with hands-on experience.
+
+By the end of this course, you will be able to:
 
 - Analyze the stability and performance of control systems using mathematical tools.
 - Apply state-space methods to model and control multivariable systems.
 - Utilize computational software to simulate and validate control designs.
-- Develop an understanding of the trade-offs in control system design.
-- Formulate a control synthesis problem and mathematically describe control requirements and objectives.
-- Gain familiarity in modern software tools that enable the possibility of real-time controllers.
-
+- Understand and evaluate trade-offs in control system design.
+- Formulate control synthesis problems and mathematically articulate control objectives and requirements.
+- Become proficient with modern software tools that make real-time control possible.
 
 #### Acknowledgement
 

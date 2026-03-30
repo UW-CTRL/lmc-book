@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Project &#8212; Linear Multivariable Control</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=025806d8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deliverables/project';</script>
+    <script src="../_static/custom.js?v=7f7a6837"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Talk reflection" href="talk.html" />
+    <link rel="prev" title="Homework" href="homework.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/class_icon.png" class="logo__image only-light" alt="Linear Multivariable Control - Home"/>
+    <script>document.write(`<img src="../_static/class_icon.png" class="logo__image only-dark" alt="Linear Multivariable Control - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/overview.html">Course information</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../logistics/schedule.html">Week-by-week schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deliverables</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="homework.html">Homework</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="talk.html">Talk reflection</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lectures/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/state-space.html">State-space representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/optimization.html">Introduction to optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/control-certificates.html">Control certificate functions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw01.html">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw02.html">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw03.html">Homework 3</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/notebooktopdf.html">Converting Code Notebooks to PDF</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Fdeliverables/project.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/deliverables/project.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Project</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proposal">Proposal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grading-criteria">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lightning-pitch">Lightning Pitch</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poster-session">Poster Session</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-creating-and-presenting-your-poster">Tips for Creating and Presenting Your Poster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poster-printing-instructions">Poster Printing Instructions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peer-evaluation">Peer Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-report">Project Report</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#past-project-ideas">Past Project Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-writing-a-compelling-proposal-matters">Why Writing a Compelling Proposal Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-an-effective-lightning-pitch-matters">Why an Effective Lightning Pitch Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-on-proposal-writing">Resources on Proposal Writing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-on-reading-and-writing-research-papers">Resources on Reading and Writing Research Papers</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="project">
+<h1>Project<a class="headerlink" href="#project" title="Link to this heading">#</a></h1>
+<p>The course project is your opportunity to explore in greater depth any topic covered during the class. Depending on your background and interests, possible directions include (but are not limited to):</p>
+<ul class="simple">
+<li><p>Re-implementing and adapting an algorithm from a research paper.</p></li>
+<li><p>Performing an in-depth study of course concepts by conducting a comparative or trade-off analysis on representative systems.</p></li>
+<li><p>Applying techniques learned in class to a real-world application.</p></li>
+<li><p>Extending course techniques in the context of your current (PhD/MS) research topic.</p></li>
+</ul>
+<p>You are not required to build everything from scratch. You are encouraged to leverage material from your homework, course demos, previous classes, and open-source resources, as long as you provide proper acknowledgment and references.</p>
+<p>Projects can be completed individually or in teams of two. For team projects, the expectations are higher: the project should be broader in scope than an individual effort, and all group members must have their activities and collaboration plan clearly defined. Refer to the proposal guidelines below for more details.</p>
+<p><strong>Note for Group Projects:</strong> A well-structured collaboration plan and clearly defined project scope are essential. Assign roles and deliverables to each group member, anticipate potential bottlenecks, and develop strategies to address them. Because group projects involve more components, it is especially critical to have contingency plans in place to ensure that issues with one part do not derail the entire project. Describe all of this in your collaboration plan (see item 6 in the proposal section).</p>
+<section id="proposal">
+<h2>Proposal<a class="headerlink" href="#proposal" title="Link to this heading">#</a></h2>
+<p><strong>Due: Friday Week 5 (via Canvas)</strong></p>
+<p>Your project proposal should clearly articulate your idea and outline the major activities you plan to undertake. Aim for a concise, well-structured document of 1–2 pages (including any figures or tables). Use the outline below to craft a compelling proposal.</p>
+<p><strong>Important:</strong> Your project must have a direct connection to the material covered in this course.</p>
+<p><strong>Combining with Other Courses:</strong> You are welcome to combine your project with another course this quarter. If you do so, you must clearly delineate which parts belong to this course and which to the other, as well as describe any shared components (e.g., shared simulation environment). You cannot submit the same body of work for different courses.</p>
+<p><strong>Required Components:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Title and Team Information</strong></p>
+<ul class="simple">
+<li><p>Provide a descriptive and engaging title.</p></li>
+<li><p>Include the full names of all team members (if any).</p></li>
+</ul>
+</li>
+<li><p><strong>Motivation and Background</strong> (~0.25 pages)</p>
+<ul class="simple">
+<li><p>Briefly describe why your topic is important or interesting.</p></li>
+<li><p>Provide context, highlighting connections to course content or real-world relevance.</p></li>
+</ul>
+</li>
+<li><p><strong>Objective</strong> (~0.3 pages_)</p>
+<ul class="simple">
+<li><p>Clearly define the problem you are addressing. Include any relevant notation or mathematical formulation needed to define the problem.</p></li>
+<li><p>State your goal(s) and what you aim to achieve.</p></li>
+<li><p>List the questions you hope to answer.</p></li>
+</ul>
+</li>
+<li><p><strong>Proposed Approach</strong> (~0.5 - 1 page)</p>
+<ul class="simple">
+<li><p>Outline your methods, techniques, or tools.</p></li>
+<li><p>Clearly state the scope of your project—what you plan to address and what lies outside it.</p></li>
+<li><p>Explain how you will evaluate your technique or describe the experiments you plan to conduct.</p></li>
+<li><p>Indicate any datasets, software, or frameworks you expect to use.</p></li>
+<li><p>Describe the connection to this class</p></li>
+</ul>
+</li>
+<li><p><strong>Timeline</strong> (~0.2 pages)</p>
+<ul class="simple">
+<li><p>Provide a high-level, week-by-week breakdown or milestones for your work (e.g., research, implementation, testing, finalization).</p></li>
+<li><p>Note: Lightning pitch and poster are due in Week 10; final report is due during finals week.</p></li>
+</ul>
+</li>
+<li><p><strong>Collaboration Plan (For Group Projects)</strong> (~0.25 pages_)</p>
+<ul class="simple">
+<li><p>Detail task division and each member’s responsibilities.</p></li>
+<li><p>Explain how components interconnect.</p></li>
+<li><p>Include plans for collaboration and accountability.</p></li>
+</ul>
+</li>
+<li><p><strong>Project Scope (For Projects Overlapping Another Course)</strong> (0.25 pages)</p>
+<ul class="simple">
+<li><p>Describe which parts belong specifically to this course and how your efforts will differ from your other course work.</p></li>
+<li><p>Discuss any synergies between the courses, if applicable.</p></li>
+</ul>
+</li>
+<li><p><strong>References</strong></p>
+<ul class="simple">
+<li><p>List all papers, resources, or tools you plan to use.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Tips:</strong></p>
+<ul class="simple">
+<li><p><strong>Be Specific:</strong> Avoid vague statements; make your ideas and plans as clear as possible.</p></li>
+<li><p><strong>Stay Focused:</strong> Ensure your project aligns with course topics and is feasible within the timeframe.</p></li>
+<li><p><strong>Use Visuals (Optional but encouraged):</strong> Diagrams and charts can clarify your ideas.</p></li>
+<li><p><strong>Proofread:</strong> Review for clarity, grammar, and formatting.</p></li>
+</ul>
+<section id="grading-criteria">
+<h3>Grading criteria<a class="headerlink" href="#grading-criteria" title="Link to this heading">#</a></h3>
+<p>Your proposal will be graded based on how well it fulfills the outlined requirements and demonstrates technical clarity. Clear organization, thoughtful justification of your approach, and precise communication of your objectives and methods will all contribute to your grade.</p>
+</section>
+</section>
+<section id="lightning-pitch">
+<h2>Lightning Pitch<a class="headerlink" href="#lightning-pitch" title="Link to this heading">#</a></h2>
+<p><strong>Scheduled: Monday Lecture, Week 10 (June 1)</strong></p>
+<p>Each student/group will present a lightning pitch (also called a spotlight talk) to the class. Given the size of the class, each pitch will be under 2 minutes.</p>
+<p>Your pitch should be engaging, concise, and accessible to a general audience. Slides are optional.</p>
+<p>If you use slides, please add them to this <a class="reference external" href="https://docs.google.com/presentation/d/1mw2E34LtBzZ6mFnR-cjqmYOEuq0tqcVb5Ln9qU-ocMg/edit?usp=sharing">Google Slides document (UW Login)</a>.</p>
+<p>A helpful structure is the <strong>RISE</strong> framework:</p>
+<ul class="simple">
+<li><p><strong>R</strong>elevance: Establish why the topic matters to your audience.</p></li>
+<li><p><strong>I</strong>ssue: State the central problem, question, or challenge you’re addressing.</p></li>
+<li><p><strong>S</strong>olution: Describe your proposed approach or solution.</p></li>
+<li><p><strong>E</strong>vidence: Share evidence or anticipated results showing how your solution addresses the issue.</p></li>
+</ul>
+<section id="id1">
+<h3>Grading criteria<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Your lightning pitch will be evaluated based on clarity and organization of the pitch (e.g., use of the RISE framework), engagement and delivery. If slides are used, they should should supplement—not distract from—the spoken message.</p>
+<p><em>Note: Points may be deducted for exceeding the time limit.</em></p>
+</section>
+</section>
+<section id="poster-session">
+<h2>Poster Session<a class="headerlink" href="#poster-session" title="Link to this heading">#</a></h2>
+<p><strong>Scheduled: Wednesday Lecture, Week 10 (June 3) (Also submit PDF via Canvas as well)</strong></p>
+<p>During class, we will hold a poster session in two rounds (~35 minutes each): one half of the class will present while the other half visits and reviews posters, then the groups will swap. Each student will be assigned posters to peer review and provide feedback on.</p>
+<p>The session is a chance to develop both your written (poster) and verbal (presentation) technical communication skills. Peer reviews allow you to both give and receive constructive feedback.</p>
+<section id="tips-for-creating-and-presenting-your-poster">
+<h3>Tips for Creating and Presenting Your Poster<a class="headerlink" href="#tips-for-creating-and-presenting-your-poster" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Limit discussions to under 10 minutes per visitor (each session is 30 minutes and you should expect at least two visitors).</p></li>
+<li><p>Use figures, plots, tables, bullet points, and equations. Avoid dense blocks of text; make key information easy to find.</p></li>
+<li><p>Don’t simply watch attendees read—greet them, introduce yourself, and offer your 30-second elevator pitch.</p></li>
+<li><p>Guide your audience through the poster, summarizing each section.</p></li>
+<li><p>Pause regularly so your audience can ask questions.</p></li>
+<li><p>If multiple people are present, try to engage everyone in the discussion.</p></li>
+</ul>
+<p><strong>Example Posters:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/UW-CTRL/lmc-book/blob/main/_static/pdfs/Mizuta.SHARC.2025.pdf">Towards Safe and Predictable Social Navigation for Autonomous Ground Vehicles</a></p></li>
+</ul>
+</section>
+<section id="poster-printing-instructions">
+<h3>Poster Printing Instructions<a class="headerlink" href="#poster-printing-instructions" title="Link to this heading">#</a></h3>
+<p>You are responsible for designing, printing, and bringing your poster to the session. You may use the <a class="reference external" href="https://github.com/UW-CTRL/lmc-book/blob/main/_static/poster_template.pptx"><span class="math notranslate nohighlight">\(30 \times 24\)</span> inch poster template</a>—this is roughly the size of 3×3 letter-sized sheets—or use any other size/design you prefer.</p>
+<p>Printing options:</p>
+<ol class="arabic simple">
+<li><p>(~$10) <a class="reference external" href="https://hfs.uw.edu/perks-recreation/the-mill">The Mill</a> on campus: Fast, inexpensive printing on large paper. Be sure to check printer status in advance.</p></li>
+<li><p>(~$30) FedEx: Poster printing services, but allow a few days for processing.</p></li>
+<li><p>(~Free) Print on a regular printer, split over multiple pages using Acrobat Reader’s <a class="reference external" href="https://github.com/UW-CTRL/lmc-book/blob/main/_static/images/adobe.jpg">“Poster” print option</a>. You’ll need tape or glue to assemble your poster.</p></li>
+<li><p>(Free) Submit your poster <strong>before 9:30AM on Wednesday, June 3</strong> and the teaching team will print it using Option 3. Pick up the assembled sheets at the A&amp;A front office and tape them yourself.</p></li>
+</ol>
+<p><strong>Important:</strong> For options 3 and 4, you must assemble/tape your poster in advance—no tape or stationery will be provided at the session.</p>
+</section>
+<section id="id2">
+<h3>Grading criteria<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>The poster will be graded based on your attendence to the session, technical content and accuracy, and visual impact and design.</p>
+</section>
+</section>
+<section id="peer-evaluation">
+<h2>Peer Evaluation<a class="headerlink" href="#peer-evaluation" title="Link to this heading">#</a></h2>
+<p><strong>Due: Thursday, Finals week (June 10) (via Google Form)</strong></p>
+<p>You must submit <strong>2 peer reviews</strong> of your assigned projects based on the poster interaction and report (LINK WILL BE UPDATED)</p>
+<p>Consider taking a photo of each poster you review for reference when writing your feedback.</p>
+<p><strong>Note:</strong> Your reviews will be shared with the project authors. Critique is welcome, but always be constructive and professional.</p>
+<p>Peer reviews follow similar principles to research paper reviews. In your review, address:</p>
+<ul class="simple">
+<li><p>A clear summary of the project (purpose, approach, results)</p></li>
+<li><p>New insights, techniques, or perspectives gained from the work</p></li>
+<li><p>What you found enjoyable or effective (e.g., technical depth, clear presentation, figures, experiment design)</p></li>
+<li><p>Suggestions for improvement (technical, experimental, visual, or organizational)</p></li>
+<li><p>Assessment of the poster session interaction (presentation, ability to engage, effective communication)</p></li>
+<li><p>Any other feedback (e.g., typos, clarifications, minor questions)</p></li>
+</ul>
+<section id="id3">
+<h3>Grading criteria<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Grading will be based on submitting your reviews on time. Reviews must be thoughtful, constructive, and professionally written. Points will be deducted for reviews that lack sincerity, substance, or professional tone.</p>
+</section>
+</section>
+<section id="project-report">
+<h2>Project Report<a class="headerlink" href="#project-report" title="Link to this heading">#</a></h2>
+<p><strong>Due: June 11, 11:59PM (via Canvas)</strong></p>
+<p><strong>Written report (IEEE format):</strong> 4–6 pages, accessible to a first-year graduate student. See <a class="reference external" href="https://github.com/UW-CTRL/lmc-book/blob/main/_static/report_template.zip">template</a> for formatting and content guidance.</p>
+<p><strong>For Groups:</strong> The maximum is 8 pages per group.</p>
+<p>Submit a PDF to Canvas before the deadline.</p>
+<p>Evaluation criteria include technical soundness, clarity, and organization.</p>
+</section>
+<section id="past-project-ideas">
+<h2>Past Project Ideas<a class="headerlink" href="#past-project-ideas" title="Link to this heading">#</a></h2>
+<p>Here are examples of previous course projects:</p>
+<ul class="simple">
+<li><p>Optimal Control of Thrust-Vectored Spacecraft Landing with Trajectory Optimization</p></li>
+<li><p>A Stackelberg Game Approach for Multi-Robot Object Transportation</p></li>
+<li><p>Spacecraft Trajectory Optimization with Discrete Control Constraints</p></li>
+<li><p>Obstacle-Avoiding Robot Arm: How to Make Robotic Arms Avoid Obstacles Like Neo?</p></li>
+<li><p>LQR Greenhouse Humidity Control</p></li>
+<li><p>Stabilizing a Rudderless Aircraft with Rotary Horizontal Tail</p></li>
+<li><p>Safe Navigation in Human-Robot Interaction Using Control Barrier Functions</p></li>
+<li><p>Control Allocation for Aircraft States Control and Wind Gust Alleviation</p></li>
+<li><p>Safe Leg Exoskeleton Control Using a Human Data-Based CBF</p></li>
+<li><p>Safe Reinforcement Learning through Barrier Functions</p></li>
+<li><p>Hybrid Trajectory Optimization for a Biped Walker</p></li>
+<li><p>Path Planning and Control for VTOL Aircraft Landing</p></li>
+<li><p>Optimizing Low-Thrust Orbital Transfers with Successive Convexification</p></li>
+<li><p>CoBL-Diffusion: Diffusion-Based Conditional Robot Planning in Dynamic Environments Using Control Barrier and Lyapunov Functions</p></li>
+<li><p>Replicating CMU’s Ballbot using LQR Optimization and MPC</p></li>
+<li><p>Investigating Sampling-Based MPC: MPPI for Planar Quadrotor</p></li>
+<li><p>Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Functions</p></li>
+<li><p>6-DoF Quadrotor Trajectory Optimization with Dynamic Obstacles and Free-Final-Time</p></li>
+</ul>
+</section>
+<section id="why-writing-a-compelling-proposal-matters">
+<h2>Why Writing a Compelling Proposal Matters<a class="headerlink" href="#why-writing-a-compelling-proposal-matters" title="Link to this heading">#</a></h2>
+<p>Writing a compelling proposal is crucial: it clarifies your ideas, demonstrates your project’s feasibility, and helps secure support or approval from stakeholders in both academic and industry settings. A strong proposal showcases your subject mastery and your ability to formulate and execute a robust project plan. This process forces you to deeply consider the challenge, organize your thoughts, and develop a clear plan before beginning work—much like planning out code before you start writing it.</p>
+<p>You’ll likely need to write proposals throughout your career, for example:</p>
+<ul class="simple">
+<li><p>Research statements for PhD applications</p></li>
+<li><p>Research grants, fellowships, or seed funding</p></li>
+<li><p>Project or feature pitches to teams or organizations</p></li>
+<li><p>Thesis or dissertation topic approvals</p></li>
+<li><p>Collaborating on joint projects with external partners</p></li>
+<li><p>Proposals for new products or services in industry</p></li>
+</ul>
+<p>Crafting strong proposals communicates your vision, gains buy-in from others, and sets you up for project success. Particularly in academia, compelling proposals are necessary for grants and research support. This course’s low-stakes proposal is an ideal environment to practice setting and articulating a research or project vision.</p>
+</section>
+<section id="why-an-effective-lightning-pitch-matters">
+<h2>Why an Effective Lightning Pitch Matters<a class="headerlink" href="#why-an-effective-lightning-pitch-matters" title="Link to this heading">#</a></h2>
+<p>A lightning pitch is a brief, impactful way to convey your project’s essence to an audience. It forces you to distill your work to its core, helping others quickly grasp your goals, approach, and significance. A compelling pitch can:</p>
+<ul class="simple">
+<li><p>Capture attention and generate interest</p></li>
+<li><p>Help you communicate complex ideas simply</p></li>
+<li><p>Provide immediate feedback and guide project refinement</p></li>
+<li><p>Showcase your ability to present ideas clearly and confidently</p></li>
+</ul>
+<p>In both professional and academic contexts, lightning pitches are invaluable, enabling you to quickly convince stakeholders, collaborators, or committees of your project’s merit—often in the only meeting, conversation, or chance you’ll get.</p>
+</section>
+<section id="resources-on-proposal-writing">
+<h2>Resources on Proposal Writing<a class="headerlink" href="#resources-on-proposal-writing" title="Link to this heading">#</a></h2>
+<p>Below are resources (geared toward research grants) to guide your project proposal writing. Not all points will apply, but these should help you focus your ideas:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.darpa.mil/about/heilmeier-catechism">Heilmeier Catechism</a>: Eight concise questions to frame your research for maximum impact.</p>
+<ul>
+<li><p><a class="reference external" href="https://techtransferfordefense.stanford.edu/creating-impactful-one-pagers-using-heilmeier-catechism">Stanford notes on the Heilmeier Catechism</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.nsf.gov/funding/merit-review#our-merit-review-criteria-f24">NSF Review Criteria</a>: How the National Science Foundation evaluates proposals, focusing on intellectual merit and broader impact.</p></li>
+</ul>
+</section>
+<section id="resources-on-reading-and-writing-research-papers">
+<h2>Resources on Reading and Writing Research Papers<a class="headerlink" href="#resources-on-reading-and-writing-research-papers" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://faculty.washington.edu/kymleung/assets/courses/aa598/2024/lecture02.pdf">How to read/write a paper</a> (AA 598, Fall 2024)</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=QYbAvOPcy0s&amp;amp;t=4s">How to Write Good Papers – Invited Talk by Cyrill Stachniss</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/&#64;jasoncorso/how-to-read-conference-papers-fa78c75f78aa">PACES Method for Reading Papers</a>: A practical guide for approaching conference papers, especially if you are new to research literature.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deliverables"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="homework.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="talk.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Talk reflection</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proposal">Proposal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grading-criteria">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lightning-pitch">Lightning Pitch</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poster-session">Poster Session</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-creating-and-presenting-your-poster">Tips for Creating and Presenting Your Poster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poster-printing-instructions">Poster Printing Instructions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peer-evaluation">Peer Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Grading criteria</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-report">Project Report</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#past-project-ideas">Past Project Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-writing-a-compelling-proposal-matters">Why Writing a Compelling Proposal Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-an-effective-lightning-pitch-matters">Why an Effective Lightning Pitch Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-on-proposal-writing">Resources on Proposal Writing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-on-reading-and-writing-research-papers">Resources on Reading and Writing Research Papers</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

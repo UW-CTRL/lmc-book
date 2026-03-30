@@ -1,116 +1,182 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Sequential decision-making &#8212; Linear Multivariable Control</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/a11y.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=025806d8" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script src="../_static/custom.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/sequential-dm';</script>
+    <script src="../_static/custom.js?v=7f7a6837"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Linear Quadratic Regulator" href="lqr.html" />
-    <link rel="prev" title="Control certificate functions" href="control-certificates.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
         
       
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
       
-      <img src="../_static/class_icon.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Linear Multivariable Control</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../_static/class_icon.png" class="logo__image only-light" alt="Linear Multivariable Control - Home"/>
+    <script>document.write(`<img src="../_static/class_icon.png" class="logo__image only-dark" alt="Linear Multivariable Control - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -119,421 +185,272 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Syllabus
- </span>
-</p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Syllabus</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../logistics/overview.html">
-   Course information
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../logistics/schedule.html">
-   Week-by-week schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../logistics/overview.html">Course information</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../logistics/schedule.html">Week-by-week schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Deliverables
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deliverables</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../project/exercises.html">
-   Exercises
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../project/paper-review.html">
-   Research paper presentation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../project/tutorial.html">
-   Tutorial
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/homework.html">Homework</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/talk.html">Talk reflection</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Lectures
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="introduction.html">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="state-space.html">
-   State-space representation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="optimization.html">
-   Introduction to optimization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="control-certificates.html">
-   Control certificate functions
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Sequential decision-making
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lqr.html">
-   Linear Quadratic Regulator
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="reachability.html">
-   HJ reachability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="kalman-filter.html">
-   State estimation
-  </a>
- </li>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="state-space.html">State-space representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">Introduction to optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-certificates.html">Control certificate functions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw01.html">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw02.html">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw03.html">Homework 3</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/notebooktopdf.html">Converting Code Notebooks to PDF</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/sequential-dm.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
 
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
 
 
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/sequential-dm.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
   </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/UW-CTRL/lmc-book"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Flectures/sequential-dm.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/lectures/sequential-dm.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.md</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </button>
-
-      </li>
+</div></div>
       
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
+    </div>
   
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
-
-    </div>
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#some-motivating-examples">
-   Some motivating examples
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#principle-of-optimality">
-   Principle of Optimality
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#problem-set-up-optimal-control-problem">
-   Problem set-up: Optimal Control Problem
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-value-function-i-e-cost-to-go">
-   The Value Function (i.e., cost-to-go)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimal-value-function-and-policy">
-     Optimal value function and policy
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bellman-equation">
-   Bellman equation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#representing-the-value-function">
-     Representing the value function
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#stochastic-dynamic-programming">
-     Stochastic dynamic programming
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#infinite-time-horizon-dynamic-programming">
-     Infinite time horizon dynamic programming
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#hamilton-jacobi-bellman-equation">
-   Hamilton-Jacobi-Bellman equation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#additional-reading">
-   Additional reading
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Sequential decision-making</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#some-motivating-examples">
-   Some motivating examples
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#principle-of-optimality">
-   Principle of Optimality
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#problem-set-up-optimal-control-problem">
-   Problem set-up: Optimal Control Problem
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-value-function-i-e-cost-to-go">
-   The Value Function (i.e., cost-to-go)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimal-value-function-and-policy">
-     Optimal value function and policy
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bellman-equation">
-   Bellman equation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#representing-the-value-function">
-     Representing the value function
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#stochastic-dynamic-programming">
-     Stochastic dynamic programming
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#infinite-time-horizon-dynamic-programming">
-     Infinite time horizon dynamic programming
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#hamilton-jacobi-bellman-equation">
-   Hamilton-Jacobi-Bellman equation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#additional-reading">
-   Additional reading
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Sequential decision-making</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-motivating-examples">Some motivating examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principle-of-optimality">Principle of Optimality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-set-up-optimal-control-problem">Problem set-up: Optimal Control Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-value-function-i-e-cost-to-go">The Value Function (i.e., cost-to-go)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-value-function-and-policy">Optimal value function and policy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bellman-equation">Bellman equation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-the-value-function">Representing the value function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-dynamic-programming">Stochastic dynamic programming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infinite-time-horizon-dynamic-programming">Infinite time horizon dynamic programming</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hamilton-jacobi-bellman-equation">Hamilton-Jacobi-Bellman equation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-reading">Additional reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="sequential-decision-making">
-<h1>Sequential decision-making<a class="headerlink" href="#sequential-decision-making" title="Permalink to this headline">#</a></h1>
+<h1>Sequential decision-making<a class="headerlink" href="#sequential-decision-making" title="Link to this heading">#</a></h1>
 <p>In the previous chapters (specifically, the CBF-CLF filters), we saw that a control input could be synthesized by adjusting the desired control as little as possible to satisfy the CBF and CLF constraints. But how was the desired control selected? And since we change the desired control for the <em>current</em> time, how does this effect the future behavior of the system? Would adjusting the desired control now affect the performance of the system in the future?</p>
 <p>To answer these questions, we must consider a <em>sequence</em> of decisions (i.e., control inputs or actions) and reason about how each decision may have enduring consequences.</p>
 <section id="some-motivating-examples">
-<h2>Some motivating examples<a class="headerlink" href="#some-motivating-examples" title="Permalink to this headline">#</a></h2>
+<h2>Some motivating examples<a class="headerlink" href="#some-motivating-examples" title="Link to this heading">#</a></h2>
 <p><strong>Going through college:</strong> What are the consequences of (a) sleeping in and skipping lecture versus (b) waking up early and attending lecture? In option (a), the immediate reward is high/cost is low since you get to sleep in and relax, but in the future, you may be ill-prepared for the midterm and that requires you to spend <em>more</em> effort to revise for the midterm. So your future reward is low/cost is high. With option (b), your immediate reward is low/cost is high since you have to wake up early and spend effort paying attention in class, but you will be more prepared for the upcoming midterm and will not need to spend too much effort in revising for the midterm. So your future reward is high/cost is low.
 So which option should you take? Well, that depends on the how much the immediate reward/cost compares with the future reward/cost.</p>
 <p>We can extend this example, and consider the your decisions when taking a pre-requisite course (e.g., linear algebra) and how that may effect your performance in a future engineering course, which then may affect your competitiveness when applying for jobs or graduate programs, and so forth.</p>
@@ -544,7 +461,7 @@ This is generally a very difficult choice to make for many reasons, but in parti
 <p>In the rest of the chapter, we will discuss a principled approach to solving these sequential decision-making problems, and how one may go about solving these problems.</p>
 </section>
 <section id="principle-of-optimality">
-<h2>Principle of Optimality<a class="headerlink" href="#principle-of-optimality" title="Permalink to this headline">#</a></h2>
+<h2>Principle of Optimality<a class="headerlink" href="#principle-of-optimality" title="Link to this heading">#</a></h2>
 <p>The <strong>Principle of Optimality</strong> is a foundational concept in sequential decision-making and dynamic programming. There are many ways to describe it, here are some different versions of the same concept:</p>
 <ul class="simple">
 <li><p>An optimal solution to a problem contains within it optimal solutions to its subproblems.</p></li>
@@ -555,12 +472,12 @@ This is generally a very difficult choice to make for many reasons, but in parti
 By leveraging the principle of optimality, we can systematically compute the best sequence of decisions by solving these subproblems, often using techniques like dynamic programming. By iteratively solving for the tail subproblems, we can then contruct the optimal policy—the optimal control to take from any state.</p>
 </section>
 <section id="problem-set-up-optimal-control-problem">
-<h2>Problem set-up: Optimal Control Problem<a class="headerlink" href="#problem-set-up-optimal-control-problem" title="Permalink to this headline">#</a></h2>
+<h2>Problem set-up: Optimal Control Problem<a class="headerlink" href="#problem-set-up-optimal-control-problem" title="Link to this heading">#</a></h2>
 <p>First, let us mathematically define the optimal control problem we seek to solve.
 To start off, let us consider a <em>discrete time</em> and <em>finite-horizon</em> setting. The idea for continuous time is similar, but the resulting key equation we get at the end will be a partial differential equation instead of a difference equation.</p>
 <p>Let <span class="math notranslate nohighlight">\(x_t, u_t\)</span> denote the state and control at time step <span class="math notranslate nohighlight">\(t\)</span>. Suppose we seek to find an optimal sequence of controls that minimizes the total cost over a time horizon <span class="math notranslate nohighlight">\(T\)</span>.</p>
 <div class="math notranslate nohighlight" id="equation-eq-ocp">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eq-ocp" title="Permalink to this equation">#</a></span>\[\begin{split}\min_{u_{0:T-1}} &amp; \quad \sum_{t=0}^{T-1} J(x_t, u_t, t) + J_T(x_T)\\
+<span class="eqno">()<a class="headerlink" href="#equation-eq-ocp" title="Link to this equation">#</a></span>\[\begin{split}\min_{u_{0:T-1}} &amp; \quad \sum_{t=0}^{T-1} J(x_t, u_t, t) + J_T(x_T)\\
 \text{subject to} &amp; \quad  x_{t+1} = f(x_t, u_t, t)\\
 &amp; \quad x_0 = x_\mathrm{current}\\
 &amp; \quad u_t \in \mathcal{U}(x_t, t), x_t \in\mathcal{X}_t\\
@@ -569,18 +486,18 @@ To start off, let us consider a <em>discrete time</em> and <em>finite-horizon</e
 <p>We have made an assumption here that the cost has an <em>additive</em> cost structure, where the total cost is sum of the cost for being at a state <span class="math notranslate nohighlight">\(x\)</span> and executing a control <span class="math notranslate nohighlight">\(u\)</span> at timestep <span class="math notranslate nohighlight">\(t\)</span>. This additive cost structure is important as this allows us to break down the problem into smaller subproblems. Also note that we have a <em>terminal cost</em> <span class="math notranslate nohighlight">\(J_T\)</span> which denotes the cost of being at state <span class="math notranslate nohighlight">\(x_T\)</span> at the end of the planning horizon.</p>
 </section>
 <section id="the-value-function-i-e-cost-to-go">
-<h2>The Value Function (i.e., cost-to-go)<a class="headerlink" href="#the-value-function-i-e-cost-to-go" title="Permalink to this headline">#</a></h2>
+<h2>The Value Function (i.e., cost-to-go)<a class="headerlink" href="#the-value-function-i-e-cost-to-go" title="Link to this heading">#</a></h2>
 <p>As the Principle of Optimality states, we can break down the search for an optimal policy into smaller tail subproblems. Given this, we define the concept of a <em>value function</em> <span class="math notranslate nohighlight">\(V_\pi(x,t)\)</span>, which is a function that describes the <em>future accumulated cost/reward</em> starting at state <span class="math notranslate nohighlight">\(x\)</span> at time <span class="math notranslate nohighlight">\(t\)</span> and following a policy <span class="math notranslate nohighlight">\(\pi\)</span>. Recall, a policy is a function that maps state <span class="math notranslate nohighlight">\(x\)</span> to a control <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(u=\pi(x)\)</span>.
 Mathematically, the value function is defined as (for discrete time and finite horizon),</p>
 <div class="math notranslate nohighlight" id="equation-eq-value-function">
-<span class="eqno">(8)<a class="headerlink" href="#equation-eq-value-function" title="Permalink to this equation">#</a></span>\[V_\pi(x,t) = \sum_{k=t}^{T-1} J(x_k, \pi(x_k), k) + J_T(x_T)\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-value-function" title="Link to this equation">#</a></span>\[V_\pi(x,t) = \sum_{k=t}^{T-1} J(x_k, \pi(x_k), k) + J_T(x_T)\]</div>
 <p>Simply put, we just sum up the total cost from following a policy <span class="math notranslate nohighlight">\(\pi\)</span> from state <span class="math notranslate nohighlight">\(x\)</span>, starting at timestep <span class="math notranslate nohighlight">\(t\)</span>. The value function is interpreted as, and often referred to as, the <em>cost-to-go</em> as it quite literally represents the total future cost from state <span class="math notranslate nohighlight">\(x\)</span>.</p>
 <p>Naturally, depending on the choice of <span class="math notranslate nohighlight">\(\pi\)</span>, your value would be different. So how do we go about picking the <em>optimal policy</em> <span class="math notranslate nohighlight">\(\pi^*\)</span>?</p>
 <section id="optimal-value-function-and-policy">
-<h3>Optimal value function and policy<a class="headerlink" href="#optimal-value-function-and-policy" title="Permalink to this headline">#</a></h3>
+<h3>Optimal value function and policy<a class="headerlink" href="#optimal-value-function-and-policy" title="Link to this heading">#</a></h3>
 <p>To find the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> (and corresponding optimal value function <span class="math notranslate nohighlight">\(V^*\)</span>), we simply need to find the policy that minimizes the total cost.</p>
 <div class="math notranslate nohighlight" id="equation-eq-optimal-value-function">
-<span class="eqno">(9)<a class="headerlink" href="#equation-eq-optimal-value-function" title="Permalink to this equation">#</a></span>\[\begin{split}V^*(x_t,t) = \min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T) \quad \text{subject to constraints...}\\
+<span class="eqno">()<a class="headerlink" href="#equation-eq-optimal-value-function" title="Link to this equation">#</a></span>\[\begin{split}V^*(x_t,t) = \min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T) \quad \text{subject to constraints...}\\
 \pi^*(x_t,t) = \mathrm{arg}\min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T) \quad \text{subject to constraints...}\end{split}\]</div>
 <p>To simplify the problem a little bit for ease of notation, let’s remove the constraints for now (except for dynamics constraints).</p>
 <div class="math notranslate nohighlight">
@@ -592,8 +509,8 @@ V^*(x_t,t) = \min_{u_{t:T-1}} \sum_{k=t}^{T-1} J(x_k, u_k, k) + J_T(x_T)\\
 </section>
 </section>
 <section id="bellman-equation">
-<h2>Bellman equation<a class="headerlink" href="#bellman-equation" title="Permalink to this headline">#</a></h2>
-<p>Using the principle of optimality, we can break up the defintion of the value function <a class="reference internal" href="#equation-eq-optimal-value-function">(9)</a> into two parts as follows (again, removing the constraints to make it more notationally simple)</p>
+<h2>Bellman equation<a class="headerlink" href="#bellman-equation" title="Link to this heading">#</a></h2>
+<p>Using the principle of optimality, we can break up the defintion of the value function <a class="reference internal" href="#equation-eq-optimal-value-function">()</a> into two parts as follows (again, removing the constraints to make it more notationally simple)</p>
 <div class="math notranslate nohighlight">
 \[
 V^*(x_t,t) = \min_{u_{t}} \biggl( J(x_t, u_t, t) + \min_{u_{1:T-1}} \sum_{k=t+1}^{T-1} J(x_k, u_k, k) + J_T(x_T) \biggl)
@@ -620,7 +537,7 @@ With the base case defined, we can then sweep through the timestep, working <em>
 <div class="admonition-bellman-equation-discrete-time-finite-horizon admonition">
 <p class="admonition-title">Bellman Equation (discrete time, finite horizon)</p>
 <div class="math notranslate nohighlight" id="equation-eq-bellman">
-<span class="eqno">(10)<a class="headerlink" href="#equation-eq-bellman" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
+<span class="eqno">()<a class="headerlink" href="#equation-eq-bellman" title="Link to this equation">#</a></span>\[\begin{split}&amp;V^*(x_{t},t) = \min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t, t)\\
 &amp;\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( J(x_{t}, u_{t}, t) + V^*(x_{t+1}, t+1) \biggl)\end{split}\]</div>
 </div>
 <div class="admonition-pause-and-think admonition">
@@ -628,7 +545,7 @@ With the base case defined, we can then sweep through the timestep, working <em>
 <p>Although the Bellman equation provides a nice recursive relationship to use, is it straightforward to compute the value function for a general setting, say with nonlinear dynamics, non-trivial constraints, and nonlinear cost terms?</p>
 </div>
 <section id="representing-the-value-function">
-<h3>Representing the value function<a class="headerlink" href="#representing-the-value-function" title="Permalink to this headline">#</a></h3>
+<h3>Representing the value function<a class="headerlink" href="#representing-the-value-function" title="Link to this heading">#</a></h3>
 <p>Depending on the nature of the state and control space, the value function can be represented differently.</p>
 <ul class="simple">
 <li><p>Discrete (finite) state: The value function can be stored in tabular form, with an index for state, and another for time. But if the state space and horizon is very large (e.g., game of chess) then this look-up table would be too large, and in that case, a function approximation (e.g., deep neural network) would be used.</p></li>
@@ -659,7 +576,7 @@ Q_\pi(x_t,u_t,t) = J(x_t,u_t,t) + V_\pi(x_{t+1}).
 </div>
 </section>
 <section id="stochastic-dynamic-programming">
-<h3>Stochastic dynamic programming<a class="headerlink" href="#stochastic-dynamic-programming" title="Permalink to this headline">#</a></h3>
+<h3>Stochastic dynamic programming<a class="headerlink" href="#stochastic-dynamic-programming" title="Link to this heading">#</a></h3>
 <p>In many cases, we do not know precisely which state we will end up in when we take a certain action.
 That is, given <span class="math notranslate nohighlight">\(x_t, u_t\)</span>, the next state <span class="math notranslate nohighlight">\(x_{t+1}\)</span> is not deterministic.
 For example, if we are controlling a rocket, in the real world the thrust produced by the engine for any given throttle command is not precesely known; thus we cannot precisely tell what the vehicle’s state will be some time in the future. Or, suppose we are playing a game of chess; even if we know the state (i.e., the board position) perfectly, when we make a move we don’t know what the opponent will do. We may have an idea of which moves are likely or unlikely based on our knowledge of the game and our opponent, and in fact the skill of playing chess is to try to influence your opponent to make moves favorable to you, but we ultimately don’t know the future perfectly.</p>
@@ -673,7 +590,7 @@ For example, if we are controlling a rocket, in the real world the thrust produc
 <div class="admonition-stochastic-bellman-equation-discrete-time-finite-horizon admonition">
 <p class="admonition-title">Stochastic Bellman Equation (discrete time, finite horizon)</p>
 <div class="math notranslate nohighlight" id="equation-eq-stoch-bellman">
-<span class="eqno">(11)<a class="headerlink" href="#equation-eq-stoch-bellman" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;V^*(x_{t},t) = \min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl), \\
+<span class="eqno">()<a class="headerlink" href="#equation-eq-stoch-bellman" title="Link to this equation">#</a></span>\[\begin{split}&amp;V^*(x_{t},t) = \min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl), \\
 &amp;\pi^*(x_{t},t) = \mathrm{arg}\min_{u_{t}} \biggl( \mathbb{E}_{x_{t+1}\sim  p(x_{t+1} \mid x_t, u_t)}[ J(x_{t}, u_{t}, x_{t+1}, t) + V^*(x_{t+1}, t+1)] \biggl)\end{split}\]</div>
 </div>
 <!-- ## Worked example (discrete-time, stochastic) -->
@@ -692,14 +609,14 @@ For example, if we are controlling a rocket, in the real world the thrust produc
 </div>
 </section>
 <section id="infinite-time-horizon-dynamic-programming">
-<h3>Infinite time horizon dynamic programming<a class="headerlink" href="#infinite-time-horizon-dynamic-programming" title="Permalink to this headline">#</a></h3>
+<h3>Infinite time horizon dynamic programming<a class="headerlink" href="#infinite-time-horizon-dynamic-programming" title="Link to this heading">#</a></h3>
 <p>Often we are interested in problems with an infinite time horizon. For example, suppose we are designing a stabilization system for a cruise ship, to reduce rolling due to waves. The cruise ship will put out to sea, activate the stabilization system, and leave it running “indefinitely”, or at least until it gets back to port. Since we don’t know how long the stabilizer will have to run (and in any case it will run for a very long time on each journey), we can just assume it will run “forever”. In cases like these, infinite-horizon dynamic programming is useful.</p>
 <p>In infinite-horizon dynamic programming, it no longer makes sense to consider a terminal state cost, since there is no terminal state. Instead, we use the infinite-horizon Bellman equation, which includes a “discount factor” <span class="math notranslate nohighlight">\(\gamma\)</span> multiplying <span class="math notranslate nohighlight">\(V(x_{t+1}, t+1)\)</span>, where <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; 1\)</span>:</p>
 <p>It also does not make sense to keep track of timestep in the infinite horizon case since the horizon is, well, infinite. Keeping track of what the value is at timestep, say, 1000000 versus time step 100 is not particularly useful since the horizon is infinite. As such, drop the time argument in our value function definition.</p>
 <div class="admonition-infinite-horizon-bellman-equation-discrete-time admonition">
 <p class="admonition-title">Infinite-Horizon Bellman Equation (discrete time)</p>
 <div class="math notranslate nohighlight" id="equation-eq-inf-bellman">
-<span class="eqno">(12)<a class="headerlink" href="#equation-eq-inf-bellman" title="Permalink to this equation">#</a></span>\[\begin{split}&amp;V^*(x) = \min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\
+<span class="eqno">()<a class="headerlink" href="#equation-eq-inf-bellman" title="Link to this equation">#</a></span>\[\begin{split}&amp;V^*(x) = \min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\
 &amp;\pi^*(x_{t}) = \mathrm{arg}\min_{u} \biggl( J(x, u) + \gamma V^*(f(x,u)) \biggl), \qquad \text{where} \quad x_{t+1} = f(x_t, u_t)\\\end{split}\]</div>
 </div>
 <p>This has the effect of “discounting” future costs, so that they mattter less the further in the future they are. As we work backwards through time in the dynamic programming process, the value function at later time steps will be multiplied by higher and higher powers of <span class="math notranslate nohighlight">\(\gamma\)</span>, which converge to zero.</p>
@@ -718,7 +635,7 @@ For example, if we are controlling a rocket, in the real world the thrust produc
 </section>
 </section>
 <section id="hamilton-jacobi-bellman-equation">
-<h2>Hamilton-Jacobi-Bellman equation<a class="headerlink" href="#hamilton-jacobi-bellman-equation" title="Permalink to this headline">#</a></h2>
+<h2>Hamilton-Jacobi-Bellman equation<a class="headerlink" href="#hamilton-jacobi-bellman-equation" title="Link to this heading">#</a></h2>
 <p>So far, we have considered a <em>discrete-time</em> setting. What about the continuous-time setting?
 We can derive the continuous-time case by casting the continuous time problem into a discrete-time problem with timestep <span class="math notranslate nohighlight">\(\Delta t\)</span> and let <span class="math notranslate nohighlight">\(\Delta t\rightarrow 0\)</span> and see what we get as a result of taking that limit.
 With the continuous-time setting, our dynamics are <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,t)\)</span> and the cost is <span class="math notranslate nohighlight">\(\int_0^T J(x,u,t) dt + J_T(x(T))\)</span>. Note that the cost is an integral, but to “convert to discrete-time”, the cost over a <span class="math notranslate nohighlight">\(\Delta t\)</span> time step is approximated to be <span class="math notranslate nohighlight">\(J(x,u,t) \Delta t\)</span>.</p>
@@ -740,12 +657,12 @@ V^*(x(t),t) = \min_{u(t)} \biggl( J(x(t), u(t), t)\Delta t + V^*(x(t+\Delta t), 
 <div class="admonition-hamilton-jacobi-bellman-equation-continuous-time-finite-horizon admonition">
 <p class="admonition-title">Hamilton-Jacobi-Bellman Equation (continuous-time, finite horizon)</p>
 <div class="math notranslate nohighlight" id="equation-eq-hjb">
-<span class="eqno">(13)<a class="headerlink" href="#equation-eq-hjb" title="Permalink to this equation">#</a></span>\[\begin{split}0 &amp;= \frac{\partial V^*}{\partial t}(x,t) +  \min_{u(t)} \biggl( J(x(t), u(t), t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)\\
+<span class="eqno">()<a class="headerlink" href="#equation-eq-hjb" title="Link to this equation">#</a></span>\[\begin{split}0 &amp;= \frac{\partial V^*}{\partial t}(x,t) +  \min_{u(t)} \biggl( J(x(t), u(t), t) + \nabla V^*(x,t)^Tf(x,u,t) \biggl)\\
 V^*(x,T) &amp;= J_T(x)\end{split}\]</div>
 </div>
 </section>
 <section id="additional-reading">
-<h2>Additional reading<a class="headerlink" href="#additional-reading" title="Permalink to this headline">#</a></h2>
+<h2>Additional reading<a class="headerlink" href="#additional-reading" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://incompleteideas.net/book/RLbook2020.pdf">Chapter 4: Reinforcement Learning: An Introduction (2nd Ed) by Richard S. Sutton and Andrew Barto</a></p></li>
 <li><p><a class="reference external" href="https://underactuated.csail.mit.edu/index.html">Chapter 7: Underactuated Robotics Course Notes by Russ Tedrake</a></p></li>
@@ -766,7 +683,7 @@ V^*(x,T) &amp;= J_T(x)\end{split}\]</div>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./lectures"
         },
         predefinedOutput: true
@@ -774,50 +691,99 @@ V^*(x,T) &amp;= J_T(x)\end{split}\]</div>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="control-certificates.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Control certificate functions</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="lqr.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Linear Quadratic Regulator</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-motivating-examples">Some motivating examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principle-of-optimality">Principle of Optimality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-set-up-optimal-control-problem">Problem set-up: Optimal Control Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-value-function-i-e-cost-to-go">The Value Function (i.e., cost-to-go)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-value-function-and-policy">Optimal value function and policy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bellman-equation">Bellman equation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-the-value-function">Representing the value function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-dynamic-programming">Stochastic dynamic programming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infinite-time-horizon-dynamic-programming">Infinite time horizon dynamic programming</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hamilton-jacobi-bellman-equation">Hamilton-Jacobi-Bellman equation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-reading">Additional reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)<br/>
-  
-      &copy; Copyright 2025.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
