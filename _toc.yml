@@ -16,6 +16,7 @@ parts:
   - file: deliverables/homework
   - file: deliverables/project
   - file: deliverables/talk
+  - file: deliverables/extracredit
 - caption: Lectures
   chapters:
   - file: lectures/introduction
