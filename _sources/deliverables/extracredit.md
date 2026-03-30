@@ -1,6 +1,6 @@
 # Extra Credit
 
-You have the opportunity to earn up to 5% extra credit in this course. Think of this extra credit as a form of grade "insurance": it can help offset potential lost points due to unforeseen circumstances that might prevent you from submitting certain course deliverables. Taking advantage of extra credit can provide a helpful cushion and safeguard your overall grade.
+You have the opportunity to earn up to 8% extra credit in this course. Think of this extra credit as a form of grade "insurance": it can help offset potential lost points due to unforeseen circumstances that might prevent you from submitting certain course deliverables. Taking advantage of extra credit can provide a helpful cushion and safeguard your overall grade.
 
 
 To earn the 8% extra credit, you must fill out a row or column of this bingo card. Expectations and deliverables of each item is provided below.
