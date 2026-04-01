@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -484,9 +484,9 @@ For a continuous-time system, the evolution of the state can be described by a f
 <p>A system is said to have <strong>control-affine dynamics</strong> if its evolution can be expressed as</p>
 <div class="math notranslate nohighlight">
 \[
-\dot{x} = f_0(x, t) + B(x)u,
+\dot{x} = f_0(x, t) + B(x,t)u,
 \]</div>
-<p>where the control input <span class="math notranslate nohighlight">\(u\)</span> enters the equation <strong>linearly</strong>, while all nonlinearities and autonomous effects—collectively known as the <em>drift</em> dynamics—are contained in the function <span class="math notranslate nohighlight">\(f_0(x, t)\)</span>. The matrix <span class="math notranslate nohighlight">\(B(x)\)</span> maps the control input to its influence on the state.</p>
+<p>where the control input <span class="math notranslate nohighlight">\(u\)</span> enters the equation <strong>linearly</strong>, while all nonlinearities and autonomous effects—collectively known as the <em>drift</em> dynamics—are contained in the function <span class="math notranslate nohighlight">\(f_0(x, t)\)</span>. The matrix <span class="math notranslate nohighlight">\(B(x,t)\)</span> maps the control input to its influence on the state.</p>
 <p>This structure is significant because many modern control techniques, such as feedback linearization and optimal control, rely on the system being control-affine.</p>
 <p>Importantly, given general nonlinear dynamics where the control does not appear in an affine fashion, it is sometimes possible to <em>convert</em> the system into control-affine form by augmenting the state vector with the control variables themselves, and then treating the control derivatives (e.g., <span class="math notranslate nohighlight">\(\dot{u}\)</span>) as the new control inputs. This transformation can allow us to apply tools and insights developed for control-affine systems even in situations that appear to be more complex at first glance.</p>
 </section>

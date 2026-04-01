@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -59,6 +59,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'homework/hw01';</script>
     <script src="../_static/custom.js?v=7f7a6837"></script>
     <link rel="icon" href="../_static/favicon.png"/>
@@ -217,6 +219,9 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Homework 1</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="hw02.html">Homework 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
 </ul>
@@ -395,7 +400,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -411,6 +418,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Homework 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamics-discrete-time-linearization">Dynamics (Discrete time, linearization)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -422,7 +441,150 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="homework-1">
 <h1>Homework 1<a class="headerlink" href="#homework-1" title="Link to this heading">#</a></h1>
-<p>TBD</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dynamics-discrete-time-linearization">
+<h1>Dynamics (Discrete time, linearization)<a class="headerlink" href="#dynamics-discrete-time-linearization" title="Link to this heading">#</a></h1>
+<ol class="arabic">
+<li><p><strong>Derive and implement discrete-time dynamics given continuous-time dynamics.</strong>
+Consider the following continuous-time dynamically-extended simple unicycle model. This is a common model for mobile robots with differential drive.
+$<span class="math notranslate nohighlight">\(
+ \dot{\mathbf{x}} = \begin{bmatrix}
+     \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{v}
+ \end{bmatrix} = \begin{bmatrix}
+     v\cos\theta \\ v\sin\theta \\ \omega \\ a
+ \end{bmatrix}, \quad u=(\omega, a)
+ \)</span>$</p>
+<p>a. Write down the discrete-time dynamics <span class="math notranslate nohighlight">\(\mathbf{x}_{t+1} = f(\mathbf{x}_t, \mathbf{u}_t)\)</span> using Euler integration with step size <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<p>b. Assuming zero-order hold over each time step of size <span class="math notranslate nohighlight">\(\Delta t\)</span>, write down the corresponding discrete-time dynamics <span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = f_\text{d}(\mathbf{x}_k, \mathbf{u}_k, t_k)\)</span> by performing the integration analytically, where <span class="math notranslate nohighlight">\(f_\text{d}(\mathbf{x}_k, \mathbf{u}_k) = \mathbf{x}_k + \int_{t_k}^{t_k+\Delta t}f_\text{c}(\mathbf{x}(\tau), u(\tau), \tau)d\tau\)</span> where <span class="math notranslate nohighlight">\(\mathbf{x}_k = \mathbf{x}(t_k)\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = \mathbf{x}(t_{k+1}) = \mathbf{x}(t_k + \Delta t)\)</span>. You may <em>verify</em> your results with your favorite software (e.g., Mathematica or Wolfram Alpha), but should outline the intermediate steps.</p>
+<p><em>Note: In your analytic discrete-time dynamics, you will encounter <span class="math notranslate nohighlight">\(\omega\)</span> in the denominator of some expressions. In your code, you must handle cases when <span class="math notranslate nohighlight">\(\omega\)</span> is equal to or very near zero to avoid numerical errors or division by zero. (Tip: Instead of using an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, you can use <code class="docutils literal notranslate"><span class="pre">jax.numpy.where</span></code> for better support of batched inputs.)</em>
+- <em>Hint</em>: The theoretical analytic solution is well-behaved as <span class="math notranslate nohighlight">\(\omega \to 0\)</span>, but your code must take care with this limit.</p>
+<p>c. Using your analytic expression from (a), analytically differentiate your expression to obtain the state and control jacobians of the discrete-time dynamics.</p>
+<p>d. Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code>.</p>
+</li>
+<li><p><strong>Study the classical cart-pole system and understand the limits of linearization.</strong> (This problem is adapted from <a class="reference external" href="https://underactuated.csail.mit.edu/acrobot.html#cart_pole">Underactuated Robotics notes</a> by Russ Tedrake at MIT.)
+The cart-pole system is a classic example of a nonlinear system <span class="math notranslate nohighlight">\(\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})\)</span>.  Using the same convention as the textbook, we describe the state of the cart-pole as the vector <span class="math notranslate nohighlight">\(\mathbf{x}=[x,\theta, \dot{x}, \dot{\theta}]^T\)</span>, the dimension is <span class="math notranslate nohighlight">\(n=4\)</span>, and let the force on the cart be the control input <span class="math notranslate nohighlight">\(\mathbf{u}=[f_x]\)</span>, where the dimension is <span class="math notranslate nohighlight">\(m=1\)</span>. For sake of simplicity, let <span class="math notranslate nohighlight">\(m_\mathrm{c}=m_\mathrm{p}=\ell=1\)</span> and <span class="math notranslate nohighlight">\(g=9.81\)</span>.</p>
+<p>a. Let <span class="math notranslate nohighlight">\(\bar{\mathbf{x}} = \mathbf{x} - \mathbf{x}^*\)</span>, <span class="math notranslate nohighlight">\(\bar{\mathbf{u}}=\mathbf{u} - \mathbf{u}^*\)</span> denote the error in state and control relative to the <em>equilibrium</em> <span class="math notranslate nohighlight">\((\mathbf{x}^*, \mathbf{u}^*)\)</span>. Show that the linearized <em>error dynamics</em> is of the form</p>
+<div class="math notranslate nohighlight">
+\[\dot{\bar{\mathbf{x}}} \approx \mathbf{f}_\mathrm{lin}(\bar{\mathbf{x}},\bar{\mathbf{u}}) = A_\mathrm{lin}\bar{\mathbf{x}} + B_\mathrm{lin}\bar{\mathbf{u}}\]</div>
+<p>where $<span class="math notranslate nohighlight">\(A_\mathrm{lin}= \left[\nabla_\mathbf{x}f_1(\mathbf{x}^*,\mathbf{u}^*), \nabla_\mathbf{x}f_2(\mathbf{x}^*,\mathbf{u}^*),...,\nabla_\mathbf{x}f_n(\mathbf{x}^*,\mathbf{u}^*)\right]^T,\)</span><span class="math notranslate nohighlight">\(
+ \)</span><span class="math notranslate nohighlight">\(B_\mathrm{lin} = \left[\nabla_\mathbf{u}f_1(\mathbf{x}^*,\mathbf{u}^*), \nabla_\mathbf{u}f_2(\mathbf{x}^*,\mathbf{u}^*),...,\nabla_\mathbf{u}f_n(\mathbf{x}^*,\mathbf{u}^*)\right]^T.\)</span><span class="math notranslate nohighlight">\( 
+ *Hint*: Since \)</span>(\mathbf{x}^<em>, \mathbf{u}^</em>)<span class="math notranslate nohighlight">\( is an equilibrium point, \)</span>\mathbf{f}(\mathbf{x}^<em>, \mathbf{u}^</em>)=0<span class="math notranslate nohighlight">\( and \)</span>\dot{\mathbf{x}}^*=0$.</p>
+<p>b. The linearization error is given by <span class="math notranslate nohighlight">\(e(\mathbf{x}, \mathbf{u},\mathbf{x}^*, \mathbf{u}^*) = \| \mathbf{f}(\mathbf{x}, \mathbf{u}) - \mathbf{f}_\mathrm{lin}(\bar{\mathbf{x}}, \bar{\mathbf{u}})\|_2\)</span>.
+Compute the linearization error for the following states and control pairs. Include the numbers in your write-up.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.99\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.9\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[-10]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.85\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.5\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[1, \pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[10]\)</span></p></li>
+</ul>
+<p>c. Provide a brief answer to the following questions.</p>
+<ul class="simple">
+<li><p>Is our linear approximation valid for all the points we tested?</p></li>
+<li><p>Do we expect a linear controller to do a decent job when <span class="math notranslate nohighlight">\(\theta=\frac{\pi}{2}\)</span>?</p></li>
+<li><p>When <span class="math notranslate nohighlight">\(\theta\)</span> is different from <span class="math notranslate nohighlight">\(\pi\)</span>, does the linearization error depend on <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>?</p></li>
+<li><p>Why is the error from the second case bigger than the one from the third, even if the second <span class="math notranslate nohighlight">\(\theta\)</span> is closer to <span class="math notranslate nohighlight">\(\pi\)</span>?</p></li>
+<li><p>What about the position <span class="math notranslate nohighlight">\(x\)</span> of the cart? Should it affect the linearization error? If no, why not?</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="optimization">
+<h1>Optimization<a class="headerlink" href="#optimization" title="Link to this heading">#</a></h1>
+<ol class="arabic">
+<li><p><strong>Cross entropy method.</strong>
+Study the cross-entropy method (CEM) as presented in the <a class="reference external" href="https://algorithmsbook.com/optimization/files/optimization.pdf">Algorithms for Optimization textbook</a>, focusing especially on page 140. Your objective is to implement the core CEM algorithm for use in global optimization, specifically targeting the Branin function described below.</p>
+<p>Your implementation should include a function named <code class="docutils literal notranslate"><span class="pre">cross_entropy_method(...)</span></code>. At a minimum, this function must:</p>
+<ul class="simple">
+<li><p>Accept the objective function to optimize,</p></li>
+<li><p>Accept any required arguments for initializing the CEM algorithm,</p></li>
+<li><p>Accept algorithm-specific hyperparameters,</p></li>
+<li><p>Return the best solution found by the algorithm.</p></li>
+</ul>
+<p>Write your code with clear, comprehensive comments that demonstrate a solid understanding of each algorithmic step.</p>
+<p>To demonstrate both the correctness and generality of your implementation, apply your <code class="docutils literal notranslate"><span class="pre">cross_entropy_method</span></code> to at least one additional objective function beyond the Branin function.</p>
+<p>For deeper analysis, visualize CEM’s progress and sample distributions over iterations using plots or animations.</p>
+<p>Finally, create several GIFs that show how samples evolve and converge over time under differing hyperparameter settings and objective functions. Comment on the effectiveness of CEM for locating local versus global minima, and discuss which factors (such as population size, number of elite samples, initialization, etc.) should be considered when selecting hyperparameters for different optimization scenarios.</p>
+<h3 class="rubric" id="branin-function">Branin function</h3>
+<p>The Branin function is a popular benchmark function for optimization algorithms. It is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+   f(x, y) = a(y - bx^2 + cx - r)^2 + s(1 - t)\cos(x) + s
+   \]</div>
+<p>where the typical parameter values are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( a = 1 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( b = \frac{5.1}{4\pi^2} \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( c = \frac{5}{\pi} \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( r = 6 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( s = 10 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( t = \frac{1}{8\pi} \)</span></p></li>
+</ul>
+<p>The function is usually evaluated on the domain <span class="math notranslate nohighlight">\( x \in [-5, 10] \)</span> and <span class="math notranslate nohighlight">\( y \in [0, 15] \)</span>.</p>
+<p>The Branin function has three global minima, making it useful for testing the performance of global optimization algorithms. Its landscape is characterized by multiple valleys and ridges, which can challenge optimization methods.</p>
+</li>
+<li><p><strong>Gradient descent.</strong> Given the different functions studied in notebook 02, discuss how the choice of initial conditions and step size affects the convergence and the final solution when using (vanilla) gradient descent.
+Provide some plots to support your discussion.</p></li>
+<li><p><strong>Gradient descent algorithms.</strong> Read Chapters 5 and 6 of the <a class="reference external" href="https://algorithmsbook.com/optimization/files/optimization.pdf">Algorithms for Optimization textbook</a>. In your own words, summarize how the various first-order and second-order variants of gradient descent differ from basic gradient descent, and explain in what ways they may offer improved performance. Consider aspects such as convergence speed, ability to escape local minima, sensitivity to step size, and robustness to the shape of the objective landscape. You don’t need to write an essay here, but rather, demonstrate an understanding that there are more sophistocated gradient descent methods, the intuition behind them, and their strengths and weaknesses.</p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="control-certificates">
+<h1>Control Certificates<a class="headerlink" href="#control-certificates" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Consider a class-<span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function of the form <span class="math notranslate nohighlight">\(\alpha(z) = a z\)</span>. Explain how adjusting the parameter <span class="math notranslate nohighlight">\(a\)</span> impacts both the system’s response and the level of conservatism inherent in a Control Barrier Function (CBF) safety filter. Specifically, discuss the trade-offs associated with choosing higher versus lower values of <span class="math notranslate nohighlight">\(a\)</span> in terms of safety margin, responsiveness, and potential limitations for practical implementation.</p></li>
+<li><p>When implementing a CBF safety filter using a class-<span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function <span class="math notranslate nohighlight">\(\alpha(z) = a z\)</span>, how should actuator constraints—such as control saturation or rate limits—influence your selection of the parameter <span class="math notranslate nohighlight">\(a\)</span>? Address how such constraints can limit the allowable range of <span class="math notranslate nohighlight">\(a\)</span>, and describe the potential consequences of choosing an inappropriate value in the presence of these practical limitations.</p></li>
+<li><p>The concept of <em>relative degree</em> is important when analyzing functions with respect to system dynamics. Here, we provide a more precise definition, specifying it for each control input component.</p></li>
+</ol>
+<p>Consider a (sufficiently) differentiable function <span class="math notranslate nohighlight">\(b : \mathbb{R}^n \rightarrow \mathbb{R}\)</span> and a control-affine dynamical system given by <span class="math notranslate nohighlight">\(\dot{z} = f(z) + g(z)u\)</span>, where <span class="math notranslate nohighlight">\(z \in \mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(u \in \mathbb{R}^m\)</span>. The relative degree <span class="math notranslate nohighlight">\(m_\mathrm{r}\)</span> of <span class="math notranslate nohighlight">\(b\)</span> with respect to the <span class="math notranslate nohighlight">\(j\)</span>-th control input is defined as the smallest integer such that</p>
+<div class="math notranslate nohighlight">
+\[
+\left[\mathcal{L}_{g}\mathcal{L}_{f}^{m_\mathrm{r}-1}b(\cdot)\right]_j \neq 0,
+\]</div>
+<p>but</p>
+<div class="math notranslate nohighlight">
+\[
+\left[\mathcal{L}_{g}\mathcal{L}_{f}^{m_\mathrm{r}-2}b(\cdot)\right]_j = 0.
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\mathcal{L}_{v}h(z) = \nabla h(z)^\top v(z)\)</span>, <span class="math notranslate nohighlight">\(\mathcal{L}_v^k b(\cdot)\)</span> denotes the <span class="math notranslate nohighlight">\(k\)</span>-th Lie derivative (with <span class="math notranslate nohighlight">\(\mathcal{L}_v^0 b(\cdot) = b(\cdot)\)</span>), and <span class="math notranslate nohighlight">\(\left[x\right]_j\)</span> refers to the <span class="math notranslate nohighlight">\(j\)</span>-th component of the vector <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Now, consider the continuous-time, dynamically-extended unicycle model, which is a control-affine system, along with a candidate control barrier function (CBF) <span class="math notranslate nohighlight">\(b(z) = x^2 + y^2 - r^2\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is the radius of an obstacle:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{z} = 
+\begin{bmatrix}
+    \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{v}
+\end{bmatrix} =
+\begin{bmatrix}
+    v\cos\theta \\ v\sin\theta \\ 0 \\ 0
+\end{bmatrix}
++ 
+\begin{bmatrix}
+    0 &amp; 0 \\ 0 &amp; 0 \\ 1 &amp; 0 \\ 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+    \omega \\ a
+\end{bmatrix}
+, \qquad b(z) = x^2 + y^2 - r^2
+\end{split}\]</div>
+<p>a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</p>
+<p>b. When the relative degree of a barrier function exceeds <span class="math notranslate nohighlight">\(1\)</span>, we must use <a class="reference external" href="https://calinbelta.com/wp-content/uploads/2023/12/High-Order_Control_Barrier_Functions.pdf">high order control barrier functions</a> (HOCBFs)—analogous to high order control Lyapunov functions—to ensure safety. For a system with relative degree <span class="math notranslate nohighlight">\(2\)</span> and control-affine dynamics <span class="math notranslate nohighlight">\(\dot{z} = f(z) + g(z) u\)</span>, the HOCBF constraint takes the following form:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{HOCBF:} \qquad
+\mathcal{L}_{f}^{2}b(z)
++ \mathcal{L}_{g}\mathcal{L}_{f} b(z)\, u
++ \mathcal{L}_{f}(\alpha_1 \circ b)(z)
++ \alpha_2\big( \mathcal{L}_{f} b(z) + \alpha_1(b(z)) \big)
+\geq 0
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{L}_{f}^{2} h(z) = \mathcal{L}_{f}(\mathcal{L}_{f} h)(z)\)</span>, <span class="math notranslate nohighlight">\((\alpha_1 \circ h)(z) = \alpha_1(h(z))\)</span>, and <span class="math notranslate nohighlight">\(\alpha_1\)</span>, <span class="math notranslate nohighlight">\(\alpha_2\)</span> are class <span class="math notranslate nohighlight">\(\mathcal{K}_\infty\)</span> functions.</p>
+<p>Given that the CBF for this system has relative degree <span class="math notranslate nohighlight">\(2\)</span>, can we directly implement it in a standard CBF-QP (Quadratic Program) safety filter? Discuss why or why not.</p>
+<ol class="arabic" start="4">
+<li><p>In this problem, you will take a closer look at the <code class="docutils literal notranslate"><span class="pre">cbf-clf-filter</span></code> demo. Make sure you first familiarize yourself with the code because you will need to change some of the parameter values to complete this problem.
+a. Set the initial state to be <code class="docutils literal notranslate"><span class="pre">[-7,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">2.0]</span></code> and the desired control to be <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">0.0]</span></code>. Run the simulation. You will find that the CBF-CLF-QP filter is <em>unsuccessful</em> in keeping the system away from the obstacle. Explain why this behavior occurs.</p>
+<p>b. Set <code class="docutils literal notranslate"><span class="pre">cbf_alpha=0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">dt=0.5</span></code>. Run the simulation. You will find that the CBF-CLF-QP filter is <em>unsuccessful</em> in keeping the system away from the obstacle. Explain why this behavior occurs.</p>
+</li>
+</ol>
 </section>
 
     <script type="text/x-thebe-config">
@@ -479,6 +641,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Homework 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamics-discrete-time-linearization">Dynamics (Discrete time, linearization)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

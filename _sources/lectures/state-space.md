@@ -59,10 +59,10 @@ The complexity and structure of the dynamics function in {eq}`eq-dynamics` play 
 A system is said to have **control-affine dynamics** if its evolution can be expressed as
 
 $$
-\dot{x} = f_0(x, t) + B(x)u,
+\dot{x} = f_0(x, t) + B(x,t)u,
 $$
 
-where the control input $u$ enters the equation **linearly**, while all nonlinearities and autonomous effects—collectively known as the *drift* dynamics—are contained in the function $f_0(x, t)$. The matrix $B(x)$ maps the control input to its influence on the state.
+where the control input $u$ enters the equation **linearly**, while all nonlinearities and autonomous effects—collectively known as the *drift* dynamics—are contained in the function $f_0(x, t)$. The matrix $B(x,t)$ maps the control input to its influence on the state.
 
 This structure is significant because many modern control techniques, such as feedback linearization and optimal control, rely on the system being control-affine.
 
