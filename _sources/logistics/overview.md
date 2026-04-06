@@ -14,7 +14,7 @@
 
 **Office hours:** 
 - **Karen's OH**: Monday 1PM GUG 311B (after class)
-- **TA's OH**: TBD
+- **TA's OH**: Tuesday/Thursday 4PM, AERB 241 (with Zoom option)
 
 **Recording:** Lectures will be recorded on a best-effort basis and there are no guarantees on the quality of the recording. Zoom link and recording can be found on Canvas.
 
