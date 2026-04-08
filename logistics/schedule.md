@@ -6,7 +6,7 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 |  Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |  Week  |  Topic  |  Milestones  |  Materials  |
 | :---------------------------------- | ------ | :---- | :--------- | :-------------- |
 | Mar 30 <br> Apr 1&nbsp;&nbsp;&nbsp;&nbsp;  |   1    |*Introduction, state space representation <br> Control certificates* | | [intro](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/intro.pdf), [state-space](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/state_space.pdf), [control certificate](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_certificate.pdf) |
-| Apr 6 <br> Apr 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  |   2    |*Optimization vs learning-based control <br> Open-loop vs closed-loop* | | [control intro](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_main_intro.pdf)|
+| Apr 6 <br> Apr 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  |   2    |*Optimization vs learning-based control <br> Open-loop vs closed-loop* | | [control intro](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_main.pdf)|
 | Apr 13 <br> Apr 15&nbsp;&nbsp;  |   3    |*Open-loop: Trajectory optimization and generation* | | |
 | Apr 20 <br>  Apr 22&nbsp;  |   4    |*Closed-loop: Sequential decision making and dynamic programming* | (Friday 4/24) Homework 1 due | |
 | Apr 27 <br> Apr 29&nbsp;&nbsp;&nbsp;  |   5    |*Bellman equation <br> MPC* | (Friday 5/1) Homework 1 self-assessment due | |
