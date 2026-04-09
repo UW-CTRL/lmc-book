@@ -11,8 +11,8 @@ For your homework submission, you should upload one pdf of your written response
 
 | Homework     | Due Date           | Questions Link          |
 |--------------|--------------------|------------------------|
-| **Homework 1** | Friday Week 3      | [hw 01 problems](/homework/hw01.md)        |
-| **Homework 2** | Friday Week 6      | [hw 02 problems](/homework/hw02.md)        |
+| **Homework 1** | Friday Week 4      | [hw 01 problems](/homework/hw01.md)        |
+| **Homework 2** | Friday Week 7     | [hw 02 problems](/homework/hw02.md)        |
 | **Homework 3** | Friday Week 10     | [hw 03 problems](/homework/hw03.md)        |
 
 
