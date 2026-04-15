@@ -1,0 +1,1227 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Homework 1 (solutions) &#8212; Linear Multivariable Control</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=025806d8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'homework/hw01_solution';</script>
+    <script src="../_static/custom.js?v=7f7a6837"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/class_icon.png" class="logo__image only-light" alt="Linear Multivariable Control - Home"/>
+    <script>document.write(`<img src="../_static/class_icon.png" class="logo__image only-dark" alt="Linear Multivariable Control - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/overview.html">Course information</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../logistics/schedule.html">Week-by-week schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deliverables</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/homework.html">Homework</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/talk.html">Talk reflection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/extracredit.html">Extra Credit</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lectures/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/state-space.html">State-space representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/optimization.html">Introduction to optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/control-certificates.html">Control certificate functions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="hw01.html">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw02.html">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/notebooktopdf.html">Converting Code Notebooks to PDF</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Fhomework/hw01_solution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/homework/hw01_solution.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Homework 1 (solutions)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamics-discrete-time-linearization">Dynamics (Discrete time, linearization)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derive-and-implement-discrete-time-dynamics-given-continuous-time-dynamics">1. Derive and implement discrete-time dynamics given continuous-time dynamics.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">2. Study the classical cart-pole system and understand the limits of linearization.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-entropy-method">1. Cross entropy method.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-function">Branin function</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">2. Gradient descent.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-algorithms">3. Gradient descent algorithms.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function">1. Class-K function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function-and-control-actuation-limits">2. Class-K function and control actuation limits.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-cbf">3. High-order CBF.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(b)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-look-at-cbf-clf-qp-filter-demo">4. Closer look at CBF-CLF-QP Filter demo.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(b)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-1-solutions">
+<h1>Homework 1 (solutions)<a class="headerlink" href="#homework-1-solutions" title="Link to this heading">#</a></h1>
+<section id="dynamics-discrete-time-linearization">
+<h2>Dynamics (Discrete time, linearization)<a class="headerlink" href="#dynamics-discrete-time-linearization" title="Link to this heading">#</a></h2>
+<section id="derive-and-implement-discrete-time-dynamics-given-continuous-time-dynamics">
+<h3>1. Derive and implement discrete-time dynamics given continuous-time dynamics.<a class="headerlink" href="#derive-and-implement-discrete-time-dynamics-given-continuous-time-dynamics" title="Link to this heading">#</a></h3>
+<p>Consider the following continuous-time dynamically-extended simple unicycle model. This is a common model for mobile robots with differential drive.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{\mathbf{x}} = \begin{bmatrix}
+    \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{v}
+\end{bmatrix} = \begin{bmatrix}
+    v\cos\theta \\ v\sin\theta \\ \omega \\ a
+\end{bmatrix}, \quad u=(\omega, a)
+\end{split}\]</div>
+<section id="a">
+<h4>(a)<a class="headerlink" href="#a" title="Link to this heading">#</a></h4>
+<p>Write down the discrete-time dynamics <span class="math notranslate nohighlight">\(\mathbf{x}_{t+1} = f(\mathbf{x}_t, \mathbf{u}_t)\)</span> using Euler integration with step size <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Euler integration is the simplest numerical integration scheme, simply:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{t+1} = \mathbf{x}_t + \dot{\mathbf{x}}_t \times \Delta t = \mathbf{x}_t + f(\mathbf{x}_t, \mathbf{u}_t) \Delta t.
+\]</div>
+<p>Thus our Euler step is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x}_{k+1} = \mathbf{x}_k + \Delta t \begin{bmatrix}
+            v_k \cos \theta_k \\
+            v_k \sin \theta_k \\
+            \omega_k \\
+            a_k
+\end{bmatrix}.
+\end{split}\]</div>
+</div>
+</section>
+<section id="b">
+<h4>(b)<a class="headerlink" href="#b" title="Link to this heading">#</a></h4>
+<p>Assuming zero-order hold over each time step of size <span class="math notranslate nohighlight">\(\Delta t\)</span>, write down the corresponding discrete-time dynamics <span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = f_\text{d}(\mathbf{x}_k, \mathbf{u}_k, t_k)\)</span> by performing the integration analytically, where <span class="math notranslate nohighlight">\(f_\text{d}(\mathbf{x}_k, \mathbf{u}_k) = \mathbf{x}_k + \int_{t_k}^{t_k+\Delta t}f_\text{c}(\mathbf{x}(\tau), u(\tau), \tau)d\tau\)</span> where <span class="math notranslate nohighlight">\(\mathbf{x}_k = \mathbf{x}(t_k)\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = \mathbf{x}(t_{k+1}) = \mathbf{x}(t_k + \Delta t)\)</span>. You may <em>verify</em> your results with your favorite software (e.g., Mathematica or Wolfram Alpha), but should outline the intermediate steps.</p>
+<p><em>Note: In your analytic discrete-time dynamics, you will encounter <span class="math notranslate nohighlight">\(\omega\)</span> in the denominator of some expressions. In your code, you must handle cases when <span class="math notranslate nohighlight">\(\omega\)</span> is equal to or very near zero to avoid numerical errors or division by zero. (Tip: Instead of using an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, you can use <code class="docutils literal notranslate"><span class="pre">jax.numpy.where</span></code> for better support of batched inputs.)</em>
+- <em>Hint</em>: The theoretical analytic solution is well-behaved as <span class="math notranslate nohighlight">\(\omega \to 0\)</span>, but your code must take care with this limit.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>We compute the analytic discrete-time dynamics by integrating the continuous-time dynamics
+$<span class="math notranslate nohighlight">\(    \dot{\mathbf{x}} = f(\mathbf{x}_t, \mathbf{u}_t) = \begin{bmatrix}
+        v \cos \theta \\
+        v \sin \theta \\
+        \omega \\
+        a
+        \end{bmatrix}
+\)</span>$</p>
+<p>assuming zero-order hold (constant control in each time interval). Since the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of the state <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> depend on the <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> components, but not vice versa, it will be easier to compute the <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> components first:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    v_{k+1} &amp;= v_k + \int_{t_k}^{t_k+\Delta t}\dot{v}(\tau)d\tau \\
+    &amp;= v_k + \int_{t_k}^{t_k+\Delta t}a_k\ d\tau \\
+    &amp;= v_k + a_k\Delta t, \\
+    \theta_{k+1} &amp;= \theta_k + \int_{t_k}^{t_k+\Delta t}\dot{\theta}(\tau)d\tau \\
+    &amp;= \theta_k + \int_{t_k}^{t_k+\Delta t}\omega_k\ d\tau \\
+    &amp;= \theta_k + \omega_k\Delta t.
+    \end{align*}
+\end{split}\]</div>
+<p>Now we turn to the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components. First <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+    x_{k+1} &amp;= x_k + \int_{t_k}^{t_k+\Delta t}\dot{x}(\tau)d\tau \\
+    &amp;= x_k + \int_{t_k}^{t_k+\Delta t}v(\tau)\cos(\theta(\tau))d\tau \\
+    &amp;= x_k + \int_0^{\Delta t}(v_k + a_k \hat{\tau})\cos(\theta_k + \omega_k\hat{\tau})d\hat{\tau} \\
+    &amp;= x_k + \frac{1}{\omega_k^2}\left((v_k + a_k\Delta t)\omega_k\sin(\theta_k + \omega_k\Delta t) - v_k\omega_k\sin(\theta_k) + a_k\cos(\theta_k + \omega_k\Delta t) - a_k\cos(\theta_k)\right).
+\end{align*}
+\end{split}\]</div>
+<p>The last step is obtained by performing integration by parts. You can double check your algebra with Mathematica or Wolfram Alpha.
+By a similar integration, we find</p>
+<div class="math notranslate nohighlight">
+\[
+y_{k+1} = y_k + \frac{1}{\omega_k^2}\left(v_k\omega_k\cos(\theta_k) - (v_k + a_k\Delta t)\omega_k\cos(\theta_k + \omega_k\Delta t) + a_k\sin(\theta_k + \omega_k\Delta t) - a_k\sin(\theta_k)\right).
+\]</div>
+<p>Thus our final analytic discretization is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x}_{k+1} = \mathbf{x}_k + \begin{bmatrix}
+    \frac{1}{\omega_k^2}\left((v_k + a_k\Delta t)\omega_k\sin(\theta_k + \omega_k\Delta t) - v_k\omega_k\sin(\theta_k) + a_k\cos(\theta_k + \omega_k\Delta t) - a_k\cos(\theta_k)\right) \\
+    \frac{1}{\omega_k^2}\left(v_k\omega_k\cos(\theta_k) - (v_k + a_k\Delta t)\omega_k\cos(\theta_k + \omega_k\Delta t) + a_k\sin(\theta_k + \omega_k\Delta t) - a_k\sin(\theta_k)\right) \\
+    \omega_k\Delta t \\
+    a_k\Delta t
+\end{bmatrix}.
+\end{split}\]</div>
+</div>
+</section>
+<section id="c">
+<h4>(c)<a class="headerlink" href="#c" title="Link to this heading">#</a></h4>
+<p>Using your analytic expression from (a), analytically differentiate your expression to obtain the state and control jacobians of the discrete-time dynamics.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>From (a), we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x}_{k+1} =  \begin{bmatrix}
+            x_k + v_k \cos \theta_k\Delta t \\
+            y_k + v_k \sin \theta_k\Delta t \\
+            \theta_k + \omega_k\Delta t \\
+            v_k +  a_k\Delta t
+\end{bmatrix}.
+\end{split}\]</div>
+<p>Consider linearizing about <span class="math notranslate nohighlight">\((\mathbf{x}_k, \mathbf{u}_k)\)</span>, the state and control Jacobians are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    A = 
+    \begin{bmatrix}
+    1 &amp; 0 &amp; -v_k\sin(\theta_k)\Delta t &amp; \cos(\theta_k)\Delta t \\
+    0 &amp; 1 &amp; v_k\cos(\theta_k)\Delta t &amp; \sin(\theta_k)\Delta t \\
+    0 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1 \\
+    \end{bmatrix}  
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    B= 
+    \begin{bmatrix}
+    0 &amp; 0 \\
+    0 &amp; 0 \\
+    \Delta t &amp; 0 \\
+    0 &amp; \Delta t \\
+    \end{bmatrix}
+\end{split}\]</div>
+</div>
+<p>d. Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>You can use the (pseudo)code below and replace with your functions of jacobian matrix</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#  generate random states and controls to test the Jacobians</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sample_states_and_controls</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>  <span class="n">key</span><span class="p">):</span>
+    <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span> <span class="o">=</span> <span class="n">dynamics</span><span class="o">.</span><span class="n">state_dim</span><span class="p">,</span> <span class="n">dynamics</span><span class="o">.</span><span class="n">control_dim</span>
+    <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">))</span>
+    <span class="n">controls</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">control_dim</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">states</span><span class="p">,</span> <span class="n">controls</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">analytic_jacobian</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">control</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">v</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">v</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">v</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="n">dt</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span>
+
+<span class="n">continuous_dynamics</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># continuous-time dynamically extended unicycle</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># pick a value for dt</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">discrete_dynamics_euler</span> <span class="o">=</span> <span class="n">Dynamics</span><span class="p">(</span><span class="n">euler_integrate</span><span class="p">(</span><span class="n">continuous_dynamics</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">control_dim</span><span class="p">)</span>
+<span class="n">states</span><span class="p">,</span> <span class="n">controls</span> <span class="o">=</span> <span class="n">sample_states_and_controls</span><span class="p">(</span><span class="n">discrete_dynamics_euler</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="c1"># set tolerance</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="c1"># get jacobians using jax.jacobian for all states</span>
+<span class="n">A_jax</span><span class="p">,</span> <span class="n">B_jax</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">discrete_dynamics_euler</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))(</span><span class="n">states</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
+<span class="c1"># get analytic jacaobians for all states</span>
+<span class="n">A_analytic</span><span class="p">,</span> <span class="n">B_analytic</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">analytic_jacobian</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))(</span><span class="n">states</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="c1"># check if the two values are all close</span>
+<span class="n">jnp</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A_jax</span><span class="p">,</span> <span class="n">A_analytic</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+<span class="n">jnp</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">B_jax</span><span class="p">,</span> <span class="n">B_analytic</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">
+<h3>2. Study the classical cart-pole system and understand the limits of linearization.<a class="headerlink" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization" title="Link to this heading">#</a></h3>
+<p>(This problem is adapted from <a class="reference external" href="https://underactuated.csail.mit.edu/acrobot.html#cart_pole">Underactuated Robotics notes</a> by Russ Tedrake at MIT.)
+The cart-pole system is a classic example of a nonlinear system <span class="math notranslate nohighlight">\(\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})\)</span>.  Using the same convention as the textbook, we describe the state of the cart-pole as the vector <span class="math notranslate nohighlight">\(\mathbf{x}=[x,\theta, \dot{x}, \dot{\theta}]^T\)</span>, the dimension is <span class="math notranslate nohighlight">\(n=4\)</span>, and let the force on the cart be the control input <span class="math notranslate nohighlight">\(\mathbf{u}=[f_x]\)</span>, where the dimension is <span class="math notranslate nohighlight">\(m=1\)</span>. For sake of simplicity, let <span class="math notranslate nohighlight">\(m_\mathrm{c}=m_\mathrm{p}=\ell=1\)</span> and <span class="math notranslate nohighlight">\(g=9.81\)</span>.</p>
+<section id="id1">
+<h4>(a)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>Let <span class="math notranslate nohighlight">\(\bar{\mathbf{x}} = \mathbf{x} - \mathbf{x}^*\)</span>, <span class="math notranslate nohighlight">\(\bar{\mathbf{u}}=\mathbf{u} - \mathbf{u}^*\)</span> denote the error in state and control relative to the <em>equilibrium</em> <span class="math notranslate nohighlight">\((\mathbf{x}^*, \mathbf{u}^*)\)</span>. Show that the linearized <em>error dynamics</em> is of the form</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{\bar{\mathbf{x}}} \approx \mathbf{f}_\mathrm{lin}(\bar{\mathbf{x}},\bar{\mathbf{u}}) = A_\mathrm{lin}\bar{\mathbf{x}} + B_\mathrm{lin}\bar{\mathbf{u}}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+A_\mathrm{lin}= \left[\nabla_\mathbf{x}f_1(\mathbf{x}^*,\mathbf{u}^*), \nabla_\mathbf{x}f_2(\mathbf{x}^*,\mathbf{u}^*),...,\nabla_\mathbf{x}f_n(\mathbf{x}^*,\mathbf{u}^*)\right]^T,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+B_\mathrm{lin} = \left[\nabla_\mathbf{u}f_1(\mathbf{x}^*,\mathbf{u}^*), \nabla_\mathbf{u}f_2(\mathbf{x}^*,\mathbf{u}^*),...,\nabla_\mathbf{u}f_n(\mathbf{x}^*,\mathbf{u}^*)\right]^T.
+\]</div>
+<p><em>Hint</em>: Since <span class="math notranslate nohighlight">\((\mathbf{x}^*, \mathbf{u}^*)\)</span> is an equilibrium point, <span class="math notranslate nohighlight">\(\mathbf{f}(\mathbf{x}^*, \mathbf{u}^*)=0\)</span> and <span class="math notranslate nohighlight">\(\dot{\mathbf{x}}^*=0\)</span>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Using state <span class="math notranslate nohighlight">\(\mathbf{x} = [x, \theta, \dot{x}, \dot{\theta}]^T\)</span>, and plugging <span class="math notranslate nohighlight">\(m_c=m_p=l=1\)</span> and <span class="math notranslate nohighlight">\(g=9.81\)</span> into the equations for <span class="math notranslate nohighlight">\(\ddot{x}\)</span> and <span class="math notranslate nohighlight">\(\ddot{\theta}\)</span> in the Underactuated Robotics notes (chapter 3, equations 16 and 17), we find the nonlinear state-space dynamics:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{\mathbf{x}} = f(\mathbf{x},\mathbf{u}) = \begin{bmatrix}
+    \dot{x} \\
+    \dot{\theta} \\
+    \ddot{x} \\
+    \ddot{\theta}
+\end{bmatrix} = \begin{bmatrix}
+    \dot{x} \\
+    \dot{\theta} \\
+    \frac{1}{1+\sin^2\theta}\left(f_x + \sin(\theta)(\dot{\theta}^2 + 9.81\cos\theta)\right) \\
+    \frac{1}{1+\sin^2\theta}\left(-f_x\cos\theta-\dot{\theta}^2\cos\theta\sin\theta-2\times 9.81\sin\theta\right)
+\end{bmatrix}
+\end{split}\]</div>
+<p>We will take a first-order Taylor series about this equilibrium:</p>
+<div class="math notranslate nohighlight">
+\[
+    \dot{\mathbf{x}} \approx f(\mathbf{x}^*, \mathbf{u}^*) + \nabla_xf(\mathbf{x}^*, \mathbf{u}^*)^T(\mathbf{x}-\mathbf{x}^*) + \nabla_uf(\mathbf{x}^*, \mathbf{u}^*)^T(\mathbf{u}-\mathbf{u}^*).
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\((\mathbf{x}^*, \mathbf{u}^*)\)</span> is an equilibrium point, <span class="math notranslate nohighlight">\(f(\mathbf{x}^*, \mathbf{u}^*)\)</span> is zero, and hence:</p>
+<div class="math notranslate nohighlight">
+\[
+    \dot{\mathbf{x}} \approx \nabla_xf(\mathbf{x}^*, \mathbf{u}^*)^T(\mathbf{x}-\mathbf{x}^*) + \nabla_uf(\mathbf{x}^*, \mathbf{u}^*)^T(\mathbf{u}-\mathbf{u}^*).\]</div>
+<p>Defining <span class="math notranslate nohighlight">\(\bar{\mathbf{x}} = \mathbf{x} - \mathbf{x}^*\)</span> and <span class="math notranslate nohighlight">\(\bar{\mathbf{u}} = \mathbf{u} - \mathbf{u}^*\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+    \dot{\mathbf{x}} \approx \nabla_xf(\mathbf{x}^*, \mathbf{u}^*)^T\bar{\mathbf{x}} + \nabla_uf(\mathbf{x}^*, \mathbf{u}^*)^T\bar{\mathbf{u}}.
+\]</div>
+<p>Finally, note that <span class="math notranslate nohighlight">\(\bar{\mathbf{x}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> differ only by the constant <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, and hence <span class="math notranslate nohighlight">\(\dot{\bar{\mathbf{x}}} = \dot{\mathbf{x}}\)</span>. Thus:</p>
+<div class="math notranslate nohighlight">
+\[
+   \dot{\bar{\mathbf{x}}} \approx \underbrace{\nabla_xf(\mathbf{x}^*, \mathbf{u}^*)^T}_A\bar{\mathbf{x}} + \underbrace{\nabla_uf(\mathbf{x}^*, \mathbf{u}^*)^T}_B\bar{\mathbf{u}}.
+\]</div>
+</div>
+</section>
+<section id="id2">
+<h4>(b)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>The linearization error is given by <span class="math notranslate nohighlight">\(e(\mathbf{x}, \mathbf{u},\mathbf{x}^*, \mathbf{u}^*) = \| \mathbf{f}(\mathbf{x}, \mathbf{u}) - \mathbf{f}_\mathrm{lin}(\bar{\mathbf{x}}, \bar{\mathbf{u}})\|_2\)</span>.
+Compute the linearization error for the following states and control pairs. Include the numbers in your write-up.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.99\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.9\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[-10]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.85\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0.5\pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[0, 0, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[0]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}=[1, \pi, 0, 0]^T\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}=[10]\)</span></p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Linearization errors are</p>
+<ul class="simple">
+<li><p>0.001</p></li>
+<li><p>2.354</p></li>
+<li><p>2.289</p></li>
+<li><p>26.054</p></li>
+<li><p>68.913</p></li>
+<li><p>0.000</p></li>
+</ul>
+</div>
+</section>
+<section id="id3">
+<h4>(c)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>Provide a brief answer to the following questions.</p>
+<ul class="simple">
+<li><p>Is our linear approximation valid for all the points we tested?</p></li>
+<li><p>Do we expect a linear controller to do a decent job when <span class="math notranslate nohighlight">\(\theta=\frac{\pi}{2}\)</span>?</p></li>
+<li><p>When <span class="math notranslate nohighlight">\(\theta\)</span> is different from <span class="math notranslate nohighlight">\(\pi\)</span>, does the linearization error depend on <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>?</p></li>
+<li><p>Why is the error from the second case bigger than the one from the third, even if the second <span class="math notranslate nohighlight">\(\theta\)</span> is closer to <span class="math notranslate nohighlight">\(\pi\)</span>?</p></li>
+<li><p>What about the position <span class="math notranslate nohighlight">\(x\)</span> of the cart? Should it affect the linearization error? If no, why not?</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<ul class="simple">
+<li><p>The linear approximation is not valid for all points; as the actual state and control move farther from the equilibrium point used for linearization, the linearization error increases. This means the linearized model provides a less accurate representation of the true system the further we are from the linearization point.</p></li>
+<li><p>At <span class="math notranslate nohighlight">\(\theta = \frac{\pi}{2}\)</span>, we observed the second-largest linearization error among the test cases. Therefore, we should not expect a linear controller based on this approximation to perform well at this point.</p></li>
+<li><p>The linearization error does indeed depend on <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> when <span class="math notranslate nohighlight">\(\theta\)</span> differs from <span class="math notranslate nohighlight">\(\pi\)</span>. Even though the original nonlinear dynamics are linear in <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>, the coefficient multiplying <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> depends on <span class="math notranslate nohighlight">\(\theta\)</span>. If <span class="math notranslate nohighlight">\(\theta\)</span> is not the same as in the linearization, the influence of <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> on the true dynamics can differ significantly from the linearized model, leading to increased error.</p></li>
+<li><p>Specifically, when <span class="math notranslate nohighlight">\(\theta \neq \pi\)</span>, a large value of <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> can amplify the linearization error, as seen in the second test case, where the larger input <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> led to a larger overall error than the third case, despite <span class="math notranslate nohighlight">\(\theta\)</span> being closer to <span class="math notranslate nohighlight">\(\pi\)</span>.</p></li>
+<li><p>The position <span class="math notranslate nohighlight">\(x\)</span> of the cart does not affect the linearization error. This is because the system dynamics <span class="math notranslate nohighlight">\(f(\mathbf{x}, \mathbf{u})\)</span> are independent of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(x\)</span> does not appear in the linearized dynamics. Therefore, changing <span class="math notranslate nohighlight">\(x\)</span> does not influence the difference between the nonlinear and linearized models.</p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+<section id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Link to this heading">#</a></h2>
+<section id="cross-entropy-method">
+<h3>1. Cross entropy method.<a class="headerlink" href="#cross-entropy-method" title="Link to this heading">#</a></h3>
+<p>Study the cross-entropy method (CEM) as presented in the <a class="reference external" href="https://algorithmsbook.com/optimization/files/optimization.pdf">Algorithms for Optimization textbook</a>, focusing especially on page 133. Your objective is to implement the core CEM algorithm for use in global optimization, specifically targeting the Branin function described below.</p>
+<p>Your implementation should include a function named <code class="docutils literal notranslate"><span class="pre">cross_entropy_method(...)</span></code>. At a minimum, this function must:</p>
+<ul class="simple">
+<li><p>Accept the objective function to optimize,</p></li>
+<li><p>Accept any required arguments for initializing the CEM algorithm,</p></li>
+<li><p>Accept algorithm-specific hyperparameters,</p></li>
+<li><p>Return the best solution found by the algorithm.</p></li>
+</ul>
+<p>Write your code with clear, comprehensive comments that demonstrate a solid understanding of each algorithmic step.</p>
+<p>To demonstrate both the correctness and generality of your implementation, apply your <code class="docutils literal notranslate"><span class="pre">cross_entropy_method</span></code> to at least one additional objective function beyond the Branin function.</p>
+<p>For deeper analysis, visualize CEM’s progress and sample distributions over iterations using plots or animations.</p>
+<p>Finally, create several GIFs that show how samples evolve and converge over time under differing hyperparameter settings and objective functions. Comment on the effectiveness of CEM for locating local versus global minima, and discuss which factors (such as population size, number of elite samples, initialization, etc.) should be considered when selecting hyperparameters for different optimization scenarios.</p>
+<section id="branin-function">
+<h4>Branin function<a class="headerlink" href="#branin-function" title="Link to this heading">#</a></h4>
+<p>The Branin function is a popular benchmark function for optimization algorithms. It is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x, y) = a(y - bx^2 + cx - r)^2 + s(1 - t)\cos(x) + s
+\]</div>
+<p>where the typical parameter values are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( a = 1 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( b = \frac{5.1}{4\pi^2} \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( c = \frac{5}{\pi} \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( r = 6 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( s = 10 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( t = \frac{1}{8\pi} \)</span></p></li>
+</ul>
+<p>The function is usually evaluated on the domain <span class="math notranslate nohighlight">\( x \in [-5, 10] \)</span> and <span class="math notranslate nohighlight">\( y \in [0, 15] \)</span>.</p>
+<p>The Branin function has three global minima, making it useful for testing the performance of global optimization algorithms. Its landscape is characterized by multiple valleys and ridges, which can challenge optimization methods.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>The implementation of the cross-entropy method (CEM) can be found in the Jupyter notebook <code class="docutils literal notranslate"><span class="pre">cem.ipynb</span></code>.</p>
+<p><strong>Discussion of Hyperparameter Effects:</strong></p>
+<p>CEM is generally effective at escaping local minima and finding global minima, but its success is highly sensitive to the choice of hyperparameters.</p>
+<p><strong>Population Size:</strong><br />
+A larger population enhances exploration of the search space and reduces the chance of missing the global minimum, but comes with increased computational cost. Conversely, a smaller population may lead to faster convergence, but with a higher risk of premature convergence to suboptimal (local) minima.</p>
+<p><strong>Elite Fraction (Number of Elite Samples):</strong><br />
+The ratio of elite samples to the total population is more important than the absolute count. A very small elite fraction may cause the algorithm to converge prematurely to local minima, while a large elite fraction can slow down convergence or even prevent the algorithm from concentrating adequately, resulting in failure to converge.</p>
+<p><strong>Initialization:</strong><br />
+The choice of initial mean and covariance for the sampling distribution determines which regions of the search space the algorithm explores early on. Poor initialization can result in slow convergence or in the algorithm never discovering the global minimum.</p>
+<p><strong>Number of Iterations:</strong><br />
+Increasing the number of iterations allows the sampling distribution to progressively narrow around promising regions, improving the likelihood of finding the global minimum. Too few iterations can cut convergence short. After convergence, all elite samples may collapse to a single point, causing the covariance to become zero; at this stage, further sampling can fail or produce errors.</p>
+</div>
+</section>
+</section>
+<section id="gradient-descent">
+<h3>2. Gradient descent.<a class="headerlink" href="#gradient-descent" title="Link to this heading">#</a></h3>
+<p>Given the different functions studied in notebook 02, discuss how the choice of initial conditions and step size affects the convergence and the final solution when using (vanilla) gradient descent. Provide some plots to support your discussion.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Figures 1 to 4 illustrate how both the initial starting point and the choice of step size affect the behavior of gradient descent. Different initializations can lead the algorithm to converge to different local minima.</p>
+<p>Choosing an appropriate step size is crucial for successful optimization. A suitable step size accelerates convergence (as seen when comparing Figure 1 and Figure 2). If the step size is set too large, gradient descent may diverge (Figure 3) or converge to an unintended solution (Figure 4).</p>
+<p><strong>Figure 1:</strong> Gradient descent step size = 0.001.</p>
+<p><img alt="Gradient descent step size and initialization. Gradient descent step size = 0.001." src="../_images/optim_2_1.png" /></p>
+<p><strong>Figure 2:</strong> Gradient descent step size = 0.01.</p>
+<p><img alt="Gradient descent step size and initialization. Gradient descent step size = 0.01." src="../_images/optim_2_2.png" /></p>
+<p><strong>Figure 3:</strong> Gradient descent step size = 0.02.</p>
+<p><img alt="Gradient descent step size and initialization. Gradient descent step size = 0.02." src="../_images/optim_2_3.png" /></p>
+<p><strong>Figure 4:</strong> Gradient descent step size = 0.0305.</p>
+<p><img alt="Gradient descent step size and initialization. Gradient descent step size = 0.0305." src="../_images/optim_2_4.png" /></p>
+</div>
+</section>
+<section id="gradient-descent-algorithms">
+<h3>3. Gradient descent algorithms.<a class="headerlink" href="#gradient-descent-algorithms" title="Link to this heading">#</a></h3>
+<p>Read Chapters 5 and 6 of the <a class="reference external" href="https://algorithmsbook.com/optimization/files/optimization.pdf">Algorithms for Optimization textbook</a>. In your own words, summarize how the various first-order and second-order variants of gradient descent differ from basic gradient descent, and explain in what ways they may offer improved performance. Consider aspects such as convergence speed, ability to escape local minima, sensitivity to step size, and robustness to the shape of the objective landscape. You don’t need to write an essay here, but rather, demonstrate an understanding that there are more sophistocated gradient descent methods, the intuition behind them, and their strengths and weaknesses.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p><strong>First-order Methods</strong></p>
+<p><strong>Basic Gradient Descent</strong>:<br />
+Basic gradient descent moves iteratively in the direction of the negative gradient, with updates scaled by a fixed step size (learning rate). Its behavior is highly sensitive to the choice of this step size: too small, and convergence is painfully slow; too large, and the method can overshoot or even diverge, especially for functions with steep, narrow valleys or ill-conditioned curvature.</p>
+<p><strong>Conjugate Gradient</strong>:<br />
+Unlike basic gradient descent, which always moves along the steepest descent direction, the conjugate gradient method constructs a sequence of conjugate directions. These directions are designed to avoid redundant zig-zagging, greatly improving convergence—particularly for quadratic and nearly-quadratic problems. For an n-dimensional quadratic function, it theoretically converges in at most n steps. Its efficiency, however, is best for functions that are close to quadratic.</p>
+<p><strong>Momentum</strong>:<br />
+Momentum methods accumulate a running average of past gradients—essentially building up “velocity”—which helps accelerate convergence in well-aligned directions and dampen oscillations caused by steep or narrow valleys. While this can speed up optimization dramatically, momentum can also cause overshooting or difficulty slowing when approaching a minimum.</p>
+<p><strong>Nesterov Momentum</strong>:<br />
+Nesterov momentum refines standard momentum by computing the gradient not at the current position, but at a look-ahead position estimated using the velocity. This anticipatory step allows Nesterov momentum to slow down if the landscape changes, reducing overshooting and generally improving stability.</p>
+<p><strong>Adagrad</strong>:<br />
+Both momentum and Nesterov methods use a single learning rate for all parameters. Adagrad, in contrast, adapts the learning rate individually for each parameter by accumulating the sum of squared historical gradients. Over many iterations, this can make learning rates shrink excessively and stall progress.</p>
+<p><strong>RMSProp</strong>:<br />
+To prevent Adagrad’s shrinking learning rates, RMSProp introduces an exponential decay factor to the accumulation of squared gradients, so only recent gradients have significant influence. This maintains a more consistent and effective step size throughout training.</p>
+<p><strong>Adadelta</strong>:<br />
+Adadelta further addresses the “unit mismatch” problem by not only averaging the squared gradients (like RMSProp) but also averaging the squared parameter updates, yielding a step size that better matches the scale of the parameters. This removes the need for a manually chosen learning rate, increasing robustness—though sometimes at the cost of slower convergence.</p>
+<p><strong>Adam</strong>:<br />
+Adam combines the ideas of RMSProp (exponentially decaying squared gradients) and momentum (exponentially decaying gradient averages), resulting in an optimizer that is robust and generally effective in practice. However, choosing a base learning rate remains important for Adam to converge reliably.</p>
+<p><strong>Hypergradient Descent</strong>:<br />
+Hypergradient descent dynamically adjusts the learning rate during training based on the alignment between current and previous gradients. If gradients continue to point in similar directions, the learning rate increases to accelerate convergence. This removes much of the need for manual learning rate tuning.</p>
+<p><strong>Summary</strong>:<br />
+Basic gradient descent is sensitive to the learning rate and converges slowly in challenging landscapes. Conjugate gradient methods can dramatically speed up convergence but are best suited to quadratic-like problems. Momentum-based and Nesterov methods address oscillations and speed up convergence but still require careful learning rate selection. Adaptive methods—Adagrad, RMSProp, Adadelta, Adam, and Hypergradient Descent—dynamically adjust the learning rate to achieve a better tradeoff between speed and robustness, making them more suitable for a wide range of optimization tasks.</p>
+<p><strong>Second-order Methods</strong></p>
+<p><em><strong>Newton’s Method</strong></em>:<br />
+Newton’s method approximates the minimum by iteratively building a local quadratic (second-order Taylor) expansion of the loss and analytically minimizing that approximation. This requires computing (and inverting) the Hessian—the matrix of second derivatives—for multivariable functions. When the quadratic approximation is good, convergence is extremely fast. However, if the function is not well-approximated locally by a quadratic (or if the Hessian is ill-conditioned), Newton’s method can oscillate, overshoot, or even diverge.</p>
+<p>For univariate functions, the second derivative can be estimated numerically if not available analytically (e.g., with finite differences). For multivariate problems where it’s computationally expensive to form the full Hessian, quasi-Newton methods such as Davidon–Fletcher–Powell (DFP) or Broyden–Fletcher–Goldfarb–Shanno (BFGS) approximate the Hessian efficiently using only gradient evaluations.</p>
+</div>
+</section>
+</section>
+<section id="control-certificates">
+<h2>Control Certificates<a class="headerlink" href="#control-certificates" title="Link to this heading">#</a></h2>
+<section id="class-k-function">
+<h3>1. Class-K function<a class="headerlink" href="#class-k-function" title="Link to this heading">#</a></h3>
+<p>Consider a class-<span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function of the form <span class="math notranslate nohighlight">\(\alpha(z) = a z\)</span>. Explain how adjusting the parameter <span class="math notranslate nohighlight">\(a\)</span> impacts both the system’s response and the level of conservatism inherent in a Control Barrier Function (CBF) safety filter. Specifically, discuss the trade-offs associated with choosing higher versus lower values of <span class="math notranslate nohighlight">\(a\)</span> in terms of safety margin, responsiveness, and potential limitations for practical implementation.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>For a Control Barrier Function (CBF) using a class-<span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function <span class="math notranslate nohighlight">\(\alpha(z) = a z\)</span>, the parameter <span class="math notranslate nohighlight">\(a\)</span> directly influences both how proactively and how assertively the safety filter intervenes as the state approaches the boundary of the safe set. In the CBF constraint <span class="math notranslate nohighlight">\(\max_{u \in U}\, \nabla b(x)^\top f(x, u) \geq -ab(x)\)</span>, a larger value of <span class="math notranslate nohighlight">\(a\)</span> makes the right-hand side more negative in the interior of the safe set, effectively allowing the controller to operate closer to the boundary without intervention and making the filter less conservative in normal operation. However, this also means that as the boundary is approached, the controller must react more aggressively—requiring potentially large and rapid changes in control input to maintain safety, which may stress the actuators or even exceed their capabilities.</p>
+<p>Conversely, choosing a smaller <span class="math notranslate nohighlight">\(a\)</span> makes the decrease of <span class="math notranslate nohighlight">\(b(x)\)</span> more tightly restricted: the controller begins corrective action farther from the boundary, producing a smoother and earlier response that provides a larger effective safety margin and reduces actuation demands. The trade-off is increased conservatism, which can hinder performance even when the system is safely away from the boundary.</p>
+<p>In practice, the choice of <span class="math notranslate nohighlight">\(a\)</span> entails balancing several factors: a larger <span class="math notranslate nohighlight">\(a\)</span> improves responsiveness and minimizes unnecessary conservatism but risks infeasibility (e.g., the required control may exceed actuator or QP limits) near the boundary; a smaller <span class="math notranslate nohighlight">\(a\)</span> is safer but may unreasonably constrain the nominal controller. The optimal value for <span class="math notranslate nohighlight">\(a\)</span> depends on the specific system, desired safety margin, and actuator limits. Careful tuning is necessary to ensure robust, practical implementation.</p>
+</div>
+</section>
+<section id="class-k-function-and-control-actuation-limits">
+<h3>2. Class-K function and control actuation limits.<a class="headerlink" href="#class-k-function-and-control-actuation-limits" title="Link to this heading">#</a></h3>
+<p>When implementing a CBF safety filter using a class-<span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function <span class="math notranslate nohighlight">\(\alpha(z) = a z\)</span>, how should actuator constraints—such as control saturation or rate limits—influence your selection of the parameter <span class="math notranslate nohighlight">\(a\)</span>? Address how such constraints can limit the allowable range of <span class="math notranslate nohighlight">\(a\)</span>, and describe the potential consequences of choosing an inappropriate value in the presence of these practical limitations.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Actuator constraints play a critical role in determining the appropriate value of <span class="math notranslate nohighlight">\(a\)</span> for the class-<span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function in a CBF-based safety filter. If <span class="math notranslate nohighlight">\(a\)</span> is set too high, the resulting safety constraint may require control actions that exceed the system’s actuator or rate limits, leading to an infeasible or unsafe controller—especially when the system state is close to the boundary of the safe set. Reducing <span class="math notranslate nohighlight">\(a\)</span> lowers the required control effort, enhancing feasibility by ensuring the CBF condition can be satisfied within actuator constraints, but this comes at the cost of increased conservatism and potentially restricting nominal performance even when far from the boundary. Therefore, <span class="math notranslate nohighlight">\(a\)</span> should be carefully selected to strike a balance between timely safety intervention and the practical limitations of the actuators, favoring values that guarantee feasibility while maintaining an adequate safety margin.</p>
+</div>
+</section>
+<section id="high-order-cbf">
+<h3>3. High-order CBF.<a class="headerlink" href="#high-order-cbf" title="Link to this heading">#</a></h3>
+<p>The concept of <em>relative degree</em> is important when analyzing functions with respect to system dynamics. Here, we provide a more precise definition, specifying it for each control input component.</p>
+<p>Consider a (sufficiently) differentiable function <span class="math notranslate nohighlight">\(b : \mathbb{R}^n \rightarrow \mathbb{R}\)</span> and a control-affine dynamical system given by <span class="math notranslate nohighlight">\(\dot{z} = f(z) + g(z)u\)</span>, where <span class="math notranslate nohighlight">\(z \in \mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(u \in \mathbb{R}^m\)</span>. The relative degree <span class="math notranslate nohighlight">\(m_\mathrm{r}\)</span> of <span class="math notranslate nohighlight">\(b\)</span> with respect to the <span class="math notranslate nohighlight">\(j\)</span>-th control input is defined as the smallest integer such that</p>
+<div class="math notranslate nohighlight">
+\[
+\left[\mathcal{L}_{g}\mathcal{L}_{f}^{m_\mathrm{r}-1}b(\cdot)\right]_j \neq 0,
+\]</div>
+<p>but</p>
+<div class="math notranslate nohighlight">
+\[
+\left[\mathcal{L}_{g}\mathcal{L}_{f}^{m_\mathrm{r}-2}b(\cdot)\right]_j = 0.
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\mathcal{L}_{v}h(z) = \nabla h(z)^\top v(z)\)</span>, <span class="math notranslate nohighlight">\(\mathcal{L}_v^k b(\cdot)\)</span> denotes the <span class="math notranslate nohighlight">\(k\)</span>-th Lie derivative (with <span class="math notranslate nohighlight">\(\mathcal{L}_v^0 b(\cdot) = b(\cdot)\)</span>), and <span class="math notranslate nohighlight">\(\left[x\right]_j\)</span> refers to the <span class="math notranslate nohighlight">\(j\)</span>-th component of the vector <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Now, consider the continuous-time, dynamically-extended unicycle model, which is a control-affine system, along with a candidate control barrier function (CBF) <span class="math notranslate nohighlight">\(b(z) = x^2 + y^2 - r^2\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is the radius of an obstacle:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{z} = 
+\begin{bmatrix}
+    \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{v}
+\end{bmatrix} =
+\begin{bmatrix}
+    v\cos\theta \\ v\sin\theta \\ 0 \\ 0
+\end{bmatrix}
++ 
+\begin{bmatrix}
+    0 &amp; 0 \\ 0 &amp; 0 \\ 1 &amp; 0 \\ 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+    \omega \\ a
+\end{bmatrix}
+, \qquad b(z) = x^2 + y^2 - r^2
+\end{split}\]</div>
+<p>a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>To determine the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to each control input, we need to examine how many Lie derivatives are required before the control appears explicitly.
+First, compute the Lie derivative of <span class="math notranslate nohighlight">\(b\)</span> along <span class="math notranslate nohighlight">\(g(x)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{g}b(x) = \nabla b(x)^\top g(x)
+\]</div>
+<p>Given:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla b(x) = 
+\begin{bmatrix}
+2x \\
+2y \\
+0 \\
+0
+\end{bmatrix}
+, \qquad
+g(x) = 
+\begin{bmatrix}
+0 &amp; 0 \\ 0 &amp; 0 \\ 1 &amp; 0 \\ 0 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<p>Taking the product:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathcal{L}_{g}b(x) = 
+\begin{bmatrix}
+2x &amp; 2y &amp; 0 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+0 &amp; 0 \\ 0 &amp; 0 \\ 1 &amp; 0 \\ 0 &amp; 1
+\end{bmatrix}
+= 
+\begin{bmatrix}
+0 &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+<p>Thus, <span class="math notranslate nohighlight">\(\mathcal{L}_{g}b(x) = 0\)</span> for both control inputs: the controls do not appear in the first derivative.
+Next, compute the second derivative, <span class="math notranslate nohighlight">\(\mathcal{L}_{g} \mathcal{L}_{f} b(x)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{f}b(x) = \nabla b(x)^\top f(x)
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = 
+\begin{bmatrix}
+v \cos{\theta} \\
+v \sin{\theta} \\
+0 \\
+0
+\end{bmatrix}
+\quad \Rightarrow \quad
+\mathcal{L}_{f}b(x) = 2x v \cos{\theta} + 2y v \sin{\theta}
+\end{split}\]</div>
+<p>Now we differentiate this with respect to the state to prepare for the next Lie derivative:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla \left(2x v \cos\theta + 2y v \sin\theta\right) =
+\begin{bmatrix}
+2v \cos\theta \\
+2v \sin\theta \\
+-2x v \sin\theta + 2y v \cos\theta \\
+2x \cos\theta + 2y \sin\theta
+\end{bmatrix}
+\end{split}\]</div>
+<p>Then,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{g}\mathcal{L}_{f}b(x) = \nabla\left(\mathcal{L}_f b(x)\right)^\top g(x)
+\]</div>
+<p>Calculating the product with <span class="math notranslate nohighlight">\(g(x)\)</span> (which only selects the third and fourth elements for <span class="math notranslate nohighlight">\(\omega\)</span> and <span class="math notranslate nohighlight">\(a\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+=
+\begin{bmatrix}
+-2x v \sin\theta + 2y v \cos\theta \\
+2x \cos\theta + 2y \sin\theta
+\end{bmatrix}
+\end{split}\]</div>
+<p>This expression is nonzero for general <span class="math notranslate nohighlight">\((x, y, v, \theta)\)</span>—except possibly at isolated points (such as <span class="math notranslate nohighlight">\(x=y=0\)</span> and/or <span class="math notranslate nohighlight">\(v=0\)</span>).
+Therefore, the first Lie derivative along <span class="math notranslate nohighlight">\(g(x)\)</span> vanishes, but the second is generically nonzero. This means the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to each input is <span class="math notranslate nohighlight">\(2\)</span>.</p>
+</div>
+<section id="id4">
+<h4>(b)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<p>When the relative degree of a barrier function exceeds <span class="math notranslate nohighlight">\(1\)</span>, we must use <a class="reference external" href="https://calinbelta.com/wp-content/uploads/2023/12/High-Order_Control_Barrier_Functions.pdf">high order control barrier functions</a> (HOCBFs)—analogous to high order control Lyapunov functions—to ensure safety. For a system with relative degree <span class="math notranslate nohighlight">\(2\)</span> and control-affine dynamics <span class="math notranslate nohighlight">\(\dot{z} = f(z) + g(z) u\)</span>, the HOCBF constraint takes the following form:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{HOCBF:} \qquad
+\mathcal{L}_{f}^{2}b(z)
++ \mathcal{L}_{g}\mathcal{L}_{f} b(z)\, u
++ \mathcal{L}_{f}(\alpha_1 \circ b)(z)
++ \alpha_2\big( \mathcal{L}_{f} b(z) + \alpha_1(b(z)) \big)
+\geq 0
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{L}_{f}^{2} h(z) = \mathcal{L}_{f}(\mathcal{L}_{f} h)(z)\)</span>, <span class="math notranslate nohighlight">\((\alpha_1 \circ h)(z) = \alpha_1(h(z))\)</span>, and <span class="math notranslate nohighlight">\(\alpha_1\)</span>, <span class="math notranslate nohighlight">\(\alpha_2\)</span> are class <span class="math notranslate nohighlight">\(\mathcal{K}_\infty\)</span> functions.</p>
+<p>Given that the CBF for this system has relative degree <span class="math notranslate nohighlight">\(2\)</span>, can we directly implement it in a standard CBF-QP (Quadratic Program) safety filter? Discuss why or why not.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>To address whether a standard CBF-QP safety filter can be used for barrier functions of relative degree 2, let’s start by reviewing the control barrier function (CBF) framework.</p>
+<p>For a scalar barrier function <span class="math notranslate nohighlight">\(b(z)\)</span>, the safety condition is <span class="math notranslate nohighlight">\(b(z) \geq 0\)</span> with an associated constraint on its time derivative to keep the system within the safe set:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{b}(z) = \nabla b(z)^\top \dot{z} = \nabla b(z)^\top \left(f(z) + g(z)u\right) \geq -\alpha(b(z))
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a class <span class="math notranslate nohighlight">\(\mathcal{K}_\infty\)</span> function (typically, a positive, increasing function with <span class="math notranslate nohighlight">\(\alpha(0)=0\)</span>).</p>
+<p>Using the notation of Lie derivatives, this becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{b}(z) = \mathcal{L}_f b(z) + \mathcal{L}_g b(z) u \geq -\alpha(b(z))
+\]</div>
+<p>When the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the input <span class="math notranslate nohighlight">\(u\)</span> is 1, <span class="math notranslate nohighlight">\(\mathcal{L}_g b(z) \neq 0\)</span>. This means that the control <span class="math notranslate nohighlight">\(u\)</span> appears directly in the inequality and can be chosen appropriately (through, for example, a quadratic program, QP) to enforce the constraint and keep the system safe.</p>
+<p>To enhance flexibility and allow for more tunable safety behavior, the class <span class="math notranslate nohighlight">\(\mathcal{K}\)</span> function <span class="math notranslate nohighlight">\(\alpha\)</span> is often incorporated:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_f b(z) + \mathcal{L}_g b(z) u + \alpha(b(z)) \geq 0
+\]</div>
+<p>or equivalently,</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{b}(z) \geq -\alpha(b(z))
+\]</div>
+<p>The resulting constraint is linear in <span class="math notranslate nohighlight">\(u\)</span> and can be handled efficiently by a QP-based controller.</p>
+<p>However, when the relative degree of <span class="math notranslate nohighlight">\(b\)</span> is higher than 1 (e.g., relative degree 2), we find that <span class="math notranslate nohighlight">\(\mathcal{L}_g b(z) = 0\)</span>—the control <span class="math notranslate nohighlight">\(u\)</span> does not appear in the first derivative of <span class="math notranslate nohighlight">\(b(z)\)</span>. As a consequence, <span class="math notranslate nohighlight">\(u\)</span> cannot influence <span class="math notranslate nohighlight">\(\dot{b}(z)\)</span> directly, and a standard CBF-QP controller does <strong>not</strong> work in this setting.</p>
+<p>Instead, one must use a high-order control barrier function (HOCBF) formulation that enforces a safety constraint in terms of higher-order derivatives and their Lie derivatives, as described in the question prompt. We can see that despite the increase in the number of terms, for a given value of <span class="math notranslate nohighlight">\(z\)</span>, the HOCBF inequality results in a <em>linear inequality constraint in <span class="math notranslate nohighlight">\(u\)</span></em>. This means we can easily use the HOCBF constraint in the CBF-QP filter—the problem remains a QP since the constraints remain linear.</p>
+<p><strong>In summary:</strong> The standard CBF-QP framework only applies when <span class="math notranslate nohighlight">\(b(z)\)</span> has relative degree 1. For higher relative degree, such as 2, control does not appear in the first derivative of <span class="math notranslate nohighlight">\(b(z)\)</span>, so the conventional method fails and must be replaced with a higher-order (HOCBF) approach.</p>
+</div>
+</section>
+</section>
+<section id="closer-look-at-cbf-clf-qp-filter-demo">
+<h3>4. Closer look at CBF-CLF-QP Filter demo.<a class="headerlink" href="#closer-look-at-cbf-clf-qp-filter-demo" title="Link to this heading">#</a></h3>
+<p>In this problem, you will take a closer look at the <code class="docutils literal notranslate"><span class="pre">cbf-clf-filter</span></code> demo. Make sure you first familiarize yourself with the code because you will need to change some of the parameter values to complete this problem.</p>
+<section id="id5">
+<h4>(a)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>Set the initial state to be <code class="docutils literal notranslate"><span class="pre">[-7,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">2.0]</span></code> and the desired control to be <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">0.0]</span></code>. Run the simulation. You will find that the CBF-CLF-QP filter is <em>unsuccessful</em> in keeping the system away from the obstacle. Explain why this behavior occurs.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>To understand why the CBF-CLF-QP filter fails to steer clear of the obstacle in this scenario, let’s analyze the problem in more detail.
+See that the cost function minimized by the QP is:</p>
+<div class="math notranslate nohighlight">
+\[
+J(u) = \|u-u_{des}\|^2 = \omega^2 + a^2
+\]</div>
+<p>so its gradient is:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla J = [2\omega, 2a]
+\]</div>
+<p>which is minimized at <span class="math notranslate nohighlight">\(\omega=0\)</span>, <span class="math notranslate nohighlight">\(a=0\)</span> if there are no constraints. However, the actual control output is influenced by additional constraints coming from the CLFs and CBF.</p>
+<p>When the initial state is <span class="math notranslate nohighlight">\([-7, 0.0, 0.0, 2.0]\)</span>, the system lies along the <em>symmetry axis</em> (the <span class="math notranslate nohighlight">\(x\)</span>-axis, with <span class="math notranslate nohighlight">\(y=0\)</span>, <span class="math notranslate nohighlight">\(\theta=0\)</span>). Along this symmetry, the Lie derivatives for both the CLFs and CBFs simplify dramatically:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{g}\mathcal{L}_{f} V_1(z) = [0, 2x]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{g} V_2(z) = 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{g}\mathcal{L}_{f} b(z)\, u = [0, 20x]
+\]</div>
+<p>This means that <strong>all the constraints depend only on the acceleration <span class="math notranslate nohighlight">\(a\)</span> and not at all on the turn rate <span class="math notranslate nohighlight">\(\omega\)</span></strong>.</p>
+<p>Therefore, in the QP, <span class="math notranslate nohighlight">\(\omega\)</span> is unconstrained and will always minimize the cost (i.e., set to zero), while <span class="math notranslate nohighlight">\(a\)</span> is adjusted to satisfy the CBF/CLF constraints. As a result, the system cannot generate any turning motion—it can only accelerate or decelerate along the symmetry axis (<span class="math notranslate nohighlight">\(x\)</span>-axis). When it approaches the obstacle, the only way to remain safe is for the CBF constraint to force <span class="math notranslate nohighlight">\(a\)</span> negative (i.e., braking), causing the system to stop at the obstacle boundary rather than turn around it.</p>
+<p>This phenomenon—<strong>loss of control authority in <span class="math notranslate nohighlight">\(\omega\)</span></strong>—is caused by the symmetry of both the setup and the barrier/goal functions, and it prevents the controller from finding steering solutions in such a configuration.</p>
+<p>In summary, the system proceeds straight toward the obstacle until the barrier constraint forces it to stop. Because the configuration is perfectly symmetric—with the robot heading directly toward the obstacle along the <span class="math notranslate nohighlight">\(x\)</span>-axis—the problem setup offers no preference for turning left or right. This symmetry eliminates any control authority over the turning rate (<span class="math notranslate nohighlight">\(\omega\)</span>), effectively removing the ability to steer. As a result, the safety filter cannot generate a turning maneuver around the obstacle. While the system does not collide into the obstacle, it is unable to trun around the obstacle and reach the goal.</p>
+</div>
+</section>
+<section id="id6">
+<h4>(b)<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<p>Set <code class="docutils literal notranslate"><span class="pre">cbf_alpha=0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">dt=0.5</span></code>. Run the simulation. You will find that the CBF-CLF-QP filter is <em>unsuccessful</em> in keeping the system away from the obstacle. Explain why this behavior occurs.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>The issue arises because the safety constraints in the controller are formulated using <em>continuous-time</em> CLF/CBF conditions, while the simulation advances the system in <em>discrete-time</em> steps. This mismatch means that the safety guarantees provided by the continuous-time constraints do not perfectly translate to the actual state evolution in discrete time. When a larger time step (<code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">=</span> <span class="pre">0.5</span></code>) is used, each step covers a greater state increment, so any inaccuracies or nonlinear effects accumulate more quickly, and the system is less responsive to constraint enforcement. The zero-order hold approach applies the filtered control for the entire time interval, but the constraints are only checked at the endpoints, not the intermediate states—so the system may violate safety between steps even if the constraint is satisfied at the discrete points.</p>
+<p>Additionally, lowering <code class="docutils literal notranslate"><span class="pre">cbf_alpha</span></code> to 0.5 makes the safety constraint even more restrictive, shrinking the set of feasible controls and reducing controller flexibility. Together with the larger time step, this can cause the controller either to react too late or to become excessively conservative, leading to poor performance around the obstacle.
+To address this issue, we should either ensure a sufficiently small time step size is used, or apply the discrete-time CLF/CBF formulas. However, those results in nonlinear control constraints.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamics-discrete-time-linearization">Dynamics (Discrete time, linearization)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derive-and-implement-discrete-time-dynamics-given-continuous-time-dynamics">1. Derive and implement discrete-time dynamics given continuous-time dynamics.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">2. Study the classical cart-pole system and understand the limits of linearization.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-entropy-method">1. Cross entropy method.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-function">Branin function</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">2. Gradient descent.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-algorithms">3. Gradient descent algorithms.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function">1. Class-K function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function-and-control-actuation-limits">2. Class-K function and control actuation limits.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-cbf">3. High-order CBF.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(b)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-look-at-cbf-clf-qp-filter-demo">4. Closer look at CBF-CLF-QP Filter demo.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(b)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

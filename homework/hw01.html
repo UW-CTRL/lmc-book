@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -425,6 +425,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">2. Study the classical cart-pole system and understand the limits of linearization.</a><ul class="nav section-nav flex-column">
@@ -441,20 +442,19 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">2. Gradient descent.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-gradient-descent-algorithms">3. (Optional) Gradient descent algorithms.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-algorithms">3. Gradient descent algorithms.</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function">1. Class-K function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function-and-control-actuation-limits">2. Class-K function and control actuation limits.</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-cbf">3. High-order CBF.</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(a)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(b)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-loop-at-cbf-clf-qp-filter-demo">4. Closer loop at CBF-CLF-QP Filter demo.</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(a)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">(b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-look-at-cbf-clf-qp-filter-demo">4. Closer look at CBF-CLF-QP Filter demo.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(b)</a></li>
 </ul>
 </li>
 </ul>
@@ -497,7 +497,7 @@ document.write(`
 \end{split}\]</div>
 <section id="a">
 <h4>(a)<a class="headerlink" href="#a" title="Link to this heading">#</a></h4>
-<p>Write down the discrete-time dynamics <span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = f(\mathbf{x}_k, \mathbf{u}_k)\)</span> using Euler integration with step size <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<p>Write down the discrete-time dynamics <span class="math notranslate nohighlight">\(\mathbf{x}_{t+1} = f(\mathbf{x}_t, \mathbf{u}_t)\)</span> using Euler integration with step size <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
 </section>
 <section id="b">
 <h4>(b)<a class="headerlink" href="#b" title="Link to this heading">#</a></h4>
@@ -508,7 +508,10 @@ document.write(`
 <section id="c">
 <h4>(c)<a class="headerlink" href="#c" title="Link to this heading">#</a></h4>
 <p>Using your analytic expression from (a), analytically differentiate your expression to obtain the state and control jacobians of the discrete-time dynamics.</p>
-<p>d. Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code>.</p>
+</section>
+<section id="d">
+<h4>(d)<a class="headerlink" href="#d" title="Link to this heading">#</a></h4>
+<p>Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code>.</p>
 </section>
 </section>
 <section id="study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">
@@ -596,11 +599,10 @@ f(x, y) = a(y - bx^2 + cx - r)^2 + s(1 - t)\cos(x) + s
 </section>
 <section id="gradient-descent">
 <h3>2. Gradient descent.<a class="headerlink" href="#gradient-descent" title="Link to this heading">#</a></h3>
-<p>Given the different functions studied in notebook 02, discuss how the choice of initial conditions and step size affects the convergence and the final solution when using (vanilla) gradient descent.
-Provide some plots to support your discussion.</p>
+<p>Given the different functions studied in notebook 02, discuss how the choice of initial conditions and step size affects the convergence and the final solution when using (vanilla) gradient descent. Provide some plots to support your discussion.</p>
 </section>
-<section id="optional-gradient-descent-algorithms">
-<h3>3. (Optional) Gradient descent algorithms.<a class="headerlink" href="#optional-gradient-descent-algorithms" title="Link to this heading">#</a></h3>
+<section id="gradient-descent-algorithms">
+<h3>3. Gradient descent algorithms.<a class="headerlink" href="#gradient-descent-algorithms" title="Link to this heading">#</a></h3>
 <p>Read Chapters 5 and 6 of the <a class="reference external" href="https://algorithmsbook.com/optimization/files/optimization.pdf">Algorithms for Optimization textbook</a>. In your own words, summarize how the various first-order and second-order variants of gradient descent differ from basic gradient descent, and explain in what ways they may offer improved performance. Consider aspects such as convergence speed, ability to escape local minima, sensitivity to step size, and robustness to the shape of the objective landscape. You don’t need to write an essay here, but rather, demonstrate an understanding that there are more sophistocated gradient descent methods, the intuition behind them, and their strengths and weaknesses.</p>
 </section>
 </section>
@@ -647,12 +649,9 @@ Provide some plots to support your discussion.</p>
 \end{bmatrix}
 , \qquad b(z) = x^2 + y^2 - r^2
 \end{split}\]</div>
+<p>a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</p>
 <section id="id4">
-<h4>(a)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
-<p>Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</p>
-</section>
-<section id="id5">
-<h4>(b)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<h4>(b)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <p>When the relative degree of a barrier function exceeds <span class="math notranslate nohighlight">\(1\)</span>, we must use <a class="reference external" href="https://calinbelta.com/wp-content/uploads/2023/12/High-Order_Control_Barrier_Functions.pdf">high order control barrier functions</a> (HOCBFs)—analogous to high order control Lyapunov functions—to ensure safety. For a system with relative degree <span class="math notranslate nohighlight">\(2\)</span> and control-affine dynamics <span class="math notranslate nohighlight">\(\dot{z} = f(z) + g(z) u\)</span>, the HOCBF constraint takes the following form:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -667,15 +666,15 @@ Provide some plots to support your discussion.</p>
 <p>Given that the CBF for this system has relative degree <span class="math notranslate nohighlight">\(2\)</span>, can we directly implement it in a standard CBF-QP (Quadratic Program) safety filter? Discuss why or why not.</p>
 </section>
 </section>
-<section id="closer-loop-at-cbf-clf-qp-filter-demo">
-<h3>4. Closer loop at CBF-CLF-QP Filter demo.<a class="headerlink" href="#closer-loop-at-cbf-clf-qp-filter-demo" title="Link to this heading">#</a></h3>
+<section id="closer-look-at-cbf-clf-qp-filter-demo">
+<h3>4. Closer look at CBF-CLF-QP Filter demo.<a class="headerlink" href="#closer-look-at-cbf-clf-qp-filter-demo" title="Link to this heading">#</a></h3>
 <p>In this problem, you will take a closer look at the <code class="docutils literal notranslate"><span class="pre">cbf-clf-filter</span></code> demo. Make sure you first familiarize yourself with the code because you will need to change some of the parameter values to complete this problem.</p>
-<section id="id6">
-<h4>(a)<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<section id="id5">
+<h4>(a)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <p>Set the initial state to be <code class="docutils literal notranslate"><span class="pre">[-7,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">2.0]</span></code> and the desired control to be <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">0.0]</span></code>. Run the simulation. You will find that the CBF-CLF-QP filter is <em>unsuccessful</em> in keeping the system away from the obstacle. Explain why this behavior occurs.</p>
 </section>
-<section id="id7">
-<h4>(b)<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<section id="id6">
+<h4>(b)<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
 <p>Set <code class="docutils literal notranslate"><span class="pre">cbf_alpha=0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">dt=0.5</span></code>. Run the simulation. You will find that the CBF-CLF-QP filter is <em>unsuccessful</em> in keeping the system away from the obstacle. Explain why this behavior occurs.</p>
 </section>
 </section>
@@ -751,6 +750,7 @@ Provide some plots to support your discussion.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">2. Study the classical cart-pole system and understand the limits of linearization.</a><ul class="nav section-nav flex-column">
@@ -767,20 +767,19 @@ Provide some plots to support your discussion.</p>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">2. Gradient descent.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-gradient-descent-algorithms">3. (Optional) Gradient descent algorithms.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-algorithms">3. Gradient descent algorithms.</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function">1. Class-K function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function-and-control-actuation-limits">2. Class-K function and control actuation limits.</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-cbf">3. High-order CBF.</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(a)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(b)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-loop-at-cbf-clf-qp-filter-demo">4. Closer loop at CBF-CLF-QP Filter demo.</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(a)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">(b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closer-look-at-cbf-clf-qp-filter-demo">4. Closer look at CBF-CLF-QP Filter demo.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(b)</a></li>
 </ul>
 </li>
 </ul>
