@@ -22,7 +22,8 @@ Euler integration is the simplest numerical integration scheme, simply:
 
 $$
 \mathbf{x}_{t+1} = \mathbf{x}_t + \dot{\mathbf{x}}_t \times \Delta t = \mathbf{x}_t + f(\mathbf{x}_t, \mathbf{u}_t) \Delta t.
-$$ 
+$$
+ 
 Thus our Euler step is:
 
 $$
