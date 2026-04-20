@@ -7,7 +7,7 @@ parts:
   - file: logistics/schedule
 # - caption: Notebooks
 #   chapters:
-#   - file: homework/hw_solution_writeup
+  # - file: homework/hw_solution_writeup
 #   - file: homework/hw01
 #   - file: homework/hw02
 #   - file: homework/hw03
