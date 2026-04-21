@@ -23,7 +23,7 @@ parts:
   - file: lectures/state-space
   - file: lectures/optimization
   - file: lectures/control-certificates
-  # - file: lectures/sequential-dm
+  - file: lectures/sequential-dm
   # - file: lectures/lqr
   # - file: lectures/reachability
   # - file: lectures/kalman-filter
