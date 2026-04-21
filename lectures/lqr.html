@@ -215,6 +215,7 @@
 <li class="toctree-l1"><a class="reference internal" href="state-space.html">State-space representation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">Introduction to optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="control-certificates.html">Control certificate functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sequential-dm.html">Sequential decision-making</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
 <ul class="nav bd-sidenav">
@@ -483,7 +484,7 @@ For now, let’s consider a discrete-time setting and we will later extend the a
 <section id="discrete-time-lqr">
 <h2>Discrete-time LQR<a class="headerlink" href="#discrete-time-lqr" title="Link to this heading">#</a></h2>
 <p>Consider the discrete-time and finite horizon setting, and for simplicity, let’s also assume a time-invariant setting (drop the subscripts in <span class="math notranslate nohighlight">\(A, B, Q, R\)</span>).
-Recall the Bellman equation <a class="reference internal" href="sequential-dm.html#equation-eq-bellman">()</a>. Let’s update the equation with the LQR assumptions.</p>
+Recall the Bellman equation <a class="reference internal" href="sequential-dm.html#equation-eq-bellman">(12)</a>. Let’s update the equation with the LQR assumptions.</p>
 <div class="math notranslate nohighlight">
 \[
 V^*(x_{t},t) = \min_{u_{t}} \biggl( x_t^TQx_t + u_t^TRu_t + V^*(Ax_t + Bu_t, t+1) \biggl)
