@@ -1,4 +1,4 @@
-# Homework 1 (solutions)
+# Homework 1 (Solutions)
 ## Dynamics (Discrete time, linearization)
 
 ### 1. Derive and implement discrete-time dynamics given continuous-time dynamics.
@@ -21,9 +21,8 @@ Write down the discrete-time dynamics $\mathbf{x}_{t+1} = f(\mathbf{x}_t, \mathb
 Euler integration is the simplest numerical integration scheme, simply:
 
 $$
-\mathbf{x}_{t+1} = \mathbf{x}_t + \dot{\mathbf{x}}_t \times \Delta t = \mathbf{x}_t + f(\mathbf{x}_t, \mathbf{u}_t) \Delta t.
-$$
- 
+\mathbf{x}_{k+1} = \mathbf{x}_k + \dot{\mathbf{x}}_k \times \Delta t = \mathbf{x}_k + f(\mathbf{x}_k, \mathbf{u}_k) \Delta t.
+$$ 
 Thus our Euler step is:
 
 $$
@@ -47,6 +46,7 @@ Assuming zero-order hold over each time step of size $\Delta t$, write down the 
 :class: dropdown
 
 We compute the analytic discrete-time dynamics by integrating the continuous-time dynamics 
+
 $$    \dot{\mathbf{x}} = f(\mathbf{x}_t, \mathbf{u}_t) = \begin{bmatrix}
         v \cos \theta \\
         v \sin \theta \\
@@ -137,7 +137,8 @@ $$
 $$
 ```
 
-d. Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using `jax.jacobian`.
+#### (d) 
+Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using `jax.jacobian`.
 
 ```{admonition} Solution
 :class: dropdown
@@ -376,7 +377,7 @@ Choosing an appropriate step size is crucial for successful optimization. A suit
 ![Gradient descent step size and initialization. Gradient descent step size = 0.0305.](figs/optim_2_4.png)
 ```
 
-### 3. Gradient descent algorithms. 
+### 3. (Optional) Gradient descent algorithms. 
 Read Chapters 5 and 6 of the [Algorithms for Optimization textbook](https://algorithmsbook.com/optimization/files/optimization.pdf). In your own words, summarize how the various first-order and second-order variants of gradient descent differ from basic gradient descent, and explain in what ways they may offer improved performance. Consider aspects such as convergence speed, ability to escape local minima, sensitivity to step size, and robustness to the shape of the objective landscape. You don't need to write an essay here, but rather, demonstrate an understanding that there are more sophistocated gradient descent methods, the intuition behind them, and their strengths and weaknesses.
 
 ```{admonition} Solution
@@ -487,7 +488,7 @@ $$
 , \qquad b(z) = x^2 + y^2 - r^2
 $$
 
-a. Demonstrate that the relative degree of $b$ with respect to the dynamically-extended unicycle dynamics is $2$ for both control inputs.
+#### a. Demonstrate that the relative degree of $b$ with respect to the dynamically-extended unicycle dynamics is $2$ for both control inputs.
 ```{admonition} Solution
 :class: dropdown
 To determine the relative degree of $b$ with respect to each control input, we need to examine how many Lie derivatives are required before the control appears explicitly.

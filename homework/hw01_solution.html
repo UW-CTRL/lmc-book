@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Homework 1 (solutions) &#8212; Linear Multivariable Control</title>
+    <title>Homework 1 (Solutions) &#8212; Linear Multivariable Control</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -66,6 +66,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Converting Code Notebooks to PDF" href="../logistics/notebooktopdf.html" />
+    <link rel="prev" title="Homework 3" href="hw03.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,8 +129,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -218,10 +218,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../lectures/sequential-dm.html">Sequential decision-making</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="hw01.html">Homework 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hw02.html">Homework 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Homework 1 (Solutions)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul class="nav bd-sidenav">
@@ -411,7 +412,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Homework 1 (solutions)</h1>
+    <h1>Homework 1 (Solutions)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -426,6 +427,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">2. Study the classical cart-pole system and understand the limits of linearization.</a><ul class="nav section-nav flex-column">
@@ -442,13 +444,14 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">2. Gradient descent.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-algorithms">3. Gradient descent algorithms.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-gradient-descent-algorithms">3. (Optional) Gradient descent algorithms.</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function">1. Class-K function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function-and-control-actuation-limits">2. Class-K function and control actuation limits.</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-cbf">3. High-order CBF.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-demonstrate-that-the-relative-degree-of-b-with-respect-to-the-dynamically-extended-unicycle-dynamics-is-2-for-both-control-inputs">a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(b)</a></li>
 </ul>
 </li>
@@ -471,7 +474,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="homework-1-solutions">
-<h1>Homework 1 (solutions)<a class="headerlink" href="#homework-1-solutions" title="Link to this heading">#</a></h1>
+<h1>Homework 1 (Solutions)<a class="headerlink" href="#homework-1-solutions" title="Link to this heading">#</a></h1>
 <section id="dynamics-discrete-time-linearization">
 <h2>Dynamics (Discrete time, linearization)<a class="headerlink" href="#dynamics-discrete-time-linearization" title="Link to this heading">#</a></h2>
 <section id="derive-and-implement-discrete-time-dynamics-given-continuous-time-dynamics">
@@ -493,7 +496,7 @@ document.write(`
 <p>Euler integration is the simplest numerical integration scheme, simply:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{x}_{t+1} = \mathbf{x}_t + \dot{\mathbf{x}}_t \times \Delta t = \mathbf{x}_t + f(\mathbf{x}_t, \mathbf{u}_t) \Delta t.
+\mathbf{x}_{k+1} = \mathbf{x}_k + \dot{\mathbf{x}}_k \times \Delta t = \mathbf{x}_k + f(\mathbf{x}_k, \mathbf{u}_k) \Delta t.
 \]</div>
 <p>Thus our Euler step is:</p>
 <div class="math notranslate nohighlight">
@@ -514,14 +517,15 @@ document.write(`
 - <em>Hint</em>: The theoretical analytic solution is well-behaved as <span class="math notranslate nohighlight">\(\omega \to 0\)</span>, but your code must take care with this limit.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
-<p>We compute the analytic discrete-time dynamics by integrating the continuous-time dynamics
-$<span class="math notranslate nohighlight">\(    \dot{\mathbf{x}} = f(\mathbf{x}_t, \mathbf{u}_t) = \begin{bmatrix}
+<p>We compute the analytic discrete-time dynamics by integrating the continuous-time dynamics</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \dot{\mathbf{x}} = f(\mathbf{x}_t, \mathbf{u}_t) = \begin{bmatrix}
         v \cos \theta \\
         v \sin \theta \\
         \omega \\
         a
         \end{bmatrix}
-\)</span>$</p>
+\end{split}\]</div>
 <p>assuming zero-order hold (constant control in each time interval). Since the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of the state <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> depend on the <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> components, but not vice versa, it will be easier to compute the <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> components first:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
@@ -598,7 +602,10 @@ y_{k+1} = y_k + \frac{1}{\omega_k^2}\left(v_k\omega_k\cos(\theta_k) - (v_k + a_k
     \end{bmatrix}
 \end{split}\]</div>
 </div>
-<p>d. Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code>.</p>
+</section>
+<section id="d">
+<h4>(d)<a class="headerlink" href="#d" title="Link to this heading">#</a></h4>
+<p>Generate 100 random states and verify that your analytic expression for the state and control jacobian matches the values you get from using <code class="docutils literal notranslate"><span class="pre">jax.jacobian</span></code>.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
 <p>You can use the (pseudo)code below and replace with your functions of jacobian matrix</p>
@@ -815,8 +822,8 @@ Increasing the number of iterations allows the sampling distribution to progress
 <p><img alt="Gradient descent step size and initialization. Gradient descent step size = 0.0305." src="../_images/optim_2_4.png" /></p>
 </div>
 </section>
-<section id="gradient-descent-algorithms">
-<h3>3. Gradient descent algorithms.<a class="headerlink" href="#gradient-descent-algorithms" title="Link to this heading">#</a></h3>
+<section id="optional-gradient-descent-algorithms">
+<h3>3. (Optional) Gradient descent algorithms.<a class="headerlink" href="#optional-gradient-descent-algorithms" title="Link to this heading">#</a></h3>
 <p>Read Chapters 5 and 6 of the <a class="reference external" href="https://algorithmsbook.com/optimization/files/optimization.pdf">Algorithms for Optimization textbook</a>. In your own words, summarize how the various first-order and second-order variants of gradient descent differ from basic gradient descent, and explain in what ways they may offer improved performance. Consider aspects such as convergence speed, ability to escape local minima, sensitivity to step size, and robustness to the shape of the objective landscape. You don’t need to write an essay here, but rather, demonstrate an understanding that there are more sophistocated gradient descent methods, the intuition behind them, and their strengths and weaknesses.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
@@ -901,7 +908,8 @@ Newton’s method approximates the minimum by iteratively building a local quadr
 \end{bmatrix}
 , \qquad b(z) = x^2 + y^2 - r^2
 \end{split}\]</div>
-<p>a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</p>
+<section id="a-demonstrate-that-the-relative-degree-of-b-with-respect-to-the-dynamically-extended-unicycle-dynamics-is-2-for-both-control-inputs">
+<h4>a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.<a class="headerlink" href="#a-demonstrate-that-the-relative-degree-of-b-with-respect-to-the-dynamically-extended-unicycle-dynamics-is-2-for-both-control-inputs" title="Link to this heading">#</a></h4>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
 <p>To determine the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to each control input, we need to examine how many Lie derivatives are required before the control appears explicitly.
@@ -988,6 +996,7 @@ v \sin{\theta} \\
 <p>This expression is nonzero for general <span class="math notranslate nohighlight">\((x, y, v, \theta)\)</span>—except possibly at isolated points (such as <span class="math notranslate nohighlight">\(x=y=0\)</span> and/or <span class="math notranslate nohighlight">\(v=0\)</span>).
 Therefore, the first Lie derivative along <span class="math notranslate nohighlight">\(g(x)\)</span> vanishes, but the second is generically nonzero. This means the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to each input is <span class="math notranslate nohighlight">\(2\)</span>.</p>
 </div>
+</section>
 <section id="id4">
 <h4>(b)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <p>When the relative degree of a barrier function exceeds <span class="math notranslate nohighlight">\(1\)</span>, we must use <a class="reference external" href="https://calinbelta.com/wp-content/uploads/2023/12/High-Order_Control_Barrier_Functions.pdf">high order control barrier functions</a> (HOCBFs)—analogous to high order control Lyapunov functions—to ensure safety. For a system with relative degree <span class="math notranslate nohighlight">\(2\)</span> and control-affine dynamics <span class="math notranslate nohighlight">\(\dot{z} = f(z) + g(z) u\)</span>, the HOCBF constraint takes the following form:</p>
@@ -1117,6 +1126,24 @@ To address this issue, we should either ensure a sufficiently small time step si
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="hw03.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 3</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../logistics/notebooktopdf.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Converting Code Notebooks to PDF</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1138,6 +1165,7 @@ To address this issue, we should either ensure a sufficiently small time step si
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-the-classical-cart-pole-system-and-understand-the-limits-of-linearization">2. Study the classical cart-pole system and understand the limits of linearization.</a><ul class="nav section-nav flex-column">
@@ -1154,13 +1182,14 @@ To address this issue, we should either ensure a sufficiently small time step si
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">2. Gradient descent.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-algorithms">3. Gradient descent algorithms.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-gradient-descent-algorithms">3. (Optional) Gradient descent algorithms.</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#control-certificates">Control Certificates</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function">1. Class-K function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-k-function-and-control-actuation-limits">2. Class-K function and control actuation limits.</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-cbf">3. High-order CBF.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-demonstrate-that-the-relative-degree-of-b-with-respect-to-the-dynamically-extended-unicycle-dynamics-is-2-for-both-control-inputs">a. Demonstrate that the relative degree of <span class="math notranslate nohighlight">\(b\)</span> with respect to the dynamically-extended unicycle dynamics is <span class="math notranslate nohighlight">\(2\)</span> for both control inputs.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(b)</a></li>
 </ul>
 </li>
