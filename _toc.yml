@@ -33,9 +33,10 @@ parts:
   - file: homework/hw01
   - file: homework/hw02
   - file: homework/hw03
-  # - file: homework/hw01_solution
+  - file: homework/hw01_solution
 
 - caption: Miscellaneous
   chapters:
   - file: logistics/notebooktopdf
+  - file: homework/rocketderivation
 
