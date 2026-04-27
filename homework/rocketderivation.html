@@ -1,0 +1,845 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rocket dynamics derivation &#8212; Linear Multivariable Control</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=025806d8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'homework/rocketderivation';</script>
+    <script src="../_static/custom.js?v=7f7a6837"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Converting Code Notebooks to PDF" href="../logistics/notebooktopdf.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/class_icon.png" class="logo__image only-light" alt="Linear Multivariable Control - Home"/>
+    <script>document.write(`<img src="../_static/class_icon.png" class="logo__image only-dark" alt="Linear Multivariable Control - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/overview.html">Course information</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../logistics/schedule.html">Week-by-week schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deliverables</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/homework.html">Homework</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/talk.html">Talk reflection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/extracredit.html">Extra Credit</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lectures/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/state-space.html">State-space representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/optimization.html">Introduction to optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/control-certificates.html">Control certificate functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/sequential-dm.html">Sequential decision-making</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="hw01.html">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw02.html">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw01_solution.html">Homework 1 (Solutions)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/notebooktopdf.html">Converting Code Notebooks to PDF</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Rocket dynamics derivation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Fhomework/rocketderivation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/homework/rocketderivation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Rocket dynamics derivation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kinetic-energy">Kinetic energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-energy">Potential energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-the-euler-lagrange-equations">Applying the Euler-Lagrange equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rearrange-into-state-space-dynamics-form">Rearrange into state-space dynamics form</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-forces">Generalized forces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-order-state-space-dynamics">First-order state space dynamics</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="rocket-dynamics-derivation">
+<h1>Rocket dynamics derivation<a class="headerlink" href="#rocket-dynamics-derivation" title="Link to this heading">#</a></h1>
+<p>To derive the equations of motion, we consider the Euler-Lagrange equations.</p>
+<div class="math notranslate nohighlight">
+\[ \frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{q}}\right) - \frac{\partial \mathcal{L}}{\partial q} = \sum_i Q_i \]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{L} = T - V\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(T\)</span> is the kinetic energy, <span class="math notranslate nohighlight">\(V\)</span> is the potential energy, <span class="math notranslate nohighlight">\(q\)</span> is the generalized coordinates, and <span class="math notranslate nohighlight">\(Q_i\)</span> represents non-conservative generalized forces. The RHS is where you include forces that cannot be derived from a potential energy function, such as friction, air resistance, or the active thrust and control torques applied to your rocket. If the system is purely conservative, this side of the equation is set to zero.</p>
+<p>The position of the thruster is <span class="math notranslate nohighlight">\(\mathbf{x}_\text{t} = [p_x, p_z]^T\)</span>, and the position of the center of mass of the rocket body is <span class="math notranslate nohighlight">\(\mathbf{x}_\text{b} = [p_x + \frac{\ell}{2}\sin\theta, p_z + \frac{\ell}{2}\cos\theta]^T\)</span>.</p>
+<p>Below, we present the derivation of the equations of motion of the system.</p>
+<p>See the <a class="reference external" href="https://underactuated.mit.edu/multibody.html">notes</a> here for additional references regarding Euler-Lagrange dynamics and deriving equations of motion of multi-body systems.</p>
+<section id="kinetic-energy">
+<h2>Kinetic energy<a class="headerlink" href="#kinetic-energy" title="Link to this heading">#</a></h2>
+<p>The <em>translational</em> kinetic energy is <span class="math notranslate nohighlight">\(T_\text{trans} = \frac{1}{2}m_\text{t}\|\dot{\mathbf{x}}_\text{t}\|^2 + \frac{1}{2}m_\text{b}\|\dot{\mathbf{x}}_\text{b}\|^2\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+T_\text{trans} = \frac{1}{2}m_\text{t}(\dot{p}_x^2 + \dot{p}_z^2) + \frac{1}{2}m_\text{b}(\dot{p}_x^2 + \dot{p}_z^2 + \ell\dot{\theta}(\dot{p}_x\cos\theta - \dot{p}_z\sin\theta) + \frac{1}{4}\ell^2\dot{\theta}^2) 
+\]</div>
+<p>The <em>rotational</em> kinetic energy <span class="math notranslate nohighlight">\(T_\text{rot}= \frac{1}{2}I\dot{\theta}^2\)</span> where <span class="math notranslate nohighlight">\(I\)</span> is the moment of inertia of a rod rotating about its center of mass.</p>
+<div class="math notranslate nohighlight">
+\[
+T_\text{rot} = \frac{1}{2} \left(\frac{1}{12}\right)m_\text{b}\ell^2\dot{\theta}^2
+\]</div>
+<p>Thus the total kinetic energy is:</p>
+<div class="math notranslate nohighlight">
+\[
+T = \frac{1}{2}(m_\text{t} + m_\text{b})(\dot{p}_x^2 + \dot{p}_z^2) + \frac{1}{2}m_\text{b}\ell\dot{\theta}(\dot{p}_x\cos\theta - \dot{p}_z\sin\theta) + \frac{1}{6}m_\text{b}\ell^2\dot{\theta}^2
+\]</div>
+</section>
+<section id="potential-energy">
+<h2>Potential energy<a class="headerlink" href="#potential-energy" title="Link to this heading">#</a></h2>
+<p>Only gravitational potential energy is acting on the system as there are no elastic component like springs.
+Let <span class="math notranslate nohighlight">\(z=0\)</span> correspond to zero gravitational potential energy.</p>
+<p>The potential energy of the thruster is</p>
+<div class="math notranslate nohighlight">
+\[ V_\text{t} = m_\text{t}gp_z\]</div>
+<p>The potential energy of the rocket body is</p>
+<div class="math notranslate nohighlight">
+\[ V_\text{body} = m_\text{b}g(p_z + \frac{\ell}{2}\cos\theta)\]</div>
+<p>Thus the total potential energy is
+$<span class="math notranslate nohighlight">\(
+V = (m_\text{t} + m_\text{b})gp_z + \frac{1}{2}m_\text{b}g\ell\cos\theta
+\)</span>$</p>
+</section>
+<section id="applying-the-euler-lagrange-equations">
+<h2>Applying the Euler-Lagrange equations<a class="headerlink" href="#applying-the-euler-lagrange-equations" title="Link to this heading">#</a></h2>
+<p>Given the Lagrangian <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>, and the Euler-Lagrange equation,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{q}_i}\right) - \frac{\partial \mathcal{L}}{\partial q_i} = Q_i,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(q = [p_x, p_z, \theta]^\top\)</span> and <span class="math notranslate nohighlight">\(Q_i\)</span> are the generalized forces/torques, write explicitly the equations for each coordinate.</p>
+<p>The Lagrangian is</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L} = \frac{1}{2}(m_\text{t} + m_\text{b})(\dot{p}_x^2 + \dot{p}_z^2) + \frac{1}{2}m_\text{b}\ell\dot{\theta}(\dot{p}_x\cos\theta - \dot{p}_z\sin\theta) + \frac{1}{6}m_\text{b}\ell^2\dot{\theta}^2 - (m_\text{t} + m_\text{b})g p_z - \frac{1}{2}m_\text{b}g\ell\cos\theta
+\]</div>
+<p>For each generalized coordinate:</p>
+<ol class="arabic simple">
+<li><p>For <span class="math notranslate nohighlight">\(p_x\)</span>:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{p}_x} \right) - \frac{\partial \mathcal{L}}{\partial p_x} = Q_{p_x}
+\]</div>
+<p>Compute the terms:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial \dot{p}_x} &amp;= (m_t + m_b)\dot{p}_x + \frac{1}{2}m_b\ell\dot{\theta}\cos\theta \\
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{p}_x} \right)
+  &amp;= (m_t + m_b)\ddot{p}_x + \frac{1}{2}m_b\ell\left( \ddot{\theta}\cos\theta - \dot{\theta}^2\sin\theta \right) \\
+\frac{\partial \mathcal{L}}{\partial p_x} &amp;= 0 \\
+\therefore &amp;\quad (m_t + m_b)\ddot{p}_x + \frac{1}{2}m_b\ell\left( \ddot{\theta}\cos\theta - \dot{\theta}^2\sin\theta \right) = Q_{p_x}
+\end{align*}
+\end{split}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>For <span class="math notranslate nohighlight">\(p_z\)</span>:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{p}_z} \right) - \frac{\partial \mathcal{L}}{\partial p_z} = Q_{p_z}
+\]</div>
+<p>Compute the terms:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial \dot{p}_z} &amp;= (m_t + m_b)\dot{p}_z - \frac{1}{2}m_b\ell\dot{\theta}\sin\theta \\
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{p}_z} \right)
+  &amp;= (m_t + m_b)\ddot{p}_z - \frac{1}{2}m_b\ell \left( \ddot{\theta}\sin\theta + \dot{\theta}^2\cos\theta \right) \\
+\frac{\partial \mathcal{L}}{\partial p_z} &amp;= - (m_t + m_b)g \\
+\therefore &amp; \quad (m_t + m_b)\ddot{p}_z - \frac{1}{2}m_b\ell\left( \ddot{\theta}\sin\theta + \dot{\theta}^2\cos\theta \right) + (m_t + m_b)g = Q_{p_z}
+\end{align*}
+\end{split}\]</div>
+<ol class="arabic simple" start="3">
+<li><p>For <span class="math notranslate nohighlight">\(\theta\)</span>:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{\theta}} \right) - \frac{\partial \mathcal{L}}{\partial \theta} = Q_{\theta}
+\]</div>
+<p>Compute the terms:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial \dot{\theta}} &amp;= \frac{1}{2}m_b\ell(\dot{p}_x\cos\theta - \dot{p}_z\sin\theta) + \frac{1}{3}m_b\ell^2\dot{\theta} \\
+\frac{d}{dt}\left( \frac{\partial \mathcal{L}}{\partial \dot{\theta}} \right) &amp;= \frac{1}{2}m_b\ell\left( \ddot{p}_x\cos\theta - \dot{p}_x\dot{\theta}\sin\theta - \ddot{p}_z\sin\theta - \dot{p}_z\dot{\theta}\cos\theta \right) + \frac{1}{3}m_b\ell^2\ddot{\theta} \\
+\frac{\partial \mathcal{L}}{\partial \theta} &amp;= -\frac{1}{2}m_b\ell\dot{\theta}(\dot{p}_x\sin\theta + \dot{p}_z\cos\theta) + \frac{1}{2}m_bg\ell\sin\theta \\
+\end{align*}
+\end{split}\]</div>
+<p>Therefore:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2}m_b\ell\left( \ddot{p}_x\cos\theta - \ddot{p}_z\sin\theta - \dot{p}_x\dot{\theta}\sin\theta - \dot{p}_z\dot{\theta}\cos\theta \right)
++ \frac{1}{3}m_b\ell^2\ddot{\theta}
++ \frac{1}{2}m_b\ell\dot{\theta}(\dot{p}_x\sin\theta + \dot{p}_z\cos\theta)
+- \frac{1}{2}m_b g\ell\sin\theta
+= Q_\theta
+\]</div>
+<p>Or collected:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2}m_b\ell\left( \ddot{p}_x\cos\theta - \ddot{p}_z\sin\theta \right)
++ \frac{1}{3}m_b\ell^2\ddot{\theta}
+- \frac{1}{2}m_b g\ell\sin\theta
+= Q_\theta
+\]</div>
+<p>(since the terms <span class="math notranslate nohighlight">\(-\dot{p}_x\dot{\theta}\sin\theta - \dot{p}_z\dot{\theta}\cos\theta\)</span> cancel with the time-derivative of <span class="math notranslate nohighlight">\(\partial\mathcal{L}/\partial\theta\)</span>.)</p>
+<p>Therefore, the explicit equations of motion for the three generalized coordinates are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+(m_t + m_b)\ddot{p}_x + \frac{1}{2}m_b\ell\left( \ddot{\theta}\cos\theta - \dot{\theta}^2 \sin\theta \right) &amp;= Q_{p_x} \\
+(m_t + m_b)\ddot{p}_z - \frac{1}{2}m_b\ell\left( \ddot{\theta}\sin\theta + \dot{\theta}^2\cos\theta \right) + (m_t + m_b)g &amp;= Q_{p_z} \\
+\frac{1}{2}m_b\ell\left( \ddot{p}_x\cos\theta - \ddot{p}_z\sin\theta \right)
++ \frac{1}{3}m_b\ell^2\ddot{\theta}
+- \frac{1}{2}m_b g\ell\sin\theta
+&amp;= Q_\theta
+\end{align*}
+\end{split}\]</div>
+</section>
+<section id="rearrange-into-state-space-dynamics-form">
+<h2>Rearrange into state-space dynamics form<a class="headerlink" href="#rearrange-into-state-space-dynamics-form" title="Link to this heading">#</a></h2>
+<p>Now, with these equations of motion, we need to rearrange the terms to obtain state space dynamics, for some definition of a state vector <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>.</p>
+<p>First, notice that the equations of motion just derived can be rewritten in the standard second order form:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{M}(q) \ddot{q} + \mathbf{C}(q, \dot{q}) \dot{q} + \mathbf{g}(q) = \mathbf{Q}
+\]</div>
+<p>where the generalized coordinates are <span class="math notranslate nohighlight">\(q = \begin{bmatrix} p_x \\ p_z \\ \theta \end{bmatrix}\)</span>.</p>
+<p>Rearranging the equations of motion further…</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+(m_t + m_b)\ddot{p}_x + \frac{1}{2} m_b \ell \cos\theta\, \ddot{\theta} - \frac{1}{2} m_b \ell \sin\theta\, \dot{\theta}^2 &amp;= Q_{p_x} \\
+(m_t + m_b)\ddot{p}_z - \frac{1}{2} m_b \ell \sin\theta\, \ddot{\theta} - \frac{1}{2} m_b \ell \cos\theta\, \dot{\theta}^2 + (m_t + m_b)g &amp;= Q_{p_z} \\
+\frac{1}{2} m_b \ell \cos\theta\, \ddot{p}_x - \frac{1}{2} m_b \ell \sin\theta\, \ddot{p}_z + \frac{1}{3} m_b \ell^2 \ddot{\theta} - \frac{1}{2} m_b g \ell \sin\theta &amp;= Q_\theta
+\end{align*}\]</div>
+<p>We see that:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{M}(q) = \begin{bmatrix}
+m_t + m_b &amp; 0 &amp; \frac{1}{2} m_b \ell \cos \theta \\
+0 &amp; m_t + m_b &amp; -\frac{1}{2} m_b \ell \sin \theta \\
+\frac{1}{2} m_b \ell \cos\theta &amp; -\frac{1}{2} m_b \ell \sin\theta &amp; \frac{1}{3} m_b \ell^2
+\end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{C}(q, \dot{q}) =
+\begin{bmatrix}
+0 &amp; 0 &amp; -\frac{1}{2} m_b \ell \dot{\theta} \sin\theta \\
+0 &amp; 0 &amp; -\frac{1}{2} m_b \ell \dot{\theta} \cos\theta \\
+0 &amp; 0 &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{g}(q) = \begin{bmatrix}
+0 \\
+(m_t + m_b)g \\
+-\frac{1}{2} m_b g \ell \sin\theta
+\end{bmatrix}
+\end{split}\]</div>
+<p>and <span class="math notranslate nohighlight">\(\mathbf{Q} = \begin{bmatrix} Q_{p_x} \\ Q_{p_z} \\ Q_\theta \end{bmatrix}\)</span> collects the generalized forces.</p>
+</section>
+<section id="generalized-forces">
+<h2>Generalized forces<a class="headerlink" href="#generalized-forces" title="Link to this heading">#</a></h2>
+<p>Let us now determine the generalized forces acting on the rocket system.
+Suppose now the rocket is equipped with a main thrust at the base providing both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span> thrust, and a single secondary thruster at the rocket nose providing only <span class="math notranslate nohighlight">\(x\)</span>-directed thrust, <span class="math notranslate nohighlight">\(T_{\text{nose},x}\)</span>.</p>
+<p>The available actuator inputs form the control input vector:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+u = \begin{bmatrix}
+T_{\text{base},x} \\
+T_{\text{base},z} \\
+T_{\text{nose},x}
+\end{bmatrix}
+\end{split}\]</div>
+<p>The generalized forces acting on the coordinates <span class="math notranslate nohighlight">\(p_x\)</span>, <span class="math notranslate nohighlight">\(p_z\)</span>, and <span class="math notranslate nohighlight">\(\theta\)</span> can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{Q} = 
+\begin{bmatrix}
+Q_{p_x} \\
+Q_{p_z} \\
+Q_\theta
+\end{bmatrix}
+\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+Q_{p_x} &amp;= T_{\text{base},x} + T_{\text{nose},x} \\
+Q_{p_z} &amp;= T_{\text{base},z} \\
+Q_\theta &amp;= T_{\text{nose},x} (\ell \cos \theta)
+\end{align*}
+\end{split}\]</div>
+<p>Therefore, in vector form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{Q} =
+\begin{bmatrix}
+T_{\text{base},x} + T_{\text{nose},x} \\
+T_{\text{base},z} \\
+\ell\, T_{\text{nose},x} \cos \theta
+\end{bmatrix}
+\end{split}\]</div>
+<p>Or, equivalently, using a selection matrix <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{Q} = \mathbf{B} u
+\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{B} =
+\begin{bmatrix}
+1 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; \ell \cos\theta
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="first-order-state-space-dynamics">
+<h2>First-order state space dynamics<a class="headerlink" href="#first-order-state-space-dynamics" title="Link to this heading">#</a></h2>
+<p>To write the second-order equations above in first-order state space form. Let us define <span class="math notranslate nohighlight">\(q = [p_x, p_z, \theta]^T\)</span> and <span class="math notranslate nohighlight">\(\dot{q} = [\dot{p}_x, \dot{p}_z, \dot{\theta}]^T\)</span>.
+Then we can define the state vector as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x =
+\begin{bmatrix}
+p_x \\ p_z \\ \theta \\ \dot{p}_x \\ \dot{p}_z \\ \dot{\theta}
+\end{bmatrix} = \begin{bmatrix}
+q \\ \dot{q}
+\end{bmatrix}
+\end{split}\]</div>
+<p>The original equations of motion are:
+$<span class="math notranslate nohighlight">\(
+\mathbf{M}(q)\ddot{q} + \mathbf{C}(q,\dot{q})\dot{q} + \mathbf{g}(q) = \mathbf{B}u
+\)</span>$</p>
+<p>Writing this as a first-order system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{x} = 
+\begin{bmatrix}
+\dot{p}_x \\ \dot{p}_z \\ \dot{\theta} \\ \ddot{p}_x \\ \ddot{p}_z \\ \ddot{\theta}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\dot{q} \\
+\mathbf{M}(q)^{-1} \left[ \mathbf{B}u - \mathbf{C}(q,\dot{q})\dot{q} - \mathbf{g}(q) \right]
+\end{bmatrix}
+\end{split}\]</div>
+<p>Thus, the first-order state-space equations are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{
+\dot{x} = f(x, u) =
+\begin{bmatrix}
+\dot{q} \\
+\mathbf{M}(q)^{-1}
+\left[ \mathbf{B}u - \mathbf{C}(q, \dot{q})\dot{q} - \mathbf{g}(q) \right]
+\end{bmatrix}
+}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_1 = p_x\)</span>, <span class="math notranslate nohighlight">\(x_2 = p_z\)</span>, <span class="math notranslate nohighlight">\(x_3 = \theta\)</span>, <span class="math notranslate nohighlight">\(x_4 = \dot{p}_x\)</span>, <span class="math notranslate nohighlight">\(x_5 = \dot{p}_z\)</span>, <span class="math notranslate nohighlight">\(x_6 = \dot{\theta}\)</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../logistics/notebooktopdf.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Converting Code Notebooks to PDF</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kinetic-energy">Kinetic energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-energy">Potential energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-the-euler-lagrange-equations">Applying the Euler-Lagrange equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rearrange-into-state-space-dynamics-form">Rearrange into state-space dynamics form</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-forces">Generalized forces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-order-state-space-dynamics">First-order state space dynamics</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

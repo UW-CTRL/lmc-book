@@ -59,6 +59,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'homework/hw02';</script>
     <script src="../_static/custom.js?v=7f7a6837"></script>
     <link rel="icon" href="../_static/favicon.png"/>
@@ -220,13 +222,12 @@
 <li class="toctree-l1"><a class="reference internal" href="hw01.html">Homework 1</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Homework 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hw01_solution.html">Dynamics (Discrete time, linearization)</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="hw01_solution.html">Homework 1 (Solutions)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../logistics/notebooktopdf.html">Converting Code Notebooks to PDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocketderivation.html">Rocket dynamics derivation</a></li>
 </ul>
 
     </div>
@@ -399,7 +400,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -415,6 +418,56 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-optimization">Trajectory optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rocket-landing-trajectory-optimization">1. Rocket landing trajectory optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expressing-trajectory-optimization-with-linear-dynamics-as-quadratic-programs">2. Expressing trajectory optimization with linear dynamics as quadratic programs.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#i">(i)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ii">(ii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#iii">(iii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#iv">(iv)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#v">(v)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#vi">(vi)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(vi)</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(b)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-flatness">3. Differential flatness</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(i)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">(ii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">(iii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">(iv)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-decision-making">Sequential Decision Making</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-programming-shortest-path-in-a-graph">1. Dynamic programming: Shortest path in a graph</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">(c)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -426,7 +479,296 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="homework-2">
 <h1>Homework 2<a class="headerlink" href="#homework-2" title="Link to this heading">#</a></h1>
-<p>TBD</p>
+<p><em>Due: May 15th 11:59PM</em> (Submit via Canvas)</p>
+<p>In addition to answering the written questions below, please complete the following Jupyter notebook exercises found <a class="reference external" href="https://github.com/UW-CTRL/lmc-exercises/tree/main/exercises">here</a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">05_rocket_trajopt.ipynb</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">06_stochastic_dynamic_programming.ipynb</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">07_mpc.ipynb</span></code></p></li>
+</ul>
+<section id="trajectory-optimization">
+<h2>Trajectory optimization<a class="headerlink" href="#trajectory-optimization" title="Link to this heading">#</a></h2>
+<section id="rocket-landing-trajectory-optimization">
+<h3>1. Rocket landing trajectory optimization<a class="headerlink" href="#rocket-landing-trajectory-optimization" title="Link to this heading">#</a></h3>
+<p>You should complete notebook <code class="docutils literal notranslate"><span class="pre">05_rocket_trajopt.ipynb</span></code> first before answering this question.</p>
+<section id="a">
+<h4>(a)<a class="headerlink" href="#a" title="Link to this heading">#</a></h4>
+<p>The trajectory optimization problem from part (iv) of the notebook may sometimes be infeasible, particularly if your initial guess is far from the feasible set. For instance, setting the initial control input to zero can easily lead to infeasibility.</p>
+<p>To address this, introduce slack variables into the optimization problem to relax one or more of the constraints, thereby ensuring that the solver can always find a feasible solution. Specify which constraints you are choosing to relax (for example, state or control constraints), describe how you incorporate the slack variables, and explain how you penalize their use in the objective function to discourage excessive constraint violation. Provide your reasoning for choosing which constraints to relax.</p>
+<p>Is this the only way to ensure feasibility? Briefly outline an alternative strategy, such as using a different form of regularization, constraint softening, or modifying the initial guess mechanism.</p>
+<p>(Optional) Feel free to implement your proposed formulation verify that it indeed performs what you expect it to do.</p>
+</section>
+<section id="b">
+<h4>(b)<a class="headerlink" href="#b" title="Link to this heading">#</a></h4>
+<p>How does the choice of the trust region penalty weighting affect the convergence rate towards a (locally) optimal solution. Run some experiments and provide some plots to demonstrate the relationship between trust region penalty weights and convergence rate.</p>
+</section>
+</section>
+<section id="expressing-trajectory-optimization-with-linear-dynamics-as-quadratic-programs">
+<h3>2. Expressing trajectory optimization with linear dynamics as quadratic programs.<a class="headerlink" href="#expressing-trajectory-optimization-with-linear-dynamics-as-quadratic-programs" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h4>(a)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>Consider the following trajectory optimization problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\underset{x_{0:N},\ u_{0:N-1}}{\text{minimize}} \quad
+    &amp; \sum_{k=0}^{N-1} \left(
+        x_k^\top Q x_k
+        + u_k^\top R u_k
+      \right) + x_N^\top Q_N x_N  \\
+\text{subject to} \qquad
+    &amp; x_{k+1} = A_k x_k + B_k u_k, \quad   k = 0, ..., N-1 \\
+    &amp; x_0 = x_\mathrm{init} \\
+    &amp; G_kx_k + h_k \leq 0 , \qquad k = 0, ..., N \\
+    &amp; u_{\min} \leq u_k \leq u_{\max}, \qquad k = 0, ..., N-1 \\
+\end{align*}
+\end{split}\]</div>
+<p>In this problem, you will express the above trajectory optimization problem as a quadratic program of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\underset{z}{\text{minimize}} \quad
+    &amp; \frac{1}{2}z^TPz + p^Tz + r \\
+\text{subject to} \qquad
+    &amp; Az = b\\
+    &amp; Gz \leq h
+\end{align*}
+\end{split}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(z = \begin{bmatrix} x_0^T &amp; x_1^T &amp; \dots &amp; x_N^T &amp; u_0^T &amp; u_1^T &amp; \dots &amp; u_{N-1}^T \end{bmatrix}^T\)</span>.</p>
+<section id="i">
+<h5>(i)<a class="headerlink" href="#i" title="Link to this heading">#</a></h5>
+<p>Rewrite the dynamics constraints <span class="math notranslate nohighlight">\(x_{k+1} = A_k x_k + B_k u_k\)</span> for <span class="math notranslate nohighlight">\(k = 0, \ldots, N-1\)</span> in the quadratic program form <span class="math notranslate nohighlight">\(A_\text{dyn} z = b_\text{dyn}\)</span>. Clearly define the structure and dimensions of <span class="math notranslate nohighlight">\(A_\text{dyn}\)</span> and <span class="math notranslate nohighlight">\(b_\text{dyn}\)</span> in terms of <span class="math notranslate nohighlight">\(z\)</span>. Explicitly specify how variables are arranged and how each time step’s dynamics are represented within this equality constraint.</p>
+</section>
+<section id="ii">
+<h5>(ii)<a class="headerlink" href="#ii" title="Link to this heading">#</a></h5>
+<p>Express the initial condition constraint <span class="math notranslate nohighlight">\(x_0 = x_\mathrm{init}\)</span> in the linear equality form <span class="math notranslate nohighlight">\(A_\text{init}z = b_\text{init}\)</span>. Clearly specify the structure and dimensions of <span class="math notranslate nohighlight">\(A_\text{init}\)</span> and <span class="math notranslate nohighlight">\(b_\text{init}\)</span> based on how the decision variable <span class="math notranslate nohighlight">\(z\)</span> is defined. Describe precisely which elements of <span class="math notranslate nohighlight">\(z\)</span> these matrices select and how they enforce the initial state constraint.</p>
+</section>
+<section id="iii">
+<h5>(iii)<a class="headerlink" href="#iii" title="Link to this heading">#</a></h5>
+<p>Using your answers from parts (i) and (ii), clearly write how the full equality constraint <span class="math notranslate nohighlight">\(Az = b\)</span> can be constructed by combining the dynamic constraints and initial condition constraints. Explicitly specify how <span class="math notranslate nohighlight">\(A_\text{dyn}\)</span>, <span class="math notranslate nohighlight">\(b_\text{dyn}\)</span>, <span class="math notranslate nohighlight">\(A_\text{init}\)</span>, and <span class="math notranslate nohighlight">\(b_\text{init}\)</span> are stacked or concatenated to form the complete <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(b\)</span> matrices in the quadratic program format.</p>
+</section>
+<section id="iv">
+<h5>(iv)<a class="headerlink" href="#iv" title="Link to this heading">#</a></h5>
+<p>Rewrite the state inequality constraints <span class="math notranslate nohighlight">\(G_k x_k + h_k \leq 0\)</span> for all <span class="math notranslate nohighlight">\(k = 0, \ldots, N\)</span> in the standard quadratic program form <span class="math notranslate nohighlight">\(G_\text{ineq} z \leq h_\text{ineq}\)</span>. Clearly specify the structure, dimensions, and arrangement of <span class="math notranslate nohighlight">\(G_\text{ineq}\)</span> and <span class="math notranslate nohighlight">\(h_\text{ineq}\)</span> in terms of the decision variable <span class="math notranslate nohighlight">\(z\)</span>. Explicitly describe how each time step’s constraint is embedded in <span class="math notranslate nohighlight">\(G_\text{ineq}\)</span> and <span class="math notranslate nohighlight">\(h_\text{ineq}\)</span>, making clear which parts of <span class="math notranslate nohighlight">\(z\)</span> are involved for each <span class="math notranslate nohighlight">\(k\)</span>.</p>
+</section>
+<section id="v">
+<h5>(v)<a class="headerlink" href="#v" title="Link to this heading">#</a></h5>
+<p>Rewrite the control input (actuator) constraints <span class="math notranslate nohighlight">\(u_{\min} \leq u_k \leq u_{\max}\)</span> for <span class="math notranslate nohighlight">\(k = 0, \ldots, N-1\)</span> in the standard quadratic program form <span class="math notranslate nohighlight">\(G_\text{u} z \leq h_\text{u}\)</span>. Clearly specify the structure, dimensions, and arrangement of <span class="math notranslate nohighlight">\(G_\text{u}\)</span> and <span class="math notranslate nohighlight">\(h_\text{u}\)</span> in terms of the decision variable <span class="math notranslate nohighlight">\(z\)</span>. Explicitly describe how each time step’s control constraint is embedded in <span class="math notranslate nohighlight">\(G_\text{u}\)</span> and <span class="math notranslate nohighlight">\(h_\text{u}\)</span>, making clear which parts of <span class="math notranslate nohighlight">\(z\)</span> are involved for each <span class="math notranslate nohighlight">\(k\)</span>.</p>
+</section>
+<section id="vi">
+<h5>(vi)<a class="headerlink" href="#vi" title="Link to this heading">#</a></h5>
+<p>Using your answers from parts (iv) and (v), write how the complete inequality constraint <span class="math notranslate nohighlight">\(Gz \leq h\)</span> is formed by combining the state and control input constraints. Explicitly specify how <span class="math notranslate nohighlight">\(G_\text{ineq}\)</span>, <span class="math notranslate nohighlight">\(h_\text{ineq}\)</span>, <span class="math notranslate nohighlight">\(G_\text{u}\)</span>, and <span class="math notranslate nohighlight">\(h_\text{u}\)</span> are stacked or concatenated to produce the full <span class="math notranslate nohighlight">\(G\)</span> and <span class="math notranslate nohighlight">\(h\)</span> matrices in the quadratic program format. Clearly indicate their structure and dimensions in terms of the decision variable <span class="math notranslate nohighlight">\(z\)</span>.</p>
+</section>
+<section id="id2">
+<h5>(vi)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h5>
+<p>Express the cost function</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{k=0}^{N-1} \left( x_k^\top Q x_k + u_k^\top R u_k \right) + x_N^\top Q_N x_N
+\]</div>
+<p>in the standard quadratic program form</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2}z^T P z + p^T z + r.
+\]</div>
+<p>Clearly describe the structure, dimensions, and block-diagonal form of the matrix <span class="math notranslate nohighlight">\(P\)</span> in terms of <span class="math notranslate nohighlight">\(Q\)</span>, <span class="math notranslate nohighlight">\(R\)</span>, and <span class="math notranslate nohighlight">\(Q_N\)</span>, and specify how <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(r\)</span> should be chosen to match the given objective.
+Explain which blocks of <span class="math notranslate nohighlight">\(P\)</span> correspond to which states <span class="math notranslate nohighlight">\(x_k\)</span> and control inputs <span class="math notranslate nohighlight">\(u_k\)</span> for all <span class="math notranslate nohighlight">\(k\)</span>.</p>
+</section>
+</section>
+<section id="id3">
+<h4>(b)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>Now, consider the following modified trajectory optimization problem, inspired by the SQP approach from notebook 5a. This problem includes additional trust region penalty terms in both the state and control input objectives, and also in the goal state.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\underset{x_{0:N},\ u_{0:N-1}}{\text{minimize}} \quad
+    &amp; \sum_{k=0}^{N-1} \Big[
+        x_k^\top Q\, x_k
+        + u_k^\top R\, u_k 
+        + (x_k - \tilde{x}_k)^\top Q_\mathrm{trp} (x_k - \tilde{x}_k)
+        + (u_k - \tilde{u}_k)^\top R_\mathrm{trp} (u_k - \tilde{u}_k)
+      \Big]
+      + (x_N - x_\text{goal})^\top Q_N (x_N - x_\text{goal})  \\
+\text{subject to} \quad
+    &amp; x_{k+1} = A_k x_k + B_k u_k + C_k,\qquad k = 0, \ldots, N-1 \\
+    &amp; x_0 = x_\mathrm{init} \\
+    &amp; G_k x_k + h_k \leq 0, \qquad k = 0, \ldots, N \\
+    &amp; u_{\min} \leq u_k \leq u_{\max},\qquad k = 0, \ldots, N-1 \\
+\end{align*}
+\end{split}\]</div>
+<p>Here,</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_k\)</span> denotes the state at time step <span class="math notranslate nohighlight">\(k\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(u_k\)</span> is the control input at time step <span class="math notranslate nohighlight">\(k\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_k\)</span>, <span class="math notranslate nohighlight">\(B_k\)</span>, and <span class="math notranslate nohighlight">\(C_k\)</span> describe the linearized dynamics at each time step,</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span>, <span class="math notranslate nohighlight">\(R\)</span>, <span class="math notranslate nohighlight">\(Q_\mathrm{trp}\)</span>, <span class="math notranslate nohighlight">\(R_\mathrm{trp}\)</span>, and <span class="math notranslate nohighlight">\(Q_N\)</span> are the state, input, trust region penalty, and terminal cost weights, respectively,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tilde{x}_k\)</span> and <span class="math notranslate nohighlight">\(\tilde{u}_k\)</span> are reference state and input trajectories,</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_\mathrm{init}\)</span> and <span class="math notranslate nohighlight">\(x_\text{goal}\)</span> are the prescribed initial and desired final states,</p></li>
+<li><p><span class="math notranslate nohighlight">\(G_k\)</span>, <span class="math notranslate nohighlight">\(h_k\)</span> encode stagewise state constraints,</p></li>
+<li><p><span class="math notranslate nohighlight">\(u_{\min}\)</span>, <span class="math notranslate nohighlight">\(u_{\max}\)</span> are input bounds.</p></li>
+</ul>
+<p>Based on your formulations from part (a), explicitly write out all the matrices and vectors—such as <span class="math notranslate nohighlight">\(P\)</span>, <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(G\)</span>, and <span class="math notranslate nohighlight">\(h\)</span>—that define the standard Quadratic Program (QP) form of this trajectory optimization problem. Clearly express each in terms of the problem data and parameters presented above, and specify how these matrices/vectors are constructed from the trajectory optimization problem setup.</p>
+</section>
+</section>
+<section id="differential-flatness">
+<h3>3. Differential flatness<a class="headerlink" href="#differential-flatness" title="Link to this heading">#</a></h3>
+<p><em>(Adapted from AA 274 from Stanford University)</em></p>
+<p>(<em>Note: Technically, this is not a trajectory optimization problem, as there is no objective function to minimize over possible trajectories. Rather, it is a trajectory <strong>generation</strong> problem, where the goal is to construct a feasible trajectory that satisfies the system constraints.</em>)</p>
+<p>In this problem, you will explore methods for generating smooth trajectories for non-holonomic wheeled robots, and in the process, gain familiarity with important geometric properties of these systems.</p>
+<p>A non-holonomic system is one for which the allowable instantaneous motions are subject to constraints, even though the system can ultimately reach any position and orientation through a sequence of admissible moves. A classic example is a car: while it can eventually maneuver to any pose in the plane, it cannot move directly sideways at any instant, since its velocity is constrained to the direction its wheels are oriented.</p>
+<p>Your objective is to synthesize a smooth, feasible trajectory for such a system by leveraging the concept of <em>differential flatness</em>, which enables explicit trajectory construction and control design in the presence of these motion constraints.</p>
+<div class="admonition-differential-flatness admonition">
+<p class="admonition-title">Differential flatness</p>
+<p>Differential flatness is a structural property of certain nonlinear systems that allows the state and control inputs to be expressed entirely in terms of a specific set of variables, called flat outputs, and their time derivatives.</p>
+<p>For a system to be differentially flat, there must exist a mapping such that:</p>
+<div class="math notranslate nohighlight">
+\[
+x = \Phi(y, \dot{y}, \ddot{y}, \dots, y^{(n)})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+u = \Psi(y, \dot{y}, \ddot{y}, \dots, y^{(n+1)})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> is the state, <span class="math notranslate nohighlight">\(u\)</span> is the control input, and <span class="math notranslate nohighlight">\(y\)</span> is the flat output. This property is powerful for trajectory planning because it effectively “inverts” the dynamics. Instead of solving a complex boundary value problem by integrating the equations of motion forward, a designer can simply define a smooth path for the flat outputs. Since the system is flat, the necessary control inputs and intermediate orientations required to follow that path can be calculated algebraically, ensuring that the resulting trajectory is physically feasible by construction.</p>
+</div>
+<p>Consider the dynamically extended unicycle model.</p>
+<p>The system dynamics are given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+\dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{v}
+\end{bmatrix} = \begin{bmatrix}
+v\cos\theta \\ v\sin\theta \\ \omega \\ a
+\end{bmatrix}
+\end{split}\]</div>
+<p>Here,</p>
+<ul class="simple">
+<li><p>The state vector is <span class="math notranslate nohighlight">\(\mathbf{x} = \begin{bmatrix} x &amp; y &amp; \theta &amp; v \end{bmatrix}^T\)</span>, where</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\((x, y)\)</span> is the Cartesian position of the robot’s center,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span> is its heading angle measured from the <span class="math notranslate nohighlight">\(x\)</span>-axis, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(v\)</span> is the forward velocity of the robot along its main axis.</p></li>
+</ul>
+</li>
+<li><p>The control input vector is <span class="math notranslate nohighlight">\(\mathbf{u} = \begin{bmatrix} a &amp; \omega \end{bmatrix}^T\)</span>, where</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(a\)</span> is the linear acceleration (rate of change of <span class="math notranslate nohighlight">\(v\)</span>), and</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega\)</span> is the angular velocity (rate of change of <span class="math notranslate nohighlight">\(\theta\)</span>).</p></li>
+</ul>
+</li>
+</ul>
+<p>This model captures the essential constraints of non-holonomic wheeled robots and serves as a foundation for planning and controlling their trajectories.</p>
+<section id="id4">
+<h4>(a)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<p>Derive explicit expressions for <span class="math notranslate nohighlight">\(\ddot{x}\)</span> and <span class="math notranslate nohighlight">\(\ddot{y}\)</span> in terms of the system variables <span class="math notranslate nohighlight">\((v, \theta, a, \omega)\)</span>. Starting from the given dynamics of the extended unicycle model, show how the second derivatives of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+\ddot{x} \\ \ddot{y}
+\end{bmatrix} =
+\begin{bmatrix}
+\cos\theta &amp; -v\sin\theta \\
+\sin\theta &amp; v\cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+a \\
+\omega
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="id5">
+<h4>(b)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>Given values for <span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, <span class="math notranslate nohighlight">\(\ddot{x}\)</span>, and <span class="math notranslate nohighlight">\(\ddot{y}\)</span>, under what circumstances can you solve for <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span> uniquely? Clearly state the mathematical condition(s) required for a unique solution to exist, and briefly explain the reason behind these conditions.</p>
+</section>
+<section id="c">
+<h4>(c)<a class="headerlink" href="#c" title="Link to this heading">#</a></h4>
+<p>Let us define the <em>flat outputs</em> for the system as <span class="math notranslate nohighlight">\(\begin{bmatrix} x &amp; y \end{bmatrix}^T\)</span>. Recall that the dynamics of the extended unicycle model allow us to interpret the second derivatives <span class="math notranslate nohighlight">\(\ddot{x}\)</span> and <span class="math notranslate nohighlight">\(\ddot{y}\)</span> as <em>virtual control inputs</em>: specifically, <span class="math notranslate nohighlight">\(\begin{bmatrix} u_1 &amp; u_2 \end{bmatrix}^T = \begin{bmatrix} \ddot{x} &amp; \ddot{y} \end{bmatrix}^T\)</span>. By selecting appropriate values for the flat outputs and their second derivatives, it becomes possible to algebraically compute the corresponding physical control inputs, <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span>.</p>
+<p>Suppose we wish to design a trajectory for the robot’s position in the plane, that is, a desired path <span class="math notranslate nohighlight">\(\begin{bmatrix} x(t) &amp; y(t) \end{bmatrix}^T\)</span> specified as a function of time. One convenient approach is to parameterize this trajectory using basis functions, such as polynomials:</p>
+<div class="math notranslate nohighlight">
+\[
+x(t) = \sum_{i=0}^n x_i \psi_i(t), \qquad y(t) = \sum_{i=0}^n y_i \psi_i(t)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\psi_i(t)\)</span> for <span class="math notranslate nohighlight">\(i=0,\dots, n\)</span> are chosen basis functions (e.g., polynomials), and <span class="math notranslate nohighlight">\(x_i\)</span>, <span class="math notranslate nohighlight">\(y_i\)</span> are scalar coefficients to be determined. The goal is to select these coefficients such that the resulting <span class="math notranslate nohighlight">\(x(t)\)</span> and <span class="math notranslate nohighlight">\(y(t)\)</span> satisfy desired initial/final conditions and possibly other requirements (e.g., velocity, boundary constraints).</p>
+<section id="id6">
+<h5>(i)<a class="headerlink" href="#id6" title="Link to this heading">#</a></h5>
+<p>Consider the polynomial basis functions:</p>
+<div class="math notranslate nohighlight">
+\[
+\psi_0(t) = 1, \quad \psi_1(t) = t, \quad \psi_2(t) = t^2, \quad \psi_3(t) = t^3
+\]</div>
+<p>Formulate a system of linear equations in the coefficients <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span>, for <span class="math notranslate nohighlight">\(i=0,\dots, 3\)</span>, so that the resulting trajectories <span class="math notranslate nohighlight">\(x(t)\)</span> and <span class="math notranslate nohighlight">\(y(t)\)</span> satisfy the following initial and terminal boundary conditions (with <span class="math notranslate nohighlight">\(t_\text{f} = 15\)</span>):</p>
+<ul>
+<li><p>Initial conditions:</p>
+<div class="math notranslate nohighlight">
+\[
+  x(0) = 0, \qquad y(0) = 0, \qquad v(0) = 0.5, \qquad \theta(0) = -\frac{\pi}{2}
+  \]</div>
+</li>
+<li><p>Final conditions:</p>
+<div class="math notranslate nohighlight">
+\[
+  x(t_\text{f}) = 5, \qquad y(t_\text{f}) = 5, \qquad v(t_\text{f}) = 0.5, \qquad \theta(t_\text{f}) = -\frac{\pi}{2}
+  \]</div>
+</li>
+</ul>
+<p>Provide the explicit linear equations relating the coefficients to these boundary conditions. Then, solve for the values of <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> that satisfy these constraints.</p>
+</section>
+<section id="id7">
+<h5>(ii)<a class="headerlink" href="#id7" title="Link to this heading">#</a></h5>
+<p>Explain why it is not possible to specify <span class="math notranslate nohighlight">\(v(t_\text{f}) = 0\)</span> in this formulation. What issues would arise if you tried to enforce this condition? Provide a mathematical or geometric justification.</p>
+</section>
+<section id="id8">
+<h5>(iii)<a class="headerlink" href="#id8" title="Link to this heading">#</a></h5>
+<p>Given the polynomial coefficients you have obtained, derive explicit expressions for the heading angle <span class="math notranslate nohighlight">\(\theta(t)\)</span> and the speed <span class="math notranslate nohighlight">\(v(t)\)</span> as functions of the trajectory <span class="math notranslate nohighlight">\([x(t), y(t)]\)</span> and their time derivatives.</p>
+</section>
+<section id="id9">
+<h5>(iv)<a class="headerlink" href="#id9" title="Link to this heading">#</a></h5>
+<p>Generate plots of the resulting trajectory by displaying <span class="math notranslate nohighlight">\(x(t)\)</span> and <span class="math notranslate nohighlight">\(y(t)\)</span> in the plane, as well as time profiles of <span class="math notranslate nohighlight">\(\theta(t)\)</span> and <span class="math notranslate nohighlight">\(v(t)\)</span> for <span class="math notranslate nohighlight">\(t \in [0, t_\text{f}]\)</span>. Confirm graphically and/or numerically that the trajectory meets the prescribed initial and final conditions for position, heading, and velocity. Additionally, plot the time histories of the control inputs <span class="math notranslate nohighlight">\(a(t)\)</span> and <span class="math notranslate nohighlight">\(\omega(t)\)</span> along the trajectory.</p>
+<p><em>Note</em>: You may find that in the case with velocity constraints, the solution obtained above could violate them. There are several ways to address this.</p>
+<ul class="simple">
+<li><p>Increase the number of basis polynomials and solve a constrained trajectory optimization problem. This is akin to a pseudospectral trajectory optimization approach; we can provide a trivial objective function and simply find a <em>feasible</em> solution.</p></li>
+<li><p>Increase <span class="math notranslate nohighlight">\(t_\text{f}\)</span>, essentially “stretching out” the trajectory, until the constraints are satisfied.</p></li>
+<li><p>Re-scale velocities the problematic portions of the trajectory while keeping the geometric properties the same.</p></li>
+</ul>
+<p>Take a look at the <a class="reference external" href="https://stanfordasl.github.io/PoRA-I/aa274a_aut2122/pdfs/homework/hw1.pdf">Stanford AA 274 homework</a> if you are curious to learn more about the third option.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="sequential-decision-making">
+<h2>Sequential Decision Making<a class="headerlink" href="#sequential-decision-making" title="Link to this heading">#</a></h2>
+<section id="dynamic-programming-shortest-path-in-a-graph">
+<h3>1. Dynamic programming: Shortest path in a graph<a class="headerlink" href="#dynamic-programming-shortest-path-in-a-graph" title="Link to this heading">#</a></h3>
+<p><em>(Adapted from Stanford AA 203 homework)</em></p>
+<p><img alt="Gradient descent step size and initialization. Gradient descent step size = 0.0305." src="../_images/graph_dp.jpg" /></p>
+<p>Consider the shortest path problem in figure above where it is only possible to travel to the right and the numbers represent the travel times for each segment. The control input is the decision to go “up” or “down” at each node. Given that state transitions are deterministic in a low-dimensional state space, we will use dynamic programming to develop a
+closed-loop policy for each node in the grid.</p>
+<section id="id10">
+<h4>(a)<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<p>Use dynamic programming (DP) to find the shortest path from A to B.</p>
+</section>
+<section id="id11">
+<h4>(b)<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<p>Consider a generalized version of the shortest path problem in Figure 1 where the grid has <span class="math notranslate nohighlight">\(n\)</span> segments on each side. Find the number of computations required by an exhaustive search algorithm (i.e., the number of routes that such an algorithm would need to evaluate) and the number of computations required by a DP algorithm (i.e., the number of DP evaluations). For example, for <span class="math notranslate nohighlight">\(n = 3\)</span>, an exhaustive search algorithm requires 20 computations, while the DP algorithm requires only 15.</p>
+</section>
+<section id="id12">
+<h4>(c)<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<p>Now consider an extended version of the problem where, instead of only moving one edge-length at a time, you may move in a given direction (either up-right or down-right) for 1, 2, or 3 consecutive edge-lengths in a single action. The cost structure is as follows:</p>
+<ul class="simple">
+<li><p>A move covering 1 edge-length: sum of the edge’s cost minus 1.</p></li>
+<li><p>A move covering 2 edge-lengths: sum of the two edges’ costs minus 2.</p></li>
+<li><p>A move covering 3 edge-lengths: sum of the three edges’ costs minus 3.</p></li>
+</ul>
+<p>For instance, starting from node A:</p>
+<ul class="simple">
+<li><p>Moving up-right for 1 edge-length has a cost of <span class="math notranslate nohighlight">\(5-1\)</span>,</p></li>
+<li><p>Moving up-right for 2 edge-length, the cost is <span class="math notranslate nohighlight">\(5 + 6 - 2\)</span>,</p></li>
+<li><p>Moving up-right for 3 edge-length, the cost is <span class="math notranslate nohighlight">\(5 + 6 + 10 - 3\)</span>.</p></li>
+</ul>
+<p>Using this cost and action setup, employ dynamic programming to compute the optimal (minimum-cost) path from node A to node B.</p>
+</section>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -483,6 +825,63 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-optimization">Trajectory optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rocket-landing-trajectory-optimization">1. Rocket landing trajectory optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expressing-trajectory-optimization-with-linear-dynamics-as-quadratic-programs">2. Expressing trajectory optimization with linear dynamics as quadratic programs.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#i">(i)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ii">(ii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#iii">(iii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#iv">(iv)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#v">(v)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#vi">(vi)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(vi)</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(b)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-flatness">3. Differential flatness</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">(i)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">(ii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">(iii)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">(iv)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-decision-making">Sequential Decision Making</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-programming-shortest-path-in-a-graph">1. Dynamic programming: Shortest path in a graph</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">(c)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
