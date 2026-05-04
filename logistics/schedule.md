@@ -9,8 +9,8 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | Apr 6 <br> Apr 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  |   2    |Optimization vs learning-based control <br> Open-loop vs closed-loop | | [control full](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_main.pdf), [control intro](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_intro.pdf)|
 | Apr 13 <br> Apr 15&nbsp;&nbsp;  |   3    |Open-loop: Trajectory optimization and generation | | [control traj opt](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_trajopt.pdf)|
 | Apr 20 <br>  Apr 22&nbsp;  |   4    |Open-loop: Trajectory optimization and generation <br> *Closed-loop: Sequential decision making and dynamic programming* | (Friday 4/24) Homework 1 due | [sdm](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_sdm.pdf), [stl+hri](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/special_stl_hri.pdf) |
-| Apr 27 <br> Apr 29&nbsp;&nbsp;&nbsp;  |   5    |*Bellman equation <br> MPC* | (Friday 5/1) Homework 1 self-assessment due <br> project proposal due | |
-| May 4 <br> May 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   |   6    |*LQR <br> Guest speaker* | Talk reflection due| |
+| Apr 27 <br> Apr 29&nbsp;&nbsp;&nbsp;  |   5    |Bellman equation  | (Friday 5/1) Homework 1 self-assessment due <br> project proposal due | [sdm](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_sdm.pdf)|
+| May 4 <br> May 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   |   6    |*Bellman, LQR <br> Guest speaker* | Talk reflection due| [lqr](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_lqr.pdf)|
 | May 11 <br> May 13&nbsp; |   7    |*LQR/LQG <br> Guest speaker* | (Friday 5/15) Homework 2 due, talk reflection due | |
 | May 18 <br> May 20&nbsp;&nbsp;&nbsp;  |   8    |*Advanced topics: HJ reachability, Reinforcement learning* | (Friday 5/22) Homework 2 self-assessment due,| |
 | May 25 <br> May 27&nbsp;&nbsp;&nbsp;|   9    |*(Memorial day) <br> Scientific communication*|  | |
