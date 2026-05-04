@@ -6,7 +6,7 @@ For each talk, you are expected to submit a brief reflection.
 Your reflection should thoughtfully address the presentation. You might comment on aspects you found particularly interesting or thought-provoking (and why), highlight something new you learned, describe connections to other topics or your own experience, discuss possible applications or extensions of the ideas, or pose questions that emerged for you—along with any initial thoughts or speculations.
 
 ## Submission details
-Reflections are due within 2 days of each speaker's presentation. Please submit your reflection via the Google Form [LINK TO BE UPDATED].
+Reflections are due within 2 days of each speaker's presentation. Please submit your reflection via the [Google Form](https://forms.gle/Ez5MNeGC6KJcnsak8) (UW login).
 
 ## Grading Criteria
 
