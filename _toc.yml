@@ -34,6 +34,7 @@ parts:
   - file: homework/hw02
   - file: homework/hw03
   - file: homework/hw01_solution
+  # - file: homework/hw02_solution
 
 - caption: Miscellaneous
   chapters:
