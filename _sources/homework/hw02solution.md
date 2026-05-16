@@ -1,3 +1,4 @@
+# Homework 2 (Solutions)
 ## Trajectory optimization
 
 ### 1. Rocket landing trajectory optimization
@@ -32,7 +33,7 @@ $$
 \end{align*}
 $$
 
-Here, $\gamma$ is a large positive penalty coefficient that strongly discourages the use of slack variables except when absolutely necessary. Each time step along the trajectory has an associated slack variable. This heavy penalization ensures that constraint violations are only permitted when no feasible alternative exists for the optimization. However, it is important to note that if the initial guess is very far from feasibility, relaxing only a single set of constraints may not suffice to guarantee convergence. For implementation details and further discussion, please consult the solution code in the `trajopt_1` notebook.
+Here, $\gamma$ is a large positive penalty coefficient that strongly discourages the use of slack variables except when absolutely necessary. Each time step along the trajectory has an associated slack variable. This heavy penalization ensures that constraint violations are only permitted when no feasible alternative exists for the optimization. However, it is important to note that if the initial guess is very far from feasibility, relaxing only a single set of constraints may not suffice to guarantee convergence. For implementation details and further discussion, please consult the solution code in the `hw_rocket.ipynb` solution notebook.
 
 Alternative strategies include:
 
@@ -49,13 +50,13 @@ Alternative strategies include:
 ```{admonition} Solution
 :class: dropdown
 
-Please refer to the `trajopt_1` notebook for the implementation.
+Please refer to the `hw_rocket.ipynb` solution notebook for the implementation.
 
 Adding slack variables exclusively to obstacle constraints is insufficient for finding a feasible solution. In addition to relaxing obstacle constraints, this implementation introduces slack variables for $\theta$, which penalizes the cost of high-angle maneuvers. Similarly, a slack variable for altitude is included to maintain feasibility. To achieve a smooth trajectory, the cost matrices were tuned to balance the trade-off between constraint satisfaction and control effort.
 
 **Figure 1:** Trajectory of the rocket with fine-tuned parameters. 
 
-![Traj1a](HW2figs/Traj1a.png)
+![Traj1a](figs/hw2_Traj1a.png)
 
 
 ```
@@ -72,7 +73,7 @@ However, when penalty is too high, the algorithm may not coverge fast enougth to
 
 **Figure 1:** Cost in Log Scale vs SQP iteration for different trust region penalties. 
 
-![Cost in Log Scale vs SQP iteration](HW2figs/31b1.png)
+![Cost in Log Scale vs SQP iteration](figs/hw2_31b1.png)
 
 
 ```
@@ -295,7 +296,7 @@ $$
 
 where $x_k\in R^n$, $G_k\in R^{n \times n}$ and $h_k\in R^{n \times m}$.
 
-By stacking these constraints according to the definition of z, we obtain the following block-matrix structure:
+By stacking these constraints according to the definition of $z$, we obtain the following block-matrix structure:
 
 $$
 \begin{align*}
@@ -324,7 +325,7 @@ $$
 \end{align*}
 $$
 
-The equation is simplfied as $G_{ineq} z = h_{ineq}$, where $z\in R^{(N+1)n+Nm}$,  $h_{ineq}\in R^{(N+1)n}$ and $G_{ineq}\in R^{(N+1)n \times ((N+1)n+Nm)}$.
+The equation is simplfied as $G_\mathrm{ineq} z = h_\mathrm{ineq}$, where $z\in R^{(N+1)n+Nm}$,  $h_\mathrm{ineq}\in R^{(N+1)n}$ and $G_\mathrm{ineq}\in R^{(N+1)n \times ((N+1)n+Nm)}$.
 
 ```
 
@@ -365,7 +366,7 @@ $$
     0 &  \ldots & 0 & 0 & 0 & \ddots & 0 \\
     0 &  \ldots & 0 & 0 & 0 & \ldots & I \\
     0 &  \ldots & 0 & -I & 0 & \ldots & 0 \\
-   0 &  \ldots & 0 & 0 & I & \ddots & 0 \\
+   0 &  \ldots & 0 & 0 & -I & \ddots & 0 \\
     0 &  \ldots & 0 & 0 & 0 & \ddots & 0 \\
     0 &  \ldots & 0 & 0 & 0 & \ldots & -I \\
   \end{bmatrix}
@@ -389,7 +390,7 @@ $$
 \end{align*}
 $$
 
-The equation is simplfied as $G_{u} z \leq h_{u}$ where $z\in R^{(N+1)n+Nm}$,  $h_{u}\in R^{2Nm}$ and $G_{u}\in R^{2Nm \times ((N+1)n+Nm)}$.
+The equation is simplfied as $G_\mathrm{u} z \leq h_\mathrm{u}$ where $z\in R^{(N+1)n+Nm}$,  $h_\mathrm{u}\in R^{2Nm}$ and $G_\mathrm{u}\in R^{2Nm \times ((N+1)n+Nm)}$.
 
 ```
 
@@ -409,12 +410,12 @@ The full matrices are constructed by stacking the individual constraint componen
 $$
 \begin{align*}
   \begin{bmatrix}
-    G_{ineq} \\
-    G_{u}
+    G_\mathrm{ineq} \\
+    G_\mathrm{u}
   \end{bmatrix} z = 
   \begin{bmatrix}
-    b_{ineq} \\
-    b_{u}
+    h_\mathrm{ineq} \\
+    h_\mathrm{u}
   \end{bmatrix} 
 \end{align*}
 $$
@@ -492,7 +493,7 @@ Explain which blocks of $P$ correspond to which states $x_k$ and control inputs 
 :class: dropdown
 
 
-Because the objective is a pure quadratic form with no linear or constant terms, we set $p=0$ amd $r=0$
+Because the objective is a pure quadratic form with no linear or constant terms, we set $p=0$ amd $r=0$.
 The matrix $P$ is structured as follows:
 
 $$
@@ -508,13 +509,13 @@ $$
   0 & \ldots & \ldots & \ldots& \ldots& \ldots & \dots& 0 & 2R
 \end{bmatrix} = 
 \begin{bmatrix}
-diag(2Q) & 0 & 0\\
+\mathrm{diag}(2Q) & 0 & 0\\
 0 & 2Q_N & 0 \\
-0 & 0 & diag(2R)
+0 & 0 & \mathrm{diag}(2R)
 \end{bmatrix}
 $$ 
 
-where left top block has the dimenstion of Nn-by-Nn and right botton block has the demension of Nm-by-Nm. $P \in R^{((N+1)n+Nm)}$:
+where left top block has the dimension of $Nn \times Nn$ and right botton block has the dimension of $Nm \times Nm$. $P \in R^{((N+1)n+Nm)}$:
 
 
 ```
@@ -574,29 +575,41 @@ $$
 Expand the cost function at time k:
 
 $$
-x_k^T Q x_k + u_k^T Q u_k + x_k^T Q_{trp} x_k - x_k^T Q_{trp} \tilde{x}_K -\tilde{x}_k^T Q_{trp} x_k + \tilde{x}_k^T Q_{trp} \tilde{x}_k + u_k^T R_{trp} u_k - u_k^T R_{trp} \tilde{u}_K -\tilde{u}_k^T R_{trp} u_k + \tilde{u}_k^T R_{trp} \tilde{u}_K 
+x_k^T Q x_k + u_k^T R u_k + x_k^T Q_{trp} x_k - x_k^T Q_{trp} \tilde{x}_k -\tilde{x}_k^T Q_{trp} x_k + \tilde{x}_k^T Q_{trp} \tilde{x}_k + u_k^T R_{trp} u_k - u_k^T R_{trp} \tilde{u}_k -\tilde{u}_k^T R_{trp} u_k + \tilde{u}_k^T R_{trp} \tilde{u}_k 
 $$
 
 cost at final:
 
 $$
-x_k^T Q_{N} x_k - x_k^T Q_{N} \tilde{x}_K -\tilde{x}_k^T Q_{N} x_k + \tilde{x}_k^T
- Q_{N} \tilde{x}_k
+x_N^T Q_{N} x_N - x_N^T Q_{N} x_{goal} - x_{goal}^T Q_{N} x_N + x_{goal}^T
+ Q_{N} x_{goal}
+$$
+
+Notice $Q_{trp}$, $R_{trp}$ and $Q_{N}$ are symmetric, so:
+
+$$
+
+\begin{align*}
+  x_k^T Q_{trp}\, \tilde{x}_k = (x_k^T Q_{trp}\, \tilde{x}_k)^T = \tilde{x}_k^T Q_{trp}\, x_k \\
+  x_N^T Q_{N}\, x_{goal} = (x_N^T Q_{N}\, x_{goal})^T = x_{goal}^T Q_{N}\, x_N \\
+\end{align*}
+  
+
 $$
 
 Combine similar terms:
 
 $$
 \begin{align*}
-  & \text{quatratic terms:}  \sum_{k=0}^{N-1} \Big[
+  & \text{quadratic terms:}  \sum_{k=0}^{N-1} \Big[
         x_k^T Q\, x_k + x_k^T Q_{trp}\, x_k
         + u_k^T R\, u_k + u_k^T R_{trp}\, u_k
       \Big]
       + x_N^T Q_N x_N \\
   & \text{linear terms:}  \sum_{k=0}^{N-1} \Big[
-        -x_k^T Q_{trp}\, \tilde{x}_k - \tilde{x}_k^T Q_{trp}\, x_k
-        -u_k^T R_{trp}\, \tilde{u}_k - \tilde{u}_k^T R_{trp}\, u_k
-      \Big] \\
+       - 2 \tilde{x}_k^T Q_{trp}\, x_k
+       - 2 \tilde{u}_k^T R_{trp}\, u_k
+      \Big] - 2 x_{goal}^T Q_{N}\, x_N \\
   & \text{constant terms:}   \sum_{k=0}^{N-1} \Big[
         \tilde{x}_k^T Q_{trp}\, \tilde{x}_k
         + \tilde{u}_k^T R_{trp}\, \tilde{u}_k
@@ -605,7 +618,7 @@ $$
 \end{align*}
 $$
 
-The quatratic terms are represented by $\frac{1}{2}zT P z$. 
+The quadratic terms are represented by $\frac{1}{2}z^T P z$. 
 The matrix P $\in R^{((N+1)n + Nm) \times ((N+1)n + Nm)}$ is a block diagonal matrix with the structure:
 
 $$
@@ -620,20 +633,14 @@ $$
   \vdots & & & &\vdots & & \ddots & \ddots& 0 \\
   0 & \ldots & \ldots & \ldots& \ldots& \ldots & \dots& 0 & 2(R+R_{trp})
 \end{bmatrix} = 
-\begin{bmatrix}
-diag(2(Q+Q_{trp})) & 0 & 0\\
-0 & 2Q_N & 0 \\
-0 & 0 & diag(2(R+R_{trp}))
-\end{bmatrix}
+\operatorname{blkdiag}\Big(
+\underbrace{2(Q+Q_{trp}), \ldots, 2(Q+Q_{trp})}_{N\ \text{times}},
+2Q_N,
+\underbrace{2(R+R_{trp}), \ldots, 2(R+R_{trp})}_{N\ \text{times}}
+\Big)
 $$ 
 
-Notice linear terms are scalars, so:
-
-$$
-  x_k^T Q_{trp}\, \tilde{x}_k = (x_k^T Q_{trp}\, \tilde{x}_k)T = \tilde{x}_k^T Q_{trp}\, x_k
-$$
-
-Therefore, the linear terms can be written as $p T z$, where $p \in R^{(N+1)n+Nm}$:
+The linear terms can be written as $p^T z$, where $p \in R^{(N+1)n+Nm}$:
 
 $$
 \begin{bmatrix}
@@ -647,7 +654,7 @@ $$
 \end{bmatrix}
 $$
 
-The constant terms r in the equation $\frac{1}{2}z^T P z + p^T z + r$ is givan by:
+The constant terms r in the equation $ \frac{1}{2}z^T P z + p^T z + r $ is given by:
 $$
 r =\sum_{k=0}^{N-1} \Big[
         \tilde{x}_k^T Q_{trp}\, \tilde{x}_k
@@ -660,15 +667,15 @@ $$
 Set dynamic constraints as:
 
 $$
-x_{k+1} + A_k x_k + B_k u_k = C_k
+x_{k+1} - A_k x_k - B_k u_k = C_k
 $$
 
-Equality constrints are derive by following the procedure in problem a.(i), a.(ii) and a.(iii) yelds:
+Equality constraints are derived by following the procedure in problem a.(i), a.(ii) and a.(iii) yields:
 
 
 $$
 \begin{align*}
-  Az\leq b \\
+  Az = b \\
   A = 
   \begin{bmatrix}
     I & 0 & \ldots & & \ldots & \ldots & \ldots & \ldots & 0\\
@@ -683,21 +690,21 @@ $$
     x_\mathrm{init} \\
     C_0 \\
     \vdots \\
-    C_N \\
+    C_{N-1} \\
   \end{bmatrix} \\
 \end{align*}
 $$
 
 where $A \in R^{(N+1)n \times ((N+1)n + Nm) }$ and $b \in R^{(N+1)n}$.
 
-Follow the procedure in problem a.(iv), a.(v) and a.(vi) yelds $Gz \leq h$, where:
+Follow the procedure in problem a.(iv), a.(v) and a.(vi) yields $Gz \leq h$, where:
 
 
 $$
 \begin{align*}
     G=
   \begin{bmatrix}
-    diag(G_k) & 0  \\
+    blkdiag(G_0, \ldots, G_N) & 0  \\
     0 & I   \\
     0 & -I   
   \end{bmatrix} \\
@@ -716,7 +723,7 @@ $$
 \end{align*}
 $$ 
 
-where $h\in R^{(N+1)n + 2Nm}$ and $G\in R^{((N+1)n + 2Nm) \times ((N+1)n+Nm)}$
+where $G_k\in R^{q \times n}$, $h\in R^{(N+1)q + 2Nm}$ and $G\in R^{((N+1)q + 2Nm) \times ((N+1)n+Nm)}$
 
 
 ```
@@ -739,10 +746,14 @@ Your objective is to synthesize a smooth, feasible trajectory for such a system 
 Differential flatness is a structural property of certain nonlinear systems that allows the state and control inputs to be expressed entirely in terms of a specific set of variables, called flat outputs, and their time derivatives.
 
 For a system to be differentially flat, there must exist a mapping such that:
-$$
-x = \Phi(y, \dot{y}, \ddot{y}, \dots, y^{(n)})$$
 
-$$u = \Psi(y, \dot{y}, \ddot{y}, \dots, y^{(n+1)})$$
+$$
+x = \Phi(y, \dot{y}, \ddot{y}, \dots, y^{(n)})
+$$
+
+$$
+u = \Psi(y, \dot{y}, \ddot{y}, \dots, y^{(n+1)})
+$$
 
 where $x$ is the state, $u$ is the control input, and $y$ is the flat output. This property is powerful for trajectory planning because it effectively "inverts" the dynamics. Instead of solving a complex boundary value problem by integrating the equations of motion forward, a designer can simply define a smooth path for the flat outputs. Since the system is flat, the necessary control inputs and intermediate orientations required to follow that path can be calculated algebraically, ensuring that the resulting trajectory is physically feasible by construction.
 ```
@@ -794,46 +805,46 @@ $$
 :class: dropdown
 
 
-Taking the time derivatives of $\dot{x}$ and $\dot{y}$, yeilds:
+Taking the time derivatives of $\dot{x}$ and $\dot{y}$, yields:
 
 $$
 \begin{align*}
-  \begin{bmatrix}
-    \ddot{x} \\
-    \ddot{y}
-  \end{bmatrix} = 
-  \begin{bmatrix}
-    \frac{d(v \cos(\theta))}{dt} \\
-    \frac{d(v \sin(\theta))}{dt} \\
-  \end{bmatrix} = 
-  \begin{bmatrix}
-    \dot{v} \cos(\theta) -  v \dot{\theta} \sin(\theta) \\
-    \dot{v} \sin(\theta) -  v \dot{\theta} \cos(\theta) 
-  \end{bmatrix}
+\ddot{x} &= \frac{d}{dt}(v\cos\theta)
+= \dot{v}\cos\theta - v\dot{\theta}\sin\theta \\
+\ddot{y} &= \frac{d}{dt}(v\sin\theta)
+= \dot{v}\sin\theta + v\dot{\theta}\cos\theta
 \end{align*}
 
 $$
 
-substitute $\dot{v}$ and $\dot{\theta}$ with $a$ and $\omega$ yelds:
+substitute $\dot{v}$ and $\dot{\theta}$ with $a$ and $\omega$ gives:
 
 $$
-  \begin{align*}
-    \begin{bmatrix}
-    \ddot{x} \\
-    \ddot{y}
-  \end{bmatrix} = 
-  \begin{bmatrix}
-    a \cos(\theta) -  v \omega \sin(\theta) \\
-    a \sin(\theta) -  v \omega \cos(\theta) 
-  \end{bmatrix} =
-  \begin{bmatrix}
-    \cos(\theta) & -v \sin(\theta) \\
-    \sin(\theta) & v \cos(\theta) \\ 
-  \end{bmatrix}
-  \begin{bmatrix}
-    a \\ \omega
-  \end{bmatrix}
-  \end{align*}
+
+\begin{align*}
+\ddot{x} &= a\cos\theta - v\omega\sin\theta \\
+\ddot{y} &= a\sin\theta + v\omega\cos\theta
+\end{align*}
+
+$$
+
+write the equations in matrix form:
+
+$$
+
+\begin{bmatrix}
+\ddot{x} \\
+\ddot{y}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos\theta & -v\sin\theta \\
+\sin\theta & v\cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+a \\ \omega
+\end{bmatrix}
+
 $$
 
 ```
@@ -846,13 +857,13 @@ Given values for $v$, $\theta$, $\ddot{x}$, and $\ddot{y}$, under what circumsta
 ```{admonition} Solution
 :class: dropdown
 
-For a square matrix, finding a unique solution to $Ax=b$ requires A to be invertible, which is equivalente to the folling statements:
+For a square matrix, finding a unique solution to $Ax=b$ requires $A$ to be invertible, which is equivalent to the following statements:
 1. $det(A) \neq 0$
 2. A is full rank.
-3. Columns of A are linearly independent.
-4. CRows of A are linearly independent.
+3. The columns of A are linearly independent.
+4. The rows of A are linearly independent.
 
-We can test if a solution exists by examining the determinant of $A$. In the unicycle case, a unique solution exists if:
+We can determine whether a unique solution exists by examining the determinant of $A$. In the unicycle case, a unique solution exists if:
 
 $$
 det(\begin{bmatrix}
@@ -861,7 +872,15 @@ det(\begin{bmatrix}
 \end{bmatrix}) = v \cos^2(\theta) + v \sin^2(\theta) = v \neq 0  
 $$ 
 
-The velocity is non-zero, then we can find a unique solution. If $v$ is zero, than $\omega$ disappears from the equations, and infinitely many ω values produce the same $(\ddot{x},\ddot{y})$. 
+Therefore, a unique solution for $(a,\omega)$ exists whenever the velocity satisfies
+
+$$
+v \neq 0
+$$
+
+If $v \neq 0$, the mapping from $(a,\omega)$ to $(\ddot{x},\ddot{y})$ is invertible, so both inputs uniquely determine the accelerations.
+
+If $v = 0$, the second column of $A$ vanishes, and the system becomes rank-deficient. In this case, $\omega$ has no effect on $(\ddot{x},\ddot{y})$, so the solution is not unique.
 
 
 ```
@@ -882,6 +901,7 @@ where $\psi_i(t)$ for $i=0,\dots, n$ are chosen basis functions (e.g., polynomia
 
 ##### (i)
 Consider the polynomial basis functions:
+
 $$
 \psi_0(t) = 1, \quad \psi_1(t) = t, \quad \psi_2(t) = t^2, \quad \psi_3(t) = t^3
 $$
@@ -889,10 +909,13 @@ $$
 Formulate a system of linear equations in the coefficients $x_i$ and $y_i$, for $i=0,\dots, 3$, so that the resulting trajectories $x(t)$ and $y(t)$ satisfy the following initial and terminal boundary conditions (with $t_\text{f} = 15$):
 
 - Initial conditions:
+
   $$
   x(0) = 0, \qquad y(0) = 0, \qquad v(0) = 0.5, \qquad \theta(0) = -\frac{\pi}{2}
   $$
+
 - Final conditions:
+
   $$
   x(t_\text{f}) = 5, \qquad y(t_\text{f}) = 5, \qquad v(t_\text{f}) = 0.5, \qquad \theta(t_\text{f}) = -\frac{\pi}{2}
   $$
@@ -904,7 +927,7 @@ Provide the explicit linear equations relating the coefficients to these boundar
 :class: dropdown
 
 
-Define polynimials function for $x(t)$ and $y(t)$:
+Define polynomials function for $x(t)$ and $y(t)$:
 
 $$
 \begin{align*}
@@ -930,15 +953,47 @@ $$
   & x(0) = x_0 + 0 x_1 +0 x_2 +0 x_3 = 0 \\
   & \dot{x}(0) = x_1 + 0x_2 +0 x_3 = v \cos(\theta) = 0.5 \cos(-\frac{\pi}{2}) = 0 \\
   & x(15) = x_0 + 15x_1 + 15^2x_2 +15^3x_3 = 5 \\
-  & \dot{x}(15) = x_1 + 30x_2 + 3*15^2 x_3 = 0 \\
+  & \dot{x}(15) = x_1 + 30x_2 + 3 \cdot 15^2 x_3 = 0 \\
   & y(0) = y_0 + 0 y_1 +0 y_2 +0 y_3 = 0 \\
   & \dot{y}(0) = y_1 + 0y_2 +0 y_3 = v \sin(\theta) = 0.5 \sin(-\frac{\pi}{2}) = -0.5 \\
   & y(15) = y_0 + 15y_1 +  15^2y_2 +15^3y_3 = 5 \\
-  & \dot{y}(15) = y_1 + 30y_2 + 3*15^2 y_3 = 0.5 \sin(-\frac{\pi}{2}) = -0.5 \\
+  & \dot{y}(15) = y_1 + 30y_2 + 3 \cdot 15^2 y_3 = 0.5 \sin(-\frac{\pi}{2}) = -0.5 \\
 \end{align*}
 $$
 
-solve for $x_i$ and $y_i$ yeilds:
+The above equations can be expressed as a system of linear equations
+
+$$
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+1 & 15 & 225 & 3375 \\
+0 & 1 & 30 & 675  
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\ x_1 \\ x_2 \\ x_3
+\end{bmatrix} = 
+\begin{bmatrix}
+0 \\ 0 \\ 5 \\ 0
+\end{bmatrix}
+$$
+
+$$
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+1 & 15 & 225 & 3375 \\
+0 & 1 & 30 & 675  
+\end{bmatrix}
+\begin{bmatrix}
+y_0 \\ y_1 \\ y_2 \\ y_3
+\end{bmatrix} = 
+\begin{bmatrix}
+0 \\ -0.5 \\ 5 \\ -0.5
+\end{bmatrix}
+$$
+
+solving for $x_i$ and $y_i$ yields:
 
 $$
 \begin{align*}
@@ -969,17 +1024,20 @@ Explain why it is not possible to specify $v(t_\text{f}) = 0$ in this formulatio
 :class: dropdown
 
 
-We can find $v$ ans $\theta$ in terms of $x(t)$, $y(t)$ and their time derivatives:
+We can find $v$ and $\theta$ in terms of $x(t)$, $y(t)$ and their time derivatives:
  
 $$
 \begin{align*}
   v = \sqrt{(\dot{x}(t)^2 + \dot{y}(t)^2)}  \\
-  \theta = \arctan2(\dot{y}(t),\dot{x}(t)) 
+  \theta = \mathrm{arctan2}(\dot{y}(t),\dot{x}(t)) 
 \end{align*}
 $$
 
-If we inforce $v$ to be zero, both $\dot{x}(t)$ and $\dot{y}(t)$ becomes zero, and $\theta$ becomes sigular. 
+If we enforce the terminal condition $v$ to be zero, both $\dot{x}(t)$ and $\dot{y}(t)$ become zero, and $\theta$ become singular. 
 
+Geometrically, when the robot is completely stationary, there is no instantaneous direction of motion, so the orientation cannot be uniquely determined from the flat outputs. As a result, the mapping from the flat outputs $(x,y)$ back to the system states and control inputs is no longer invertible at $v=0$.
+
+Therefore, the differential flatness formulation becomes singular when $v(t_f)=0$, which is why this terminal condition cannot be imposed directly in this trajectory parameterization.
 
 ```
 
@@ -992,7 +1050,7 @@ Given the polynomial coefficients you have obtained, derive explicit expressions
 :class: dropdown
 
 
-Using the polynomial coefficients found in part (i), the velocity components are:
+Using the polynomial coefficients found in part (i), the trajectories are:
 
 $$
   \begin{align*}
@@ -1001,13 +1059,63 @@ $$
 \end{align*} 
 $$
 
-The explicit expressions are: 
+Taking time derivatives gives the velocity components:
+
 $$
 \begin{align*}
-  v = \sqrt{(\dot{x}(t)^2 + \dot{y}(t)^2)}  = \sqrt{(\frac{2}{15}t + \frac{-2}{225}t^2)^2 + (-0.5+\frac{1}{3}t+\frac{-1}{45}t^2)^2}\\
-  \theta = \arctan(\frac{\dot{y}(t)}{\dot{x}(t)}) = \arctan(\frac{-0.5+\frac{1}{3}t+\frac{-1}{45}t^2}{\frac{2}{15}t + \frac{-2}{225}t^2})
-
+\dot{x}(t)
+&=
+\frac{2}{15}t - \frac{2}{225}t^2 \\
+\dot{y}(t)
+&=
+-0.5 + \frac{1}{3}t - \frac{1}{45}t^2
 \end{align*}
+$$
+
+The speed is therefore
+
+$$
+v(t)
+=
+\sqrt{\dot{x}(t)^2+\dot{y}(t)^2}
+$$
+
+which gives
+
+$$
+v(t)
+=
+\sqrt{
+(
+\frac{2}{15}t-\frac{2}{225}t^2
+)^2
++
+(
+-0.5+\frac{1}{3}t-\frac{1}{45}t^2
+)^2
+}
+$$
+
+The heading angle is
+
+$$
+\theta(t)
+=
+\mathrm{arctan2}(
+\dot{y}(t),
+\dot{x}(t)
+)
+$$
+
+or explicitly,
+
+$$
+\theta(t)
+=
+\mathrm{arctan2}(
+-0.5+\frac{1}{3}t-\frac{1}{45}t^2,
+\frac{2}{15}t-\frac{2}{225}t^2
+)
 $$
 
 ```
@@ -1036,15 +1144,15 @@ Take a look at the [Stanford AA 274 homework](https://stanfordasl.github.io/PoRA
 :class: dropdown
 
 
-The implementation and visualization of the trajectory, states, and control inputs are provided in the trajop_3 notebook.
+The implementation and visualization of the trajectory, states, and control inputs are provided in the `hw2_differential_flatness.ipynb` solution notebook.
 
 **Figure 1:** Trajectory of the unicycle. 
 
-![Trajectory of the unicycle](HW2figs/3iv_1.png)
+![Trajectory of the unicycle](figs/hw2_3iv_1.png)
 
 **Figure 2:** Controls v.s time
 
-![Controls](HW2figs/3iv_2.png)
+![Controls](figs/hw2_3iv_2.png)
 
 
 ```
@@ -1070,13 +1178,17 @@ Use dynamic programming (DP) to find the shortest path from A to B.
 :class: dropdown
 
 
-By computing the state-action value backward from destination B layer by layer, we determine the value function for each node. This function represents the minimum cost-to-go from that specific node to the target. For every node, we identify the control decision ("up" or "down") that minimizes this future cost.
+By applying dynamic programming backward from the destination node $(B)$, we compute the optimal cost-to-go (value function) for each node layer by layer. The value function at each node represents the minimum remaining travel cost from that node to the destination.
+
+At each node, we evaluate the possible control actions (“up” or “down”) and select the action that minimizes the sum of:
+1. the immediate edge cost, and
+2. the optimal future cost-to-go of the next node.
 
 The resulting value functions and optimal directions for each node are illustrated in Figure 1, with the globally optimal path from A to B highlighted in red.
 
 **Figure 1:** Finding Optimal path using DP. 
 
-![Finding Optimal path using DP](HW2figs/sdm_a.png)
+![Finding Optimal path using DP](figs/hw2_sdm_a.png)
 
 
 ```
@@ -1091,7 +1203,7 @@ Consider a generalized version of the shortest path problem in Figure 1 where th
 :class: dropdown
 
 
-Getting from point A to point B in an n-by-n grid requires $n$ units in downward direction and $n$ units in upward direction.
+Getting from point A to point B in an n-by-n grid requires $n$ units in the downward direction and $n$ units in the upward direction.
 
 
 The total number of steps is always 2n. The problem of finding every possible route is equivalent to finding every possible arrangement of $n$ "D"s and $n$ "U"s in a sequence of length $2n$.
@@ -1153,62 +1265,48 @@ Using this cost and action setup, employ dynamic programming to compute the opti
 
 Let's define the following notation:
 
+- $V(i,j)$ : The value function at "$i$th" layer across and the "$j$th" node (indexed from the top).
+- $Q(i,j,d,\ell)$ : The state-action cost for moving in direction "$d$" for "$\ell$" edge-lengths from node $(i,j)$. 
+- $U$ : Moving upward 
+- $D$ : Moving downward 
 
-
-$$
-
-\begin{align*}
-    & V(l,n) =: \text{The value function at "$l_{th}$" layer and the "$n_{th}$" node (indexed from the top).}\\ 
-    & Q(l,n,dirc,el) =: \text{The state-action cost for moving in direction "$dirc$" for "$el$" edge-lengths from "$l_{th}$" layer and the "$n_{th}$" node } \\
-    & U = \text{Moving upward} \\
-    & D = \text{Moving downward} \\
-\end{align*}
-
-$$
-For example: Q(3,4,D,2) represents the cost of moving downward for 2 edge-lengths starting from the 4th node of the 3rd layer.
+For example: $Q(4,4,U,2)$ represents the cost of moving upwards for 2 edge-lengths starting from the 4th layer across, and 4th node from the top.
 
 The value function at any given node is computed by selecting the minimum Q among all possible actions.
 
-The example is provided as following: 
+An example is provided as below: 
 
-Starting from the first node of the 6th layer: 
-$$
-
-    Q(6,1,D,1) = 10-1 = 9
+Starting from the 6th layer (second to last layer from B), and top node: 
 
 $$
-
-Their is no other action costs need to be computed. The value function V(6,1) = 9.
-
-Compute the cost at the second node of the 6th layer.
-
+    Q(6,1,D,1) = 10 - 1 + V(7,1) = 9 + 0 = 9
 $$
 
-Q(6,2,U,1) = 11-1 = 10
+There are no other action costs that need to be computed since the only viable action is $D$. Therefore, the value function $V(6,1) = 9$.
+
+Next, compute the cost at the second node of the 6th layer:
 
 $$
+Q(6,2,U,1) = 11-1 +  V(7,1) = 10 + 0 = 10
+$$
 
-Their is no other action costs need to be computed. The value function V(6,1) = 10. 
+There are no other action costs that need to be computed since the only viable action is $U$. Therefore, the value function $V(6,2) = 10$. 
 
-Moving back one layer to the 5th layer, and compute the cost for the first node of the 5th layer. 
+Moving back one layer to the 5th layer, and we compute the cost for the top node of the 5th layer. 
 
 The cost by moving downward for 1 edge-length:
 
- $$
-
- Q(5,2,D,1) = (8-1) + 9 = 16.
-
- $$ 
+$$
+ Q(5,1,D,1) = (8-1) + V(6,1) = 7 + 9 = 16.
+$$ 
  
  The cost by moving downward for 2 edge-lengths.
 
- $$
+$$
+  Q(5,1,D,2) = (10+8-2) + V(7,1) = 16. 
+$$
 
-  Q(5,2,D,2) = (10+8-2) = 16. 
-
- $$
-
- The value function V(5,2) = 16.
+The value function V(5,2) = 16. Taking either action $(D,1)$ or $(D,2)$ is equivalent.
 
 Repeating this backward induction process from B to A, the costs evaluated at each node are summarized below:
  
@@ -1224,22 +1322,23 @@ Repeating this backward induction process from B to A, the costs evaluated at ea
     Q(1,1,D,3)=43 & & Q(3,2,U,1)=29& Q(4,2,D,1)=22 &   &  \\
      & Q(2,2,U,1)=31& Q(3,2,U,2)=29& Q(4,2,D,2)=24 & Q(5,3,U,1)=18  &  \\
      & Q(2,2,U,2)=35& Q(3,2,D,2)=25&               & Q(5,6,U,2)=18  &  \\
-     & Q(2,2,U,3)=34& Q(3,2,D,2)=36& Q(4,3,U,1)=18 &   &  \\
+     & Q(2,2,U,3)=35& Q(3,2,D,2)=36& Q(4,3,U,1)=18 &   &  \\
      & Q(2,2,D,1)=35& & Q(4,3,U,2)=18 &   &  \\
      & Q(2,2,D,2)=37& Q(3,3,U,1)=27& Q(4,3,D,1)=29 &   &  \\
      & & Q(3,3,U,2)=27&  &   &  \\
      & & Q(3,3,U,3)=27& Q(4,4,U,1)=24 &   &  \\
      & & Q(3,3,D,1)=29& Q(4,4,U,2)=24 &   &  \\
+     & & Q(3,3,D,1)=29& Q(4,4,U,3)=24 &   &  \\
      
  \end{array}
  
  $$
 
-The resulting value functions and the optimal path are illustrated infigure 2.
+The resulting value functions and the optimal path are illustrated in figure 2.
 
 **Figure 2:** Optimal path using DP with multi-length actions. 
 
-![Optimal path using DP with multi-length actions](HW2figs/sdm_c.png)
+![Optimal path using DP with multi-length actions](figs/hw2_sdm_c.png)
 
 
 ```

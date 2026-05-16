@@ -66,6 +66,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Homework 1" href="../homework/hw01.html" />
+    <link rel="prev" title="Sequential decision-making" href="sequential-dm.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,8 +129,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -210,12 +210,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../deliverables/extracredit.html">Extra Credit</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="state-space.html">State-space representation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">Introduction to optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="control-certificates.html">Control certificate functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sequential-dm.html">Sequential decision-making</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Quadratic Regulator</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
 <ul class="nav bd-sidenav">
@@ -223,6 +224,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../homework/hw02.html">Homework 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../homework/hw03.html">Homework 3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../homework/hw01_solution.html">Homework 1 (Solutions)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw02solution.html">Homework 2 (Solutions)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul class="nav bd-sidenav">
@@ -424,7 +426,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-assumption-of-lqr">Key assumption of LQR</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-it-called-linear-quadratic-regulator">Why is it called Linear Quadratic Regulator?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-it-called-a-linear-quadratic-regulator">Why is it called a Linear Quadratic Regulator?</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-time-lqr">Discrete-time LQR</a><ul class="nav section-nav flex-column">
@@ -449,38 +451,40 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="linear-quadratic-regulator">
 <h1>Linear Quadratic Regulator<a class="headerlink" href="#linear-quadratic-regulator" title="Link to this heading">#</a></h1>
-<p>In the previous chapter, we learned about sequential decision-making and saw that using the principle of optimality, an optimal control problem could be broken down into a sequence of smaller decisions which could be solved recursively.
-The resulting equations we derived were the <strong>Bellman Equation</strong> (discrete time) and the <strong>Hamilton-Jacobi-Bellman Equation</strong> (continuous time).
-However, despite these nice equations that, in theory, tells us how to solve for the optimal control policy, they are in general difficult to solve and often intractable. This is due to a number of reasons, like having a large state and control space (if discrete and finite) or the minimization problem is difficult to solve (i.e., non-convex). For the latter, the difficulty of the minimization problem can stem from the functional form of the cost function, dynamics, and value function. If the functional form (e.g., linear, quadratic, exponential, etc.) is not conducive to making the minimization problem tractable, then solving the Bellman equation or HJB equation is going to be very challenging.
-Another, perhaps more subtle, point is that even if we can solve time instance of the minimization problem, is there are any guarantees that we can solve the problem for the next time step? Since we are essentially performing dynamic programming and iterating backward in time, we want to make sure that whatever solution we get at time <span class="math notranslate nohighlight">\(t\)</span> will make the next iteration at the previous time step also tractable.</p>
+<p>In the previous chapter, we explored sequential decision-making and learned that, by applying the principle of optimality, we can decompose an optimal control problem into a series of smaller decisions that can be solved recursively. This led us to derive the <strong>Bellman Equation</strong> (for discrete time) and the <strong>Hamilton-Jacobi-Bellman (HJB) Equation</strong> (for continuous time).</p>
+<p>While these equations elegantly characterize the solution to the optimal control problem in theory, they are often extremely challenging, or even impossible, to solve exactly in practice. Often times, the value function is approximated instead, such as with a neural network, or some form of local search is applied. Several factors contribute to this intractability. For instance, when the state or control spaces are large (in the discrete, finite case) or when the minimization step in the Bellman or HJB equation is itself difficult to solve (e.g., due to non-convexity), finding a solution becomes prohibitive. The complexity of this minimization depends on the structure of the cost function, the dynamics, and the current form of the value function. If the ingredients of this optimization (such as cost functions being nonlinear or dynamics being complicated) are not particularly friendly, then solving these equations becomes extremely hard.</p>
+<p>A more subtle challenge is that even if we can solve the minimization at a single time step, we need assurance that this tractability will persist at every subsequent time step as we iterate backward through time using dynamic programming. In other words, we need to ensure that the solution at time <span class="math notranslate nohighlight">\(t\)</span> yields a value function form that keeps the next backward step manageable. Otherwise, the recursive process could quickly become intractable even if it may be tractable for the first step.</p>
 <p><em>So under what conditions is solving these equations tractable?</em></p>
 <section id="key-assumption-of-lqr">
 <h2>Key assumption of LQR<a class="headerlink" href="#key-assumption-of-lqr" title="Link to this heading">#</a></h2>
 <p>We make the following simplifying assumptions on the optimal control problem, and show that with these assumptions, solving the Bellman and HJB equations is very tractable and exhibits very nice structure.
-For now, let’s consider a discrete-time setting and we will later extend the analysis to the continuous-time setting.</p>
+For now, let’s first consider a discrete-time setting.</p>
 <div class="admonition-key-assumptions-of-lqr admonition">
-<p class="admonition-title">Key assumptions of LQR</p>
+<p class="admonition-title">Key Assumptions of LQR</p>
 <ul class="simple">
-<li><p><strong>Linear dynamics.</strong> We assume the dynamics are linear: <span class="math notranslate nohighlight">\(x_{t+1} = A_tx_t + B_tu_t\)</span>. Note that they can be time-varying (there are subscripts on <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>).</p></li>
-<li><p><strong>Quadratic cost.</strong> We assume that the cost function for the optimal control problem is quadratic in state and controls. That is, the stage cost is <span class="math notranslate nohighlight">\(J(x_t, u_t, t) = x_t^TQ_tx_t + u_t^TR_tu_t\)</span> and the terminal cost is <span class="math notranslate nohighlight">\(J_T(x_T) = x_T^TQ_Tx_T\)</span> where <span class="math notranslate nohighlight">\(Q^T=Q\succeq 0\)</span>, <span class="math notranslate nohighlight">\(Q_T^T=Q_T\succeq 0\)</span>, and  <span class="math notranslate nohighlight">\(R^T=R\succ 0\)</span>.</p></li>
-<li><p><strong>No additional constraints.</strong> There are no other constraints other than constraints on dynamics and initial states. This means there are no constraints on controls (e.g., control limits) or state constraints (e.g., avoid obstacles).</p></li>
+<li><p><strong>Linear dynamics:</strong> The system dynamics are assumed to be linear: <span class="math notranslate nohighlight">\(x_{k+1} = A_k x_k + B_k u_k\)</span>. The matrices <span class="math notranslate nohighlight">\(A_k\)</span> and <span class="math notranslate nohighlight">\(B_k\)</span> may be time-varying (hence the subscript <span class="math notranslate nohighlight">\(k\)</span>).</p></li>
+<li><p><strong>Quadratic cost:</strong> The cost function is quadratic in both the states and the controls. Specifically, the stage cost is given by <span class="math notranslate nohighlight">\(g(x_k, u_k, t_k) = x_k^{\top} Q_k x_k + u_k^{\top} R_k u_k\)</span>, and the terminal cost is <span class="math notranslate nohighlight">\(g_N(x_N) = x_N^{\top} Q_N x_N\)</span>, where <span class="math notranslate nohighlight">\(Q_k^{\top} = Q_k \succeq 0\)</span>, <span class="math notranslate nohighlight">\(Q_N^{\top} = Q_N \succeq 0\)</span>, and <span class="math notranslate nohighlight">\(R_k^{\top} = R_k \succ 0\)</span>.</p></li>
+<li><p><strong>No additional constraints:</strong> The only constraints are those imposed by the system dynamics and the initial state. There are no explicit constraints on the controls (such as actuator limits) or the states (such as obstacle avoidance).</p></li>
 </ul>
 </div>
 <p>Given these assumptions, the resulting optimal control problem becomes,</p>
 <div class="admonition-lqr-optimal-control-problem admonition">
 <p class="admonition-title">LQR optimal control problem</p>
 <div class="math notranslate nohighlight" id="equation-eq-lqr-ocp">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-lqr-ocp" title="Link to this equation">#</a></span>\[\begin{split}\min_{u_0,\ldots u_{T-1}} &amp; \: x_T^TQ_Tx_T + \sum_{t=0}^{T-1} x_t^TQ_tx_t + u_t^TR_tu_t\\
-\text{subject to} &amp; \: x_{t+1} = A_tx_t + B_tu_t\\
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-lqr-ocp" title="Link to this equation">#</a></span>\[\begin{split}\min_{u_0,\ldots u_{N-1}} &amp; \: x_N^{\top}Q_Nx_N + \sum_{t=0}^{N-1} x_k^{\top}Q_kx_k + u_k^{\top}R_ku_k\\
+\text{subject to} &amp; \: x_{k+1} = A_kx_k + B_ku_k, \quad k=0,\ldots, N-1\\
 &amp; \: x_0 = x_\mathrm{current}\end{split}\]</div>
 </div>
-<p>A result of these assumptions is that the value function <span class="math notranslate nohighlight">\(V(x,t)\)</span> is quadratic! In fact, we have <span class="math notranslate nohighlight">\(V(x,t) = x^TP_tx\)</span>. While it may not be obvious, we will show this below. Intuitively, this result stems from the fact that we assume a quadratic (terminal) cost, and since we initialize the value function <span class="math notranslate nohighlight">\(V(x,T) = J_T(x) = x^TQ_Tx^T\)</span>, it turns out that this quadratic function form of <span class="math notranslate nohighlight">\(V(x,t)\)</span> is preserved.</p>
-<section id="why-is-it-called-linear-quadratic-regulator">
-<h3>Why is it called Linear Quadratic Regulator?<a class="headerlink" href="#why-is-it-called-linear-quadratic-regulator" title="Link to this heading">#</a></h3>
-<p>Given the key assumptions, it may be more clear why the name Linear Quadratic Regulator is the way it is.
-<strong>Linear</strong> because the dynamics are assumed to be linear. But it also turns out that the optimal control is linear too!
-<strong>Quadratic</strong> because the cost is assumed to be quadratic. But it also turns out that the value function is quadratic too!
-<strong>Regulator</strong> because given how the cost is defined, the controller will drive the system’s state variables to zero.</p>
+<p>As a preview of what’s to come: under these assumptions, the value function <span class="math notranslate nohighlight">\(V(x, t)\)</span> is guaranteed to take a quadratic form. Specifically, for each time step <span class="math notranslate nohighlight">\(k = 0, \ldots, N\)</span>, the value function can be written as <span class="math notranslate nohighlight">\(V(x_k, t_k) = x_k^\top P_k x_k\)</span>. Although this result may not be obvious at first glance, we will demonstrate it in the following sections. The intuition is that, by starting with a quadratic terminal cost and initializing the value function as <span class="math notranslate nohighlight">\(V(x_N, t_N) = g_N(x_N) = x_N^\top Q_T x_N\)</span>, the preservation of quadratic structure through dynamic programming ensures <span class="math notranslate nohighlight">\(V(x, t)\)</span> remains quadratic at each step.</p>
+<section id="why-is-it-called-a-linear-quadratic-regulator">
+<h3>Why is it called a Linear Quadratic Regulator?<a class="headerlink" href="#why-is-it-called-a-linear-quadratic-regulator" title="Link to this heading">#</a></h3>
+<p>Given these assumptions, the meaning behind each part of the name “Linear Quadratic Regulator” becomes clear:</p>
+<ul class="simple">
+<li><p><strong>Linear:</strong> The dynamics of the system are linear in both the state and control variables. Interestingly, under the LQR framework, the <em>optimal</em> control law that results is also linear in the state.</p></li>
+<li><p><strong>Quadratic:</strong> The cost we aim to minimize is quadratic in both the states and the controls. As a result, the value function—representing the optimal total cost-to-go—also takes a quadratic form.</p></li>
+<li><p><strong>Regulator:</strong> The particular structure of the cost is designed to penalize deviations from the zero state (and from zero control effort), so the optimal controller works to regulate (drive) the system’s state toward zero over time.</p></li>
+</ul>
+<p>In summary, LQR refers to the fact that we are using an optimal <em>regulator</em> (feedback controller) designed for <em>linear</em> systems with <em>quadratic</em> performance criteria.</p>
 </section>
 </section>
 <section id="discrete-time-lqr">
@@ -534,7 +538,7 @@ Essentially, we have derived an <em>update</em> equation for <span class="math n
 <div class="admonition-discrete-time-finite-horizon-lqr admonition">
 <p class="admonition-title">Discrete-time finite horizon LQR</p>
 <div class="math notranslate nohighlight" id="equation-eq-dt-finite-lqr">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-dt-finite-lqr" title="Link to this equation">#</a></span>\[\begin{split}P_{t-1} &amp;= Q + A^TP_tA -  A^TP_tB(B^TP_tB+R)^{-1}B^TP_tA, \quad P_T = Q_T\\
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-dt-finite-lqr" title="Link to this equation">#</a></span>\[\begin{split}P_{t-1} &amp;= Q + A^TP_tA -  A^TP_tB(B^TP_tB+R)^{-1}B^TP_tA, \quad P_T = Q_T\\
 K_{t} &amp;= (B^TP_{t+1}B+R)^{-1}B^TP_{t+1}A\\
 u^*_{t} &amp;= -K_{t}x_{t}\end{split}\]</div>
 </div>
@@ -550,7 +554,7 @@ Assuming <span class="math notranslate nohighlight">\(P_t\)</span> has converged
 <div class="admonition-discrete-time-infinite-horizon-lqr-dare admonition">
 <p class="admonition-title">Discrete-time infinite horizon LQR (DARE)</p>
 <div class="math notranslate nohighlight" id="equation-eq-dare">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-dare" title="Link to this equation">#</a></span>\[P_\infty = Q + A^TP_\infty A -  A^TP_\infty B(B^TP_\infty B+R)^{-1}B^TP_\infty A.\]</div>
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-dare" title="Link to this equation">#</a></span>\[P_\infty = Q + A^TP_\infty A -  A^TP_\infty B(B^TP_\infty B+R)^{-1}B^TP_\infty A.\]</div>
 </div>
 <p>This equation is referred to as the <strong>discrete time algebraic Riccati equation (DARE)</strong> for which there are well-established ways to solve that linear matrix equation. Practically, there are built-in functions in control system packages that we can call to find <span class="math notranslate nohighlight">\(P_\infty\)</span>. But don’t forget to read the documentation to know how to use it properly!</p>
 </section>
@@ -568,7 +572,7 @@ We leave this as an exercise, but provide a high-level sketch of the steps (whic
 <div class="admonition-continuous-time-finite-horizon-lqr admonition">
 <p class="admonition-title">Continuous-time finite horizon LQR</p>
 <div class="math notranslate nohighlight" id="equation-eq-ct-finite-lqr">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-ct-finite-lqr" title="Link to this equation">#</a></span>\[\begin{split}0 &amp; = \dot{P}(t) + Q + A^TP(t) + P(t)A - P(t)BR^{-1}B^TP(t), \quad P(T) = Q_T\\
+<span class="eqno">(19)<a class="headerlink" href="#equation-eq-ct-finite-lqr" title="Link to this equation">#</a></span>\[\begin{split}0 &amp; = \dot{P}(t) + Q + A^TP(t) + P(t)A - P(t)BR^{-1}B^TP(t), \quad P(T) = Q_T\\
 K(t) &amp;= R^{-1}B^TP(t)\\
 u^*(t) &amp;= -K(t)x(t)\end{split}\]</div>
 </div>
@@ -576,7 +580,7 @@ u^*(t) &amp;= -K(t)x(t)\end{split}\]</div>
 <div class="admonition-continuous-time-infinite-horizon-lqr-care admonition">
 <p class="admonition-title">Continuous-time infinite horizon LQR (CARE)</p>
 <div class="math notranslate nohighlight" id="equation-eq-care">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-care" title="Link to this equation">#</a></span>\[0 =  Q + A^TP_\infty  + P_\infty A - P_\infty BR^{-1}B^TP_\infty\]</div>
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-care" title="Link to this equation">#</a></span>\[0 =  Q + A^TP_\infty  + P_\infty A - P_\infty BR^{-1}B^TP_\infty\]</div>
 </div>
 <p>This equation is referred to as the <strong>continuous time algebraic Riccati equation (CARE)</strong> for which there are well-established ways to solve that linear matrix equation. Like DARE, there are built-in functions in control system packages that we can use.</p>
 </section>
@@ -658,6 +662,24 @@ u_t = \bar{u}_t + \delta u_t^* = \bar{u}_t - K_t\delta x_t
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="sequential-dm.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Sequential decision-making</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../homework/hw01.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Homework 1</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -675,7 +697,7 @@ u_t = \bar{u}_t + \delta u_t^* = \bar{u}_t - K_t\delta x_t
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-assumption-of-lqr">Key assumption of LQR</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-it-called-linear-quadratic-regulator">Why is it called Linear Quadratic Regulator?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-it-called-a-linear-quadratic-regulator">Why is it called a Linear Quadratic Regulator?</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-time-lqr">Discrete-time LQR</a><ul class="nav section-nav flex-column">
