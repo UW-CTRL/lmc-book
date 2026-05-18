@@ -24,7 +24,7 @@ parts:
   - file: lectures/optimization
   - file: lectures/control-certificates
   - file: lectures/sequential-dm
-  # - file: lectures/lqr
+  - file: lectures/lqr
   # - file: lectures/reachability
   # - file: lectures/kalman-filter
 
@@ -34,7 +34,7 @@ parts:
   - file: homework/hw02
   - file: homework/hw03
   - file: homework/hw01_solution
-  # - file: homework/hw02_solution
+  - file: homework/hw02solution
 
 - caption: Miscellaneous
   chapters:

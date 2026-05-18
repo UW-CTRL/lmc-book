@@ -1,23 +1,24 @@
 # Linear Quadratic Regulator
 
-In the previous chapter, we learned about sequential decision-making and saw that using the principle of optimality, an optimal control problem could be broken down into a sequence of smaller decisions which could be solved recursively.
-The resulting equations we derived were the **Bellman Equation** (discrete time) and the **Hamilton-Jacobi-Bellman Equation** (continuous time).
-However, despite these nice equations that, in theory, tells us how to solve for the optimal control policy, they are in general difficult to solve and often intractable. This is due to a number of reasons, like having a large state and control space (if discrete and finite) or the minimization problem is difficult to solve (i.e., non-convex). For the latter, the difficulty of the minimization problem can stem from the functional form of the cost function, dynamics, and value function. If the functional form (e.g., linear, quadratic, exponential, etc.) is not conducive to making the minimization problem tractable, then solving the Bellman equation or HJB equation is going to be very challenging.
-Another, perhaps more subtle, point is that even if we can solve time instance of the minimization problem, is there are any guarantees that we can solve the problem for the next time step? Since we are essentially performing dynamic programming and iterating backward in time, we want to make sure that whatever solution we get at time $t$ will make the next iteration at the previous time step also tractable.
+In the previous chapter, we explored sequential decision-making and learned that, by applying the principle of optimality, we can decompose an optimal control problem into a series of smaller decisions that can be solved recursively. This led us to derive the **Bellman Equation** (for discrete time) and the **Hamilton-Jacobi-Bellman (HJB) Equation** (for continuous time).
+
+While these equations elegantly characterize the solution to the optimal control problem in theory, they are often extremely challenging, or even impossible, to solve exactly in practice. Often times, the value function is approximated instead, such as with a neural network, or some form of local search is applied. Several factors contribute to this intractability. For instance, when the state or control spaces are large (in the discrete, finite case) or when the minimization step in the Bellman or HJB equation is itself difficult to solve (e.g., due to non-convexity), finding a solution becomes prohibitive. The complexity of this minimization depends on the structure of the cost function, the dynamics, and the current form of the value function. If the ingredients of this optimization (such as cost functions being nonlinear or dynamics being complicated) are not particularly friendly, then solving these equations becomes extremely hard.
+
+A more subtle challenge is that even if we can solve the minimization at a single time step, we need assurance that this tractability will persist at every subsequent time step as we iterate backward through time using dynamic programming. In other words, we need to ensure that the solution at time $t$ yields a value function form that keeps the next backward step manageable. Otherwise, the recursive process could quickly become intractable even if it may be tractable for the first step.
 
 *So under what conditions is solving these equations tractable?*
 
 ## Key assumption of LQR
 
 We make the following simplifying assumptions on the optimal control problem, and show that with these assumptions, solving the Bellman and HJB equations is very tractable and exhibits very nice structure.
-For now, let's consider a discrete-time setting and we will later extend the analysis to the continuous-time setting.
+For now, let's first consider a discrete-time setting.
 
 
-```{admonition} Key assumptions of LQR
+```{admonition} Key Assumptions of LQR
 :label: eq-lqr-assumptions
-- **Linear dynamics.** We assume the dynamics are linear: $x_{t+1} = A_tx_t + B_tu_t$. Note that they can be time-varying (there are subscripts on $A$ and $B$).
-- **Quadratic cost.** We assume that the cost function for the optimal control problem is quadratic in state and controls. That is, the stage cost is $J(x_t, u_t, t) = x_t^TQ_tx_t + u_t^TR_tu_t$ and the terminal cost is $J_T(x_T) = x_T^TQ_Tx_T$ where $Q^T=Q\succeq 0$, $Q_T^T=Q_T\succeq 0$, and  $R^T=R\succ 0$.
-- **No additional constraints.** There are no other constraints other than constraints on dynamics and initial states. This means there are no constraints on controls (e.g., control limits) or state constraints (e.g., avoid obstacles).
+- **Linear dynamics:** The system dynamics are assumed to be linear: $x_{k+1} = A_k x_k + B_k u_k$. The matrices $A_k$ and $B_k$ may be time-varying (hence the subscript $k$).
+- **Quadratic cost:** The cost function is quadratic in both the states and the controls. Specifically, the stage cost is given by $g(x_k, u_k, t_k) = x_k^{\top} Q_k x_k + u_k^{\top} R_k u_k$, and the terminal cost is $g_N(x_N) = x_N^{\top} Q_N x_N$, where $Q_k^{\top} = Q_k \succeq 0$, $Q_N^{\top} = Q_N \succeq 0$, and $R_k^{\top} = R_k \succ 0$.
+- **No additional constraints:** The only constraints are those imposed by the system dynamics and the initial state. There are no explicit constraints on the controls (such as actuator limits) or the states (such as obstacle avoidance).
 ```
 
 Given these assumptions, the resulting optimal control problem becomes,
@@ -26,19 +27,23 @@ Given these assumptions, the resulting optimal control problem becomes,
 ```{admonition} LQR optimal control problem
 ```{math}
 :label: eq-lqr-ocp
-\min_{u_0,\ldots u_{T-1}} & \: x_T^TQ_Tx_T + \sum_{t=0}^{T-1} x_t^TQ_tx_t + u_t^TR_tu_t\\
-\text{subject to} & \: x_{t+1} = A_tx_t + B_tu_t\\
+\min_{u_0,\ldots u_{N-1}} & \: x_N^{\top}Q_Nx_N + \sum_{t=0}^{N-1} x_k^{\top}Q_kx_k + u_k^{\top}R_ku_k\\
+\text{subject to} & \: x_{k+1} = A_kx_k + B_ku_k, \quad k=0,\ldots, N-1\\
 & \: x_0 = x_\mathrm{current}
 ```
 
-A result of these assumptions is that the value function $V(x,t)$ is quadratic! In fact, we have $V(x,t) = x^TP_tx$. While it may not be obvious, we will show this below. Intuitively, this result stems from the fact that we assume a quadratic (terminal) cost, and since we initialize the value function $V(x,T) = J_T(x) = x^TQ_Tx^T$, it turns out that this quadratic function form of $V(x,t)$ is preserved.
+As a preview of what’s to come: under these assumptions, the value function $V(x, t)$ is guaranteed to take a quadratic form. Specifically, for each time step $k = 0, \ldots, N$, the value function can be written as $V(x_k, t_k) = x_k^\top P_k x_k$. Although this result may not be obvious at first glance, we will demonstrate it in the following sections. The intuition is that, by starting with a quadratic terminal cost and initializing the value function as $V(x_N, t_N) = g_N(x_N) = x_N^\top Q_T x_N$, the preservation of quadratic structure through dynamic programming ensures $V(x, t)$ remains quadratic at each step.
 
 
-### Why is it called Linear Quadratic Regulator?
-Given the key assumptions, it may be more clear why the name Linear Quadratic Regulator is the way it is.
-**Linear** because the dynamics are assumed to be linear. But it also turns out that the optimal control is linear too!
-**Quadratic** because the cost is assumed to be quadratic. But it also turns out that the value function is quadratic too!
-**Regulator** because given how the cost is defined, the controller will drive the system's state variables to zero.
+### Why is it called a Linear Quadratic Regulator?
+
+Given these assumptions, the meaning behind each part of the name "Linear Quadratic Regulator" becomes clear:
+
+- **Linear:** The dynamics of the system are linear in both the state and control variables. Interestingly, under the LQR framework, the *optimal* control law that results is also linear in the state.
+- **Quadratic:** The cost we aim to minimize is quadratic in both the states and the controls. As a result, the value function—representing the optimal total cost-to-go—also takes a quadratic form.
+- **Regulator:** The particular structure of the cost is designed to penalize deviations from the zero state (and from zero control effort), so the optimal controller works to regulate (drive) the system’s state toward zero over time.
+
+In summary, LQR refers to the fact that we are using an optimal *regulator* (feedback controller) designed for *linear* systems with *quadratic* performance criteria.
 
 
 ## Discrete-time LQR
