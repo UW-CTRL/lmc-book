@@ -15,7 +15,7 @@ Note: *Italicized* text indicates planned topics, but subject to change.
 | May 18 <br> May 20&nbsp;&nbsp;&nbsp;  |   8    |LQR, MPC, *Advanced topics: HJ reachability*| (Friday 5/22) Homework 2 self-assessment due| [mpc](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_mpc.pdf),[hjr](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_hjr.pdf)|
 | May 25 <br> May 27&nbsp;&nbsp;&nbsp;|   9    |(Memorial day) <br> HJ reachability, Kalman filter, scientific communication|  |[kalman](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/control_kalman.pdf), [pitch](https://github.com/UW-CTRL/lmc-book/blob/aa548-spr26/pdfs/pitch.pdf) |
 | Jun 1 <br> Jun 3&nbsp;&nbsp;&nbsp;&nbsp;   |   10   |Lighting talks <br> Poster presentation | (Friday 6/5) Homework 3 due| |
-|         | Finals | | (Monday) Report due <br> (Thursday) Peer review due | |
+|         | Finals | | (Wednesday 6/10) Report due <br> (Friday 6/12) Peer review due | |
 
 <!-- bust: 25107-11501 -->
 

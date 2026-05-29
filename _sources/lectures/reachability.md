@@ -4,51 +4,55 @@ In this chapter, we will introduce reachability analysis, and show that we can f
 
 
 ## Reachability analysis
-Reachability analysis, as the name suggests, is the study of the set of states a system can (or can't) reach within some fixed time. Generally, we refer to this set of states as a *reachable set*. The reachable set depends on a number of factors including
+Reachability analysis, as the name suggests, is the study of the set of states a system can (or cannot) reach within some fixed time. Generally, we refer to this set of states as a *reachable set*. The reachable set depends on a number of factors including
 - the dynamics of the system
 - initial conditions
 - set of controls
 - disturbances affecting the system
 
 Reachability analysis is useful for a number of applications such as
-- safety-critical control: knowing whether it is possible for the system to hit an obstacle is important, and if so, evasive control should be executed.
-- robust control: if there is uncertainty or disturbances present, it is important to know where the system could possible reach and making sure that it does not intersect with obstacles.
-- verification: computing the reachable sets based on the dynamics and assumptions about the system can help provide a certificate or guarantees on whether a system can reach a goal or can avoid obstacles.
+- safety-critical control: knowing whether it is possible (or inevitable) for the system to hit an obstacle. If so, evasive control should be executed to avoid entry into such a set.
+- robust control: if there is uncertainty or disturbances present, it is important to know where the system could possibly reach and ensure that it does not intersect with obstacles.
+- verification: computing the reachable sets based on the dynamics and assumptions about the system can help provide a certificate or guarantee on whether a system can reach a goal or can avoid obstacles.
 
 ### Types of reachability
 There are two types of reachability problem: Forward reachability and backward reachability.
 
 #### Forward reachability
 Given system dynamics, and the set of all allowable controls it can take. Then the *forward reachable set* is the set of the states the system could be in at some future time.
-Or differently phrased, starting from here, under any allowed input, where could the system end up?
+Or differently phrased, starting from an initial set of states, under any allowed input, where could the system end up within some time?
+
 Let's define this mathematically.
 Let $\mathbb{U}[0,t]:=\lbrace u \mid [0,t] \rightarrow \mathcal{U} \rbrace$ be the set of all possible control signals over time interval $[0,t]$. Given dynamics $\dot{x} = f(x,u,t)$, let $\xi_{x_0, 0}^{u(\cdot)}(\tau) = x(\tau)$ be the state the system will be in at time $t=\tau$ if starting at $x_0$ and $t=0$ and executes some control signal $u(\cdot)\in\mathbb{U}[0,\tau]$.
 
 Then we define the forward reachable set $\mathcal{F}(x_0, \tau)$ as follows,
 
-$$\mathcal{F}(x_0, \tau) = \lbrace x \in \mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0, t], \: x = \xi_{x_0,0}^{u(\cdot)}(\tau) \rbrace$$
+$$\mathcal{F}(\mathcal{X}_0, \tau) = \lbrace x \in \mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0, t], \: \exists x_0 \in \mathcal{X}_0, \: x = \xi_{x_0,0}^{u(\cdot)}(\tau) \rbrace$$
 
-which translates to, all the states in the domain where there exists a control signal that can make the system be in that state within time $\tau$.
+which translates to, all the states in the domain where there exists a control signal that can make the system be at that state within time $\tau$ when starting from inside $\mathcal{X}_0$.
 
 
 #### Backward reachability
-Given a *target set*, the backrward reachable set* is the set of states where it is possible reach that set at some future time.
-Or differently phrased, where must the system be now so that it can reach a target set in the future?
-Let's define this mathematically.
-Let $\mathcal{T}$ be a target set that the system is interested in reaching. Then for a system starting at $t=0$ and would like to reach $\mathcal{T}$ at $t=\tau$, then the *backward reachable set* is
+Given a *target set*, the *backward reachable set* is the set of states where it is possible reach the target set at some future time.
+Or differently phrased, where must the system be now so that it can reach the target set in the future?
 
+Let's define this mathematically.
+Let $\mathcal{T}$ be a target set that the system is interested in reaching. Without loss of generality, let us assume that $t=0$ corresponds to the time when we want to check whether or not the system has reached $\mathcal{T}$.
+We want to determine what are at the states where within some time $\tau$, we will reach $\mathcal{T}$. 
+Since we have defined $t=0$ to be the end of the horizon, we are interested in the set of states at $t=-\tau$ where in $\tau$ seconds later ($t=-\tau + \tau = 0$), the system will be inside $\mathcal{T}$. 
+The *backward reachable set* is defined as
 
 ```{admonition} Backward Reachable Set (Reach Case)
 ```{math}
 :label: eq-BRS-reach
-\mathcal{R}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.
+\mathcal{R}(\mathcal{T}, -\tau) = \lbrace x\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.
 
 ```
 
 
-This translates to, for all initial states in the domain, there exists a control signal where it will lead the system to be inside $\mathcal{T}$ at time $t=\tau$.
+This translates to, for all initial states in the domain, there exists a control signal where it will lead the system to be inside $\mathcal{T}$ in $\tau$ seconds.
 
-The above assume that reaching the target set $\mathcal{T}$ is a good thing. That is, we are seeking whether there exists *at least* one control signal that would get us there in $\tau$ time. As such, we use $\mathcal{R}$ to denote the intention to **r**each $\mathcal{T}$.
+The above assume that reaching the target set $\mathcal{T}$ is a good thing. That is, we are seeking whether there exists *at least* one control signal that would get us there in $\tau$ seconds. As such, we use $\mathcal{R}$ to denote the intention to **r**each $\mathcal{T}$.
 
 
 

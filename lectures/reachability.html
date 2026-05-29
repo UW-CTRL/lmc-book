@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -458,7 +458,7 @@ document.write(`
 <p>In this chapter, we will introduce reachability analysis, and show that we can frame reachability as an optimal control problem and utilize the same machinery discussed in the previous chapter.</p>
 <section id="reachability-analysis">
 <h2>Reachability analysis<a class="headerlink" href="#reachability-analysis" title="Link to this heading">#</a></h2>
-<p>Reachability analysis, as the name suggests, is the study of the set of states a system can (or can’t) reach within some fixed time. Generally, we refer to this set of states as a <em>reachable set</em>. The reachable set depends on a number of factors including</p>
+<p>Reachability analysis, as the name suggests, is the study of the set of states a system can (or cannot) reach within some fixed time. Generally, we refer to this set of states as a <em>reachable set</em>. The reachable set depends on a number of factors including</p>
 <ul class="simple">
 <li><p>the dynamics of the system</p></li>
 <li><p>initial conditions</p></li>
@@ -467,9 +467,9 @@ document.write(`
 </ul>
 <p>Reachability analysis is useful for a number of applications such as</p>
 <ul class="simple">
-<li><p>safety-critical control: knowing whether it is possible for the system to hit an obstacle is important, and if so, evasive control should be executed.</p></li>
-<li><p>robust control: if there is uncertainty or disturbances present, it is important to know where the system could possible reach and making sure that it does not intersect with obstacles.</p></li>
-<li><p>verification: computing the reachable sets based on the dynamics and assumptions about the system can help provide a certificate or guarantees on whether a system can reach a goal or can avoid obstacles.</p></li>
+<li><p>safety-critical control: knowing whether it is possible (or inevitable) for the system to hit an obstacle. If so, evasive control should be executed to avoid entry into such a set.</p></li>
+<li><p>robust control: if there is uncertainty or disturbances present, it is important to know where the system could possibly reach and ensure that it does not intersect with obstacles.</p></li>
+<li><p>verification: computing the reachable sets based on the dynamics and assumptions about the system can help provide a certificate or guarantee on whether a system can reach a goal or can avoid obstacles.</p></li>
 </ul>
 <section id="types-of-reachability">
 <h3>Types of reachability<a class="headerlink" href="#types-of-reachability" title="Link to this heading">#</a></h3>
@@ -477,27 +477,30 @@ document.write(`
 <section id="forward-reachability">
 <h4>Forward reachability<a class="headerlink" href="#forward-reachability" title="Link to this heading">#</a></h4>
 <p>Given system dynamics, and the set of all allowable controls it can take. Then the <em>forward reachable set</em> is the set of the states the system could be in at some future time.
-Or differently phrased, starting from here, under any allowed input, where could the system end up?
-Let’s define this mathematically.
+Or differently phrased, starting from an initial set of states, under any allowed input, where could the system end up within some time?</p>
+<p>Let’s define this mathematically.
 Let <span class="math notranslate nohighlight">\(\mathbb{U}[0,t]:=\lbrace u \mid [0,t] \rightarrow \mathcal{U} \rbrace\)</span> be the set of all possible control signals over time interval <span class="math notranslate nohighlight">\([0,t]\)</span>. Given dynamics <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,t)\)</span>, let <span class="math notranslate nohighlight">\(\xi_{x_0, 0}^{u(\cdot)}(\tau) = x(\tau)\)</span> be the state the system will be in at time <span class="math notranslate nohighlight">\(t=\tau\)</span> if starting at <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(t=0\)</span> and executes some control signal <span class="math notranslate nohighlight">\(u(\cdot)\in\mathbb{U}[0,\tau]\)</span>.</p>
 <p>Then we define the forward reachable set <span class="math notranslate nohighlight">\(\mathcal{F}(x_0, \tau)\)</span> as follows,</p>
 <div class="math notranslate nohighlight">
-\[\mathcal{F}(x_0, \tau) = \lbrace x \in \mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0, t], \: x = \xi_{x_0,0}^{u(\cdot)}(\tau) \rbrace\]</div>
-<p>which translates to, all the states in the domain where there exists a control signal that can make the system be in that state within time <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
+\[\mathcal{F}(\mathcal{X}_0, \tau) = \lbrace x \in \mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0, t], \: \exists x_0 \in \mathcal{X}_0, \: x = \xi_{x_0,0}^{u(\cdot)}(\tau) \rbrace\]</div>
+<p>which translates to, all the states in the domain where there exists a control signal that can make the system be at that state within time <span class="math notranslate nohighlight">\(\tau\)</span> when starting from inside <span class="math notranslate nohighlight">\(\mathcal{X}_0\)</span>.</p>
 </section>
 <section id="backward-reachability">
 <h4>Backward reachability<a class="headerlink" href="#backward-reachability" title="Link to this heading">#</a></h4>
-<p>Given a <em>target set</em>, the backrward reachable set* is the set of states where it is possible reach that set at some future time.
-Or differently phrased, where must the system be now so that it can reach a target set in the future?
-Let’s define this mathematically.
-Let <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> be a target set that the system is interested in reaching. Then for a system starting at <span class="math notranslate nohighlight">\(t=0\)</span> and would like to reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at <span class="math notranslate nohighlight">\(t=\tau\)</span>, then the <em>backward reachable set</em> is</p>
+<p>Given a <em>target set</em>, the <em>backward reachable set</em> is the set of states where it is possible reach the target set at some future time.
+Or differently phrased, where must the system be now so that it can reach the target set in the future?</p>
+<p>Let’s define this mathematically.
+Let <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> be a target set that the system is interested in reaching. Without loss of generality, let us assume that <span class="math notranslate nohighlight">\(t=0\)</span> corresponds to the time when we want to check whether or not the system has reached <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+We want to determine what are at the states where within some time <span class="math notranslate nohighlight">\(\tau\)</span>, we will reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+Since we have defined <span class="math notranslate nohighlight">\(t=0\)</span> to be the end of the horizon, we are interested in the set of states at <span class="math notranslate nohighlight">\(t=-\tau\)</span> where in <span class="math notranslate nohighlight">\(\tau\)</span> seconds later (<span class="math notranslate nohighlight">\(t=-\tau + \tau = 0\)</span>), the system will be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+The <em>backward reachable set</em> is defined as</p>
 <div class="admonition-backward-reachable-set-reach-case admonition">
 <p class="admonition-title">Backward Reachable Set (Reach Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-reach">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach" title="Link to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach" title="Link to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, -\tau) = \lbrace x\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.\]</div>
 </div>
-<p>This translates to, for all initial states in the domain, there exists a control signal where it will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at time <span class="math notranslate nohighlight">\(t=\tau\)</span>.</p>
-<p>The above assume that reaching the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is a good thing. That is, we are seeking whether there exists <em>at least</em> one control signal that would get us there in <span class="math notranslate nohighlight">\(\tau\)</span> time. As such, we use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> to denote the intention to <strong>r</strong>each <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
+<p>This translates to, for all initial states in the domain, there exists a control signal where it will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in <span class="math notranslate nohighlight">\(\tau\)</span> seconds.</p>
+<p>The above assume that reaching the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is a good thing. That is, we are seeking whether there exists <em>at least</em> one control signal that would get us there in <span class="math notranslate nohighlight">\(\tau\)</span> seconds. As such, we use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> to denote the intention to <strong>r</strong>each <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
 <p>However, we can also treat <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as an undesirable set (e.g., collision set), and ask the question whether it is possible to <em>avoid</em> <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future. To check whether it is possible to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, we can equivalently determine whether <em>all</em> control signals would lead to the system being inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. Obviously, being inside this set would be undesirable because it would mean that all control signals would always lead the system to end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, i.e., there is nothing that can be done to avoid entering <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
 We can compute this set in a similar way as above. We refer to this as the <em>avoid</em> set and use <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to denote it. This avoid set is also often referred to as the <em>Inevitable Collision Set (ICS)</em> if <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> represents a collision set.</p>
 <div class="admonition-backward-reachable-set-avoid-case admonition">

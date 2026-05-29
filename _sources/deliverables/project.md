@@ -124,22 +124,24 @@ Printing options:
 1. (~$10) [The Mill](https://hfs.uw.edu/perks-recreation/the-mill) on campus: Fast, inexpensive printing on large paper. Be sure to check printer status in advance.
 2. (~$30) FedEx: Poster printing services, but allow a few days for processing.
 3. (~Free) Print on a regular printer, split over multiple pages using Acrobat Reader’s ["Poster" print option](https://github.com/UW-CTRL/lmc-book/blob/main/_static/images/adobe.jpg). You’ll need tape or glue to assemble your poster.
-4. (Free) Submit your poster **before 9:30AM on Wednesday, June 3** and the teaching team will print it using Option 3. Pick up the assembled sheets at the A&A front office and tape them yourself. 
+4. (Free) Submit your poster **before 9:30AM on Wednesday, June 3** and the teaching team will print it using Option 3. Pick up the assembled sheets at the A&A front office and tape them yourself. [Upload your poster here (UW login)](https://drive.google.com/drive/folders/1QUbvoABW4_vBZB1bXUzSyYODPUvTF9s2?usp=sharing). Please using naming convention: `poster#_lastname_firstname.pdf`
 
-**Important:** For options 3 and 4, you must assemble/tape your poster in advance—no tape or stationery will be provided at the session.
+**Important: For options 3 and 4, you must assemble/tape your poster in advance—no tape or stationery will be provided at the session.**
 
 
 ### Grading criteria
 The poster will be graded based on your attendence to the session, technical content and accuracy, and visual impact and design.
 
 
-
-
 ## Peer Evaluation
 
-**Due: Thursday, Finals week (June 10) (via Google Form)**
+**Due: Friday, Finals week (June 12) (via Google Form)**
 
-You must submit **2 peer reviews** of your assigned projects based on the poster interaction and report (LINK WILL BE UPDATED)
+You must submit **2 peer reviews** of your assigned projects based on the poster interaction and report.
+
+(UW login required)
+- [See your assigned peer reviews here](https://docs.google.com/spreadsheets/d/1czVMqdOQrrzhh9HH_shQNyamMdax2jJBlgC4851GICo/edit?usp=sharing)
+- [Form to submit peer reviews](https://forms.gle/y2wqb2HUXemvyFZt8)
 
 Consider taking a photo of each poster you review for reference when writing your feedback.
 
@@ -160,7 +162,7 @@ Grading will be based on submitting your reviews on time. Reviews must be though
 
 ## Project Report 
 
-**Due: June 11, 11:59PM (via Canvas)**
+**Due: Wednesday June 10, 11:59PM (via Canvas)**
 
 
 **Written report (IEEE format):** 4–6 pages, accessible to a first-year graduate student. See [template](https://github.com/UW-CTRL/lmc-book/blob/main/_static/report_template.zip) for formatting and content guidance.
@@ -170,6 +172,8 @@ Grading will be based on submitting your reviews on time. Reviews must be though
 
 
 Submit a PDF to Canvas before the deadline. 
+
+**NOTE**: Your report will be shared with the class so that you can access the report that you are assigned to review.
 
 Evaluation criteria include technical soundness, clarity, and organization.
 
