@@ -38,15 +38,14 @@ Or differently phrased, where must the system be now so that it can reach the ta
 
 Let's define this mathematically.
 Let $\mathcal{T}$ be a target set that the system is interested in reaching. Without loss of generality, let us assume that $t=0$ corresponds to the time when we want to check whether or not the system has reached $\mathcal{T}$.
-We want to determine what are at the states where within some time $\tau$, we will reach $\mathcal{T}$. 
-Since we have defined $t=0$ to be the end of the horizon, we are interested in the set of states at $t=-\tau$ where in $\tau$ seconds later ($t=-\tau + \tau = 0$), the system will be inside $\mathcal{T}$. 
+We want to determine what are at the states where within some horizon length $|\tau|$, we will reach $\mathcal{T}$. 
+Since we have defined $t=0$ to be the end of the horizon, we are interested in the set of states at $t=-|\tau|$ where in $|\tau|$ seconds later ($t=-|\tau| + |\tau| = 0$), the system will be inside $\mathcal{T}$. For simplicity, we will assume $\tau >0$ and drop the absolute value symbols. 
 The *backward reachable set* is defined as
 
 ```{admonition} Backward Reachable Set (Reach Case)
 ```{math}
 :label: eq-BRS-reach
 \mathcal{R}(\mathcal{T}, -\tau) = \lbrace x\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.
-
 ```
 
 
@@ -54,118 +53,105 @@ This translates to, for all initial states in the domain, there exists a control
 
 The above assume that reaching the target set $\mathcal{T}$ is a good thing. That is, we are seeking whether there exists *at least* one control signal that would get us there in $\tau$ seconds. As such, we use $\mathcal{R}$ to denote the intention to **r**each $\mathcal{T}$.
 
+However, we can also treat $\mathcal{T}$ as an undesirable set (e.g., collision set), and ask the question whether it is possible to *avoid* $\mathcal{T}$ in the future. To check whether it is possible to avoid $\mathcal{T}$, we can equivalently determine whether *all* control signals would lead to the system being inside $\mathcal{T}$. If all control signals lead to the system entering $\mathcal{T}$, then that means that there is no control signal that avoids $\mathcal{T}$.
 
-
-However, we can also treat $\mathcal{T}$ as an undesirable set (e.g., collision set), and ask the question whether it is possible to *avoid* $\mathcal{T}$ in the future. To check whether it is possible to avoid $\mathcal{T}$, we can equivalently determine whether *all* control signals would lead to the system being inside $\mathcal{T}$. Obviously, being inside this set would be undesirable because it would mean that all control signals would always lead the system to end up in $\mathcal{T}$, i.e., there is nothing that can be done to avoid entering $\mathcal{T}$.
-We can compute this set in a similar way as above. We refer to this as the *avoid* set and use $\mathcal{A}$ to denote it. This avoid set is also often referred to as the *Inevitable Collision Set (ICS)* if $\mathcal{T}$ represents a collision set.
+Obviously, being inside this set would be undesirable because it would mean that all control signals would always lead the system to end up in $\mathcal{T}$, i.e., there is nothing that the system can do to avoid entering $\mathcal{T}$.
+We can define this set in a similar way as above. We refer to this as the *avoid* set and use $\mathcal{A}$ to denote it. This avoid set is also often referred to as the *Inevitable Collision Set (ICS)* if $\mathcal{T}$ represents a collision set.
 
 ```{admonition} Backward Reachable Set (Avoid Case)
 ```{math}
 :label: eq-BRS-avoid
-\mathcal{A}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace
-
+\mathcal{A}(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[-\tau, 0] \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace
 ```
 
+
 ##### Backward reachable tubes
-Great! We just defined these sets that determine whether is it possible reach a target set (reach case), and whether it is impossible to avoid the target set (avoid case).
-However, the above definitions only considers whether the system is inside the target set only at the final time $\tau$. It is possible that the system enters the target set before $t<\tau$ but exits it and is outside of $\mathcal{T}$ at $t=\tau$.
+Great! We just defined BRS as sets that determine whether is it possible reach a target set (reach case), and whether it is impossible to avoid the target set (avoid case).
+However, the above definitions only considers whether the system is inside the target set only *at the end of the horizon*. It is possible that the system enters $\mathcal{T}$ during the horizon but exits it by the end of the horizon. Thus a state may be outside of the BRS, but can still enter $\mathcal{T}$ in the future.
+Indeed, if $\mathcal{T}$ represents a collision set, then entering $\mathcal{T}$ before the end of the horizon is still bad and is something we would like to capture. 
 
-So we should also define the sets to consider entry into the target set $\mathcal{T}$ *anytime* between $t=0$ and $t=\tau$.
-These sets are referred to as *Backward Reachable Tubes (BRT)* and had a very similar definition as above, but considers additional entry into $\mathcal{T}$ for any time $s\in[0,\tau]$.
-
+As such, we should also define sets that consider entry into the target set $\mathcal{T}$ *anytime* between $t=-\tau$ and $t=0$.
+These sets that consider entry into the target set before the end of the horizon are referred to as *Backward Reachable Tubes (BRT)* and has a very similar definition as above, but considers additional entry into $\mathcal{T}$ for any time $s\in[-\tau, 0]$.
 
 
 ```{admonition} Backward Reachable Tube (Reach Case)
 ```{math}
 :label: eq-BRS-reach
-\widetilde{\mathcal{R}}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.
-
+\widetilde{\mathcal{R}}(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[-\tau, 0],\: \exists s\in[-\tau, 0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.
 ```
 
 ```{admonition} Backward Reachable Tube (Avoid Case)
 ```{math}
 :label: eq-BRS-avoid
-\widetilde{\mathcal{A}}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid  \forall u(\cdot) \in \mathbb{U}[0,\tau], \: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s) \in \mathcal{T} \rbrace
-
+\widetilde{\mathcal{A}}(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid  \forall u(\cdot) \in \mathbb{U}[-\tau, 0], \: \exists s\in[-\tau,0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s) \in \mathcal{T} \rbrace
 ```
 
-
 ### Computing BRS
-Great! We just defined what backward reachable sets and backward reachable tubes are. But how do we go about actually computing them?
-Let's focus our attention to BRS for the moment. We are concerned with whether we end up in $\mathcal{T}$ at the end of the time horizon, and we must reason *backward* in time to determine what is the set of states that would lead to entry into $\mathcal{T}$ in the future.
-This aspect of reasoning *backward* in time strongly hints that we need to perform dynamic programming to determine the BRS. In fact, we can pose this reachability problem as an *optimal control problem* and solve it using the HJB equation.
+Great! We just defined what **backward reachable sets** and **backward reachable tubes** are. But how do we go about actually computing them?
+Let's focus our attention to **BRS** for the moment. We are concerned with whether we end up in $\mathcal{T}$ at the end of the time horizon, and we must reason *backward* in time to determine what is the set of states where it is possible to enter $\mathcal{T}$ in $\tau$ time.
+Or differently put, given some horizon and starting state, *does there exist a control signal where the state at the end of horizon is in $\mathcal{T}$?* When we consider "*does there exists*", it should make you think "*optimization*"! If we just need to find at least one, then we can try to find the "best", i.e., optimal, control signal that drives the final state as far inside $\mathcal{T}$ as possible. If the optimal control sequence cannot reach $\mathcal{T}$, then no other control sequence can.
 
-Note that in the BRS definition, we only care if we enter $\mathcal{T}$ at the end of the horizon and nothing else. We don't care about the total control effort used. With this idea, we can define the *terminal cost* based on the $\mathcal{T}$.
+This aspect of reasoning *backward* in time and the "does there exist" question strongly hints that we need to perform dynamic programming to determine the BRS. In fact, we can pose this reachability problem as an *optimal control problem* and solve it using the HJB equation (since we are considering a continuous-time setting).
+
+Note that in the BRS definition, we only care if we enter $\mathcal{T}$ at the end of the horizon and nothing else. We don't care about the total control effort used nor what happens *during* the trajectory. We just care about what happens at the end. With this idea, we treat the running cost as zero, an keep the terminal cost non-zero. In fact, define the *terminal cost* based on the $\mathcal{T}$.
 Let us define a terminal cost function $g:\mathbb{R}^n \rightarrow \mathbb{R}$ such that,
 
 $$
 \mathcal{T} = \lbrace x\in\mathcal{X} \mid g(x) \leq 0 \rbrace
 $$
 
-which means that the $g(x)$ is negative if $x\in\mathcal{T}$, or $g(x)=0$ if $x\in\partial\mathcal{T}$ (i.e., on the boundary of $\mathcal{T}$).
+which means that the $g(x)$ is negative if $x\in\mathcal{T}$, or $g(x)=0$ if $x\in\partial\mathcal{T}$ (i.e., on the boundary of $\mathcal{T}$). A natural choice for $g$ is the signed distance function, a function that measures the closest distance to the boundary of $\mathcal{T}$, where negative distances denotes *inside* the set, while positive distance denotes *outside* the set.
 
-And we also set the running cost (or stage cost) to be zero---again, we are just concerned about whether the system ends up in $\mathcal{T}$ at the end of the horizon, and nothing about the control effort or state error during the horizon. Below is an optimal control problem with the described cost structure, and no additonal constraints aside from ones constraining the dynamics and allowable state/control sets.
+Below is an optimal control problem with the described cost structure, and no additonal constraints aside from ones constraining the dynamics and allowable state/control sets.
 
 
 $$
-\min_{u(\cdot) \in \mathbb{U}[0,\tau]} &\: J_T(x(T))\\
+\begin{align*}
+\min_{u(\cdot) \in \mathbb{U}[0,\tau]} &\: g(x(T))\\
 \text{subject to} &\: \dot{x} = f(x,u,t)\\
                   &\: u(t) \in \mathcal{U}, x(t) \in \mathcal{X}
+\end{align*}
 $$
 
-With this cost structure, note that finding an optimal control policy that *minimizes* the cost is equivalent to finding an optimal control policy that drives the system into $\mathcal{T}$.
-In fact, if $J_T$ is defined as the *signed distance function* of $\mathcal{T}$, then the more negative $J_T(x)$, the further *inside* $x$ is of $\mathcal{T}$ and the more positive $J_T(x)$ is, the further *outside* $x$ is from $\mathcal{T}$. Then the optimal policy would driven the system as far inside of $\mathcal{T}$ as possible.
-
-
+With this cost structure, note that finding an optimal control policy that *minimizes* the cost is equivalent to finding an optimal control policy that drives the system into as far into $\mathcal{T}$ as possible, assuming that $g$ is defined where the more negative it is, the farther inside $\mathcal{T}$ it is.
 
 Recall that the (optimal) value function measures the future accumulated cost associated with state $x$ if the system follows the (optimal) policy. With this particular choice of cost structure described above (zero running cost and terminal cost to have a zero sub-level set be $\mathcal{T}$), the value function becomes:
 
 $$
-V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]}J_T(\xi_{x,t}^{u(\cdot)}(\tau)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[0,\tau]}J_T(\xi_{x,t}^{u(\cdot)}(\tau))
+V^*(x,-\tau) = \min_{u(\cdot) \in \mathbb{U}[-\tau, 0]}g(\xi_{x,-\tau}^{u(\cdot)}(0)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[-\tau,0]}g(\xi_{x,-\tau}^{u(\cdot)}(0))
 $$
 
-which is simply the terminal cost evaluated at the state at time $\tau$ if starting from state $x$, at time $t$, and following policy $\pi^*$. Since $J_T(x) \leq 0$ implies $x\in \mathcal{T}$, this means that if $V(x,t) \leq 0$, then following the optimal policy from state $x$ and time $t$ will lead the system to be inside $\mathcal{T}$ at time $\tau$ (i.e., at the end of the horizon).
-As such, this means that the zero sub-level set of $V(\cdot, t)$ is precisely the BRS for a horizon of $\tau - t$! Concretely, we have,
+which is simply the terminal cost evaluated at the state at the end of the horizon if starting from state $x$, and following policy $\pi^*$. Since $g(x) \leq 0$ implies $x\in \mathcal{T}$, this means that if $V(x,t) \leq 0$, then following the optimal policy from state $x$ and time $t=-\tau$ will lead the system to be inside $\mathcal{T}$ at time $t=0$ (i.e., at the end of the horizon).
+As such, this means that the zero sub-level set of $V(\cdot, t)$ is precisely the BRS for a horizon of $\tau$! Concretely, we have,
 
 ```{admonition} Backward Reachable Set as a Value Function (Reach Case)
 ```{math}
 :label: eq-BRS-reach-value
-\mathcal{R}(\mathcal{T}, \tau - t) = \lbrace x\in \mathcal{X} \mid V^*(x,t) \leq 0 \rbrace, \qquad \text{where the planning horizon is }\tau
-
-```
-
-It may be easier to set the end of the time horizon to be $t=0$ and since we are stepping backwards in time, we use $t=-\tau$ to indicate $\tau$ time units back in time. So we can also write $V(x,-\tau)$ to indicate the BRS of a time horizon of $\tau$.
-
-```{admonition} Backward Reachable Set as a Value Function (reparameterizing time) (Reach Case)
-```{math}
-:label: eq-BRS-reach-value
-\mathcal{R}(\mathcal{T}, \tau) = \lbrace x\in \mathcal{X} \mid V^*(x,-\tau) \leq 0 \rbrace
-
+\mathcal{R}(\mathcal{T}, -\tau) = \lbrace x\in \mathcal{X} \mid V^*(x,-\tau) \leq 0 \rbrace, \qquad \text{where the planning horizon is }\tau
 ```
 
 What about the avoid case? Recall that the BRS for the avoid case is to determine the set of states where it is impossible to avoid $\mathcal{T}$ despite the system's best effort.
-With the same cost described above, if the system instead aimed to *maximize* the terminal cost, then it is trying its best to avoid $\mathcal{T}$, but if $V^*(x,t) \leq 0$ it means that the system will end up inside $\mathcal{T}$ (despite the system's best effort).
+With the same cost described above, if the system instead aimed to *maximize* the terminal cost rather than minimize, then it is trying its best to avoid $\mathcal{T}$, but if $V^*(x,-\tau) \leq 0$ it means that the system will end up inside $\mathcal{T}$ (despite the system's best effort).
 
-As such, the BRS for the avoid case is the same as the reach case, except that we are performing a *maximization* problem instead of a minimization one.
+As such, the BRS for the avoid case is the same as the reach case, except that we are performing a *maximization* problem instead of a minimization one. After solving the for the value function with the maximization, then the BRS (avoid case) is simply the sub-zero level set of the value function, just like what we saw above.
 
 
-Great! Now we have now posed the backward reachability problem as an optimal control problem and discussed how to interpret the value function. So how do we go about solving for the value function? We solve the Hamilton-Jacboi-Bellman equation! But the stage cost is set to zero.
+Great! Now we have now posed the backward reachability problem as an optimal control problem and discussed how to extract the BRS from the computed value function. So how do we go about solving for the value function? We solve the Hamilton-Jacboi-Bellman equation! But the stage cost is set to zero.
 
 ```{admonition} HJB equation for BRS
 ```{math}
 :label: eq-BRS-reach-avoid-value
-
 \frac{\partial V}{\partial t}(x,t) + \min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \max_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) = 0 \qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0]\\
-
+V(x,0) = g(x) \qquad t\in[-\tau, 0]\\
 ```
+
 
 ### Computing BRT
 What about the backward reachable tube? What want to check whether the system enters $\mathcal{T}$ *any* time during the horizon. As such, we don't want to compute the terminal cost at the end of the horizon, but rather, determine the lowest value anytime over the horizon. Mathematically, the value function becomes,
 
 $$
-V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x,t}^{u(\cdot)}(s)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x,t}^{u(\cdot)}(s)).
+V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[-\tau, 0]} \min_{s\in[-\tau, 0]} J_T(\xi_{x,-\tau}^{u(\cdot)}(s)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[-\tau, 0]} \min_{s\in[-\tau, 0]} J_T(\xi_{x,-\tau}^{u(\cdot)}(s)).
 $$
 
 We change the HJB PDE slightly to reflect the minimization over time,
@@ -173,18 +159,17 @@ We change the HJB PDE slightly to reflect the minimization over time,
 ```{admonition} HJB equation for BRT
 ```{math}
 :label: eq-BRT-reach-avoid-value
-
 \frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t)\biggl) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \max_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t)\biggl) \qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\
-
+V(x,0) = g(x) \qquad t\in[-\tau, 0],\\
 ```
+
 
 which looks very similar to the standard HJB equation, except there is a $\min$ with zero. Intuitively, if $\min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) > 0 $ (or $\max$), it means the system is moving in a direction where $V$ increases (i.e., moving *away* from $\mathcal{T}$). Since we want to find the *minimum* value of $V$ over the horizon, whenever $V$ is increasing, we want to "freeze" the value of $V$, essentially forcing $\frac{\partial V}{\partial t}=0$.
 Alternatively, if $\min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) < 0 $, it means the system is moving towards $\mathcal{T}$ and we want to keep track of this and not "freeze" the value of $V$.
 
 ### Presence of disturbances
-What if now there are disturbances added to the system? Assuming our dynamics are now $\dot{x} = f(x,u,d)$ and there is an external disturbance input $d$ that affects the system. Then we want to ensure that it is still possible to reach the target set $\mathcal{T}$, or whether it can still be avoided.
+What if now there are disturbances added to the system? Assuming our dynamics are now $\dot{x} = f(x,u,d)$ and there is an external (bounded) disturbance input $d\in\mathcal{D}$ that affects the system. Then we want to ensure that it is still possible to reach the target set $\mathcal{T}$, or whether it can still be avoided despite any and all disturbance signals that could be applied.
 
 For the *reach* case, we want to consider whether the system can still reach $\mathcal{T}$ *regardless of any* disturbances possible. This means that the BRS/BRT should be defined such that the system can reach $\mathcal{T}$ *for all* disturbances.
 
@@ -192,10 +177,9 @@ For the *reach* case, we want to consider whether the system can still reach $\m
 ```{admonition} Backward Reachable Set/Tube with Disturbances (Reach Case)
 ```{math}
 :label: eq-BRS/BRT-disturbance-reach
-\mathcal{R}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall d(\cdot) \in \mathbb{D}[0, \tau],\: \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.
+\mathcal{R}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[-\tau,0], \: \forall d(\cdot) \in \mathbb{D}[-\tau, 0],\: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.\\
 
-\widetilde{\mathcal{R}}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall d(\cdot) \in \mathbb{D}[0, \tau],\: \exists u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.
-
+\widetilde{\mathcal{R}}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[-\tau,0], \: \forall d(\cdot) \in \mathbb{D}[-\tau, 0],\: \exists s\in[-\tau,0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.
 ```
 
 For the *avoid* case, we want to consider whether there is at least one disturbance that would always lead the system into $\mathcal{T}$ regardless of any possible control signal. In other words, the BRS/BRT is considering whether there is a disturbance signal that makes it impossible for the system to about $\mathcal{T}$.
@@ -205,17 +189,17 @@ This means that the BRS/BRT should be defined such that there exists a disturban
 ```{admonition} Backward Reachable Set/Tube with Disturbances (Avoid Case)
 ```{math}
 :label: eq-BRS/BRT-disturbance-avoid
-\mathcal{A}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists d(\cdot) \in \mathbb{D}[0, \tau],\: \forall u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.
+\mathcal{A}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[-\tau,0], \: \exists d(\cdot) \in \mathbb{D}[-\tau, 0],\: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.
 
-\widetilde{\mathcal{A}}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists d(\cdot) \in \mathbb{D}[0, \tau],\: \forall u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.
-
+\widetilde{\mathcal{A}}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[-\tau,0], \: \exists d(\cdot) \in \mathbb{D}[-\tau, 0],\: \exists s\in[-\tau,0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.
 ```
+
 
 So now, we have updated the definition of BRS/BRT with disturbances present.
 We can similarly update the HJB PDE to include the disturbance term.
 Since the disturbance is acting in a manner that tries to oppose the system's best effort to reach/avoid $\mathcal{T}$, if the system is trying perform a $\max$, then the disturbance will perform a $\min$, and vice versa.
 But there is a question as to which order we should compute this sequence of operations.
-Or differently put, what kind of information pattern we should assume. Does the system get to see what the disturbance is first when deciding the optimal control, or the other way around?
+Or differently put, what kind of information pattern we should assume? Does the system get to see what the disturbance is first when deciding the optimal control, or the other way around?
 Generally, we are using reachability analysis to be robust against disturbances/uncertainties, and therefore would like to take on a more conservative stance. That is, we would like to choose the ordering that would assume that the information pattern would benefit the disturbance.
 
 
@@ -238,7 +222,7 @@ With this max-min inequality, we assume the system chooses a control *first*, an
 
 \frac{\partial V}{\partial t}(x,t) + \min_{u\in\mathcal{U}}\max_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \max_{u\in\mathcal{U}}\min_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\
+V(x,0) = g(x) \qquad t\in[-\tau, 0],\\
 
 ```
 
@@ -248,7 +232,7 @@ V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\
 
 \frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \min_{u\in\mathcal{U}}\max_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\biggl) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \max_{u\in\mathcal{U}}\min_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\biggl) \qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\
+V(x,0) = g(x) \qquad t\in[-\tau, 0],\\
 
 ```
 

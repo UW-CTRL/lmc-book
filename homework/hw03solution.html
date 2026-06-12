@@ -1,0 +1,1357 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linear Quadratic Regulator &#8212; Linear Multivariable Control</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=025806d8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'homework/hw03solution';</script>
+    <script src="../_static/custom.js?v=7f7a6837"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Converting Code Notebooks to PDF" href="../logistics/notebooktopdf.html" />
+    <link rel="prev" title="Homework 2 (Solutions)" href="hw02solution.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/class_icon.png" class="logo__image only-light" alt="Linear Multivariable Control - Home"/>
+    <script>document.write(`<img src="../_static/class_icon.png" class="logo__image only-dark" alt="Linear Multivariable Control - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Linear Multivariable Control
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/overview.html">Course information</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../logistics/schedule.html">Week-by-week schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deliverables</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/homework.html">Homework</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/talk.html">Talk reflection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deliverables/extracredit.html">Extra Credit</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lectures/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/state-space.html">State-space representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/optimization.html">Introduction to optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/control-certificates.html">Control certificate functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/sequential-dm.html">Sequential decision-making</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lqr.html">Linear Quadratic Regulator</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Homework</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="hw01.html">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw02.html">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw01_solution.html">Homework 1 (Solutions)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw02solution.html">Homework 2 (Solutions)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Quadratic Regulator</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../logistics/notebooktopdf.html">Converting Code Notebooks to PDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocketderivation.html">Rocket dynamics derivation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UW-CTRL/lmc-book/issues/new?title=Issue%20on%20page%20%2Fhomework/hw03solution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/homework/hw03solution.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Linear Quadratic Regulator</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-time-lqr">1. Continuous-Time LQR</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e">(e)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f">(f)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#g">(g)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-varying-case">2. Time-varying case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lqr-stability">3. LQR stability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discounted-lqr">4. Discounted LQR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-tracking">5. Trajectory tracking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="linear-quadratic-regulator">
+<h1>Linear Quadratic Regulator<a class="headerlink" href="#linear-quadratic-regulator" title="Link to this heading">#</a></h1>
+<section id="continuous-time-lqr">
+<h2>1. Continuous-Time LQR<a class="headerlink" href="#continuous-time-lqr" title="Link to this heading">#</a></h2>
+<p>In this problem, you will derive the equations for the continuous-time Linear Quadratic Regulator (LQR). The steps will be similar to those covered for the discrete-time case in lecture; however, instead of using the Bellman equation, you will apply the Hamilton-Jacobi-Bellman (HJB) equation to the continuous-time setting.</p>
+<p>The continuous-time LQR problem is define below.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\min_{u(\cdot)} &amp; \quad x(T)^TQ_Tx(T) + \int_{0}^{T} x(t)^TQ(t)x(t) + u(t)^TR(t)u(t) dt\\
+\text{subject to} &amp; \quad \dot{x} = A(t)x(t) + B(t)u(t), \:\: t\in[0,T]\\
+&amp; \quad x(0) = x_\text{current}
+\end{align*}
+\end{split}\]</div>
+<p>The HJB equation is</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial V}{\partial t} + \min_{u(t)\in \mathcal{U}} g(x(t), u(t), t) + \nabla V(x(t), t)^T f(x(t), u(t), t) = 0
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(V\)</span> is the value function.</p>
+<section id="a">
+<h3>(a)<a class="headerlink" href="#a" title="Link to this heading">#</a></h3>
+<p>Let us begin with the <em>time-invariant</em> case for the continuous-time LQR problem.</p>
+<p>Based on the LQR formulation and the Hamilton-Jacobi-Bellman (HJB) equation:</p>
+<ul class="simple">
+<li><p>Explicitly write out the functions <span class="math notranslate nohighlight">\(g(x, u)\)</span>, <span class="math notranslate nohighlight">\(f(x, u)\)</span>, and the terminal condition for the value function <span class="math notranslate nohighlight">\(V(x(T), T)\)</span>.</p></li>
+<li><p>Then, using these expressions, write the HJB equation specialized to the continuous-time, finite horizon, time-invariant LQR problem.</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>For the time-invariant continuous-time finite-horizon LQR problem,</p>
+<div class="math notranslate nohighlight">
+\[\dot{x} = Ax + Bu\]</div>
+<p>the functions in the HJB equation are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+    g(x,u) = x^T Q x + u^T R u \\
+    f(x,u) = Ax + Bu 
+\end{align*}\end{split}\]</div>
+<p>The terminal condition is:</p>
+<div class="math notranslate nohighlight">
+\[V(x(T),T) = x(T)^TQ_Tx(T)\]</div>
+<p>Therefore, the HJB equation becomes</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial V}{\partial t} + \min_{u}
+(
+x^TQx
++
+u^TRu
++
+\nabla V(x,t)^T(Ax+Bu)
+)
+= 0\]</div>
+<p>with terminal condition</p>
+<div class="math notranslate nohighlight">
+\[V(x,T)=x^TQ_Tx\]</div>
+</div>
+</section>
+<section id="b">
+<h3>(b)<a class="headerlink" href="#b" title="Link to this heading">#</a></h3>
+<p>Next, suppose the value function is quadratic at all times; specifically, let <span class="math notranslate nohighlight">\(V(x(t), t) = x(t)^T P(t) x(t)\)</span>. Using this form, explicitly derive expressions for both the partial derivative of the value function with respect to time, <span class="math notranslate nohighlight">\(\frac{\partial V}{\partial t}\)</span>, and for the gradient of the value function with respect to the state, <span class="math notranslate nohighlight">\(\nabla V(x(t), t)\)</span>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Assume the value function has the quadratic form:</p>
+<div class="math notranslate nohighlight">
+\[V(x(t),t) = x(t)^T P(t) x(t)\]</div>
+<p>where <span class="math notranslate nohighlight">\(P(t)\)</span> is symmetric.</p>
+<p>First, the partial derivative with respect to time is</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial V}{\partial t}
+=
+x(t)^T \dot{P}(t) x(t)\]</div>
+<p>In the HJB equation, <span class="math notranslate nohighlight">\(V(x,t)\)</span> is treated as a function of two independent variables, <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>Therefore, when computing the partial derivative with respect to <span class="math notranslate nohighlight">\(t\)</span>, the state <span class="math notranslate nohighlight">\(x\)</span> is held fixed. The effect of the state changing with time is accounted for separately by the term <span class="math notranslate nohighlight">\(\nabla V(x,t)^T f(x,u)\)</span> in the HJB equation.</p>
+<p>Next, the gradient of <span class="math notranslate nohighlight">\(V\)</span> with respect to the state is</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla V(x(t),t)
+=
+\frac{\partial}{\partial x}
+[
+x(t)^T P(t) x(t)
+]\]</div>
+<p>Using the quadratic derivative rule,</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla V(x(t),t)
+=
+(P(t)+P(t)^T)x(t)\]</div>
+<p>Since <span class="math notranslate nohighlight">\(P(t)=P(t)^T\)</span>, this becomes</p>
+<div class="math notranslate nohighlight">
+\[\nabla V(x(t),t)
+=
+2P(t)x(t)\]</div>
+</div>
+</section>
+<section id="c">
+<h3>(c)<a class="headerlink" href="#c" title="Link to this heading">#</a></h3>
+<p>After substituting your expressions from (b) into the HJB equation, show that the optimal policy <span class="math notranslate nohighlight">\(\pi^\star(x,t)\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\pi^\star(x,t) = -R^{-1}B^TP(t)x(t)
+\]</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Substituting the results from part (b) into the HJB equation gives</p>
+<div class="math notranslate nohighlight">
+\[x^T\dot{P}x
++
+\min_u
+[
+x^TQx
++
+u^TRu
++
+(2Px)^T(Ax+Bu)
+]
+=0\]</div>
+<p>To find the optimal control, differentiate with respect to <span class="math notranslate nohighlight">\(u\)</span> and set the result equal to zero:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial}{\partial u}
+[
+u^TRu + 2x^TPBu
+]
+=
+2Ru + 2B^TPx
+=0\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(u\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+Ru = -B^TPx
+\]</div>
+<div class="math notranslate nohighlight">
+\[u^\star = -R^{-1}B^TPx\]</div>
+<p>Therefore, the optimal policy is</p>
+<div class="math notranslate nohighlight">
+\[\pi^\star(x,t)
+=
+-R^{-1}B^TP(t)x(t)\]</div>
+</div>
+</section>
+<section id="d">
+<h3>(d)<a class="headerlink" href="#d" title="Link to this heading">#</a></h3>
+<p>With the optimal policy <span class="math notranslate nohighlight">\(\pi^\star(x,t)\)</span>, show that the HJB equation reduces to</p>
+<div class="math notranslate nohighlight">
+\[
+0 = x(t)^T(\dot{P} + Q + 2P(t)A - P(t)BR^{-1}B^TP(t))x(t)
+\]</div>
+<p>Will the matrix in the above quadratic form be always symmetric?</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Substitute the optimal policy</p>
+<div class="math notranslate nohighlight">
+\[u^\star = -R^{-1}B^TPx\]</div>
+<p>into the HJB equation:</p>
+<div class="math notranslate nohighlight">
+\[x^T\dot{P}x
++
+x^TQx
++
+(u^\star)^TRu^\star
++
+(2Px)^T(Ax+Bu^\star)
+=0\]</div>
+<p>Now compute each term involving <span class="math notranslate nohighlight">\(u^\star\)</span>.</p>
+<p>First,</p>
+<div class="math notranslate nohighlight">
+\[(u^\star)^TRu^\star
+=
+x^T PBR^{-1}B^T Px\]</div>
+<p>Next,</p>
+<div class="math notranslate nohighlight">
+\[(2Px)^TBu^\star
+=
+2x^T PB(-R^{-1}B^T Px)
+=
+-2x^T PBR^{-1}B^T Px\]</div>
+<p>Therefore,</p>
+<div class="math notranslate nohighlight">
+\[(u^\star)^TRu^\star
++
+(2Px)^T Bu^\star
+=
+-x^T PBR^{-1}B^T Px\]</div>
+<p>Also,</p>
+<div class="math notranslate nohighlight">
+\[(2Px)^T Ax
+=
+2x^T PAx\]</div>
+<p>Thus, the HJB equation becomes</p>
+<div class="math notranslate nohighlight">
+\[0
+=
+x^T\dot{P}x
++
+x^T Q x
++
+2x^T P Ax
+-
+x^T PBR^{-1}B^T Px\]</div>
+<p>or equivalently,</p>
+<div class="math notranslate nohighlight">
+\[0
+=
+x^T
+(
+\dot{P}
++
+Q
++
+2PA
+-
+PBR^{-1}B^TP
+)
+x\]</div>
+<p>Let’s check whether <span class="math notranslate nohighlight">\(\dot{P}+Q+2PA-PBR^{-1}B^TP\)</span> is symmetric by checking it transpose:</p>
+<div class="math notranslate nohighlight">
+\[(\dot{P}+Q+2PA-PBR^{-1}B^TP)^T\]</div>
+<p>Since <span class="math notranslate nohighlight">\(P(t)\)</span> is symmetric for all t, taking the derivative preserves symmetry. So <span class="math notranslate nohighlight">\(\dot{P}\)</span> is symmetric.</p>
+<p>In LQR, Q is symmetric.</p>
+<p>Next,</p>
+<div class="math notranslate nohighlight">
+\[(PBR^{-1}B^TP)^T = P^TB(R^{-1})^TB^TP^T\]</div>
+<p>then since <span class="math notranslate nohighlight">\(P^T = P\)</span> and <span class="math notranslate nohighlight">\(R = R^T\)</span>, we have <span class="math notranslate nohighlight">\((R^{-1})^T = R^{-1}\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[(PBR^{-1}B^TP)^T = PBR^{-1}B^TP\]</div>
+<p>is symmetric.</p>
+<p>Only <span class="math notranslate nohighlight">\(PA\)</span> is not necessarily symmetric. Therefore, <span class="math notranslate nohighlight">\(\dot{P}+Q+2PA-PBR^{-1}B^TP\)</span> is not necessarily symmetric.</p>
+</div>
+</section>
+<section id="e">
+<h3>(e)<a class="headerlink" href="#e" title="Link to this heading">#</a></h3>
+<p>Recall that any matrix <span class="math notranslate nohighlight">\(M\)</span> can be decomposed in terms of its symmetric and skew-symmetric components:</p>
+<div class="math notranslate nohighlight">
+\[
+M = \underbrace{\frac{M + M^T}{2}}_{\text{symmetric}} + \underbrace{\frac{M-M^T}{2}}_{\text{skew-symmetric}}
+\]</div>
+<p>Prove that for any vector <span class="math notranslate nohighlight">\(x\)</span> of appropriate size, that <span class="math notranslate nohighlight">\(x^TMx = x^T (\frac{M + M^T}{2})x\)</span>. That is, <span class="math notranslate nohighlight">\(x^T (\frac{M-M^T}{2})x = 0\)</span>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Let</p>
+<div class="math notranslate nohighlight">
+\[M_s = \frac{M+M^T}{2},
+\qquad
+M_k = \frac{M-M^T}{2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(M_s\)</span> is symmetric and <span class="math notranslate nohighlight">\(M_k\)</span> is skew-symmetric. Then</p>
+<div class="math notranslate nohighlight">
+\[M = M_s + M_k\]</div>
+<p>and therefore</p>
+<div class="math notranslate nohighlight">
+\[x^TMx
+=
+x^T(M_s+M_k)x
+=
+x^TM_sx + x^TM_kx\]</div>
+<p>Now consider the skew-symmetric term</p>
+<div class="math notranslate nohighlight">
+\[x^TM_kx\]</div>
+<p>Since this is a scalar, it is equal to its transpose:</p>
+<div class="math notranslate nohighlight">
+\[x^TM_kx
+=
+(x^TM_kx)^T\]</div>
+<p>Using the transpose rule,</p>
+<div class="math notranslate nohighlight">
+\[(x^TM_kx)^T
+=
+x^TM_k^Tx\]</div>
+<p>Because <span class="math notranslate nohighlight">\(M_k\)</span> is skew-symmetric,</p>
+<div class="math notranslate nohighlight">
+\[M_k^T = -M_k\]</div>
+<p>Thus,</p>
+<div class="math notranslate nohighlight">
+\[x^TM_kx
+=
+x^T(-M_k)x
+=
+-x^TM_kx\]</div>
+<p>Therefore,</p>
+<div class="math notranslate nohighlight">
+\[2x^TM_kx = 0\]</div>
+<p>so</p>
+<div class="math notranslate nohighlight">
+\[x^TM_kx = 0\]</div>
+<p>Hence,</p>
+<div class="math notranslate nohighlight">
+\[x^TMx
+=
+x^TM_sx\]</div>
+<p>or equivalently,</p>
+<div class="math notranslate nohighlight">
+\[x^TMx
+=
+x^T (\frac{M+M^T}{2})x\]</div>
+<p>and,</p>
+<div class="math notranslate nohighlight">
+\[x^T(\frac{M-M^T}{2})x = 0\]</div>
+</div>
+</section>
+<section id="f">
+<h3>(f)<a class="headerlink" href="#f" title="Link to this heading">#</a></h3>
+<p>Given the results from (e), finally show that the value function for the continuous-time LQR problem is the solution to the following ODE:</p>
+<div class="math notranslate nohighlight">
+\[
+-\dot{P}(t) = Q + P(t)A + A^TP(t) -P(t)BR^{-1}B^TP(t)
+\]</div>
+<p>With boundary condition <span class="math notranslate nohighlight">\(P(T) = Q_T\)</span>.
+This is the Riccati differential equation.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>From part (d), after substituting the optimal policy into the HJB equation, we obtained</p>
+<div class="math notranslate nohighlight">
+\[
+0 =
+x^T
+(
+\dot{P}
++
+Q
++
+2PA
+-
+PBR^{-1}B^TP
+)
+x\]</div>
+<p>However, the matrix inside the quadratic form is not necessarily symmetric because
+<span class="math notranslate nohighlight">\(PA\)</span> is not necessarily symmetric. From part (e), for any matrix <span class="math notranslate nohighlight">\(M\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[x^TMx
+=
+x^T(\frac{M+M^T}{2})x\]</div>
+<p>Therefore, the term <span class="math notranslate nohighlight">\(2PA\)</span> in the quadratic form can be replaced by its
+symmetric part:</p>
+<div class="math notranslate nohighlight">
+\[x^T(2PA)x
+=
+x^T(\frac{2PA+(2PA)^T}{2})x\]</div>
+<p>Since</p>
+<div class="math notranslate nohighlight">
+\[(2PA)^T = 2A^TP\]</div>
+<p>we have</p>
+<div class="math notranslate nohighlight">
+\[x^T(2PA)x
+=
+x^T(PA+A^TP)x\]</div>
+<p>Thus, the HJB equation becomes</p>
+<div class="math notranslate nohighlight">
+\[0 =
+x^T
+(
+\dot{P}
++
+Q
++
+PA
++
+A^TP
+-
+PBR^{-1}B^TP
+)
+x\]</div>
+<p>Since the matrix inside the quadratic form is symmetric, and the equality holds for all (x), the matrix must be zero:</p>
+<div class="math notranslate nohighlight">
+\[\dot{P}
++
+Q
++
+PA
++
+A^TP
+-
+PBR^{-1}B^TP
+=
+0\]</div>
+<p>Rearranging gives the Riccati differential equation:</p>
+<div class="math notranslate nohighlight">
+\[-\dot{P}(t)
+=
+Q
++
+P(t)A
++
+A^TP(t)
+-
+P(t)BR^{-1}B^TP(t)\]</div>
+<p>The terminal condition comes from the terminal cost:</p>
+<div class="math notranslate nohighlight">
+\[V(x(T),T)=x(T)^TQ_Tx(T)\]</div>
+<p>Since</p>
+<div class="math notranslate nohighlight">
+\[V(x(T),T)=x(T)^TP(T)x(T)\]</div>
+<p>we must have</p>
+<div class="math notranslate nohighlight">
+\[P(T)=Q_T\]</div>
+<p>Therefore, the value function is determined by solving</p>
+<div class="math notranslate nohighlight">
+\[-\dot{P}(t)
+=
+Q
++
+P(t)A
++
+A^TP(t)
+-
+P(t)BR^{-1}B^TP(t),
+\qquad
+P(T)=Q_T\]</div>
+</div>
+</section>
+<section id="g">
+<h3>(g)<a class="headerlink" href="#g" title="Link to this heading">#</a></h3>
+<p>Consider the infinite-horizon case. How does the above ODE change? The resulting equation is referred to as the <em>continuous algebraic Riccati equation (CARE)</em>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>For the infinite-horizon LQR problem, there is no finite terminal time and no terminal condition <span class="math notranslate nohighlight">\(P(T)=Q_T\)</span>. We look for a steady-state value function</p>
+<div class="math notranslate nohighlight">
+\[P(t) = P, \qquad V(x) = x^T P x\]</div>
+<p>where <span class="math notranslate nohighlight">\(P\)</span> is constant in time. Therefore,</p>
+<div class="math notranslate nohighlight">
+\[\dot{P}(t)=0\]</div>
+<p>Starting from the Riccati differential equation,</p>
+<div class="math notranslate nohighlight">
+\[-\dot{P}(t)
+=
+Q
++
+P(t)A
++
+A^TP(t)
+-
+P(t)BR^{-1}B^TP(t)\]</div>
+<p>setting <span class="math notranslate nohighlight">\(\dot{P}(t)=0\)</span> gives</p>
+<div class="math notranslate nohighlight">
+\[0
+=
+Q
++
+PA
++
+A^TP
+-
+PBR^{-1}B^TP\]</div>
+<p>This is the continuous algebraic Riccati equation (CARE):</p>
+<div class="math notranslate nohighlight">
+\[A^TP + PA - PBR^{-1}B^TP + Q = 0\]</div>
+<p>The corresponding infinite-horizon optimal policy is</p>
+<div class="math notranslate nohighlight">
+\[u^\star(t)
+=
+-R^{-1}B^T Px(t)\]</div>
+</div>
+</section>
+</section>
+<section id="time-varying-case">
+<h2>2. Time-varying case<a class="headerlink" href="#time-varying-case" title="Link to this heading">#</a></h2>
+<p>Now consider the time-varying (and finite horizon) case for both continuous-time and discrete-time systems. Clearly state the Riccati equations that govern the evolution of the matrix <span class="math notranslate nohighlight">\(P(t)\)</span> and <span class="math notranslate nohighlight">\(P_k\)</span> in each setting. Provide the forms of the time-varying Riccati differential equation for the continuous-time case, and the Riccati recursion for the discrete-time case.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>The continuous-time finite-horizon time-varying Riccati differential equation is</p>
+<div class="math notranslate nohighlight">
+\[
+-\dot{P}(t)
+=
+Q(t)
++
+A(t)^TP(t)
++
+P(t)A(t)
+-
+P(t)B(t)R(t)^{-1}B(t)^TP(t),
+\]</div>
+<p>with terminal condition</p>
+<div class="math notranslate nohighlight">
+\[
+P(T)=Q_T.
+\]</div>
+<p>The corresponding optimal control law is</p>
+<div class="math notranslate nohighlight">
+\[
+u^\star(t)
+=
+-R(t)^{-1}B(t)^TP(t)x(t).
+\]</div>
+<p>For the discrete-time finite-horizon time-varying LQR problem, the Riccati recursion is</p>
+<div class="math notranslate nohighlight">
+\[
+P_k
+=
+Q_k
++
+A_k^TP_{k+1}A_k
+-
+A_k^TP_{k+1}B_k
+(R_k+B_k^TP_{k+1}B_k)^{-1}
+B_k^TP_{k+1}A_k,
+\]</div>
+<p>with terminal condition</p>
+<div class="math notranslate nohighlight">
+\[
+P_N=Q_N.
+\]</div>
+<p>The corresponding optimal control law is</p>
+<div class="math notranslate nohighlight">
+\[
+u_k^\star=-K_kx_k,
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+K_k
+=
+(R_k+B_k^TP_{k+1}B_k)^{-1}
+B_k^TP_{k+1}A_k.
+\]</div>
+<p>Both Riccati equations are solved backward in time from their terminal conditions.</p>
+</div>
+</section>
+<section id="lqr-stability">
+<h2>3. LQR stability<a class="headerlink" href="#lqr-stability" title="Link to this heading">#</a></h2>
+<p>Consider the continuous-time infinite-horizon LQR problem. Show that the closed-loop system <span class="math notranslate nohighlight">\(\dot{x} = (A - BK)x\)</span>, where <span class="math notranslate nohighlight">\(K = R^{-1} B^T P\)</span> is the optimal LQR gain, is asymptotically stable. Specifically, prove that the optimal value function <span class="math notranslate nohighlight">\(V(x) = x^T P x\)</span> serves as a valid Lyapunov function for the closed-loop system, thereby establishing asymptotic stability of the origin.</p>
+<p>You may assume that under the LQR assumption, the solution to CARE <span class="math notranslate nohighlight">\(P\)</span> is positive definite.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>For the continuous-time infinite-horizon LQR problem, the optimal control is</p>
+<div class="math notranslate nohighlight">
+\[u^\star = -Kx\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[K = R^{-1}B^TP\]</div>
+<p>Thus, the closed-loop system is</p>
+<div class="math notranslate nohighlight">
+\[\dot{x} = (A-BK)x\]</div>
+<p>We want to show that</p>
+<div class="math notranslate nohighlight">
+\[V(x)=x^TPx\]</div>
+<p>is a Lyapunov function for the closed-loop system.</p>
+<p>Since <span class="math notranslate nohighlight">\(P\)</span> is positive definite, we have</p>
+<div class="math notranslate nohighlight">
+\[V(x)=x^TPx &gt; 0, \qquad x\neq 0, \qquad V(0)=0
+\]</div>
+<p>Therefore, <span class="math notranslate nohighlight">\(V(x)\)</span> is positive definite.
+Now compute the time derivative of <span class="math notranslate nohighlight">\(V\)</span> along the closed-loop trajectory:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{V}(x) = \dot{x}^TPx + x^TP\dot{x}
+\]</div>
+<p>Substituting</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{x}=(A-BK)x
+\]</div>
+<p>gives</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{V}(x) = x^T(A-BK)^TPx + x^TP(A-BK)x
+\]</div>
+<p>Therefore,</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{V}(x) = x^T [ (A-BK)^TP + P(A-BK) ] x
+\]</div>
+<p>To establish asymptotic stability, we need to show that <span class="math notranslate nohighlight">\(\dot{V}(x)&lt;0\)</span>.</p>
+<p>Since</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{V}(x)=x^T (A-BK)^T P + P(A-BK)x\]</div>
+<p><span class="math notranslate nohighlight">\(\dot{V}(x)&lt;0\)</span> can be proved by showing</p>
+<div class="math notranslate nohighlight">
+\[
+(A-BK)^T P+P(A-BK) \prec 0
+\]</div>
+<p>Expanding the matrix term,</p>
+<div class="math notranslate nohighlight">
+\[
+(A-BK)^TP + P(A-BK) = A^TP + PA - K^TB^TP - PBK 
+\]</div>
+<p>From the CARE in part (g),</p>
+<div class="math notranslate nohighlight">
+\[
+A^TP + PA - PBR^{-1}B^TP + Q = 0
+\]</div>
+<p>and use</p>
+<div class="math notranslate nohighlight">
+\[
+K = R^{-1}B^TP
+\]</div>
+<p>we have</p>
+<div class="math notranslate nohighlight">
+\[
+A^TP + PA - PBK + Q = 0, \quad \Rightarrow \quad A^TP + PA - PBK = -Q
+\]</div>
+<p>Substituting this into our <span class="math notranslate nohighlight">\(\dot{V}\)</span> expression,</p>
+<div class="math notranslate nohighlight">
+\[
+A^TP + PA - K^TB^TP - PBK =  - K^TB^TP - Q 
+\]</div>
+<p>Breaking down <span class="math notranslate nohighlight">\(- K^TB^TP - Q \)</span> further,</p>
+<div class="math notranslate nohighlight">
+\[
+- K^TB^TP - Q  = - K^TRR^{-1}B^TP - Q =  - K^TRK - Q = - (K^TRK + Q)
+\]</div>
+<p>Since in LQR we assume <span class="math notranslate nohighlight">\(Q\succeq 0\)</span> and <span class="math notranslate nohighlight">\(R\succ 0\)</span>, we also have <span class="math notranslate nohighlight">\(K^TRK \succ 0\)</span>. This means</p>
+<div class="math notranslate nohighlight">
+\[
+- (K^TRK + Q) \prec 0
+\]</div>
+<p>As such, this means that we have
+$<span class="math notranslate nohighlight">\(
+\dot{V}(x) = x^T [(A-BK)^TP + P(A-BK)]x = - x^T[(K^TRK + Q)]x &lt; 0 
+\)</span>$</p>
+<p>Hence, the origin of the closed-loop system is asymptotically stable, and <span class="math notranslate nohighlight">\(V(x)=x^TPx\)</span> is a valid Lyapunov function.</p>
+</div>
+</section>
+<section id="discounted-lqr">
+<h2>4. Discounted LQR<a class="headerlink" href="#discounted-lqr" title="Link to this heading">#</a></h2>
+<p>Consider the discrete-time LQR problem but with a discount term on the stage cost: <span class="math notranslate nohighlight">\(\sum_{k=0}^{N-1} \gamma^k (x_k^TQ_kx_k + u_k^TR_ku_k)\)</span>. How does the optimal gain and resulting Riccati recursion equation differ?</p>
+<p>For the infinite horizon setting and without discount, to solve for <span class="math notranslate nohighlight">\(P_\infty\)</span>, we can use the <code class="docutils literal notranslate"><span class="pre">dare(A,B,Q,R)</span></code> function (in Matlab or Python) given matrices <span class="math notranslate nohighlight">\(A,B,Q,R\)</span>. Is it still possible to use the same function to solve for <span class="math notranslate nohighlight">\(P_\infty\)</span> for the discounted setting? Provide a brief explanation.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>For the finite horizon case, with the discount, it remains a discrete-time finite-horizon time-varying problem with <span class="math notranslate nohighlight">\(\tilde{Q}_k = \gamma^kQ_k\)</span> and <span class="math notranslate nohighlight">\(\tilde{R}_k = \gamma^kR_k\)</span></p>
+<p>Now, consider the discounted discrete-time infinite-horizon LQR problem</p>
+<div class="math notranslate nohighlight">
+\[J
+=
+\sum_{k=0}^{\infty}
+\gamma^k
+(
+x_k^TQx_k + u_k^TRu_k
+),
+\qquad
+0&lt;\gamma&lt;1\]</div>
+<p>subject to</p>
+<div class="math notranslate nohighlight">
+\[x_{k+1}=Ax_k+Bu_k\]</div>
+<p>Assume the value function has the form</p>
+<div class="math notranslate nohighlight">
+\[V(x_k)=x_k^TPx_k\]</div>
+<p>The Bellman equation is</p>
+<div class="math notranslate nohighlight">
+\[V(x_k)
+=
+\min_{u_k}
+[
+x_k^TQx_k
++
+u_k^TRu_k
++
+\gamma V(x_{k+1})
+]\]</div>
+<p>Substituting <span class="math notranslate nohighlight">\(x_{k+1}=Ax_k+Bu_k\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[V(x_k)
+=
+\min_{u_k}
+[
+x_k^TQx_k
++
+u_k^TRu_k
++
+\gamma (Ax_k+Bu_k)^TP(Ax_k+Bu_k)
+]\]</div>
+<p>Taking the derivative with respect to (u_k) and setting it equal to zero gives</p>
+<div class="math notranslate nohighlight">
+\[2Ru_k
++
+2\gamma B^TP(Ax_k+Bu_k)
+=
+0\]</div>
+<p>Therefore,</p>
+<div class="math notranslate nohighlight">
+\[(R+\gamma B^TPB)u_k
+=
+-\gamma B^TPAx_k\]</div>
+<p>so the optimal control is</p>
+<div class="math notranslate nohighlight">
+\[u_k^\star=-Kx_k\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[K
+=
+(R+\gamma B^TPB)^{-1}
+\gamma B^TPA\]</div>
+<p>Substituting the optimal control back into the Bellman equation gives the
+discounted algebraic Riccati equation</p>
+<div class="math notranslate nohighlight">
+\[P
+=
+Q
++
+\gamma A^TPA
+-
+\gamma^2 A^TPB
+(R+\gamma B^TPB)^{-1}
+B^TPA\]</div>
+<p>We can still use the standard DARE solver by
+rewriting the discounted problem as an undiscounted LQR problem with scaled
+dynamics:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{A}=\sqrt{\gamma}A,
+\qquad
+\tilde{B}=\sqrt{\gamma}B\]</div>
+<p>Then the discounted Riccati equation becomes</p>
+<div class="math notranslate nohighlight">
+\[P
+=
+Q
++
+\tilde{A}^TP\tilde{A}
+-
+\tilde{A}^TP\tilde{B}
+(
+R+\tilde{B}^TP\tilde{B}
+)^{-1}
+\tilde{B}^TP\tilde{A}\]</div>
+<p>Therefore, <span class="math notranslate nohighlight">\(P_\infty\)</span> can be computed using</p>
+<div class="math notranslate nohighlight">
+\[P_\infty
+=
+\texttt{dare}(\sqrt{\gamma}A,\sqrt{\gamma}B,Q,R)\]</div>
+<p>After obtaining <span class="math notranslate nohighlight">\(P_\infty\)</span>, the discounted optimal gain is</p>
+<div class="math notranslate nohighlight">
+\[K
+=
+(R+\gamma B^TP_\infty B)^{-1}
+\gamma B^TP_\infty A\]</div>
+</div>
+</section>
+<section id="trajectory-tracking">
+<h2>5. Trajectory tracking<a class="headerlink" href="#trajectory-tracking" title="Link to this heading">#</a></h2>
+<p>Run the <code class="docutils literal notranslate"><span class="pre">tracking_LQR.ipynb</span></code> demo notebook. Please read the comments in the notebook to get a good sense of what the notebook is doing.</p>
+<p>After reading and running the notebook, answer the following questions.</p>
+<section id="id1">
+<h3>(a)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Why does there exist some “steady state error” at the end of the trajectory?</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>There is no integral action. The LQR controller minimizes a quadratic cost function that balances tracking performance and control effort. Since control effort is penalized in the cost function, the optimal solution may allow a small tracking error if eliminating that error would require additional control input.</p>
+<p>As a result, the controller does not necessarily drive the tracking error exactly to zero at the end of the trajectory. Instead, it finds the state and control trajectories that minimize the overall cost, which can lead to a small residual error.</p>
+</div>
+</section>
+<section id="id2">
+<h3>(b)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>If we found ourselves running up against control limits, what could we change in (i) the tracking LQR formulation, or (ii) the computation of the nominal trajectory, to make this less likely to happen?</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>The controller may run into control limits because the nominal control plus the feedback correction exceeds the actuator bounds. In the tracking LQR formulation, this can be reduced by increasing the control cost <span class="math notranslate nohighlight">\(R\)</span>, which penalizes large feedback inputs and makes the controller less aggressive. We can also decrease the state-tracking weights in <span class="math notranslate nohighlight">\(Q\)</span> if the controller is trying too hard to remove small errors.</p>
+<p>In the nominal trajectory computation, we can design the nominal control sequence to stay away from the actuator limits. For example, we can impose tighter thrust constraints or add a margin around the actuator bounds. This gives the feedback controller additional authority to reject disturbances without saturating.</p>
+</div>
+</section>
+<section id="id3">
+<h3>(c)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Even with closed-loop control, we see that the red “safety bubble” surrounding the quad intersects the obstacle over a short time interval. What could we do to avoid this?</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Even with LQR feedback, the quadcopter does not follow the nominal trajectory exactly because of disturbances, modeling error, and control limits. Therefore, if the nominal trajectory passes too close to the obstacle, the safety bubble can still intersect the obstacle.</p>
+<p>To avoid this, we should modify the nominal trajectory optimization to include a larger obstacle clearance margin. This can be done by inflating the obstacle radius or adding an additional safety buffer in the obstacle avoidance constraint. As a result, the nominal trajectory stays farther away from the obstacle, leaving room for tracking errors caused by disturbances, modeling inaccuracies, and actuator saturation.</p>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="hw02solution.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 2 (Solutions)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../logistics/notebooktopdf.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Converting Code Notebooks to PDF</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-time-lqr">1. Continuous-Time LQR</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e">(e)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f">(f)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#g">(g)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-varying-case">2. Time-varying case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lqr-stability">3. LQR stability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discounted-lqr">4. Discounted LQR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-tracking">5. Trajectory tracking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Karen Leung (Instructor) & Oliver Sheridan (Teaching Assistant 2024, 2025)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

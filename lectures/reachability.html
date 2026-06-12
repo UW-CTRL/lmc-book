@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -225,6 +225,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../homework/hw03.html">Homework 3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../homework/hw01_solution.html">Homework 1 (Solutions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../homework/hw02solution.html">Homework 2 (Solutions)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/hw03solution.html">Linear Quadratic Regulator</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul class="nav bd-sidenav">
@@ -491,8 +492,8 @@ Let <span class="math notranslate nohighlight">\(\mathbb{U}[0,t]:=\lbrace u \mid
 Or differently phrased, where must the system be now so that it can reach the target set in the future?</p>
 <p>Let’s define this mathematically.
 Let <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> be a target set that the system is interested in reaching. Without loss of generality, let us assume that <span class="math notranslate nohighlight">\(t=0\)</span> corresponds to the time when we want to check whether or not the system has reached <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
-We want to determine what are at the states where within some time <span class="math notranslate nohighlight">\(\tau\)</span>, we will reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
-Since we have defined <span class="math notranslate nohighlight">\(t=0\)</span> to be the end of the horizon, we are interested in the set of states at <span class="math notranslate nohighlight">\(t=-\tau\)</span> where in <span class="math notranslate nohighlight">\(\tau\)</span> seconds later (<span class="math notranslate nohighlight">\(t=-\tau + \tau = 0\)</span>), the system will be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+We want to determine what are at the states where within some horizon length <span class="math notranslate nohighlight">\(|\tau|\)</span>, we will reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+Since we have defined <span class="math notranslate nohighlight">\(t=0\)</span> to be the end of the horizon, we are interested in the set of states at <span class="math notranslate nohighlight">\(t=-|\tau|\)</span> where in <span class="math notranslate nohighlight">\(|\tau|\)</span> seconds later (<span class="math notranslate nohighlight">\(t=-|\tau| + |\tau| = 0\)</span>), the system will be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. For simplicity, we will assume <span class="math notranslate nohighlight">\(\tau &gt;0\)</span> and drop the absolute value symbols.
 The <em>backward reachable set</em> is defined as</p>
 <div class="admonition-backward-reachable-set-reach-case admonition">
 <p class="admonition-title">Backward Reachable Set (Reach Case)</p>
@@ -501,81 +502,79 @@ The <em>backward reachable set</em> is defined as</p>
 </div>
 <p>This translates to, for all initial states in the domain, there exists a control signal where it will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in <span class="math notranslate nohighlight">\(\tau\)</span> seconds.</p>
 <p>The above assume that reaching the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is a good thing. That is, we are seeking whether there exists <em>at least</em> one control signal that would get us there in <span class="math notranslate nohighlight">\(\tau\)</span> seconds. As such, we use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> to denote the intention to <strong>r</strong>each <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
-<p>However, we can also treat <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as an undesirable set (e.g., collision set), and ask the question whether it is possible to <em>avoid</em> <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future. To check whether it is possible to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, we can equivalently determine whether <em>all</em> control signals would lead to the system being inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. Obviously, being inside this set would be undesirable because it would mean that all control signals would always lead the system to end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, i.e., there is nothing that can be done to avoid entering <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
-We can compute this set in a similar way as above. We refer to this as the <em>avoid</em> set and use <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to denote it. This avoid set is also often referred to as the <em>Inevitable Collision Set (ICS)</em> if <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> represents a collision set.</p>
+<p>However, we can also treat <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as an undesirable set (e.g., collision set), and ask the question whether it is possible to <em>avoid</em> <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future. To check whether it is possible to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, we can equivalently determine whether <em>all</em> control signals would lead to the system being inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. If all control signals lead to the system entering <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, then that means that there is no control signal that avoids <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
+<p>Obviously, being inside this set would be undesirable because it would mean that all control signals would always lead the system to end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, i.e., there is nothing that the system can do to avoid entering <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+We can define this set in a similar way as above. We refer to this as the <em>avoid</em> set and use <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to denote it. This avoid set is also often referred to as the <em>Inevitable Collision Set (ICS)</em> if <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> represents a collision set.</p>
 <div class="admonition-backward-reachable-set-avoid-case admonition">
 <p class="admonition-title">Backward Reachable Set (Avoid Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-avoid">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-avoid" title="Link to this equation">#</a></span>\[\mathcal{A}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-avoid" title="Link to this equation">#</a></span>\[\mathcal{A}(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[-\tau, 0] \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace\]</div>
 </div>
 <section id="backward-reachable-tubes">
 <h5>Backward reachable tubes<a class="headerlink" href="#backward-reachable-tubes" title="Link to this heading">#</a></h5>
-<p>Great! We just defined these sets that determine whether is it possible reach a target set (reach case), and whether it is impossible to avoid the target set (avoid case).
-However, the above definitions only considers whether the system is inside the target set only at the final time <span class="math notranslate nohighlight">\(\tau\)</span>. It is possible that the system enters the target set before <span class="math notranslate nohighlight">\(t&lt;\tau\)</span> but exits it and is outside of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at <span class="math notranslate nohighlight">\(t=\tau\)</span>.</p>
-<p>So we should also define the sets to consider entry into the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>anytime</em> between <span class="math notranslate nohighlight">\(t=0\)</span> and <span class="math notranslate nohighlight">\(t=\tau\)</span>.
-These sets are referred to as <em>Backward Reachable Tubes (BRT)</em> and had a very similar definition as above, but considers additional entry into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> for any time <span class="math notranslate nohighlight">\(s\in[0,\tau]\)</span>.</p>
+<p>Great! We just defined BRS as sets that determine whether is it possible reach a target set (reach case), and whether it is impossible to avoid the target set (avoid case).
+However, the above definitions only considers whether the system is inside the target set only <em>at the end of the horizon</em>. It is possible that the system enters <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> during the horizon but exits it by the end of the horizon. Thus a state may be outside of the BRS, but can still enter <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future.
+Indeed, if <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> represents a collision set, then entering <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> before the end of the horizon is still bad and is something we would like to capture.</p>
+<p>As such, we should also define sets that consider entry into the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>anytime</em> between <span class="math notranslate nohighlight">\(t=-\tau\)</span> and <span class="math notranslate nohighlight">\(t=0\)</span>.
+These sets that consider entry into the target set before the end of the horizon are referred to as <em>Backward Reachable Tubes (BRT)</em> and has a very similar definition as above, but considers additional entry into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> for any time <span class="math notranslate nohighlight">\(s\in[-\tau, 0]\)</span>.</p>
 <div class="admonition-backward-reachable-tube-reach-case admonition">
 <p class="admonition-title">Backward Reachable Tube (Reach Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-reach">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach" title="Link to this equation">#</a></span>\[\widetilde{\mathcal{R}}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach" title="Link to this equation">#</a></span>\[\widetilde{\mathcal{R}}(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid  \exists u(\cdot) \in \mathbb{U}[-\tau, 0],\: \exists s\in[-\tau, 0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.\]</div>
 </div>
 <div class="admonition-backward-reachable-tube-avoid-case admonition">
 <p class="admonition-title">Backward Reachable Tube (Avoid Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-avoid">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-avoid" title="Link to this equation">#</a></span>\[\widetilde{\mathcal{A}}(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid  \forall u(\cdot) \in \mathbb{U}[0,\tau], \: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s) \in \mathcal{T} \rbrace\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-avoid" title="Link to this equation">#</a></span>\[\widetilde{\mathcal{A}}(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid  \forall u(\cdot) \in \mathbb{U}[-\tau, 0], \: \exists s\in[-\tau,0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s) \in \mathcal{T} \rbrace\]</div>
 </div>
 </section>
 </section>
 </section>
 <section id="computing-brs">
 <h3>Computing BRS<a class="headerlink" href="#computing-brs" title="Link to this heading">#</a></h3>
-<p>Great! We just defined what backward reachable sets and backward reachable tubes are. But how do we go about actually computing them?
-Let’s focus our attention to BRS for the moment. We are concerned with whether we end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the time horizon, and we must reason <em>backward</em> in time to determine what is the set of states that would lead to entry into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in the future.
-This aspect of reasoning <em>backward</em> in time strongly hints that we need to perform dynamic programming to determine the BRS. In fact, we can pose this reachability problem as an <em>optimal control problem</em> and solve it using the HJB equation.</p>
-<p>Note that in the BRS definition, we only care if we enter <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the horizon and nothing else. We don’t care about the total control effort used. With this idea, we can define the <em>terminal cost</em> based on the <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
+<p>Great! We just defined what <strong>backward reachable sets</strong> and <strong>backward reachable tubes</strong> are. But how do we go about actually computing them?
+Let’s focus our attention to <strong>BRS</strong> for the moment. We are concerned with whether we end up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the time horizon, and we must reason <em>backward</em> in time to determine what is the set of states where it is possible to enter <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> in <span class="math notranslate nohighlight">\(\tau\)</span> time.
+Or differently put, given some horizon and starting state, <em>does there exist a control signal where the state at the end of horizon is in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>?</em> When we consider “<em>does there exists</em>”, it should make you think “<em>optimization</em>”! If we just need to find at least one, then we can try to find the “best”, i.e., optimal, control signal that drives the final state as far inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as possible. If the optimal control sequence cannot reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, then no other control sequence can.</p>
+<p>This aspect of reasoning <em>backward</em> in time and the “does there exist” question strongly hints that we need to perform dynamic programming to determine the BRS. In fact, we can pose this reachability problem as an <em>optimal control problem</em> and solve it using the HJB equation (since we are considering a continuous-time setting).</p>
+<p>Note that in the BRS definition, we only care if we enter <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the horizon and nothing else. We don’t care about the total control effort used nor what happens <em>during</em> the trajectory. We just care about what happens at the end. With this idea, we treat the running cost as zero, an keep the terminal cost non-zero. In fact, define the <em>terminal cost</em> based on the <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
 Let us define a terminal cost function <span class="math notranslate nohighlight">\(g:\mathbb{R}^n \rightarrow \mathbb{R}\)</span> such that,</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{T} = \lbrace x\in\mathcal{X} \mid g(x) \leq 0 \rbrace
 \]</div>
-<p>which means that the <span class="math notranslate nohighlight">\(g(x)\)</span> is negative if <span class="math notranslate nohighlight">\(x\in\mathcal{T}\)</span>, or <span class="math notranslate nohighlight">\(g(x)=0\)</span> if <span class="math notranslate nohighlight">\(x\in\partial\mathcal{T}\)</span> (i.e., on the boundary of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>).</p>
-<p>And we also set the running cost (or stage cost) to be zero—again, we are just concerned about whether the system ends up in <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at the end of the horizon, and nothing about the control effort or state error during the horizon. Below is an optimal control problem with the described cost structure, and no additonal constraints aside from ones constraining the dynamics and allowable state/control sets.</p>
+<p>which means that the <span class="math notranslate nohighlight">\(g(x)\)</span> is negative if <span class="math notranslate nohighlight">\(x\in\mathcal{T}\)</span>, or <span class="math notranslate nohighlight">\(g(x)=0\)</span> if <span class="math notranslate nohighlight">\(x\in\partial\mathcal{T}\)</span> (i.e., on the boundary of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>). A natural choice for <span class="math notranslate nohighlight">\(g\)</span> is the signed distance function, a function that measures the closest distance to the boundary of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, where negative distances denotes <em>inside</em> the set, while positive distance denotes <em>outside</em> the set.</p>
+<p>Below is an optimal control problem with the described cost structure, and no additonal constraints aside from ones constraining the dynamics and allowable state/control sets.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\min_{u(\cdot) \in \mathbb{U}[0,\tau]} &amp;\: J_T(x(T))\\
+\begin{align*}
+\min_{u(\cdot) \in \mathbb{U}[0,\tau]} &amp;\: g(x(T))\\
 \text{subject to} &amp;\: \dot{x} = f(x,u,t)\\
                   &amp;\: u(t) \in \mathcal{U}, x(t) \in \mathcal{X}
+\end{align*}
 \end{split}\]</div>
-<p>With this cost structure, note that finding an optimal control policy that <em>minimizes</em> the cost is equivalent to finding an optimal control policy that drives the system into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
-In fact, if <span class="math notranslate nohighlight">\(J_T\)</span> is defined as the <em>signed distance function</em> of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, then the more negative <span class="math notranslate nohighlight">\(J_T(x)\)</span>, the further <em>inside</em> <span class="math notranslate nohighlight">\(x\)</span> is of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> and the more positive <span class="math notranslate nohighlight">\(J_T(x)\)</span> is, the further <em>outside</em> <span class="math notranslate nohighlight">\(x\)</span> is from <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>. Then the optimal policy would driven the system as far inside of <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as possible.</p>
+<p>With this cost structure, note that finding an optimal control policy that <em>minimizes</em> the cost is equivalent to finding an optimal control policy that drives the system into as far into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> as possible, assuming that <span class="math notranslate nohighlight">\(g\)</span> is defined where the more negative it is, the farther inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> it is.</p>
 <p>Recall that the (optimal) value function measures the future accumulated cost associated with state <span class="math notranslate nohighlight">\(x\)</span> if the system follows the (optimal) policy. With this particular choice of cost structure described above (zero running cost and terminal cost to have a zero sub-level set be <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>), the value function becomes:</p>
 <div class="math notranslate nohighlight">
 \[
-V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]}J_T(\xi_{x,t}^{u(\cdot)}(\tau)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[0,\tau]}J_T(\xi_{x,t}^{u(\cdot)}(\tau))
+V^*(x,-\tau) = \min_{u(\cdot) \in \mathbb{U}[-\tau, 0]}g(\xi_{x,-\tau}^{u(\cdot)}(0)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[-\tau,0]}g(\xi_{x,-\tau}^{u(\cdot)}(0))
 \]</div>
-<p>which is simply the terminal cost evaluated at the state at time <span class="math notranslate nohighlight">\(\tau\)</span> if starting from state <span class="math notranslate nohighlight">\(x\)</span>, at time <span class="math notranslate nohighlight">\(t\)</span>, and following policy <span class="math notranslate nohighlight">\(\pi^*\)</span>. Since <span class="math notranslate nohighlight">\(J_T(x) \leq 0\)</span> implies <span class="math notranslate nohighlight">\(x\in \mathcal{T}\)</span>, this means that if <span class="math notranslate nohighlight">\(V(x,t) \leq 0\)</span>, then following the optimal policy from state <span class="math notranslate nohighlight">\(x\)</span> and time <span class="math notranslate nohighlight">\(t\)</span> will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at time <span class="math notranslate nohighlight">\(\tau\)</span> (i.e., at the end of the horizon).
-As such, this means that the zero sub-level set of <span class="math notranslate nohighlight">\(V(\cdot, t)\)</span> is precisely the BRS for a horizon of <span class="math notranslate nohighlight">\(\tau - t\)</span>! Concretely, we have,</p>
+<p>which is simply the terminal cost evaluated at the state at the end of the horizon if starting from state <span class="math notranslate nohighlight">\(x\)</span>, and following policy <span class="math notranslate nohighlight">\(\pi^*\)</span>. Since <span class="math notranslate nohighlight">\(g(x) \leq 0\)</span> implies <span class="math notranslate nohighlight">\(x\in \mathcal{T}\)</span>, this means that if <span class="math notranslate nohighlight">\(V(x,t) \leq 0\)</span>, then following the optimal policy from state <span class="math notranslate nohighlight">\(x\)</span> and time <span class="math notranslate nohighlight">\(t=-\tau\)</span> will lead the system to be inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span> (i.e., at the end of the horizon).
+As such, this means that the zero sub-level set of <span class="math notranslate nohighlight">\(V(\cdot, t)\)</span> is precisely the BRS for a horizon of <span class="math notranslate nohighlight">\(\tau\)</span>! Concretely, we have,</p>
 <div class="admonition-backward-reachable-set-as-a-value-function-reach-case admonition">
 <p class="admonition-title">Backward Reachable Set as a Value Function (Reach Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-reach-value">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach-value" title="Link to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, \tau - t) = \lbrace x\in \mathcal{X} \mid V^*(x,t) \leq 0 \rbrace, \qquad \text{where the planning horizon is }\tau\]</div>
-</div>
-<p>It may be easier to set the end of the time horizon to be <span class="math notranslate nohighlight">\(t=0\)</span> and since we are stepping backwards in time, we use <span class="math notranslate nohighlight">\(t=-\tau\)</span> to indicate <span class="math notranslate nohighlight">\(\tau\)</span> time units back in time. So we can also write <span class="math notranslate nohighlight">\(V(x,-\tau)\)</span> to indicate the BRS of a time horizon of <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
-<div class="admonition-backward-reachable-set-as-a-value-function-reparameterizing-time-reach-case admonition">
-<p class="admonition-title">Backward Reachable Set as a Value Function (reparameterizing time) (Reach Case)</p>
-<div class="math notranslate nohighlight" id="equation-eq-brs-reach-value">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach-value" title="Link to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, \tau) = \lbrace x\in \mathcal{X} \mid V^*(x,-\tau) \leq 0 \rbrace\]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach-value" title="Link to this equation">#</a></span>\[\mathcal{R}(\mathcal{T}, -\tau) = \lbrace x\in \mathcal{X} \mid V^*(x,-\tau) \leq 0 \rbrace, \qquad \text{where the planning horizon is }\tau\]</div>
 </div>
 <p>What about the avoid case? Recall that the BRS for the avoid case is to determine the set of states where it is impossible to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> despite the system’s best effort.
-With the same cost described above, if the system instead aimed to <em>maximize</em> the terminal cost, then it is trying its best to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, but if <span class="math notranslate nohighlight">\(V^*(x,t) \leq 0\)</span> it means that the system will end up inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> (despite the system’s best effort).</p>
-<p>As such, the BRS for the avoid case is the same as the reach case, except that we are performing a <em>maximization</em> problem instead of a minimization one.</p>
-<p>Great! Now we have now posed the backward reachability problem as an optimal control problem and discussed how to interpret the value function. So how do we go about solving for the value function? We solve the Hamilton-Jacboi-Bellman equation! But the stage cost is set to zero.</p>
+With the same cost described above, if the system instead aimed to <em>maximize</em> the terminal cost rather than minimize, then it is trying its best to avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, but if <span class="math notranslate nohighlight">\(V^*(x,-\tau) \leq 0\)</span> it means that the system will end up inside <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> (despite the system’s best effort).</p>
+<p>As such, the BRS for the avoid case is the same as the reach case, except that we are performing a <em>maximization</em> problem instead of a minimization one. After solving the for the value function with the maximization, then the BRS (avoid case) is simply the sub-zero level set of the value function, just like what we saw above.</p>
+<p>Great! Now we have now posed the backward reachability problem as an optimal control problem and discussed how to extract the BRS from the computed value function. So how do we go about solving for the value function? We solve the Hamilton-Jacboi-Bellman equation! But the stage cost is set to zero.</p>
 <div class="admonition-hjb-equation-for-brs admonition">
 <p class="admonition-title">HJB equation for BRS</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-reach-avoid-value">
 <span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach-avoid-value" title="Link to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \max_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) = 0 \qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0]\\\end{split}\]</div>
+V(x,0) = g(x) \qquad t\in[-\tau, 0]\\\end{split}\]</div>
 </div>
 </section>
 <section id="computing-brt">
@@ -583,7 +582,7 @@ V(x,0) = J_T(x) \qquad t\in[-\tau, 0]\\\end{split}\]</div>
 <p>What about the backward reachable tube? What want to check whether the system enters <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>any</em> time during the horizon. As such, we don’t want to compute the terminal cost at the end of the horizon, but rather, determine the lowest value anytime over the horizon. Mathematically, the value function becomes,</p>
 <div class="math notranslate nohighlight">
 \[
-V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x,t}^{u(\cdot)}(s)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x,t}^{u(\cdot)}(s)).
+V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[-\tau, 0]} \min_{s\in[-\tau, 0]} J_T(\xi_{x,-\tau}^{u(\cdot)}(s)), \qquad \pi^*(\cdot) = \mathrm{arg}\min_{u(\cdot)  \in \mathbb{U}[-\tau, 0]} \min_{s\in[-\tau, 0]} J_T(\xi_{x,-\tau}^{u(\cdot)}(s)).
 \]</div>
 <p>We change the HJB PDE slightly to reflect the minimization over time,</p>
 <div class="admonition-hjb-equation-for-brt admonition">
@@ -591,32 +590,32 @@ V^*(x,t) = \min_{u(\cdot) \in \mathbb{U}[0,\tau]} \min_{s\in[0,\tau]} J_T(\xi_{x
 <div class="math notranslate nohighlight" id="equation-eq-brt-reach-avoid-value">
 <span class="eqno">()<a class="headerlink" href="#equation-eq-brt-reach-avoid-value" title="Link to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t)\biggl) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \max_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t)\biggl) \qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
+V(x,0) = g(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
 </div>
 <p>which looks very similar to the standard HJB equation, except there is a <span class="math notranslate nohighlight">\(\min\)</span> with zero. Intuitively, if <span class="math notranslate nohighlight">\(\min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) &gt; 0 \)</span> (or <span class="math notranslate nohighlight">\(\max\)</span>), it means the system is moving in a direction where <span class="math notranslate nohighlight">\(V\)</span> increases (i.e., moving <em>away</em> from <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>). Since we want to find the <em>minimum</em> value of <span class="math notranslate nohighlight">\(V\)</span> over the horizon, whenever <span class="math notranslate nohighlight">\(V\)</span> is increasing, we want to “freeze” the value of <span class="math notranslate nohighlight">\(V\)</span>, essentially forcing <span class="math notranslate nohighlight">\(\frac{\partial V}{\partial t}=0\)</span>.
 Alternatively, if <span class="math notranslate nohighlight">\(\min_{u\in\mathcal{U}} \nabla V(x,t)^T f(x,u,t) &lt; 0 \)</span>, it means the system is moving towards <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> and we want to keep track of this and not “freeze” the value of <span class="math notranslate nohighlight">\(V\)</span>.</p>
 </section>
 <section id="presence-of-disturbances">
 <h3>Presence of disturbances<a class="headerlink" href="#presence-of-disturbances" title="Link to this heading">#</a></h3>
-<p>What if now there are disturbances added to the system? Assuming our dynamics are now <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,d)\)</span> and there is an external disturbance input <span class="math notranslate nohighlight">\(d\)</span> that affects the system. Then we want to ensure that it is still possible to reach the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, or whether it can still be avoided.</p>
+<p>What if now there are disturbances added to the system? Assuming our dynamics are now <span class="math notranslate nohighlight">\(\dot{x} = f(x,u,d)\)</span> and there is an external (bounded) disturbance input <span class="math notranslate nohighlight">\(d\in\mathcal{D}\)</span> that affects the system. Then we want to ensure that it is still possible to reach the target set <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, or whether it can still be avoided despite any and all disturbance signals that could be applied.</p>
 <p>For the <em>reach</em> case, we want to consider whether the system can still reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>regardless of any</em> disturbances possible. This means that the BRS/BRT should be defined such that the system can reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> <em>for all</em> disturbances.</p>
 <div class="admonition-backward-reachable-set-tube-with-disturbances-reach-case admonition">
 <p class="admonition-title">Backward Reachable Set/Tube with Disturbances (Reach Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-brt-disturbance-reach">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-brt-disturbance-reach" title="Link to this equation">#</a></span>\[ \begin{align}\begin{aligned}\mathcal{R}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall d(\cdot) \in \mathbb{D}[0, \tau],\: \exists u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.\\\widetilde{\mathcal{R}}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \forall d(\cdot) \in \mathbb{D}[0, \tau],\: \exists u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s)) \in \mathcal{T} \rbrace.\end{aligned}\end{align} \]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-brt-disturbance-reach" title="Link to this equation">#</a></span>\[ \begin{align}\begin{aligned}\begin{split}\mathcal{R}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[-\tau,0], \: \forall d(\cdot) \in \mathbb{D}[-\tau, 0],\: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.\\\end{split}\\\widetilde{\mathcal{R}}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \exists u(\cdot) \in \mathbb{U}[-\tau,0], \: \forall d(\cdot) \in \mathbb{D}[-\tau, 0],\: \exists s\in[-\tau,0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.\end{aligned}\end{align} \]</div>
 </div>
 <p>For the <em>avoid</em> case, we want to consider whether there is at least one disturbance that would always lead the system into <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> regardless of any possible control signal. In other words, the BRS/BRT is considering whether there is a disturbance signal that makes it impossible for the system to about <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.
 This means that the BRS/BRT should be defined such that there exists a disturbance signal such that the system will reach <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> regardless of any control signals.</p>
 <div class="admonition-backward-reachable-set-tube-with-disturbances-avoid-case admonition">
 <p class="admonition-title">Backward Reachable Set/Tube with Disturbances (Avoid Case)</p>
 <div class="math notranslate nohighlight" id="equation-eq-brs-brt-disturbance-avoid">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-brt-disturbance-avoid" title="Link to this equation">#</a></span>\[ \begin{align}\begin{aligned}\mathcal{A}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists d(\cdot) \in \mathbb{D}[0, \tau],\: \forall u(\cdot) \in \mathbb{U}[0,\tau] \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(\tau) \in \mathcal{T} \rbrace.\\\widetilde{\mathcal{A}}_d(\mathcal{T}, \tau) = \lbrace x_0\in\mathcal{X} \mid \exists d(\cdot) \in \mathbb{D}[0, \tau],\: \forall u(\cdot) \in \mathbb{U}[0,\tau],\: \exists s\in[0,\tau], \: \text{s.t.} \: \xi_{x_0, 0}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.\end{aligned}\end{align} \]</div>
+<span class="eqno">()<a class="headerlink" href="#equation-eq-brs-brt-disturbance-avoid" title="Link to this equation">#</a></span>\[ \begin{align}\begin{aligned}\mathcal{A}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[-\tau,0], \: \exists d(\cdot) \in \mathbb{D}[-\tau, 0],\: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(0) \in \mathcal{T} \rbrace.\\\widetilde{\mathcal{A}}_d(\mathcal{T}, -\tau) = \lbrace x_0\in\mathcal{X} \mid \forall u(\cdot) \in \mathbb{U}[-\tau,0], \: \exists d(\cdot) \in \mathbb{D}[-\tau, 0],\: \exists s\in[-\tau,0], \: \text{s.t.} \: \xi_{x_0, -\tau}^{u(\cdot)}(s) \in \mathcal{T} \rbrace.\end{aligned}\end{align} \]</div>
 </div>
 <p>So now, we have updated the definition of BRS/BRT with disturbances present.
 We can similarly update the HJB PDE to include the disturbance term.
 Since the disturbance is acting in a manner that tries to oppose the system’s best effort to reach/avoid <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>, if the system is trying perform a <span class="math notranslate nohighlight">\(\max\)</span>, then the disturbance will perform a <span class="math notranslate nohighlight">\(\min\)</span>, and vice versa.
 But there is a question as to which order we should compute this sequence of operations.
-Or differently put, what kind of information pattern we should assume. Does the system get to see what the disturbance is first when deciding the optimal control, or the other way around?
+Or differently put, what kind of information pattern we should assume? Does the system get to see what the disturbance is first when deciding the optimal control, or the other way around?
 Generally, we are using reachability analysis to be robust against disturbances/uncertainties, and therefore would like to take on a more conservative stance. That is, we would like to choose the ordering that would assume that the information pattern would benefit the disturbance.</p>
 <p>There is a max-min inequality that describes that the player acting second has the advantage.</p>
 <aside class="margin sidebar">
@@ -634,14 +633,14 @@ Generally, we are using reachability analysis to be robust against disturbances/
 <div class="math notranslate nohighlight" id="equation-eq-brs-reach-avoid-value-hji">
 <span class="eqno">()<a class="headerlink" href="#equation-eq-brs-reach-avoid-value-hji" title="Link to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min_{u\in\mathcal{U}}\max_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \max_{u\in\mathcal{U}}\min_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
+V(x,0) = g(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
 </div>
 <div class="admonition-hji-equation-for-brt admonition">
 <p class="admonition-title">HJI equation for BRT</p>
 <div class="math notranslate nohighlight" id="equation-eq-brt-reach-avoid-value-hji">
 <span class="eqno">()<a class="headerlink" href="#equation-eq-brt-reach-avoid-value-hji" title="Link to this equation">#</a></span>\[\begin{split}\frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \min_{u\in\mathcal{U}}\max_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\biggl) = 0 \qquad \text{Reach case}\\
 \frac{\partial V}{\partial t}(x,t) + \min\biggl(0, \max_{u\in\mathcal{U}}\min_{d\in\mathcal{D}} \nabla V(x,t)^T f(x,u,d,t)\biggl) \qquad \text{Avoid case}\\
-V(x,0) = J_T(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
+V(x,0) = g(x) \qquad t\in[-\tau, 0],\\\end{split}\]</div>
 </div>
 </section>
 </section>
