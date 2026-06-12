@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Linear Quadratic Regulator &#8212; Linear Multivariable Control</title>
+    <title>Homework 3 (Solutions) &#8212; Linear Multivariable Control</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/a11y.css?v=ffeaf963" />
@@ -225,7 +225,7 @@
 <li class="toctree-l1"><a class="reference internal" href="hw03.html">Homework 3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hw01_solution.html">Homework 1 (Solutions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hw02solution.html">Homework 2 (Solutions)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Quadratic Regulator</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Homework 3 (Solutions)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
 <ul class="nav bd-sidenav">
@@ -416,7 +416,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Linear Quadratic Regulator</h1>
+    <h1>Homework 3 (Solutions)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -426,23 +426,26 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-time-lqr">1. Continuous-Time LQR</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e">(e)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f">(f)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#g">(g)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-quadratic-regulator">Linear Quadratic Regulator</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-time-lqr">1. Continuous-Time LQR</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#e">(e)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f">(f)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#g">(g)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-varying-case">2. Time-varying case</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lqr-stability">3. LQR stability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discounted-lqr">4. Discounted LQR</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-tracking">5. Trajectory tracking</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-varying-case">2. Time-varying case</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lqr-stability">3. LQR stability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discounted-lqr">4. Discounted LQR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-tracking">5. Trajectory tracking</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -456,10 +459,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="linear-quadratic-regulator">
-<h1>Linear Quadratic Regulator<a class="headerlink" href="#linear-quadratic-regulator" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-3-solutions">
+<h1>Homework 3 (Solutions)<a class="headerlink" href="#homework-3-solutions" title="Link to this heading">#</a></h1>
+<section id="linear-quadratic-regulator">
+<h2>Linear Quadratic Regulator<a class="headerlink" href="#linear-quadratic-regulator" title="Link to this heading">#</a></h2>
 <section id="continuous-time-lqr">
-<h2>1. Continuous-Time LQR<a class="headerlink" href="#continuous-time-lqr" title="Link to this heading">#</a></h2>
+<h3>1. Continuous-Time LQR<a class="headerlink" href="#continuous-time-lqr" title="Link to this heading">#</a></h3>
 <p>In this problem, you will derive the equations for the continuous-time Linear Quadratic Regulator (LQR). The steps will be similar to those covered for the discrete-time case in lecture; however, instead of using the Bellman equation, you will apply the Hamilton-Jacobi-Bellman (HJB) equation to the continuous-time setting.</p>
 <p>The continuous-time LQR problem is define below.</p>
 <div class="math notranslate nohighlight">
@@ -477,7 +482,7 @@ document.write(`
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(V\)</span> is the value function.</p>
 <section id="a">
-<h3>(a)<a class="headerlink" href="#a" title="Link to this heading">#</a></h3>
+<h4>(a)<a class="headerlink" href="#a" title="Link to this heading">#</a></h4>
 <p>Let us begin with the <em>time-invariant</em> case for the continuous-time LQR problem.</p>
 <p>Based on the LQR formulation and the Hamilton-Jacobi-Bellman (HJB) equation:</p>
 <ul class="simple">
@@ -515,7 +520,7 @@ u^TRu
 </div>
 </section>
 <section id="b">
-<h3>(b)<a class="headerlink" href="#b" title="Link to this heading">#</a></h3>
+<h4>(b)<a class="headerlink" href="#b" title="Link to this heading">#</a></h4>
 <p>Next, suppose the value function is quadratic at all times; specifically, let <span class="math notranslate nohighlight">\(V(x(t), t) = x(t)^T P(t) x(t)\)</span>. Using this form, explicitly derive expressions for both the partial derivative of the value function with respect to time, <span class="math notranslate nohighlight">\(\frac{\partial V}{\partial t}\)</span>, and for the gradient of the value function with respect to the state, <span class="math notranslate nohighlight">\(\nabla V(x(t), t)\)</span>.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
@@ -553,7 +558,7 @@ x(t)^T P(t) x(t)
 </div>
 </section>
 <section id="c">
-<h3>(c)<a class="headerlink" href="#c" title="Link to this heading">#</a></h3>
+<h4>(c)<a class="headerlink" href="#c" title="Link to this heading">#</a></h4>
 <p>After substituting your expressions from (b) into the HJB equation, show that the optimal policy <span class="math notranslate nohighlight">\(\pi^\star(x,t)\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -598,7 +603,7 @@ Ru = -B^TPx
 </div>
 </section>
 <section id="d">
-<h3>(d)<a class="headerlink" href="#d" title="Link to this heading">#</a></h3>
+<h4>(d)<a class="headerlink" href="#d" title="Link to this heading">#</a></h4>
 <p>With the optimal policy <span class="math notranslate nohighlight">\(\pi^\star(x,t)\)</span>, show that the HJB equation reduces to</p>
 <div class="math notranslate nohighlight">
 \[
@@ -687,7 +692,7 @@ x\]</div>
 </div>
 </section>
 <section id="e">
-<h3>(e)<a class="headerlink" href="#e" title="Link to this heading">#</a></h3>
+<h4>(e)<a class="headerlink" href="#e" title="Link to this heading">#</a></h4>
 <p>Recall that any matrix <span class="math notranslate nohighlight">\(M\)</span> can be decomposed in terms of its symmetric and skew-symmetric components:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -756,7 +761,7 @@ x^T (\frac{M+M^T}{2})x\]</div>
 </div>
 </section>
 <section id="f">
-<h3>(f)<a class="headerlink" href="#f" title="Link to this heading">#</a></h3>
+<h4>(f)<a class="headerlink" href="#f" title="Link to this heading">#</a></h4>
 <p>Given the results from (e), finally show that the value function for the continuous-time LQR problem is the solution to the following ODE:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -866,7 +871,7 @@ P(T)=Q_T\]</div>
 </div>
 </section>
 <section id="g">
-<h3>(g)<a class="headerlink" href="#g" title="Link to this heading">#</a></h3>
+<h4>(g)<a class="headerlink" href="#g" title="Link to this heading">#</a></h4>
 <p>Consider the infinite-horizon case. How does the above ODE change? The resulting equation is referred to as the <em>continuous algebraic Riccati equation (CARE)</em>.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
@@ -910,7 +915,7 @@ PBR^{-1}B^TP\]</div>
 </section>
 </section>
 <section id="time-varying-case">
-<h2>2. Time-varying case<a class="headerlink" href="#time-varying-case" title="Link to this heading">#</a></h2>
+<h3>2. Time-varying case<a class="headerlink" href="#time-varying-case" title="Link to this heading">#</a></h3>
 <p>Now consider the time-varying (and finite horizon) case for both continuous-time and discrete-time systems. Clearly state the Riccati equations that govern the evolution of the matrix <span class="math notranslate nohighlight">\(P(t)\)</span> and <span class="math notranslate nohighlight">\(P_k\)</span> in each setting. Provide the forms of the time-varying Riccati differential equation for the continuous-time case, and the Riccati recursion for the discrete-time case.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
@@ -974,7 +979,7 @@ B_k^TP_{k+1}A_k.
 </div>
 </section>
 <section id="lqr-stability">
-<h2>3. LQR stability<a class="headerlink" href="#lqr-stability" title="Link to this heading">#</a></h2>
+<h3>3. LQR stability<a class="headerlink" href="#lqr-stability" title="Link to this heading">#</a></h3>
 <p>Consider the continuous-time infinite-horizon LQR problem. Show that the closed-loop system <span class="math notranslate nohighlight">\(\dot{x} = (A - BK)x\)</span>, where <span class="math notranslate nohighlight">\(K = R^{-1} B^T P\)</span> is the optimal LQR gain, is asymptotically stable. Specifically, prove that the optimal value function <span class="math notranslate nohighlight">\(V(x) = x^T P x\)</span> serves as a valid Lyapunov function for the closed-loop system, thereby establishing asymptotic stability of the origin.</p>
 <p>You may assume that under the LQR assumption, the solution to CARE <span class="math notranslate nohighlight">\(P\)</span> is positive definite.</p>
 <div class="dropdown admonition">
@@ -1070,7 +1075,7 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </section>
 <section id="discounted-lqr">
-<h2>4. Discounted LQR<a class="headerlink" href="#discounted-lqr" title="Link to this heading">#</a></h2>
+<h3>4. Discounted LQR<a class="headerlink" href="#discounted-lqr" title="Link to this heading">#</a></h3>
 <p>Consider the discrete-time LQR problem but with a discount term on the stage cost: <span class="math notranslate nohighlight">\(\sum_{k=0}^{N-1} \gamma^k (x_k^TQ_kx_k + u_k^TR_ku_k)\)</span>. How does the optimal gain and resulting Riccati recursion equation differ?</p>
 <p>For the infinite horizon setting and without discount, to solve for <span class="math notranslate nohighlight">\(P_\infty\)</span>, we can use the <code class="docutils literal notranslate"><span class="pre">dare(A,B,Q,R)</span></code> function (in Matlab or Python) given matrices <span class="math notranslate nohighlight">\(A,B,Q,R\)</span>. Is it still possible to use the same function to solve for <span class="math notranslate nohighlight">\(P_\infty\)</span> for the discounted setting? Provide a brief explanation.</p>
 <div class="dropdown admonition">
@@ -1184,11 +1189,11 @@ R+\tilde{B}^TP\tilde{B}
 </div>
 </section>
 <section id="trajectory-tracking">
-<h2>5. Trajectory tracking<a class="headerlink" href="#trajectory-tracking" title="Link to this heading">#</a></h2>
+<h3>5. Trajectory tracking<a class="headerlink" href="#trajectory-tracking" title="Link to this heading">#</a></h3>
 <p>Run the <code class="docutils literal notranslate"><span class="pre">tracking_LQR.ipynb</span></code> demo notebook. Please read the comments in the notebook to get a good sense of what the notebook is doing.</p>
 <p>After reading and running the notebook, answer the following questions.</p>
 <section id="id1">
-<h3>(a)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<h4>(a)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <p>Why does there exist some “steady state error” at the end of the trajectory?</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
@@ -1197,7 +1202,7 @@ R+\tilde{B}^TP\tilde{B}
 </div>
 </section>
 <section id="id2">
-<h3>(b)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h4>(b)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <p>If we found ourselves running up against control limits, what could we change in (i) the tracking LQR formulation, or (ii) the computation of the nominal trajectory, to make this less likely to happen?</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
@@ -1206,13 +1211,14 @@ R+\tilde{B}^TP\tilde{B}
 </div>
 </section>
 <section id="id3">
-<h3>(c)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h4>(c)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
 <p>Even with closed-loop control, we see that the red “safety bubble” surrounding the quad intersects the obstacle over a short time interval. What could we do to avoid this?</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
 <p>Even with LQR feedback, the quadcopter does not follow the nominal trajectory exactly because of disturbances, modeling error, and control limits. Therefore, if the nominal trajectory passes too close to the obstacle, the safety bubble can still intersect the obstacle.</p>
 <p>To avoid this, we should modify the nominal trajectory optimization to include a larger obstacle clearance margin. This can be done by inflating the obstacle radius or adding an additional safety buffer in the obstacle avoidance constraint. As a result, the nominal trajectory stays farther away from the obstacle, leaving room for tracking errors caused by disturbances, modeling inaccuracies, and actuator saturation.</p>
 </div>
+</section>
 </section>
 </section>
 </section>
@@ -1281,23 +1287,26 @@ R+\tilde{B}^TP\tilde{B}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-time-lqr">1. Continuous-Time LQR</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e">(e)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f">(f)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#g">(g)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-quadratic-regulator">Linear Quadratic Regulator</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-time-lqr">1. Continuous-Time LQR</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c">(c)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">(d)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#e">(e)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f">(f)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#g">(g)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-varying-case">2. Time-varying case</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lqr-stability">3. LQR stability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discounted-lqr">4. Discounted LQR</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-tracking">5. Trajectory tracking</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-varying-case">2. Time-varying case</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lqr-stability">3. LQR stability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discounted-lqr">4. Discounted LQR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-tracking">5. Trajectory tracking</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">(a)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">(b)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">(c)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

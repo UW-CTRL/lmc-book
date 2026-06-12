@@ -1,3 +1,4 @@
+# Homework 3 (Solutions)
 ## Linear Quadratic Regulator
 
 
